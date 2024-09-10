@@ -1,4 +1,3 @@
-import './App.css';
 import GameMap from './GameMap';
 
 function App() {
