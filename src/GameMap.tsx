@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { MapContainer, Marker, Pane, Polygon, Popup, TileLayer, useMap } from "react-leaflet";
+import { useState, useRef } from "react";
+import { MapContainer, Marker, Pane, Polygon, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
 
@@ -16,16 +16,13 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-// map bounds (display a "bacground" around this area)
+// map bounds (display a "background" around this area)
 const bounds = L.latLngBounds(
     L.latLng(53.261616, -6.496525), // Southwest corner
     L.latLng(53.40118, -6.03441)  // Northeast corner
 );
 
-// TODO either use this map mask, or just set the min zoom to automatically adjust according to the specified coordinates.
-// We should be able to do this: 'map.getBoundsZoom(bounds, false);' if needed, but we need to get the map reference first.
 const MapMask = () => {
-    // Coordinates for the corners of the map area
     const mapCorners: LatLngExpression[] = [
         [90, -180], // Top-left
         [90, 180],  // Top-right
@@ -33,7 +30,6 @@ const MapMask = () => {
         [-90, -180] // Bottom-left
     ];
 
-    // Coordinates for the corners of the bounds to cut out
     const boundsCoords: LatLngExpression[] = [
         [bounds.getSouthWest().lat, bounds.getSouthWest().lng],
         [bounds.getSouthWest().lat, bounds.getNorthEast().lng],
@@ -41,7 +37,6 @@ const MapMask = () => {
         [bounds.getNorthEast().lat, bounds.getSouthWest().lng],
     ];
 
-    // Combine map corners and bounds to create the mask
     const maskCoords: LatLngExpression[][] = [
         [...mapCorners],
         [...boundsCoords]
@@ -57,14 +52,29 @@ const MapMask = () => {
     );
 };
 
+// Component to handle clicks and add markers
+function ClickHandler({ onClick }: { onClick: (latlng: LatLngExpression) => void }) {
+    useMapEvents({
+        click(e) {
+            onClick([e.latlng.lat, e.latlng.lng]);
+        },
+    });
+    return null;
+}
+
 function GameMap() {
-    // https://medium.com/@timndichu/getting-started-with-leaflet-js-and-react-rendering-a-simple-map-ef9ee0498202
     const gameMapRef = useRef(null);
+    const [markers, setMarkers] = useState<LatLngExpression[]>([]);
+
+    const addMarker = (position: LatLngExpression) => {
+        setMarkers((current) => [...current, position]);
+    };
 
     return (
         <MapContainer
             center={[53.3484000, -6.2539000]}
-            zoom={13} scrollWheelZoom={true}
+            zoom={13} 
+            scrollWheelZoom={true}
             ref={gameMapRef}
             style={{ height: "85vh", width: "90vw", margin: "auto" }}
             maxBounds={bounds}
@@ -75,15 +85,18 @@ function GameMap() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 minZoom={12}
             />
-            <Marker position={[53.3484000, -6.2539000]} >
-                <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
-            </Marker>
+
+            <ClickHandler onClick={addMarker} />
+
+            {markers.map((position, idx) => (
+                <Marker key={idx} position={position}>
+                    <Popup>You clicked here!</Popup>
+                </Marker>
+            ))}
 
             <MapMask />
         </MapContainer>
     );
-};
+}
 
 export default GameMap;
