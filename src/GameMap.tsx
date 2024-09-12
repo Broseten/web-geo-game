@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
-import { MapContainer, Marker, Pane, Polygon, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L, { Bounds, LatLngExpression } from "leaflet";
+import L, { LatLngExpression } from "leaflet";
 
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -43,31 +43,33 @@ function GameMap() {
     };
 
     return (
-        <MapContainer
-            center={[53.3484000, -6.2539000]}
-            zoom={13}
-            scrollWheelZoom={true}
-            ref={gameMapRef}
-            style={{ height: "85vh", width: "90vw", margin: "auto" }}
-            maxBounds={bounds}
-            maxBoundsViscosity={1.0} // Enforces bounds restriction
-        >
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                minZoom={12}
-            />
+        <div className="gamemap">
+            <MapContainer
+                center={[53.3484000, -6.2539000]}
+                zoom={13}
+                scrollWheelZoom={true}
+                ref={gameMapRef}
+                style={{ height: "85vh", width: "90vw", margin: "auto" }}
+                maxBounds={bounds}
+                maxBoundsViscosity={1.0} // Enforces bounds restriction
+            >
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    minZoom={12}
+                />
 
-            <ClickHandler onClick={addMarker} />
+                <ClickHandler onClick={addMarker} />
 
-            {markers.map((position, idx) => (
-                <Marker key={idx} position={position}>
-                    <Popup>You clicked here!</Popup>
-                </Marker>
-            ))}
+                {markers.map((position, idx) => (
+                    <Marker key={idx} position={position}>
+                        <Popup>You clicked here! ({position.toString()})</Popup>
+                    </Marker>
+                ))}
 
-            <MapMask bounds={bounds}/>
-        </MapContainer>
+                <MapMask bounds={bounds} />
+            </MapContainer>
+        </div>
     );
 }
 

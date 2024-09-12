@@ -3,7 +3,7 @@ import GameMap from './GameMap';
 function App() {
   return (
     <div className="App">
-      <h1>The game map</h1>
+      <h1 style={{textAlign: "center"}}>The game map</h1>
       <GameMap />
     </div>
   );
