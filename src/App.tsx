@@ -1,12 +1,15 @@
-import GameMap from './GameMap';
+import './App.css'
+import GameMap from './GameMap'
 
 function App() {
   return (
-    <div className="App">
-      <h1 style={{textAlign: "center"}}>The game map</h1>
-      <GameMap />
-    </div>
-  );
+    <>
+      <div className="app">
+        <h1>The Game</h1>
+        <GameMap />
+      </div>
+    </>
+  )
 }
 
-export default App;
+export default App
