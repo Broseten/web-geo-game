@@ -1,5 +1,5 @@
 import './App.css'
-import GameMap from './GameMap'
+import GameMap from './Components/Map/GameMap'
 
 function App() {
   return (
