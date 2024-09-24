@@ -1,4 +1,12 @@
-# React + TypeScript + Vite
+# Web Geo Game
+
+Use `npm run dev` to run the project during development.
+
+# Template Readme
+
+There might be still some useful info:
+
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
