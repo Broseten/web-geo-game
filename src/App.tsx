@@ -1,13 +1,15 @@
-import './App.css'
+import { Box, Center, Heading } from '@chakra-ui/react'
 import GameMap from './Components/Map/GameMap'
 
 function App() {
   return (
     <>
-      <div className="app">
-        <h1>The Game</h1>
+      <Box className="app" backgroundColor="gray.100" h='calc(100vh)'>
+        <Center>
+          <Heading mb={4}>The Game</Heading>
+        </Center>
         <GameMap />
-      </div>
+      </Box>
     </>
   )
 }
