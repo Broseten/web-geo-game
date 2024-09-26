@@ -15,20 +15,22 @@ function App() {
       setIsConnected(false);
     }
 
-    function onTestClient() {
-      // must use a function -- because javscript closures
-      // since the counter is a const, it captures its value when creating this callback...
-      setTestCounter(testCounter => testCounter + 1);
+    function updateCount(count: number) {
+      setTestCounter(count);
     }
 
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
-    socket.on('testClient', onTestClient);
+    socket.on('countClient', updateCount);
+    socket.on('init-count-client', updateCount);
+
+    // init the state
+    socket.emit('init-count');
 
     return () => {
       socket.off('connect', onConnect);
       socket.off('disconnect', onDisconnect);
-      socket.off('testClient', onTestClient);
+      socket.off('countClient', updateCount);
     };
   }, []);
 
@@ -41,9 +43,8 @@ function App() {
         <Center>
           <Text>{isConnected ? "connected" : "not connected"}, {`triggered ${testCounter} times`}</Text>
           <Button onClick={() => {
-            socket.emit("test");
+            socket.emit("count");
           }}>Click me</Button>
-          {/* <GameMap /> */}
         </Center>
       </Box>
     </>
