@@ -1,6 +1,7 @@
 import { Box, Button, Center, Heading, Text } from '@chakra-ui/react'
 import { socket } from './main'
 import { useEffect, useState } from 'react';
+import GameMap from './Components/Map/GameMap';
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -31,6 +32,7 @@ function App() {
       socket.off('connect', onConnect);
       socket.off('disconnect', onDisconnect);
       socket.off('countClient', updateCount);
+      socket.off('init-count-client', updateCount);
     };
   }, []);
 
@@ -46,6 +48,7 @@ function App() {
             socket.emit("count");
           }}>Click me</Button>
         </Center>
+        <GameMap/>
       </Box>
     </>
   )
