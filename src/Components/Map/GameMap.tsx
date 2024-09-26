@@ -41,6 +41,8 @@ function GameMap() {
     const [markers, setMarkers] = useState<[number, LatLngExpression][]>([]);
     // TODO useSocket custom hook?
 
+    const addMarkerRPC = 'add-marker';
+    const setMarkersRPC = 'set-markers';
     useEffect(() => {
         function addMarker(marker: [number, LatLngExpression]) {
             setMarkers((current) => [...current, marker]);
@@ -50,15 +52,15 @@ function GameMap() {
             setMarkers(markers);
         };
 
-        socket.on('add-marker', addMarker);
-        socket.on('set-markers', setMarkersState);
+        socket.on(addMarkerRPC, addMarker);
+        socket.on(setMarkersRPC, setMarkersState);
 
         // request the initial state
         socket.emit('request-map-markers');
 
         return () => {
-            socket.off('add-marker', addMarker);
-            socket.off('remove-marker', setMarkersState);
+            socket.off(addMarkerRPC, addMarker);
+            socket.off(setMarkersRPC, setMarkersState);
         };
     }, []);
 
