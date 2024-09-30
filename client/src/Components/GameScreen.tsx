@@ -3,14 +3,14 @@ import { socket } from "../main";
 import GameMap from "./Map/GameMap";
 import { useEffect, useState } from "react";
 import initSocket from "../Hooks/useSocket";
-import { useNavigate } from "react-router-dom";
+import { useScreenSelection } from "./Contexts/useScreenSelection";
 
 interface GameScreenProps {
    isConnected: boolean;
 }
 
 export default function GameScreen({ isConnected }: GameScreenProps) {
-   const navigate = useNavigate();
+   const { setCurrentScreen } = useScreenSelection();
    const [testCounter, setTestCounter] = useState(0);
 
    initSocket('countClient', (count: number) => setTestCounter(count));
@@ -38,7 +38,7 @@ export default function GameScreen({ isConnected }: GameScreenProps) {
                         ? <Button colorScheme='red' variant='outline' onClick={() => socket.disconnect()}>Test Disconnect</Button>
                         : <Button colorScheme='green' variant='solid' onClick={() => socket.connect()}>Test Connect</Button>
                   }
-                  <Button colorScheme='red' variant='solid' onClick={() => navigate('/')}>Leave</Button>
+                  <Button colorScheme='red' variant='solid' onClick={() => setCurrentScreen('home')}>Leave</Button>
                </HStack>
             </VStack>
          </Center>

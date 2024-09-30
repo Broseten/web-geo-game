@@ -4,6 +4,7 @@ import App from './App.tsx'
 import { ChakraProvider } from '@chakra-ui/react'
 import customTheme from './Theme.ts'
 import { io } from 'socket.io-client';
+import { ScreenProvider } from './Components/Contexts/useScreenSelection.tsx';
 
 const URL = 'http://localhost:1337';
 
@@ -14,7 +15,9 @@ export const socket = io(URL, {
 createRoot(document.getElementById('root')!).render(
    //<StrictMode>
    <ChakraProvider theme={customTheme}>
-      <App />
+      <ScreenProvider>
+         <App />
+      </ ScreenProvider>
    </ChakraProvider>
    //</StrictMode>,
 )
