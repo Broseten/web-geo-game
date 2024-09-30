@@ -6,6 +6,7 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import MapMask from "./MapMask";
 import { socket } from "../../main";
+import initSocket from "../../Hooks/useSocket";
 
 // TODO custom icons for different solutions
 let DefaultIcon = L.icon({
@@ -43,25 +44,15 @@ function GameMap() {
 
    const addMarkerRPC = 'add-marker';
    const setMarkersRPC = 'set-markers';
+
+   // add a marker
+   initSocket(addMarkerRPC, (marker: [number, LatLngExpression]) => { setMarkers((current) => [...current, marker]); });
+   // set markers (update or init)
+   initSocket(setMarkersRPC, (newMarkers: [number, LatLngExpression][]) => { setMarkers(newMarkers); });
+
    useEffect(() => {
-      function addMarker(marker: [number, LatLngExpression]) {
-         setMarkers((current) => [...current, marker]);
-      };
-
-      function setMarkersState(markers: [number, LatLngExpression][]) {
-         setMarkers(markers);
-      };
-
-      socket.on(addMarkerRPC, addMarker);
-      socket.on(setMarkersRPC, setMarkersState);
-
       // request the initial state
       socket.emit('request-map-markers');
-
-      return () => {
-         socket.off(addMarkerRPC, addMarker);
-         socket.off(setMarkersRPC, setMarkersState);
-      };
    }, []);
 
    return (

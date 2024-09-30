@@ -2,6 +2,7 @@ import { Box, Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
 import { socket } from "../main";
 import GameMap from "./Map/GameMap";
 import { useEffect, useState } from "react";
+import initSocket from "../Hooks/useSocket";
 
 interface GameScreenProps {
    isConnected: true;
@@ -10,21 +11,12 @@ interface GameScreenProps {
 export default function GameScreen({ isConnected }: GameScreenProps) {
    const [testCounter, setTestCounter] = useState(0);
 
+   initSocket('countClient', (count: number) => setTestCounter(count));
+   initSocket('init-count-client', (count: number) => setTestCounter(count));
+
    useEffect(() => {
-      function updateCount(count: number) {
-         setTestCounter(count);
-      }
-
-      socket.on('countClient', updateCount);
-      socket.on('init-count-client', updateCount);
-
       // init the state
       socket.emit('init-count');
-
-      return () => {
-         socket.off('countClient', updateCount);
-         socket.off('init-count-client', updateCount);
-      };
    }, []);
 
    return (

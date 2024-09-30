@@ -3,27 +3,13 @@ import { socket } from './main'
 import { useEffect, useState } from 'react';
 import JoinScreen from './Components/JoinScreen';
 import GameScreen from './Components/GameScreen';
+import initSocket from './Hooks/useSocket';
 
 function App() {
    const [isConnected, setIsConnected] = useState(socket.connected);
 
-   useEffect(() => {
-      function onConnect() {
-         setIsConnected(true);
-      }
-
-      function onDisconnect() {
-         setIsConnected(false);
-      }
-
-      socket.on('connect', onConnect);
-      socket.on('disconnect', onDisconnect);
-
-      return () => {
-         socket.off('connect', onConnect);
-         socket.off('disconnect', onDisconnect);
-      };
-   }, []);
+   initSocket('connect', () => setIsConnected(true));
+   initSocket('disconnect', () => setIsConnected(false));
 
    // TODO use grid for the layout somewhere?
    return (
