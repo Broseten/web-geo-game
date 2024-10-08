@@ -8,6 +8,7 @@ import { ScreenProvider } from './Components/Contexts/useScreenSelection.tsx';
 
 const URL = 'http://localhost:1337';
 
+// TODO ensure that the client has the same ID when reconnecting (cookie)
 export const socket = io(URL, {
    autoConnect: false
 });
