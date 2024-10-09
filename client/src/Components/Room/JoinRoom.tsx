@@ -1,7 +1,7 @@
 import { AbsoluteCenter, Box, Button } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 
-export default function HomeScreen() {
+export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
 
    // TODO get from server

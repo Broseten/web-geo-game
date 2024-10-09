@@ -2,7 +2,7 @@ import { AbsoluteCenter, Box, Button, Input } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useState } from "react";
 
-export default function HomeScreen() {
+export default function CreateRoom() {
    const { setCurrentScreen } = useScreenSelection();
    const [roomName, setRoomName] = useState('')
 
