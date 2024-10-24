@@ -62,7 +62,12 @@ function GameMap() {
             zoom={13}
             scrollWheelZoom={true}
             ref={gameMapRef}
-            style={{ height: "85vh", width: "90vw", margin: "auto" }}
+            style={{ height: "100vh", width: "75vw",
+               marginLeft: "auto", 
+               marginRight: "auto", 
+               marginTop: "auto", 
+               marginBottom: "auto"
+            }}
             maxBounds={bounds}
             maxBoundsViscosity={1.0} // Enforces bounds restriction
          >

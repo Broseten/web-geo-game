@@ -2,7 +2,7 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import { ChakraProvider } from '@chakra-ui/react'
-import customTheme from './Theme.ts'
+import customTheme from './Theme/Theme.ts'
 import { io } from 'socket.io-client';
 import { ScreenProvider } from './Components/Contexts/useScreenSelection.tsx';
 

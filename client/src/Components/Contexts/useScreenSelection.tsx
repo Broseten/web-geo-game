@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 
-type Screens = 'home' | 'room' | 'play';
+type Screens = 'home' | 'play' | 'join' | 'create' | 'lobby' | 'customize';
 
 // Create the context
 const ScreenContext = createContext<{

@@ -1,10 +1,13 @@
-import { Box, Center, Heading } from '@chakra-ui/react'
-import GameScreen from './Components/GameScreen';
-import HomeScreen from './Components/HomeScreen';
+import { Box } from '@chakra-ui/react'
+import GameScreen from './Components/Game.tsx/GameScreen';
+import HomeScreen from './Components/Home/HomeScreen';
 import { useState } from 'react';
 import initSocket from './Hooks/useSocket';
-import RoomScreen from './Components/RoomScreen';
 import { useScreenSelection } from './Components/Contexts/useScreenSelection';
+import JoinRoom from './Components/Room/JoinRoom';
+import CreateRoom from './Components/Room/CreateRoom';
+import Lobby from './Components/Room/Lobby';
+import CustomizeRoom from './Components/Room/CustomizeRoom';
 
 function App() {
    const [isConnected, setIsConnected] = useState(false);
@@ -19,8 +22,14 @@ function App() {
       switch (currentScreen) {
          case 'home':
             return <HomeScreen />;
-         case 'room':
-            return <RoomScreen />;
+         case 'join':
+            return <JoinRoom />;
+         case 'create':
+            return <CreateRoom />;
+         case 'customize':
+            return <CustomizeRoom />;
+         case 'lobby':
+            return <Lobby />
          case 'play':
             return <GameScreen isConnected={isConnected} />;
          default:
@@ -35,10 +44,11 @@ function App() {
    // room screen    -- (join/create) to configure a room, username and join
    // play screen    -- to acutally play the game (can use a parametr with id of the room to rejoin on refresh)
    return (
-      <Box className="app" backgroundColor="gray.100" h='calc(100vh)'>
-         <Center>
-            <Heading mb={4}>The Game</Heading>
-         </Center>
+      <Box 
+         className="app" 
+         h='calc(100vh)'
+         bg="brand.blue"
+      >
          {renderScreen()}
       </Box>
    )
