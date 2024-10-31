@@ -24,6 +24,9 @@ const customTheme = {
       off: '#f9faf0' // an off-white
     }
   },
+  hr: {
+    color: "white"
+  }
 }
 
   // // sizes: {

@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react'
-import GameScreen from './Components/Game.tsx/GameScreen';
+import GameScreen from './Components/Game/GameScreen';
 import HomeScreen from './Components/Home/HomeScreen';
 import { useState } from 'react';
 import initSocket from './Hooks/useSocket';

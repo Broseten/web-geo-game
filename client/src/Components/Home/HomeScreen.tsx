@@ -7,6 +7,7 @@ export default function HomeScreen() {
    return (
       <Box
          h='calc(100vh)'
+         // background image is sourced from pexels.com 
          backgroundImage="/src/Theme/images/Dublin.jpg"
          backgroundSize="cover"
          //filter="auto" blur="5px"

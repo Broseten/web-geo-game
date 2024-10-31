@@ -3,6 +3,7 @@ import { socket } from "../../main";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useState } from "react";
 import { EditIcon } from "@chakra-ui/icons";
+import GameModal from "../Game/GameModal";
 //import DarkButton from "../../Theme/DarkButton";
 
 
@@ -112,12 +113,16 @@ export default function SetUpInfo() {
                         variant='solid' onClick={() => {
                         setCurrentScreen('create')
                     }}>Create</Button>
+
                     <Button bg='brand.red' color="white"
                         _hover={{ bg: "white", color: "brand.red"}}
-                        variant='solid' onClick={() => {
-                        // setCurrentScreen('join') // future code
-                        setCurrentScreen('play')
-                    }}>Join</Button>
+                        variant='solid' 
+                        onClick={() => {
+                            // setCurrentScreen('join') // future code
+                            setCurrentScreen('play')
+                        }}>
+                        Join
+                    </Button>
                 </HStack>
 
                 <Text mb="104" opacity={"0"}>X</Text>

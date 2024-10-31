@@ -57,7 +57,8 @@ export default function CreateRoom() {
                onClick={() => {
                   setCurrentScreen('home');
                }}>
-            <Image src="src/Theme/images/home.png"></Image>
+            <Image rounded='100' //boxShadow='dark-lg'
+               src="src/Theme/images/home.png"></Image>
          </Button>
       </Box>
    );

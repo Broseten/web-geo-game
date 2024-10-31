@@ -62,7 +62,7 @@ function GameMap() {
             zoom={13}
             scrollWheelZoom={true}
             ref={gameMapRef}
-            style={{ height: "100vh", width: "75vw",
+            style={{ height: "100vh", width: "70vw",
                marginLeft: "auto", 
                marginRight: "auto", 
                marginTop: "auto", 
