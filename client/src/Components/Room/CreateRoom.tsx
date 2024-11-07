@@ -1,65 +1,80 @@
-import { Box, Button, Center, Icon, Image, Input, Link, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Image, Text } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
-import { useState } from "react";
+import React from 'react';
+import '../../Theme/home-create.css';
+import Customizations from "./Customizations";
 
 export default function CreateRoom() {
    const { setCurrentScreen } = useScreenSelection();
-   const [roomName, setRoomName] = useState('');
+   const roomName = "temp"
 
    return (
-      <Box>
-
-         {/* */}
+      <Box
+         h='calc(100vh)'
+         overflow="auto"
+         // background image is sourced from pexels.com 
+         backgroundImage="/src/Theme/images/Dublin.jpg"
+         backgroundSize="cover"
+         backgroundPosition="center"
+         backgroundRepeat="no-repeat"
+      >
          <Center>
-            <Text
-               pt='150'
-               fontSize="4xl"
-               fontWeight="bold"
-               color="brand.teal"
-            >You are the Facilitator!
-            </Text>
-         </Center>
+            <Box className="full-translucent-box">
 
-         <Center>
-            <Text
-               pb="20"
-               fontSize="l"
-               color="brand.grey"
-            >Please name your room by typing below.
-            </Text>
-         </Center>
+               <Center>
+                  <Text pt="70px"
+                     fontSize="4xl"
+                     fontWeight="bold"
+                     color="brand.teal">
+                     You are the Facilitator!
+                  </Text>
+               </Center>
 
+               <Center>
+                  <Text pb="20px"
+                     fontSize="lg"
+                     color="brand.grey">
+                     Please create your room by customizing it below.
+                  </Text>
+               </Center>
 
-         <Center>
-            <VStack>
-               <Input
-                  value={roomName}
-                  onChange={(event) => setRoomName(event.target.value)}
-                  maxWidth="500"
-                  outlineColor="white"
-                  placeholder='Enter room name...'
-                  _placeholder={{ color: 'white' }}
-                  mb="5"
-               />
-               <Button bg='white' color="brand.teal" variant='solid' onClick={() => {
-                  // customize the room
-                  setCurrentScreen('customize');
-               }}>
-                  Create {roomName}
-               </Button>
-            </VStack>
-         </Center>
+               {/* Room customizations */}
+               <Center>
+                  <Box bg="brand.off" overflow="auto"
+                     width="550px" height="500px"
+                     borderRadius="5px"
+                     borderColor="brand.yellow"
+                     borderWidth="2px"
+                     padding="5"
+                     mb="20px"
+                  >
+                     <Customizations />
+                  </Box>
+               </Center>
 
-         {/* home button at the top */}
-         <Button position="absolute" top="0" left="0" height="20" width="20"
-               bg="none"
-               _hover={{background: "none"}}
+               {/* This button creates the room and goes to the lobby */}
+               <Center>
+                  <Button //className="dark-button" 
+                     mb="80px"
+                     bg='brand.teal' color="white" variant='outline'
+                     _hover={{bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px"}}
+                     onClick={() => { setCurrentScreen('lobby'); }}>
+                     Create {roomName}
+                  </Button>
+               </Center>
+            </Box>
+
+            {/* home button at the top */}
+            <Button
+               position="absolute" className="home-button" bg="none"
+               _hover={{ background: "none" }}
                onClick={() => {
                   setCurrentScreen('home');
                }}>
-            <Image rounded='100' //boxShadow='dark-lg'
-               src="src/Theme/images/home.png"></Image>
-         </Button>
+               <Image rounded='100' //boxShadow='dark-lg'
+                  src="src/Theme/images/home.png"></Image>
+            </Button>
+         </Center>
       </Box>
    );
 }

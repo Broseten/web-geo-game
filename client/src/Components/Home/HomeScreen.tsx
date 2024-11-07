@@ -1,6 +1,7 @@
-import { AbsoluteCenter, Box, Center, HStack, Heading, Icon, Image, Link, Text } from "@chakra-ui/react";
+import { Box, Center, HStack, Heading, Icon, Image, Link, Text } from "@chakra-ui/react";
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import SetUpInfo from "./SetUpInfo";
+import '../../Theme/home-create.css'; 
 
 export default function HomeScreen() {
 
@@ -15,40 +16,40 @@ export default function HomeScreen() {
          backgroundPosition="center"
          backgroundRepeat="no-repeat"
       >
-         <Box>
-            <Center>
-               <Box height="715px" width="600px" bg="white" opacity={0.75}></Box>
-            </Center>
+         <Center>
+            <Box className="translucent-box">
 
-            {/* Text over the white background box */}
-            <AbsoluteCenter>
+               {/* Text over the white translucent box */}
                <Center>
-                  <Heading mb={1} size="4xl" color="brand.grey"
+                  <Heading mt="75px" mb="1" size="4xl" 
+                     color="brand.grey"
                      textShadow='0px 0px 8px #444444'>
                      NegoDesign
                   </Heading>
                </Center>
                <Center>
-                  <Text mb="100" fontSize="2xl" textAlign="center" color="brand.teal"
+                  <Text mb="80px" fontSize="2xl" textAlign="center" 
+                     color="brand.teal"
                      textShadow='0px 0px 10px #444444'>
                      A voting tool for the HeritACT project
                   </Text>
                </Center>
 
-               {/* Set Up Info - Start, Player Name, Join/Create Room Options */}
-               <Center>{<SetUpInfo />}</Center>
-            </AbsoluteCenter>
+               {/* Start, Player Name, Join/Create Room Options */}
+               <Center>{<SetUpInfo />}</Center> 
 
-            {/* HeritACT info link at the bottom */}
-            <Center position="absolute" left="50%" bottom="10" transform="translateX(-50%)">
-               <Link href="https://www.heritact.eu" isExternal>
-                  <HStack>
-                     <Icon as={InfoOutlineIcon} color="brand.grey" />
-                     <Image src="/src/Theme/images/HERITACT.png" height="18px" width="84px" />
-                  </HStack>
-               </Link>
-            </Center>
-         </Box>
+
+               {/* HeritACT info link at the bottom */}
+               <Center position="absolute" left="50%" bottom="10" transform="translateX(-50%)">
+                  <Link href="https://www.heritact.eu" isExternal>
+                     <HStack>
+                        <Icon as={InfoOutlineIcon} color="brand.grey" />
+                        <Image src="/src/Theme/images/HERITACT.png" height="18px" width="84px" />
+                     </HStack>
+                  </Link>
+               </Center>
+            </Box>
+         </Center>
       </Box>
    );
 }

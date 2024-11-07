@@ -33,34 +33,25 @@ export default function Game() {
 
         <VStack align={"top"}>
 
-            {/* Home button section at the top */}
-            {/* TODO - can't figure out how to stretch thes two items, so "spacing" is filler code */}
-            <HStack spacing={"200"}>
-                {/* TODO - ideally, the home button would be a svg image */}
-                {/* TODO - fix the photo, it deforms when screen size is reduced */}
-
-                <Button bg="none" _hover={{ background: "none" }}
-                    onClick={() => { setCurrentScreen('home'); }}
-                    p="0" pl="1.5">
-                    <Image src="/src/Theme/images/home_yellow.png"
-                        style={{ width: '45px', height: '50px' }}
-                        objectFit={"contain"}
-                        paddingTop="5px" pl="0" pr="0">
-                    </Image>
-                </Button>
-
-                <Heading color="brand.yellow" fontSize="18px">
-                    NegoDesign
-                </Heading>
-            </HStack>
+            {/* Home button at the top */}
+            <Button bg="none" p="0" pl="1.5"
+                color="brand.yellow" fontSize="18px" fontFamily="Avenir Next" fontWeight="bold"
+                _hover={{
+                    background: "none",
+                    color: "brand.yellow",
+                    textDecoration: "underline"
+                }}
+                onClick={() => { setCurrentScreen('home'); }}>
+                NegoDesign
+            </Button>
 
             <hr />
 
             {/* Status and Time Section */}
-            <HStack>
+            <HStack justifyContent="center">
 
                 {/* Status */}
-                <VStack pr="20" pl="2" align="top">
+                <VStack>
                     <Heading size="lg" color="white" alignSelf="center">Status</Heading>
 
                     <Text fontSize="14px" mb="20px" align="center">
@@ -70,8 +61,11 @@ export default function Game() {
                     </Text>
                 </VStack>
 
+                {/* just for spacing */}
+                <Text mr="40px"></Text>
+
                 {/* Time */}
-                <VStack display="flex" justifySelf="flex-start">
+                <VStack pr="10px">
                     <Heading size="lg" color="white" alignSelf="center">Time</Heading>
 
                     <Text mb="40px" align="center">
@@ -95,7 +89,6 @@ export default function Game() {
             <Center>
                 <Solutions />
             </Center>
-
         </VStack>
     );
 }

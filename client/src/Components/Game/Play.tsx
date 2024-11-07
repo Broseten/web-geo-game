@@ -8,11 +8,11 @@ import GameModal from "./GameModal";
 import Game from "./Game";
 import Voting from "../Voting/Voting";
 
-interface GameScreenProps {
+interface Play {
    isConnected: boolean;
 }
 
-export default function GameScreen({ isConnected }: GameScreenProps) {
+export default function Play({ isConnected }: Play) {
    const { setCurrentScreen } = useScreenSelection();
    const [testCounter, setTestCounter] = useState(0);
 
@@ -32,15 +32,14 @@ export default function GameScreen({ isConnected }: GameScreenProps) {
    return (
       <HStack bg="brand.teal" align="flex.start">
 
-         <GameModal></GameModal>
+         <GameModal />
 
          {/* TODO - can use isVoting to switch from Game.tsx and Voting.tsx */}
-         {/* <Game></Game> */}
-         <Voting></Voting>
+         {/* <Game /> */} {/* <Voting /> */}
+         <Game />
 
          {/* Adding in the Game Map */}
          <GameMap />
-
       </HStack>
    );
 }

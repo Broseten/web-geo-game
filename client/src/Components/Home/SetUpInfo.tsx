@@ -3,8 +3,7 @@ import { socket } from "../../main";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useState } from "react";
 import { EditIcon } from "@chakra-ui/icons";
-import GameModal from "../Game/GameModal";
-//import DarkButton from "../../Theme/DarkButton";
+import '../../Theme/home-create.css';
 
 
 
@@ -19,33 +18,39 @@ export default function SetUpInfo() {
         socket.disconnect;
     }
 
-    // conditional statements for the middle display of the Home page section 
+    // conditional statements for the middle display of the Home page  
 
     {/* Start button - inital display */ }
     if (!isStartButtonClicked && !isPlayerNameEntered) {
         return (
             <Box>
-                {/* <DarkButton onClick={() => {
-                    // TODO probably navigate only after connecting?
-                    socket.connect();
-                    setIsStartButtonClicked(true);
-                }}>grace testing</DarkButton> */}
-
-                <Button
-                    bg="brand.teal" color="white"
+                <Button //className="dark-button"
+                    bg="brand.teal"
+                    color="white"
                     boxShadow='dark-lg' p='6' rounded='md'
                     _hover={{
                         background: "brand.off",
                         color: "brand.teal",
                     }}
-                    variant='solid'
-                    mt="20"
-                    mb="200"
+                    mt="100px"
                     onClick={() => {
                         // TODO probably navigate only after connecting?
                         socket.connect();
                         setIsStartButtonClicked(true);
-                    }}>Start
+                    }}>
+                    Start
+                </Button>
+
+                {/*TEMPORARY - FOR PLAY*/}
+                <Button colorScheme='green'
+                    onClick={() => { setCurrentScreen('play') }}>
+                    Play
+                </Button>
+
+                {/*TEMPORARY - FOR LOBBY*/}
+                <Button colorScheme='red'
+                    onClick={() => { setCurrentScreen('lobby') }}>
+                    Lobby
                 </Button>
             </Box>
         )
@@ -54,46 +59,48 @@ export default function SetUpInfo() {
     {/* Player enters their name */ }
     if (isStartButtonClicked && !isPlayerNameEntered) {
         return (
-            <Box>
-                <Box bg="brand.off" borderRadius={"10"} pl="0.5cm" pr="0.5cm">
-                    <Center><Text
-                        mt="0.45cm"
-                        mb="0.25cm"
-                        color="brand.grey"
-                    >Please type your name below</Text></Center>
+            <Box bg="white" borderRadius="5px" pl="30px" pr="30px">
+                <Center>
+                    <Text mt="0.45cm" mb="0.25cm" color="brand.grey">
+                        Please type your name below
+                    </Text>
+                </Center>
 
-                    <InputGroup>
-                        <InputLeftElement pointerEvents='none'>
-                            <EditIcon color='brand.teal' />
-                        </InputLeftElement>
-                        <Input
-                            value={playerName}
-                            onChange={(event) => setPlayerName(event.target.value)}
+                <InputGroup>
+                    <InputLeftElement pointerEvents='none'>
+                        <EditIcon color='brand.teal' />
+                    </InputLeftElement>
+                    <Input
+                        value={playerName}
+                        onChange={(event) => setPlayerName(event.target.value)}
 
-                            borderColor="brand.teal"
-                            color="brand.teal"
-                            placeholder='Enter your name...'
-                            _placeholder={{ color: 'brand.teal' }}
-                            _hover={{ borderWidth: "2px" }}
-                            mb="50"
-                        ></Input>
-                    </InputGroup>
-                </Box>
+                        borderColor="brand.teal"
+                        color="brand.teal"
+                        placeholder='Enter your name...'
+                        _placeholder={{ color: 'brand.teal' }}
+                        _hover={{ borderWidth: "2px" }}
+                        mb="50"
+                    ></Input>
+                </InputGroup>
 
-                <Center><Button
-                    bg="brand.teal" color="white"
-                    boxShadow='dark-lg' p='6' rounded='md'
-                    _hover={{
-                        background: "brand.off",
-                        color: "brand.teal",
-                    }}
-                    variant='solid'
-                    mt="10"
-                    mb="100"
-                    onClick={() => {
-                        setIsPlayerNameEntered(true);
-                    }}>Next
-                </Button></Center>
+                <Center>
+                    <Button
+                        bg="brand.teal" color="white"
+                        borderWidth="1px" rounded='md'
+                        _hover={{
+                            bg: "white",
+                            color: "brand.teal",
+                            borderColor: "brand.teal",
+                            borderWidth: "1px"
+                        }}
+                        mt="20px"
+                        mb="30px"
+                        onClick={() => {
+                            setIsPlayerNameEntered(true);
+                        }}>
+                        Next
+                    </Button>
+                </Center>
             </Box>
         )
     }
@@ -101,31 +108,33 @@ export default function SetUpInfo() {
     // Users decides if they want to create or join a room 
     else return (
         <Center>
-            <VStack>
-                <Box mb="5" bg="white" borderRadius={"10"} pl="0.5cm" pr="0.5cm">
-                    <Text color="brand.grey">Choose a room option below to begin!</Text>
-                </Box>
+            <VStack bg="white" borderRadius="5px" pl="0.5cm" pr="0.5cm" pb="20px">
 
-                {/* TODO - put the button styles in the Theme folder, since it coordinates with the background photo?*/}
-                <HStack mb="100">
-                    <Button bg='brand.orange' color="white"
-                        _hover={{ bg: "white", color: "brand.orange"}}
+                <Text mt="10px" color="brand.grey">
+                    Choose a room option below to begin!
+                </Text>
+
+                <HStack>
+                    <Button bg='white' color="brand.teal"
+                        borderColor="brand.teal" borderWidth="1px"
+                        _hover={{ bg: "brand.teal", color: "white" }}
                         variant='solid' onClick={() => {
-                        setCurrentScreen('create')
-                    }}>Create</Button>
+                            setCurrentScreen('create')
+                        }}>
+                        Create
+                    </Button>
 
-                    <Button bg='brand.red' color="white"
-                        _hover={{ bg: "white", color: "brand.red"}}
-                        variant='solid' 
+                    <Button bg='white' color="brand.teal"
+                        borderColor="brand.teal" borderWidth="1px"
+                        _hover={{ bg: "brand.teal", color: "white" }}
+                        variant='solid'
                         onClick={() => {
-                            // setCurrentScreen('join') // future code
-                            setCurrentScreen('play')
+                            setCurrentScreen('join') // future code
+                            // setCurrentScreen('play') // for ease
                         }}>
                         Join
                     </Button>
                 </HStack>
-
-                <Text mb="104" opacity={"0"}>X</Text>
             </VStack>
         </Center>
     )

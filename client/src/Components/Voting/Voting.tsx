@@ -3,10 +3,11 @@ import { socket } from "../../main";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useEffect, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
+import Information from "./Information";
 
 
 
-export default function Game() {
+export default function Voting() {
 
     const { setCurrentScreen } = useScreenSelection();
     const [testCounter, setTestCounter] = useState(0);
@@ -32,37 +33,27 @@ export default function Game() {
 
         <VStack align={"top"}>
 
-            {/* Home button section at the top */}
-            {/* TODO - can't figure out how to stretch thes two items, so "spacing" is filler code */}
-            <HStack spacing={"200"}>
-                {/* TODO - ideally, the home button would be a svg image */}
-                {/* TODO - fix the photo, it deforms when screen size is reduced */}
-
-                <Button bg="none" _hover={{ background: "none" }}
-                    onClick={() => { setCurrentScreen('home'); }}
-                    p="0" pl="1.5">
-                    <Image src="/src/Theme/images/home_yellow.png"
-                        style={{ width: '45px', height: '50px' }}
-                        objectFit={"contain"}
-                        paddingTop="5px" pl="0" pr="0">
-                    </Image>
-                </Button>
-
-                <Heading color="brand.yellow" fontSize="18px">
-                    NegoDesign
-                </Heading>
-            </HStack>
+            {/* Home button at the top */}
+            <Button bg="none" p="0" pl="1.5"
+                color="brand.yellow" fontSize="18px" fontFamily="Avenir Next" fontWeight="bold"
+                _hover={{ 
+                    background: "none", 
+                    color: "brand.yellow", 
+                    textDecoration: "underline"
+                }}
+                onClick={() => { setCurrentScreen('home'); }}>
+                NegoDesign
+            </Button>
 
             <hr />
 
             {/* Voting and Time Section */}
             <Center>
-                <HStack alignItems="center">
+                <HStack justifyContent="center">
 
-                    <Heading size="lg" color="white" mr="20" style={{ textAlign: 'center' }}>
+                    <Heading size="md" color="white" mr="40px" lineHeight="1" textAlign="center">
                         You are <br /> voting!
                     </Heading>
-
 
                     <VStack>
                         <Heading size="lg" color="white">Time</Heading>
@@ -79,13 +70,17 @@ export default function Game() {
             {/* Another Section */}
             <Center>
                 <VStack>
-                    <Heading size="lg" color="white" mt="5">
-                        Another Section
+
+                    {/* TO DO - make size flexible depending on screen width*/}
+                    <Box width="300px"></Box>
+
+                    <Heading size="lg" color="white" mt="5px" lineHeight="1" textAlign="center">
+                        Solution <br/>
+                        Information
                     </Heading>
 
-                    <Text align="center">
-                        text goes here
-                    </Text>
+                    {/* Information about placed solutions */}
+                    <Information />
                 </VStack>
             </Center>
 
