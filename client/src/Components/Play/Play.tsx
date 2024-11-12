@@ -11,12 +11,15 @@ import { useScreenSelection } from "../Contexts/useScreenSelection";
 import PlayModal from "./PlayModal";
 import Game from "./Game/Game";
 import Voting from "./Voting/Voting";
+import L from "leaflet";
+import { usePolygon } from "../Contexts/PolygonContext";
 
 interface Play {
    isConnected: boolean;
 }
 
 export default function Play({ isConnected }: Play) {
+   const { polygon } = usePolygon();
    const { setCurrentScreen } = useScreenSelection();
    const [testCounter, setTestCounter] = useState(0);
 
@@ -30,8 +33,6 @@ export default function Play({ isConnected }: Play) {
       socket.emit('init-count');
    }, []);
 
-
-
    {/* Section left of the game map */ }
    return (
       <HStack bg="brand.teal" align="flex.start">
@@ -43,7 +44,7 @@ export default function Play({ isConnected }: Play) {
          <Game />
 
          {/* Adding in the Game Map */}
-         <GameMap />
+         <GameMap polygon={polygon} />
       </HStack>
    );
 }

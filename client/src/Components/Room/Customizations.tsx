@@ -6,6 +6,7 @@ import { Box, Button, Center, Checkbox, CheckboxGroup, Grid, Input, InputGroup, 
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useState } from "react";
 import '../../Theme/theme.css';
+import MapSelection from "./MapAreaSelection";
 
 export default function Customizations() {
     const { setCurrentScreen } = useScreenSelection();
@@ -48,7 +49,10 @@ export default function Customizations() {
                     Choose a map from the dropdown
                 </Text>
 
-                {/* TODO - insert map here */}
+                <Box h="400px">
+                    <MapSelection />
+                </Box>
+                {/* TODO - insert map here
                 <Select bg="brand.teal" fontSize="14px"
                     placeholder='Select map...'>
                     <option value='ballina'>    Ballina</option>
@@ -57,7 +61,7 @@ export default function Customizations() {
                     <option value='galway'>     Galway</option>
                     <option value='limerick'>   Limerick</option>
                     <option value='waterford'>  Waterford</option>
-                </Select>
+                </Select> */}
             </Box>
 
 
@@ -167,7 +171,11 @@ export default function Customizations() {
                 <Button //className="dark-button" 
                     bg='brand.teal' color="white" variant='outline'
                     _hover={{ bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px" }}
-                    onClick={() => { setCurrentScreen('lobby'); }}>
+                    onClick={() => {
+                        // TODO first check if the polygon in the polygon context is null
+                        //      if it is null, assign approximate rectangular location from the map visible area
+                        setCurrentScreen('lobby');
+                    }}>
                     {/* TODO - make roomName appear */}
                     Create {roomName}
                 </Button>

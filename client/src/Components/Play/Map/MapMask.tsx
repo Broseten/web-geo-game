@@ -1,14 +1,13 @@
 // Authors: Vojta Bruza and Grace Houser
-// This file TODO
 
-import { LatLngBounds, LatLngExpression } from "leaflet";
+import { LatLngExpression } from "leaflet";
 import { Pane, Polygon } from "react-leaflet";
 
 interface MapMaskProps {
-    bounds: LatLngBounds;
+    polygonCoords: LatLngExpression[];
 }
 
-const MapMask = ({ bounds }: MapMaskProps) => {
+const MapMask = ({ polygonCoords }: MapMaskProps) => {
     const mapCorners: LatLngExpression[] = [
         [90, -180], // Top-left
         [90, 180],  // Top-right
@@ -16,16 +15,10 @@ const MapMask = ({ bounds }: MapMaskProps) => {
         [-90, -180] // Bottom-left
     ];
 
-    const boundsCoords: LatLngExpression[] = [
-        [bounds.getSouthWest().lat, bounds.getSouthWest().lng],
-        [bounds.getSouthWest().lat, bounds.getNorthEast().lng],
-        [bounds.getNorthEast().lat, bounds.getNorthEast().lng],
-        [bounds.getNorthEast().lat, bounds.getSouthWest().lng],
-    ];
-
+    // Create the mask using the map corners and the polygon bounds
     const maskCoords: LatLngExpression[][] = [
-        [...mapCorners],
-        [...boundsCoords]
+        mapCorners,
+        polygonCoords
     ];
 
     return (

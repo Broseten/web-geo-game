@@ -9,6 +9,7 @@ import CreateRoom from './Components/Room/CreateRoom';
 import Lobby from './Components/Lobby/Lobby';
 import Results from './Components/Results/Results';
 import EndScreen from './Components/Results/EndScreen';
+import { PolygonProvider } from './Components/Contexts/PolygonContext';
 
 function App() {
    const [isConnected, setIsConnected] = useState(false);
@@ -47,13 +48,15 @@ function App() {
    // room screen    -- (join/create) to configure a room, username and join
    // play screen    -- to acutally play the game (can use a parametr with id of the room to rejoin on refresh)
    return (
-      <Box
-         className="app"
-         h='calc(100vh)'
-         bg="brand.blue"
-      >
-         {renderScreen()}
-      </Box>
+      <PolygonProvider>
+         <Box
+            className="app"
+            h='calc(100vh)'
+            bg="brand.blue"
+         >
+            {renderScreen()}
+         </Box>
+      </PolygonProvider>
    )
 }
 

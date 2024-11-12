@@ -4,15 +4,17 @@ import L from 'leaflet';
 import '@bopen/leaflet-area-selection/dist/index.css';
 import { DrawAreaSelection } from '@bopen/leaflet-area-selection';
 import 'leaflet/dist/leaflet.css';
+import { usePolygon } from '../Contexts/PolygonContext';
 
-export default function AreaSelectionMap() {
+export default function MapAreaSelection() {
+  const { setPolygon: setMapPolygon } = usePolygon();
    const mapRef = useRef<L.Map | null>(null);
 
    useEffect(() => {
       // Initialize the map only once
       if (mapRef.current === null) {
          // Create the map instance
-         const map = L.map('map').setView([53.3484000, -6.2539000], 13);
+         const map = L.map('map').setView([50.22, 7.91], 3);
 
          // Add OpenStreetMap tile layer
          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -20,16 +22,14 @@ export default function AreaSelectionMap() {
                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
          }).addTo(map);
 
-         // Initialize the area selection tool with onPolygonReady callback
+         // Initialize the area selection tool with the 'active' and 'onPolygonReady' options
          const areaSelection = new DrawAreaSelection({
+            active: false, // Start with the selection tool active
             color: 'blue', // Customize polygon color
-            active: true,
             onPolygonReady: (polygon: L.Polygon, controlInstance: any) => {
-               const bounds = polygon.getBounds();
-               console.log('Selected area bounds:', bounds);
-               // Additional processing can be added here (e.g., sending to server)
-               // TODO
-            },
+               // TODO send to server instead of the context
+               setMapPolygon(polygon);
+            }
          });
 
          // Add the area selection control to the map
@@ -39,6 +39,5 @@ export default function AreaSelectionMap() {
       }
    }, []);
 
-   // TODO style
    return <div id="map" style={{ height: '100%', width: '100%' }} />;
-};
+}

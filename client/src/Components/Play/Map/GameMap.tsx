@@ -1,8 +1,5 @@
-// Authors: Vojta Bruza and Grace Houser
-// This file sets up the game map
-
-import { useState, useRef, useEffect } from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import { useState, useEffect } from "react";
+import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -11,7 +8,6 @@ import MapMask from "./MapMask";
 import { socket } from "../../../main";
 import initSocket from "../../../Hooks/useSocket";
 
-// TODO custom icons for different solutions
 let DefaultIcon = L.icon({
    iconSize: [25, 41],
    iconAnchor: [10, 41],
@@ -22,68 +18,80 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-// Component to handle clicks and add markers
-function ClickHandler({ onClick }: { onClick: (latlng: LatLngExpression) => void }) {
+interface GameMapProps {
+   polygon: L.Polygon | null;
+}
+
+function MapInitializer({ bounds, onClick }: { bounds: L.LatLngBounds, onClick: (latlng: LatLngExpression) => void }) {
+   const map = useMap();
+
+   useEffect(() => {
+      if (map) {
+         // init the map properly
+         // pan and zoom on the bounds 
+         map.fitBounds(bounds);
+         // set the min zoom distance to match the one given by the fitbounds
+         map.setMinZoom(map.getZoom());
+      }
+   }, [map, bounds]);
+
    useMapEvents({
+      // add listeners
       click(e) {
          onClick([e.latlng.lat, e.latlng.lng]);
       },
    });
+
    return null;
 }
 
-function GameMap() {
-   // map bounds (display a "background" around this area)
-   const bounds = L.latLngBounds(
-      L.latLng(53.261616, -6.496525), // Southwest corner
-      L.latLng(53.40118, -6.03441)  // Northeast corner
-   );
+export default function GameMap({ polygon }: GameMapProps) {
+   if (!polygon) {
+      console.error("Error: Polygon is null in GameMap component.");
+      return null;
+   }
 
-   const gameMapRef = useRef(null);
-   // stores positions of all markers, use setMarkers to set it and notify React to rerender the page
-   // TODO maybe make the marker a specific type instead of a tuple
+   const bounds = polygon.getBounds();
+   const polygonCoords = polygon.getLatLngs()[0] as LatLngExpression[];
+
    const [markers, setMarkers] = useState<[number, LatLngExpression][]>([]);
-   // TODO useSocket custom hook?
 
    const addMarkerRPC = 'add-marker';
    const setMarkersRPC = 'set-markers';
 
-   // add a marker
-   initSocket(addMarkerRPC, (marker: [number, LatLngExpression]) => { setMarkers((current) => [...current, marker]); });
-   // set markers (update or init)
-   initSocket(setMarkersRPC, (newMarkers: [number, LatLngExpression][]) => { setMarkers(newMarkers); });
+   initSocket(addMarkerRPC, (marker: [number, LatLngExpression]) => {
+      setMarkers((current) => [...current, marker]);
+   });
+   initSocket(setMarkersRPC, (newMarkers: [number, LatLngExpression][]) => {
+      setMarkers(newMarkers);
+   });
 
    useEffect(() => {
-      // request the initial state
       socket.emit('request-map-markers');
    }, []);
 
    return (
       <div className="gamemap">
          <MapContainer
-            center={[53.3484000, -6.2539000]}
-            zoom={13}
+            center={bounds.getCenter()}
             scrollWheelZoom={true}
-            ref={gameMapRef}
-            style={{ height: "100vh", width: "70vw",
-               marginLeft: "auto", 
-               marginRight: "auto", 
-               marginTop: "auto", 
-               marginBottom: "auto"
-            }}
+            zoom={13}
+            style={{ height: "100vh", width: "70vw", margin: "auto" }}
             maxBounds={bounds}
-            maxBoundsViscosity={1.0} // Enforces bounds restriction
+            maxBoundsViscosity={1.0}
          >
+            <MapInitializer
+               bounds={bounds}
+               onClick={(position) => {
+                  socket.emit('add-marker', position);
+               }}
+            />
+
             <TileLayer
                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-               minZoom={12}
+               minZoom={4}
             />
-
-            <ClickHandler onClick={(position) => {
-               socket.emit('add-marker', position);
-            }
-            } />
 
             {markers.map((marker) => (
                <Marker key={marker[0]} position={marker[1]}>
@@ -93,27 +101,24 @@ function GameMap() {
                         <button
                            onClick={() => socket.emit('remove-marker', marker[0])}
                            style={{
-                              backgroundColor: '#BF4C50', /* Green background */
-                              color: 'white', /* White text */
-                              padding: '5px 10px', /* Some padding */
-                              border: 'none', /* Remove border */
-                              borderRadius: '5px', /* Rounded corners */
-                              cursor: 'pointer', /* Pointer on hover */
-                              marginTop: '0px' /* Space between text and button */
+                              backgroundColor: '#BF4C50',
+                              color: 'white',
+                              padding: '5px 10px',
+                              border: 'none',
+                              borderRadius: '5px',
+                              cursor: 'pointer',
+                              marginTop: '0px'
                            }}
                         >
                            Delete
                         </button>
                      </div>
                   </Popup>
-
                </Marker>
             ))}
 
-            <MapMask bounds={bounds} />
+            <MapMask polygonCoords={polygonCoords} />
          </MapContainer>
       </div>
    );
 }
-
-export default GameMap;
