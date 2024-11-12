@@ -1,14 +1,14 @@
 import { Box } from '@chakra-ui/react'
-import Play from './Components/Game/Play';
+import Play from './Components/Play/Play';
 import HomeScreen from './Components/Home/HomeScreen';
 import { useState } from 'react';
 import initSocket from './Hooks/useSocket';
 import { useScreenSelection } from './Components/Contexts/useScreenSelection';
 import JoinRoom from './Components/Room/JoinRoom';
 import CreateRoom from './Components/Room/CreateRoom';
-import Lobby from './Components/Room/Lobby';
-import Results from './Components/Voting/Results';
-import EndScreen from './Components/Voting/EndScreen';
+import Lobby from './Components/Lobby/Lobby';
+import Results from './Components/Results/Results';
+import EndScreen from './Components/Results/EndScreen';
 
 function App() {
    const [isConnected, setIsConnected] = useState(false);

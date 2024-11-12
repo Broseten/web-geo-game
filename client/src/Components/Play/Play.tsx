@@ -4,13 +4,13 @@
 
 import { HStack } from "@chakra-ui/react";
 import { socket } from "../../main";
-import GameMap from "../Map/GameMap";
+import GameMap from "./Map/GameMap";
 import { useEffect, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
-import GameModal from "./GameModal";
-import Game from "./Game";
-import Voting from "../Voting/Voting";
+import PlayModal from "./PlayModal";
+import Game from "./Game/Game";
+import Voting from "./Voting/Voting";
 
 interface Play {
    isConnected: boolean;
@@ -36,7 +36,7 @@ export default function Play({ isConnected }: Play) {
    return (
       <HStack bg="brand.teal" align="flex.start">
 
-         <GameModal />
+         <PlayModal />
 
          {/* TODO - can use isVoting to switch from Game.tsx and Voting.tsx */}
          {/* <Game /> */} {/* <Voting /> */}

@@ -1,3 +1,6 @@
+// Authors: Vojta Bruza and Grace Houser
+// This file is the final result screen of the game
+
 import { Box, Button, Center, Heading, } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import '../../Theme/home-create.css';

@@ -1,4 +1,7 @@
-import { Box, Button, Center, Image, Text } from "@chakra-ui/react";
+// Authors: Vojta Bruza and Grace Houser
+// This file is the lobby framework 
+
+import { Box, Button, Center, Text } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import UserList from "./UserList_Player";
 import UserListF from "./UserList_Facilitator";

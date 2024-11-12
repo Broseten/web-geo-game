@@ -1,3 +1,6 @@
+// Authors: Vojta Bruza and Grace Houser
+// Lobby user list from the player's perspective 
+
 import { Box, Card, CardBody, Heading, Select, Text } from "@chakra-ui/react";
 import React from "react";
 //import { useScreenSelection } from "../Contexts/useScreenSelection";

@@ -1,4 +1,7 @@
-import { Box, Button, Card, CardBody, Heading, IconButton, Select, Text } from "@chakra-ui/react";
+// Authors: Vojta Bruza and Grace Houser
+// Lobby user list from the facilitator's perspective 
+
+import { Box, Card, CardBody, Heading, IconButton, Select, Text } from "@chakra-ui/react";
 import React from "react";
 //import { useScreenSelection } from "../Contexts/useScreenSelection";
 import Icon from "./Icon";

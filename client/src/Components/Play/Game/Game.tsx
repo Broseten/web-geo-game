@@ -2,10 +2,10 @@
 // This file displays the left section of the game play 
 
 import { Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
-import { socket } from "../../main";
-import { useScreenSelection } from "../Contexts/useScreenSelection";
+import { socket } from "../../../main";
+import { useScreenSelection } from "../../Contexts/useScreenSelection";
 import { useEffect, useState } from "react";
-import initSocket from "../../Hooks/useSocket";
+import initSocket from "../../../Hooks/useSocket";
 import Solutions from "./Solutions";
 
 

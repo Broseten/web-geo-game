@@ -5,7 +5,7 @@ import { Box, Button, Center, Modal, ModalBody, ModalCloseButton, ModalContent, 
 
 
 // somehow pass in variable 
-export default function GameModal() {
+export default function PlayModal() {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 

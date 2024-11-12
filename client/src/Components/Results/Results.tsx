@@ -1,9 +1,12 @@
+// Authors: Vojta Bruza and Grace Houser
+// This file is the framework of the rankings
+
 import { Box, Button, Center, Heading, Text } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import Rankings from "./Rankings";
 
 
-export default function Voting() {
+export default function Results() {
 
     const { setCurrentScreen } = useScreenSelection();
     const number = "One"; // will either be "One" or "Two"

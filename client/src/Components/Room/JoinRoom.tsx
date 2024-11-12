@@ -1,3 +1,7 @@
+// Authors: Vojta Bruza and Grace Houser
+// This file is the join room screen where 
+// players can select what room they want to join
+
 import { Box, Button, Center, Text, VStack } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 

@@ -1,8 +1,11 @@
-import { Box, Button, Center, HStack, Heading, Image, Text, VStack } from "@chakra-ui/react";
-import { socket } from "../../main";
-import { useScreenSelection } from "../Contexts/useScreenSelection";
+// Authors: Vojta Bruza and Grace Houser
+// This file is the voting screen famework 
+
+import { Box, Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
+import { socket } from "../../../main";
+import { useScreenSelection } from "../../Contexts/useScreenSelection";
 import { useEffect, useState } from "react";
-import initSocket from "../../Hooks/useSocket";
+import initSocket from "../../../Hooks/useSocket";
 import Information from "./Information";
 
 

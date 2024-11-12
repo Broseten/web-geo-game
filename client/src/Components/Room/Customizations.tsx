@@ -1,6 +1,6 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays a grid of the different customizations  
-// for when the facilitator creates a room 
+// for when the facilitator creates a room
 
 import { Box, Center, Checkbox, CheckboxGroup, Grid, Input, InputGroup, Select, SimpleGrid, Text } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";

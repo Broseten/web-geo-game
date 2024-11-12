@@ -8,8 +8,8 @@ import L, { LatLngExpression } from "leaflet";
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import MapMask from "./MapMask";
-import { socket } from "../../main";
-import initSocket from "../../Hooks/useSocket";
+import { socket } from "../../../main";
+import initSocket from "../../../Hooks/useSocket";
 
 // TODO custom icons for different solutions
 let DefaultIcon = L.icon({

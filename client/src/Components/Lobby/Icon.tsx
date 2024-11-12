@@ -1,4 +1,8 @@
-import { Avatar, Box, Button, ButtonGroup, FormControl, FormLabel, Grid, Popover, PopoverArrow, PopoverCloseButton, PopoverContent, PopoverTrigger, Stack, Text, useDisclosure } from "@chakra-ui/react"
+// Authors: Vojta Bruza and Grace Houser
+// This file has different icon options for 
+// the lobby screen
+
+import { Avatar, Box, Button, ButtonGroup, FormControl, FormLabel, Grid, Popover, PopoverArrow, PopoverCloseButton, PopoverContent, PopoverTrigger, Stack, useDisclosure } from "@chakra-ui/react"
 import { EditIcon } from "@chakra-ui/icons";
 import React from "react";
 import FocusLock from "react-focus-lock";

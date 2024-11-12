@@ -1,3 +1,6 @@
+// Authors: Vojta Bruza and Grace Houser
+// Card of the solution that was clicked on the map during voting
+
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Center, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 
