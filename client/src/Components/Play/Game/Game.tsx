@@ -7,6 +7,7 @@ import { useScreenSelection } from "../../Contexts/useScreenSelection";
 import { useEffect, useState } from "react";
 import initSocket from "../../../Hooks/useSocket";
 import Solutions from "./Solutions";
+import Timer from "../Timer";
 
 
 export default function Game() {
@@ -18,7 +19,6 @@ export default function Game() {
     const role = 'Developer'
     const playerBudget = '$200,000'
     const playerScore = 5
-    const time = '5:00.00'
 
     initSocket('countClient', (count: number) => setTestCounter(count));
     initSocket('init-count-client', (count: number) => setTestCounter(count));
@@ -33,6 +33,8 @@ export default function Game() {
     {/* Section left of the game map */ }
     return (
         <VStack align={"top"}>
+
+            <Button onClick={()=>socket.emit('start-timer', 90)}>Start Timer</Button>
 
             {/* Home button at the top */}
             <Button bg="none" p="0" pl="1.5"
@@ -69,9 +71,7 @@ export default function Game() {
                 <VStack pr="10px">
                     <Heading size="lg" color="white" alignSelf="center">Time</Heading>
 
-                    <Text mb="40px" align="center">
-                        {time}
-                    </Text>
+                    <Timer />
                 </VStack>
             </HStack>
 

@@ -8,7 +8,7 @@ export class MapHandler extends BaseHandler {
 
    override initHandlers(socket: Socket) {
       socket.on('request-map-markers', () => {
-         socket.emit('set-markers', this.markers);
+      socket.emit('set-markers', this.markers);
       });
 
       socket.on('add-marker', (position: any) => {

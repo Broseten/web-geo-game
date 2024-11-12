@@ -4,6 +4,7 @@ import { v4 } from 'uuid';
 import { MapHandler } from './handlers/MapHandler';
 import { CountHandler } from './handlers/CountHandler';
 import { BaseHandler } from './handlers/BaseHandler';
+import { GameHandler } from './handlers/GameHandler';
 
 export class ServerSocket {
    // singleton
@@ -33,7 +34,8 @@ export class ServerSocket {
       // init the handler classes once
       this.handlers = [
          new MapHandler(this.io),
-         new CountHandler(this.io)
+         new CountHandler(this.io),
+         new GameHandler(this.io),
       ];
 
       // register listeners on connect
@@ -46,9 +48,9 @@ export class ServerSocket {
    StartListeners = (socket: Socket) => {
       // unique socket ID
       console.info('Message received from ' + socket.id);
-      
+
       // init custom handlers using classes
-      this.handlers.forEach (handler => handler.initHandlers(socket));
+      this.handlers.forEach(handler => handler.initHandlers(socket));
 
       // here we can define other custom simple message handlers without a class
 
