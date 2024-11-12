@@ -5,7 +5,7 @@ import { Box, Card, CardBody, Heading, IconButton, Select, Text } from "@chakra-
 import React from "react";
 //import { useScreenSelection } from "../Contexts/useScreenSelection";
 import Icon from "./Icon";
-import '../../Theme/other.css';
+import '../../Theme/theme.css';
 import { useState } from "react";
 import { DeleteIcon } from "@chakra-ui/icons";
 

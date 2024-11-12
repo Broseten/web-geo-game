@@ -6,7 +6,7 @@ import { Avatar, Box, Button, ButtonGroup, FormControl, FormLabel, Grid, Popover
 import { EditIcon } from "@chakra-ui/icons";
 import React from "react";
 import FocusLock from "react-focus-lock";
-import '../../Theme/other.css'; 
+import '../../Theme/theme.css'; 
 
 
 // Create the form

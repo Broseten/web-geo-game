@@ -4,12 +4,11 @@
 
 import { Box, Button, Center, Text } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
-import '../../Theme/home-create.css';
+import '../../Theme/theme.css';
 import Customizations from "./Customizations";
 
 export default function CreateRoom() {
    const { setCurrentScreen } = useScreenSelection();
-   const roomName = "temp"
 
    return (
       <Box
@@ -43,27 +42,11 @@ export default function CreateRoom() {
 
                {/* Room customizations */}
                <Center>
-                  <Box bg="brand.off" overflow="auto"
-                     width="90%" height="500px"
-                     borderRadius="5px"
-                     borderColor="brand.yellow"
-                     borderWidth="2px"
-                     padding="5"
-                     mb="20px"
-                  >
+                  <Box bg="white" overflow="auto"
+                     width="500px" height="520px"
+                     borderRadius="5px" padding="5">
                      <Customizations />
                   </Box>
-               </Center>
-
-               {/* This button creates the room and goes to the lobby */}
-               <Center>
-                  <Button //className="dark-button" 
-                     mb="80px"
-                     bg='brand.teal' color="white" variant='outline'
-                     _hover={{bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px"}}
-                     onClick={() => { setCurrentScreen('lobby'); }}>
-                     Create {roomName}
-                  </Button>
                </Center>
             </Box>
 

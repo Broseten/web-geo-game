@@ -5,7 +5,7 @@ import { Box, Card, CardBody, Heading, Select, Text } from "@chakra-ui/react";
 import React from "react";
 //import { useScreenSelection } from "../Contexts/useScreenSelection";
 import Icon from "./Icon";
-import '../../Theme/other.css'; 
+import '../../Theme/theme.css'; 
 import { useState } from "react";
 
 export default function UserList() {

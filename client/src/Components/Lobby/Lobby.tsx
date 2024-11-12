@@ -32,7 +32,7 @@ export default function Lobby() {
             <Center>
                 {/* TODO - User list depends on whether you are a facilitator or player */}
                 {/* <UserList /> or <UserListF />*/}
-                <UserListF />
+                <UserList />
             </Center>
 
             {/* TODO - This button should be disbaled for players (only the facilitator can start the game) */}

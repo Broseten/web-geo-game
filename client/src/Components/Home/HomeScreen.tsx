@@ -4,7 +4,7 @@
 import { Box, Center, HStack, Heading, Icon, Image, Link, Text } from "@chakra-ui/react";
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import SetUpInfo from "./SetUpInfo";
-import '../../Theme/home-create.css'; 
+import '../../Theme/theme.css'; 
 
 export default function HomeScreen() {
 
@@ -24,9 +24,8 @@ export default function HomeScreen() {
 
                {/* Text over the white translucent box */}
                <Center>
-                  <Heading mt="75px" mb="1" size="4xl" 
-                     color="brand.grey"
-                     textShadow='0px 0px 8px #444444'>
+                  <Heading mt="75px" mb="1" size="4xl"
+                     color="brand.grey" textShadow="0px 0px 8px #444444">
                      NegoDesign
                   </Heading>
                </Center>

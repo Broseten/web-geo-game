@@ -2,18 +2,16 @@
 // This file displays start button, name input field, 
 // and join/create room option of the home screen design
 
-import { Box, Button, Center, HStack, Input, InputGroup, InputLeftElement, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
 import { socket } from "../../main";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useState } from "react";
-import { EditIcon } from "@chakra-ui/icons";
-import '../../Theme/home-create.css';
+import '../../Theme/theme.css';
 
 
 export default function SetUpInfo() {
 
     const { setCurrentScreen } = useScreenSelection();
-    const [playerName, setPlayerName] = useState('')
     const [isStartButtonClicked, setIsStartButtonClicked] = useState(false);
     const [isPlayerNameEntered, setIsPlayerNameEntered] = useState(false);
     if (socket.connected) {
@@ -24,7 +22,7 @@ export default function SetUpInfo() {
     // conditional statements for the middle display of the Home page  
 
     {/* Start button - inital display */ }
-    if (!isStartButtonClicked && !isPlayerNameEntered) {
+    if (!isStartButtonClicked) {
         return (
             <Box>
                 <Button //className="dark-button"
@@ -61,56 +59,6 @@ export default function SetUpInfo() {
                     onClick={() => { setCurrentScreen('lobby') }}>
                     Lobby
                 </Button>
-            </Box>
-        )
-    }
-
-    {/* Player enters their name */ }
-    if (isStartButtonClicked && !isPlayerNameEntered) {
-        return (
-            <Box bg="white" borderRadius="5px" pl="30px" pr="30px">
-                <Center>
-                    <Text mt="0.45cm" mb="0.25cm" color="brand.grey">
-                        Please type your name below
-                    </Text>
-                </Center>
-
-                <InputGroup>
-                    <InputLeftElement pointerEvents='none'>
-                        <EditIcon color='brand.teal' />
-                    </InputLeftElement>
-                    <Input
-                        value={playerName}
-                        onChange={(event) => setPlayerName(event.target.value)}
-
-                        borderColor="brand.teal"
-                        color="brand.teal"
-                        placeholder='Your name...'
-                        _placeholder={{ color: 'brand.teal', fontSize: "14px"}}
-                        fontSize="14px"
-                        _hover={{ borderWidth: "2px" }}
-                        mb="50"
-                    ></Input>
-                </InputGroup>
-
-                <Center>
-                    <Button
-                        bg="brand.teal" color="white"
-                        borderWidth="1px" rounded='md'
-                        _hover={{
-                            bg: "white",
-                            color: "brand.teal",
-                            borderColor: "brand.teal",
-                            borderWidth: "1px"
-                        }}
-                        mt="20px"
-                        mb="30px"
-                        onClick={() => {
-                            setIsPlayerNameEntered(true);
-                        }}>
-                        Next
-                    </Button>
-                </Center>
             </Box>
         )
     }

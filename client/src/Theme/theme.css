@@ -1,0 +1,82 @@
+/* style sheet for the Home page and the room creation pages */
+
+.translucent-box {
+  background-color: rgba(256, 256, 256, 0.75);
+  overflow: auto;
+  height: calc(100vh);
+  width: 600px;
+}
+
+.full-translucent-box {
+  background-color: rgba(256, 256, 256, 0.75);
+  overflow: auto;
+  height: 100vh;
+  width: 100%;
+}
+
+.home-button {
+  top: 22px;
+  left: 0px;
+  height: 90px;
+  width: 90px;
+}
+
+
+.dark-button {
+  background-color: red;
+
+}
+
+.white-button {
+  color: white;
+}
+
+
+
+/* theme for the room customizations */
+/* color="brand.grey"*/
+
+.h2 {
+  font-size: l;
+  font-weight: bold;
+  color: "brand.grey";
+
+  line-height: 1.15;
+  padding-bottom: 7px;
+}
+
+
+
+
+
+
+
+/* theme for the lobby and player icons */
+
+.disabled {
+  background-color: rgba(256, 256, 256, 0.75);
+}
+
+.btn-disabled {
+  /*background-color: grey;*/
+  background-color: blue;
+  cursor: not-allowed;
+}
+
+.btn-enabled {
+  background-color: red;
+  cursor: pointer;
+}
+
+/* color options for User Icons */
+:root {
+  --icon-pink:    #FF69B4;
+  --icon-red:     #e81416;
+  --icon-orange:  #ffa500;
+  --icon-yellow:  #faeb36;
+  --icon-green:   #79c314;
+  --icon-tur:     #40E0D0;
+  --icon-blue:    #487de7;
+  --icon-purple:  #b182e3;
+  --icon-gray:    #bfbfbf;
+}

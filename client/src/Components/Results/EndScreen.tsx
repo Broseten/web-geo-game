@@ -3,7 +3,7 @@
 
 import { Box, Button, Center, Heading, } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
-import '../../Theme/home-create.css';
+import '../../Theme/theme.css';
 
 
 export default function EndScreen() {

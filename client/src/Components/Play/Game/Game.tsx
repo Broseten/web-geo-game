@@ -34,17 +34,11 @@ export default function Game() {
     return (
         <VStack align={"top"}>
 
-            {/* Home button at the top */}
-            <Button bg="none" p="0" pl="1.5"
-                color="brand.yellow" fontSize="18px" fontFamily="Avenir Next" fontWeight="bold"
-                _hover={{
-                    background: "none",
-                    color: "brand.yellow",
-                    textDecoration: "underline"
-                }}
-                onClick={() => { setCurrentScreen('home'); }}>
+            {/* Logo at the top */}
+            <Heading bg="none" p="0" pl="1.5" color="brand.yellow" 
+                fontSize="18px" fontFamily="Avenir Next" fontWeight="bold">
                 NegoDesign
-            </Button>
+            </Heading>
 
             <hr />
 

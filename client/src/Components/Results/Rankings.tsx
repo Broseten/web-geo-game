@@ -2,7 +2,7 @@
 // This file displays the cards of the players ranked
 
 import { Card, CardBody, Center, Heading, Text, VStack } from "@chakra-ui/react";
-import '../../Theme/other.css';
+import '../../Theme/theme.css';
 
 
 export default function Rankings() {

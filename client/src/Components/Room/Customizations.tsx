@@ -2,10 +2,10 @@
 // This file displays a grid of the different customizations  
 // for when the facilitator creates a room
 
-import { Box, Center, Checkbox, CheckboxGroup, Grid, Input, InputGroup, Select, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Checkbox, CheckboxGroup, Grid, Input, InputGroup, Select, Text, VStack } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useState } from "react";
-//import {roomName} from './CreateRoom';
+import '../../Theme/theme.css';
 
 export default function Customizations() {
     const { setCurrentScreen } = useScreenSelection();
@@ -16,43 +16,40 @@ export default function Customizations() {
 
 
     return (
-        <SimpleGrid spacing={10} minChildWidth={250}>
+        <VStack align="left">
 
             {/* Name Room */}
-            <Box bg="white" h="200px" p="20px">
-                <Text fontSize="l" color="brand.grey" fontWeight="bold"
-                    lineHeight="1.15" pb="15px">
-                    Name your room in the textbox below
+            <Box pb="20px">
+                <Text className="h2" color="brand.grey">
+                    Name your room in the textbox
                 </Text>
 
                 <InputGroup>
-                        <Input
-                            borderColor="brand.teal"
-                            color="brand.teal"
-                            placeholder='Room name...'
-                            _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
-                            fontSize="14px"
-                            _hover={{ borderWidth: "2px" }}
-                            maxWidth="300"
-                            mb="50"
+                    <Input
+                        borderColor="brand.teal"
+                        color="brand.teal"
+                        placeholder='Room name...'
+                        _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
+                        fontSize="14px"
+                        _hover={{ borderWidth: "2px" }}
 
-                        // TODO - set time variable 
-                        // value={roomName}
-                        // onChange={(event) => setRoomName(event.target.value)}
-                        ></Input>
-                    </InputGroup>
+                    // TODO - set room name variable 
+                    // value={roomName}
+                    // onChange={(event) => setRoomName(event.target.value)}
+                    ></Input>
+                </InputGroup>
             </Box>
 
 
 
             {/* Pick Location */}
-            <Box bg="white" h="200px" p="20px">
-                <Text fontSize="l" color="brand.grey" fontWeight="bold"
-                    lineHeight="1.15" pb="15px">
-                    Choose a map from the dropdown below
+            <Box pb="20px">
+                <Text className="h2" color="brand.grey">
+                    Choose a map from the dropdown
                 </Text>
 
-                <Select mb="100px" minWidth="200" bg="brand.teal" fontSize="14px"
+                {/* TODO - insert map here */}
+                <Select bg="brand.teal" fontSize="14px"
                     placeholder='Select map...'>
                     <option value='ballina'>    Ballina</option>
                     <option value='cork'>       Cork</option>
@@ -66,107 +63,115 @@ export default function Customizations() {
 
 
             {/* Select Solutions */}
-            <Box bg="lightblue" p="20px" minWidth="600px">
-                <Text fontSize="l" color="brand.grey" fontWeight="bold"
-                    lineHeight="1.15" pb="15px">
-                    Select solutions from the options below
+            <Box pb="20px">
+                <Text className="h2" color="brand.grey">
+                    Select solutions from the options
                 </Text>
 
                 {/* Checkboxes for the solutions */}
-                <Box ml="2" mr="2"
-                    pt="2" pb="2" pl="2" pr="2"
-                    bg="white" rounded="md" color="brand.grey"
-                    minWidth="500px"
-                    >
-                    <CheckboxGroup colorScheme='orange'
-                        defaultValue={['garden', 'pavillion', 'structure', 'spaces', 'mapping', 'humanplace']}>
+                <CheckboxGroup colorScheme='orange'
+                    defaultValue={['garden', 'pavillion', 'structure', 'spaces', 'mapping', 'humanplace']}>
 
-                        <Grid templateColumns='repeat(2, 1fr)' gap={6} lineHeight="1.15">
-                            {/* TODO - all creator solutions go here*/}
-                            <Checkbox borderColor="orange" value='garden'>       Digitally Fabricated Vegetable Garden</Checkbox>
-                            <Checkbox borderColor="orange" value='pavillion'>    Small Scale Pavillion Structure</Checkbox>
-                            <Checkbox borderColor="orange" value='structure'>    Temporary Structures from Recycled Material</Checkbox>
-                            <Checkbox borderColor="orange" value='spaces'>       Reactivation of Open Spaces through NBS</Checkbox>
-                            <Checkbox borderColor="orange" value='mapping'>      Projection Mapping on Kinetic Surfaces</Checkbox>
-                            <Checkbox borderColor="orange" value='humanplace'>   AR Enriched Human-place Interaction</Checkbox>
-                        </Grid>
-                    </CheckboxGroup>
-                </Box>
+                    <Grid color="brand.grey">
+                        {/* TODO - all creator solutions go here*/}
+                        <Checkbox borderColor="orange" value='garden'>       Digitally Fabricated Vegetable Garden</Checkbox>
+                        <Checkbox borderColor="orange" value='pavillion'>    Small Scale Pavillion Structure</Checkbox>
+                        <Checkbox borderColor="orange" value='structure'>    Temporary Structures from Recycled Material</Checkbox>
+                        <Checkbox borderColor="orange" value='spaces'>       Reactivation of Open Spaces through NBS</Checkbox>
+                        <Checkbox borderColor="orange" value='mapping'>      Projection Mapping on Kinetic Surfaces</Checkbox>
+                        <Checkbox borderColor="orange" value='humanplace'>   AR Enriched Human-place Interaction</Checkbox>
+                    </Grid>
+                </CheckboxGroup>
             </Box>
 
 
 
             {/* Select Roles */}
-            <Box bg="white" h="200px" p="20px">
-                <Text fontSize="l" color="brand.grey" fontWeight="bold"
-                    lineHeight="1.15" pb="15px">
-                    Select roles from the options below
+            <Box pb="20px">
+                <Text className="h2" color="brand.grey">
+                    Select roles from the options
                 </Text>
 
-                {/* TODO - make box scrollable */}
-                <Box mb="100px" ml="10" mr="10"
-                    pt="2" pb="2" pl="2" pr="2"
-                    bg="white" rounded="md" color="red">
-                    {/* TODO - role options go here */}
-                    Options Go Here
-                </Box>
+                {/* Checkboxes for the roles */}
+                <CheckboxGroup colorScheme='orange'
+                    defaultValue={['leader', 'developer', 'elder', 'environ', 'historian', 'ngo', 'officer', 'politician', 'young', 'other']}>
+
+                    <Grid color="brand.grey">
+                        {/* TODO - all creator solutions go here*/}
+                        <Checkbox borderColor="orange" value='leader'>      Community Leader</Checkbox>
+                        <Checkbox borderColor="orange" value='developer'>   Developer</Checkbox>
+                        <Checkbox borderColor="orange" value='elder'>       Elder</Checkbox>
+                        <Checkbox borderColor="orange" value='environ'>     Environmentalist</Checkbox>
+                        <Checkbox borderColor="orange" value='historian'>   Historian</Checkbox>
+                        <Checkbox borderColor="orange" value='ngo'>         Non-government Organization</Checkbox>
+                        <Checkbox borderColor="orange" value='officer'>     Officer</Checkbox>
+                        <Checkbox borderColor="orange" value='politician'>  Politician</Checkbox>
+                        <Checkbox borderColor="orange" value='young'>       Young Person</Checkbox>
+                        <Checkbox borderColor="orange" value='other'>       Other</Checkbox>
+                    </Grid>
+                </CheckboxGroup>
             </Box>
+
 
 
             {/* Enter Time */}
-            <Box bg="white" h="200px" p="20px">
-                <Text fontSize="l" color="brand.grey" fontWeight="bold"
-                    lineHeight="1.15" pb="15px">
+            <Box pb="20px">
+                <Text className="h2" color="brand.grey">
                     Time per round
                 </Text>
 
-                <Center>
-                    <InputGroup>
-                        <Input
-                            borderColor="brand.teal"
-                            color="brand.teal"
-                            placeholder='Enter in seconds...'
-                            _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
-                            fontSize="14px"
-                            _hover={{ borderWidth: "2px" }}
-                            maxWidth="300"
-                            mb="100px"
+                <InputGroup>
+                    <Input
+                        borderColor="brand.teal"
+                        color="brand.teal"
+                        placeholder='Enter in seconds...'
+                        _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
+                        fontSize="14px"
+                        _hover={{ borderWidth: "2px" }}
 
-                        // TODO - set time variable 
-                        // value={time}
-                        // onChange={(event) => setPlayerName(event.target.value)}
-                        ></Input>
-                    </InputGroup>
-                </Center>
+                    // TODO - set time variable 
+                    // value={time}
+                    // onChange={(event) => setPlayerName(event.target.value)}
+                    ></Input>
+                </InputGroup>
             </Box>
+
 
 
             {/* Enter Budget */}
-            <Box bg="white" h="200px" p="20px">
-                <Text fontSize="l" color="brand.grey" fontWeight="bold"
-                    lineHeight="1.15" pb="15px">
+            <Box pb="20px">
+                <Text className="h2" color="brand.grey">
                     Budget per team
                 </Text>
 
-                <Center>
-                    <InputGroup>
-                        <Input
-                            borderColor="brand.teal"
-                            color="brand.teal"
-                            placeholder='Enter in euros...'
-                            _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
-                            fontSize="14px"
-                            _hover={{ borderWidth: "2px" }}
-                            maxWidth="300"
-                            mb="50"
+                <InputGroup>
+                    <Input
+                        borderColor="brand.teal"
+                        color="brand.teal"
+                        placeholder='Enter in euros...'
+                        _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
+                        fontSize="14px"
+                        _hover={{ borderWidth: "2px" }}
 
-                        // TODO - set time variable 
-                        // value={budget}
-                        // onChange={(event) => setPlayerName(event.target.value)}
-                        ></Input>
-                    </InputGroup>
-                </Center>
+                    // TODO - set budget variable 
+                    // value={budget}
+                    // onChange={(event) => setPlayerName(event.target.value)}
+                    ></Input>
+                </InputGroup>
             </Box>
-        </SimpleGrid >
+
+
+
+            {/* This button creates the room and goes to its lobby */}
+            <Center>
+                <Button //className="dark-button" 
+                    bg='brand.teal' color="white" variant='outline'
+                    _hover={{ bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px" }}
+                    onClick={() => { setCurrentScreen('lobby'); }}>
+                    {/* TODO - make roomName appear */}
+                    Create {roomName}
+                </Button>
+            </Center>
+        </VStack >
     );
 }
