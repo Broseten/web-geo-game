@@ -40,7 +40,7 @@ export default function Play({ isConnected }: Play) {
 
          {/* TODO - can use isVoting to switch from Game.tsx and Voting.tsx */}
          {/* <Game /> */} {/* <Voting /> */}
-         <Voting />
+         <Game />
 
          {/* Adding in the Game Map */}
          <GameMap />
