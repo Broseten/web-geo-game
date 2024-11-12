@@ -1,4 +1,7 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Center, HStack, Image, InputLeftElement, Text, VStack } from "@chakra-ui/react";
+// Authors: Vojta Bruza and Grace Houser
+// This file displays the accordion of solution options 
+
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Center, Image, Text } from "@chakra-ui/react";
 
 export default function Solutions() {
 

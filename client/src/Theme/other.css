@@ -1,0 +1,30 @@
+/* theme for stuff */
+
+
+.disabled {
+    background-color: rgba(256, 256, 256, 0.75);
+}
+
+.btn-disabled {
+    /*background-color: grey;*/
+    background-color: blue;
+    cursor: not-allowed;
+}
+
+.btn-enabled {
+    background-color: red;
+    cursor: pointer;
+}
+
+/* color options for User Icons */
+:root {
+    --icon-pink:    #FF69B4;
+    --icon-red:     #e81416;
+    --icon-orange:  #ffa500;
+    --icon-yellow:  #faeb36;
+    --icon-green:   #79c314;
+    --icon-tur:     #40E0D0;
+    --icon-blue:    #487de7;
+    --icon-purple:  #b182e3;
+    --icon-gray:    #bfbfbf;
+}

@@ -1,6 +1,9 @@
+// Authors: Vojta Bruza and Grace Houser
+// This file TODO
+
 import React, { createContext, useContext, useState } from 'react';
 
-type Screens = 'home' | 'play' | 'join' | 'create' | 'lobby' | 'customize';
+type Screens = 'home' | 'join' | 'create' | 'lobby' | 'play' | 'results' | 'end';
 
 // Create the context
 const ScreenContext = createContext<{

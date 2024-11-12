@@ -1,3 +1,6 @@
+// Authors: Vojta Bruza and Grace Houser
+// This file displays the home screen design 
+
 import { Box, Center, HStack, Heading, Icon, Image, Link, Text } from "@chakra-ui/react";
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import SetUpInfo from "./SetUpInfo";

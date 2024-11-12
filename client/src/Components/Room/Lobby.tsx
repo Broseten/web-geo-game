@@ -20,7 +20,8 @@ export default function Lobby() {
             <Center>
                 <Text pb="10" pr="20" pl="20" fontSize="l" color="brand.grey" align="center">
                     The facilitator will start the game when everyone is ready.
-                    {/* Start the game when everyone is ready. */} {/* TODO - Show this text if user is the facilitator */}
+                    {/* TODO - Show text below if user is the facilitator */}
+                    {/* Start the game when everyone is ready. */} 
                 </Text>
             </Center>
 
@@ -28,10 +29,10 @@ export default function Lobby() {
             <Center>
                 {/* TODO - User list depends on whether you are a facilitator or player */}
                 {/* <UserList /> or <UserListF />*/}
-                <UserList />
+                <UserListF />
             </Center>
 
-            {/* TODO - This should be disbaled for players (only the facilitator can start the game) */}
+            {/* TODO - This button should be disbaled for players (only the facilitator can start the game) */}
             {/* This button leaves the lobby and goes to the game */}
             <Center>
                 <Button bg="brand.teal" color='white' borderColor="brand.teal" borderWidth="2px"

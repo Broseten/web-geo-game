@@ -51,9 +51,18 @@ export default function Voting() {
             <Center>
                 <HStack justifyContent="center">
 
+                    {/* Only the Facilitator has this button */}
+                    <Button bg="brand.red" color="white" mr="40px"
+                        onClick={() => { setCurrentScreen('results') }}>
+                        End Voting
+                    </Button>
+
+                    {/* Only the players have this text */}
+                    {/*
                     <Heading size="md" color="white" mr="40px" lineHeight="1" textAlign="center">
                         You are <br /> voting!
                     </Heading>
+                    */}
 
                     <VStack>
                         <Heading size="lg" color="white">Time</Heading>

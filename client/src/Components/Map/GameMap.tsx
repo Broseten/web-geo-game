@@ -1,3 +1,6 @@
+// Authors: Vojta Bruza and Grace Houser
+// This file sets up the game map
+
 import { useState, useRef, useEffect } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";

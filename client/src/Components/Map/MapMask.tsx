@@ -1,3 +1,6 @@
+// Authors: Vojta Bruza and Grace Houser
+// This file TODO
+
 import { LatLngBounds, LatLngExpression } from "leaflet";
 import { Pane, Polygon } from "react-leaflet";
 

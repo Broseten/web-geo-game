@@ -1,3 +1,7 @@
+// Authors: Vojta Bruza and Grace Houser
+// This file pieces together the entire pay screen,
+// which includes the left game screen, map, and modals 
+
 import { HStack } from "@chakra-ui/react";
 import { socket } from "../../main";
 import GameMap from "../Map/GameMap";
@@ -36,7 +40,7 @@ export default function Play({ isConnected }: Play) {
 
          {/* TODO - can use isVoting to switch from Game.tsx and Voting.tsx */}
          {/* <Game /> */} {/* <Voting /> */}
-         <Game />
+         <Voting />
 
          {/* Adding in the Game Map */}
          <GameMap />

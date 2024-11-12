@@ -1,6 +1,9 @@
-import { Box, Button, Center, Image, Text } from "@chakra-ui/react";
+// Authors: Vojta Bruza and Grace Houser
+// This file displays the general design for the 
+// facilitator when they create a room 
+
+import { Box, Button, Center, Text } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
-import React from 'react';
 import '../../Theme/home-create.css';
 import Customizations from "./Customizations";
 
@@ -41,7 +44,7 @@ export default function CreateRoom() {
                {/* Room customizations */}
                <Center>
                   <Box bg="brand.off" overflow="auto"
-                     width="550px" height="500px"
+                     width="90%" height="500px"
                      borderRadius="5px"
                      borderColor="brand.yellow"
                      borderWidth="2px"
@@ -65,14 +68,15 @@ export default function CreateRoom() {
             </Box>
 
             {/* home button at the top */}
-            <Button
-               position="absolute" className="home-button" bg="none"
-               _hover={{ background: "none" }}
-               onClick={() => {
-                  setCurrentScreen('home');
-               }}>
-               <Image rounded='100' //boxShadow='dark-lg'
-                  src="src/Theme/images/home.png"></Image>
+            <Button position="absolute" top="0" left="0"
+                bg="none"
+                _hover={{ background: "none" }}
+                onClick={() => {
+                    setCurrentScreen('home');
+                }}>
+                <Text color="brand.grey" _hover={{ textDecoration: "underline" }}>
+                    NegoDesign
+                </Text>
             </Button>
          </Center>
       </Box>

@@ -1,10 +1,13 @@
+// Authors: Vojta Bruza and Grace Houser
+// This file displays start button, name input field, 
+// and join/create room option of the home screen design
+
 import { Box, Button, Center, HStack, Input, InputGroup, InputLeftElement, Text, VStack } from "@chakra-ui/react";
 import { socket } from "../../main";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useState } from "react";
 import { EditIcon } from "@chakra-ui/icons";
 import '../../Theme/home-create.css';
-
 
 
 export default function SetUpInfo() {
@@ -39,6 +42,12 @@ export default function SetUpInfo() {
                         setIsStartButtonClicked(true);
                     }}>
                     Start
+                </Button>
+
+                {/*TEMPORARY - FOR ROOM BUILD */}
+                <Button colorScheme='purple'
+                    onClick={() => { setCurrentScreen('create') }}>
+                    Create
                 </Button>
 
                 {/*TEMPORARY - FOR PLAY*/}
@@ -76,8 +85,9 @@ export default function SetUpInfo() {
 
                         borderColor="brand.teal"
                         color="brand.teal"
-                        placeholder='Enter your name...'
-                        _placeholder={{ color: 'brand.teal' }}
+                        placeholder='Your name...'
+                        _placeholder={{ color: 'brand.teal', fontSize: "14px"}}
+                        fontSize="14px"
                         _hover={{ borderWidth: "2px" }}
                         mb="50"
                     ></Input>

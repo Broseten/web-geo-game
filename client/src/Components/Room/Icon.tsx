@@ -1,10 +1,12 @@
-import { Avatar, AvatarBadge, Box, Button, ButtonGroup, FormControl, FormLabel, Grid, HStack, IconButton, Input, Popover, PopoverArrow, PopoverCloseButton, PopoverContent, PopoverTrigger, Radio, RadioGroup, Stack, VStack, useDisclosure } from "@chakra-ui/react"
+import { Avatar, Box, Button, ButtonGroup, FormControl, FormLabel, Grid, Popover, PopoverArrow, PopoverCloseButton, PopoverContent, PopoverTrigger, Stack, Text, useDisclosure } from "@chakra-ui/react"
 import { EditIcon } from "@chakra-ui/icons";
 import React from "react";
 import FocusLock from "react-focus-lock";
+import '../../Theme/other.css'; 
 
 
 // Create the form
+// TODO - this throws and error and idk why 
 const Form = ({ firstFieldRef, onCancel }) => {
     return (
         <Stack spacing={4} >
@@ -15,19 +17,16 @@ const Form = ({ firstFieldRef, onCancel }) => {
                     Choose Icon Color
                 </FormLabel>
                 <ButtonGroup pr="0" mr="0">
-                    <Grid
-                        gap="6px"
-                        templateColumns="repeat(3, 1fr)"
-                    >
-                        <Button bg="#FF69B4" _hover={{ opacity: "0.25" }}></Button>
-                        <Button bg="#e81416" _hover={{ opacity: "0.25" }}></Button>
-                        <Button bg="#ffa500" _hover={{ opacity: "0.25" }}></Button>
-                        <Button bg="#faeb36" _hover={{ opacity: "0.25" }}></Button>
-                        <Button bg="#79c314" _hover={{ opacity: "0.25" }}></Button>
-                        <Button bg="#40E0D0" _hover={{ opacity: "0.25" }}></Button>
-                        <Button bg="#487de7" _hover={{ opacity: "0.25" }}></Button>
-                        <Button bg="purple.400" _hover={{ opacity: "0.25" }}></Button>
-                        <Button bg="gray.400" _hover={{ opacity: "0.25" }}></Button>
+                    <Grid gap="6px" templateColumns="repeat(3, 1fr)">
+                        <Button bg="var(--icon-pink)" _hover={{ opacity: "0.25" }}></Button>
+                        <Button bg="var(--icon-red)" _hover={{ opacity: "0.25" }}></Button>
+                        <Button bg="var(--icon-orange)" _hover={{ opacity: "0.25" }}></Button>
+                        <Button bg="var(--icon-yellow)" _hover={{ opacity: "0.25" }}></Button>
+                        <Button bg="var(--icon-green)" _hover={{ opacity: "0.25" }}></Button>
+                        <Button bg="var(--icon-tur)" _hover={{ opacity: "0.25" }}></Button>
+                        <Button bg="var(--icon-blue)" _hover={{ opacity: "0.25" }}></Button>
+                        <Button bg="var(--icon-purple)" _hover={{ opacity: "0.25" }}></Button>
+                        <Button bg="var(--icon-gray)" _hover={{ opacity: "0.25" }}></Button>
                     </Grid>
                 </ButtonGroup>
             </FormControl>
@@ -56,7 +55,7 @@ const PopoverForm = () => {
     const firstFieldRef = React.useRef(null)
 
     return (
-        <Box alignSelf="center" ml="10px">
+        <Box>
             <Avatar display='inline-block'></Avatar>
 
             <Popover
@@ -75,6 +74,7 @@ const PopoverForm = () => {
                     <FocusLock returnFocus persistentFocus={false}>
                         <PopoverArrow />
                         <PopoverCloseButton color="white" />
+                        {/* TODO - this throws and error and idk why  */}
                         <Form firstFieldRef={firstFieldRef} onCancel={onClose} />
                     </FocusLock>
                 </PopoverContent>
@@ -83,8 +83,35 @@ const PopoverForm = () => {
     )
 }
 
-export default function POF() {
-    return (
-        <PopoverForm></PopoverForm>
+// TODO - set "you" as type boolean to get rid of error 
+export default function Icon({ you, color }) {
+
+    const isYou = you;
+    const isOther = !you;
+
+    // determine user icon color
+    // TODO - make the default gray 
+    const userColor = "var(--icon-" + color + ")"; // default color is grey
+
+    // returns icon WITH edit feature for yourself 
+    if (isYou) {
+        return (
+            <Box alignSelf="center" ml="10px">
+                <PopoverForm />
+            </Box>
+        )
+    }
+
+    // returns icon with NO edit feature for other players 
+    if (isOther) {
+        return (
+            <Box alignSelf="center" ml="10px" mr="21px">
+                <Avatar display='inline-block' bg={userColor}></Avatar>
+            </Box>
+        )
+    }
+
+    else return (
+        <Box>Error</Box>
     )
 }

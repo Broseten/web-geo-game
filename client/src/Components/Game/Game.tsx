@@ -1,10 +1,12 @@
-import { Box, Button, Center, HStack, Heading, Image, Text, VStack } from "@chakra-ui/react";
+// Authors: Vojta Bruza and Grace Houser
+// This file displays the left section of the game play 
+
+import { Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
 import { socket } from "../../main";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useEffect, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
 import Solutions from "./Solutions";
-
 
 
 export default function Game() {
@@ -30,7 +32,6 @@ export default function Game() {
 
     {/* Section left of the game map */ }
     return (
-
         <VStack align={"top"}>
 
             {/* Home button at the top */}

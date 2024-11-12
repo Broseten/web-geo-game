@@ -7,6 +7,8 @@ import { useScreenSelection } from './Components/Contexts/useScreenSelection';
 import JoinRoom from './Components/Room/JoinRoom';
 import CreateRoom from './Components/Room/CreateRoom';
 import Lobby from './Components/Room/Lobby';
+import Results from './Components/Voting/Results';
+import EndScreen from './Components/Voting/EndScreen';
 
 function App() {
    const [isConnected, setIsConnected] = useState(false);
@@ -29,6 +31,10 @@ function App() {
             return <Lobby />
          case 'play':
             return <Play isConnected={isConnected} />;
+         case 'results':
+            return <Results />;
+         case 'end':
+            return <EndScreen />;
          default:
             return <HomeScreen />;
       }
@@ -41,8 +47,8 @@ function App() {
    // room screen    -- (join/create) to configure a room, username and join
    // play screen    -- to acutally play the game (can use a parametr with id of the room to rejoin on refresh)
    return (
-      <Box 
-         className="app" 
+      <Box
+         className="app"
          h='calc(100vh)'
          bg="brand.blue"
       >

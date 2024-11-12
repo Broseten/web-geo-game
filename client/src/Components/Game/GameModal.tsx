@@ -1,3 +1,6 @@
+// Authors: Vojta Bruza and Grace Houser
+// This file contains the modals that will appear during gameplay and voting
+
 import { Box, Button, Center, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react";
 
 
