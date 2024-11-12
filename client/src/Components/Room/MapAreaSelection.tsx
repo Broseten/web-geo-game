@@ -5,16 +5,26 @@ import '@bopen/leaflet-area-selection/dist/index.css';
 import { DrawAreaSelection } from '@bopen/leaflet-area-selection';
 import 'leaflet/dist/leaflet.css';
 import { usePolygon } from '../Contexts/PolygonContext';
+import GestureHandling from 'leaflet-gesture-handling';
+
+import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 
 export default function MapAreaSelection() {
-  const { setPolygon: setMapPolygon } = usePolygon();
+   const { setPolygon: setMapPolygon } = usePolygon();
    const mapRef = useRef<L.Map | null>(null);
+
+   // Add gesture handling to Leaflet
+   L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
    useEffect(() => {
       // Initialize the map only once
       if (mapRef.current === null) {
-         // Create the map instance
-         const map = L.map('map').setView([50.22, 7.91], 3);
+         // Create the map instance with gesture handling enabled
+         const map = L.map('map', {
+            center: [50.22, 7.91],
+            zoom: 3,
+            gestureHandling: true
+         });
 
          // Add OpenStreetMap tile layer
          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
