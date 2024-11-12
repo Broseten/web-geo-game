@@ -26,20 +26,21 @@ function MapInitializer({ bounds, onClick }: { bounds: L.LatLngBounds, onClick: 
    const map = useMap();
 
    useEffect(() => {
+      // init the map properly
       if (map) {
-         // init the map properly
          // pan and zoom on the bounds 
          map.fitBounds(bounds);
-         // set the min zoom distance to match the one given by the fitbounds
-         map.setMinZoom(map.getZoom());
+         // set the min zoom distance according to the bounds
+         const zoom = Math.floor(map.getBoundsZoom(bounds));
+         map.setMinZoom(zoom);
       }
-   }, [map, bounds]);
+   }, []);
 
    useMapEvents({
       // add listeners
       click(e) {
          onClick([e.latlng.lat, e.latlng.lng]);
-      },
+      }
    });
 
    return null;
@@ -78,7 +79,7 @@ export default function GameMap({ polygon }: GameMapProps) {
             zoom={13}
             style={{ height: "100vh", width: "70vw", margin: "auto" }}
             maxBounds={bounds}
-            maxBoundsViscosity={1.0}
+            maxBoundsViscosity={.8}
          >
             <MapInitializer
                bounds={bounds}
