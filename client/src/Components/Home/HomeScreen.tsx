@@ -12,7 +12,7 @@ export default function HomeScreen() {
       <Box
          h='calc(100vh)'
          // background image is sourced from pexels.com 
-         backgroundImage="/src/Theme/images/Dublin.jpg"
+         backgroundImage="/images/Dublin.jpg"
          backgroundSize="cover"
          //filter="auto" blur="5px"
          //backdropFilter="auto" backdropBlur="5px"
@@ -46,7 +46,7 @@ export default function HomeScreen() {
                   <Link href="https://www.heritact.eu" isExternal>
                      <HStack>
                         <Icon as={InfoOutlineIcon} color="brand.grey" />
-                        <Image src="/src/Theme/images/HERITACT.png" height="18px" width="84px" />
+                        <Image src="/images/HERITACT.png" height="18px" width="84px" />
                      </HStack>
                   </Link>
                </Center>

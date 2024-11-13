@@ -1,3 +1,3 @@
-import runServer from "./src/server";
+import runServer from "./src/runHTTPserver";
 
 runServer();

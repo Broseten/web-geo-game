@@ -1,11 +1,11 @@
 import { Socket } from "socket.io";
 import { BaseHandler } from "./BaseHandler";
 
-export class GameHandler extends BaseHandler {
+export class TimerHandler extends BaseHandler {
    private timerSeconds = 0;
    private timerId: NodeJS.Timeout | null = null;
 
-   override initHandlers(socket: Socket) {
+   override startListeners(socket: Socket) {
       socket.on('request-timer-update', () => {
          socket.emit('timer-update', this.timerSeconds); // Send current timer to the requesting client
       });

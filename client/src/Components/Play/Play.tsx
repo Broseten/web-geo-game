@@ -19,6 +19,7 @@ interface Play {
 }
 
 export default function Play({ isConnected }: Play) {
+   console.log("connected: " + isConnected);
    const { polygon } = usePolygon();
    const { setCurrentScreen } = useScreenSelection();
    const [testCounter, setTestCounter] = useState(0);

@@ -1,6 +1,6 @@
 // Authors: Vojtech Bruza and Grace Houser
 import { useRef, useEffect } from 'react';
-import L from 'leaflet';
+import * as L from "leaflet";
 import '@bopen/leaflet-area-selection/dist/index.css';
 import { DrawAreaSelection } from '@bopen/leaflet-area-selection';
 import 'leaflet/dist/leaflet.css';
@@ -36,7 +36,7 @@ export default function MapAreaSelection() {
          const areaSelection = new DrawAreaSelection({
             active: false, // Start with the selection tool active
             color: 'blue', // Customize polygon color
-            onPolygonReady: (polygon: L.Polygon, controlInstance: any) => {
+            onPolygonReady: (polygon: L.Polygon, _controlInstance: any) => {
                // TODO send to server instead of the context
                setMapPolygon(polygon);
             }

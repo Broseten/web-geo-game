@@ -1,0 +1,23 @@
+{
+   "compilerOptions": {
+      "target": "ES2020", // Common target for both client and server
+      "module": "ESNext", // Use ESNext module syntax for compatibility
+      "moduleResolution": "node", // This is common to resolve node_modules for both client and server
+      "strict": true, // Enable strict mode globally for better type safety
+      "skipLibCheck": true, // Skip library checks to speed up compilation
+      "esModuleInterop": true, // Ensures compatibility with commonJS and ES module interoperability
+      "forceConsistentCasingInFileNames": true, // Prevents file casing issues across different OS
+      "noEmit": true // Do not emit output, just for type-checking at the root level
+   },
+   "references": [
+      {
+         "path": "./client/tsconfig.json"
+      }, // Reference the client project
+      {
+         "path": "./server/tsconfig.json"
+      }, // Reference the server project
+      {
+         "path": "./shared/tsconfig.json"
+      } // Reference shared types and code
+   ]
+}

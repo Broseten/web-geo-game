@@ -1,17 +1,19 @@
-// Authors: Vojta Bruza and Grace Houser
-// This file has different icon options for 
-// the lobby screen
-
-import { Avatar, Box, Button, ButtonGroup, FormControl, FormLabel, Grid, Popover, PopoverArrow, PopoverCloseButton, PopoverContent, PopoverTrigger, Stack, useDisclosure } from "@chakra-ui/react"
+// Import necessary modules
+import { Avatar, Box, Button, ButtonGroup, FormControl, FormLabel, Grid, Popover, PopoverArrow, PopoverCloseButton, PopoverContent, PopoverTrigger, Stack, useDisclosure } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
 import React from "react";
 import FocusLock from "react-focus-lock";
 import '../../Theme/theme.css'; 
 
+// Define prop types for Form
+interface FormProps {
+    firstFieldRef: React.MutableRefObject<null>;
+    onCancel: () => void;
+}
 
-// Create the form
-// TODO - this throws and error and idk why 
-const Form = ({ firstFieldRef, onCancel }) => {
+// Create the Form component with expected props
+const Form: React.FC<FormProps> = ({ firstFieldRef, onCancel }) => {
+    console.log(firstFieldRef);
     return (
         <Stack spacing={4} >
             <FormControl pr="0" mr="0">
@@ -36,14 +38,13 @@ const Form = ({ firstFieldRef, onCancel }) => {
             </FormControl>
 
             <ButtonGroup display='flex' justifyContent='flex-end'>
-                {/* TODO - disabled unless new color is clicked */}
                 <Button
                     isDisabled
                     bg='white'
                     color="brand.grey"
                     _hover={{ bg: "brand.teal", color: "white" }}
                     onClick={() => {
-                        // TODO - set avatar color to selected color
+                        onCancel(); // Close the popover when clicking Save
                     }}>
                     Save
                 </Button>
@@ -52,11 +53,10 @@ const Form = ({ firstFieldRef, onCancel }) => {
     )
 }
 
-// Create the Popover
-// Ensure you set `closeOnBlur` prop to false so it doesn't close on outside click
-const PopoverForm = () => {
-    const { onOpen, onClose, isOpen } = useDisclosure()
-    const firstFieldRef = React.useRef(null)
+// Create the PopoverForm component
+const PopoverForm: React.FC = () => {
+    const { onOpen, onClose, isOpen } = useDisclosure();
+    const firstFieldRef = React.useRef(null);
 
     return (
         <Box>
@@ -78,7 +78,6 @@ const PopoverForm = () => {
                     <FocusLock returnFocus persistentFocus={false}>
                         <PopoverArrow />
                         <PopoverCloseButton color="white" />
-                        {/* TODO - this throws and error and idk why  */}
                         <Form firstFieldRef={firstFieldRef} onCancel={onClose} />
                     </FocusLock>
                 </PopoverContent>
@@ -87,35 +86,31 @@ const PopoverForm = () => {
     )
 }
 
-// TODO - set "you" as type boolean to get rid of error 
-export default function Icon({ you, color }) {
+// Main Icon component, accepting you and color props
+interface IconProps {
+    you: boolean;
+    color: string;
+}
 
-    const isYou = you;
-    const isOther = !you;
+const Icon: React.FC<IconProps> = ({ you, color }) => {
+    // Determine user icon color
+    const userColor = `var(--icon-${color || "gray"})`; // default color is gray
 
-    // determine user icon color
-    // TODO - make the default gray 
-    const userColor = "var(--icon-" + color + ")"; // default color is grey
-
-    // returns icon WITH edit feature for yourself 
-    if (isYou) {
+    // Returns icon WITH edit feature for yourself
+    if (you) {
         return (
             <Box alignSelf="center" ml="10px">
                 <PopoverForm />
             </Box>
-        )
+        );
     }
 
-    // returns icon with NO edit feature for other players 
-    if (isOther) {
-        return (
-            <Box alignSelf="center" ml="10px" mr="21px">
-                <Avatar display='inline-block' bg={userColor}></Avatar>
-            </Box>
-        )
-    }
+    // Returns icon with NO edit feature for other players
+    return (
+        <Box alignSelf="center" ml="10px" mr="21px">
+            <Avatar display='inline-block' bg={userColor}></Avatar>
+        </Box>
+    );
+};
 
-    else return (
-        <Box>Error</Box>
-    )
-}
+export default Icon;

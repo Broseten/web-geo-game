@@ -38,8 +38,7 @@ export default function UserListF() {
                 </CardBody>
 
                 <CardBody ml="px">
-                    {/* TODO - idk why an error is being thrown !*/}
-                    <Heading size='sm' align="middle">Remove</Heading>
+                    <Heading size='sm' textAlign="center">Remove</Heading>
                 </CardBody>
             </Card>
 

@@ -6,7 +6,7 @@ export class MapHandler extends BaseHandler {
    private markers: [number, any][] = [];
    private markerIDCounter = 0;
 
-   override initHandlers(socket: Socket) {
+   override startListeners(socket: Socket) {
       socket.on('request-map-markers', () => {
       socket.emit('set-markers', this.markers);
       });
