@@ -14,7 +14,7 @@ export default function Timer() {
     }, []);
 
     return (
-        <Text mb="40px" align="center">
+        <Text align="center">
             {
                 new Date(timeSeconds * 1000).toISOString().slice(14, 19)
             }
