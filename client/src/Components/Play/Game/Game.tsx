@@ -72,7 +72,7 @@ export default function Game() {
             <Box textAlign="center" color="white">
                 <Heading size="lg">Solutions</Heading>
 
-                <Text fontSize="14px" ml="20px" mr="20px">
+                <Text fontSize="14px" lineHeight="1.15" ml="20px" mr="20px">
                     Choose a pin option below to help meet your goals as a <Text as="span" fontWeight="bold">{role}</Text>.
                 </Text>
             </Box>
