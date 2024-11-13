@@ -1,19 +1,30 @@
 {
   "compilerOptions": {
-    "target": "ES2020",        // Target modern JavaScript for better compatibility
-    "module": "commonjs",      // Node.js uses CommonJS for modules
-    "esModuleInterop": true,   // Ensures compatibility with ES6 and CommonJS modules
+    "target": "ES2020", // Target modern JavaScript for better compatibility
+    "module": "commonjs", // Node.js uses CommonJS for modules
+    "esModuleInterop": true, // Ensures compatibility with ES6 and CommonJS modules
     "forceConsistentCasingInFileNames": true,
-    "strict": true,            // Enable strict type-checking
-    "skipLibCheck": true,      // Skip type checks of declaration files for faster compilation
-    "outDir": "./dist",        // Output the compiled server code to the dist folder
-    "baseUrl": ".",            // Set the base path for relative imports
-    "paths": {                 // Simplify imports from server code
-      "*": ["node_modules/*", "src/*"]
+    "strict": true, // Enable strict type-checking
+    "skipLibCheck": true, // Skip type checks of declaration files for faster compilation
+    "outDir": "./dist", // Output the compiled server code to the dist folder
+    "baseUrl": ".", // Set the base path for relative imports
+    "paths": { // Simplify imports from server code
+      "*": [
+        "node_modules/*",
+        "src/*"
+      ],
+      "web-geo-game-shared": [
+        "../shared/dist" // Point to the dist folder in shared
+      ]
     },
     "composite": true, // Enable composite project mode
     // "declaration": true // Generate `.d.ts` files for the client
   },
-  "include": ["src", "main.ts"],         // Include all server source code
-  "exclude": ["node_modules"] // Exclude node_modules to avoid unnecessary compilation
+  "include": [
+    "src",
+    "main.ts"
+  ], // Include all server source code
+  "exclude": [
+    "node_modules"
+  ] // Exclude node_modules to avoid unnecessary compilation
 }

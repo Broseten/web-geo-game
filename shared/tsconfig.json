@@ -1,26 +1,24 @@
 {
-   "compilerOptions": {
-      "target": "ES2020", // Common modern target for both client and server
-      "module": "ESNext", // Use ES module system for compatibility
-      "strict": true, // Strict mode for better type-checking
-      "skipLibCheck": true, // Skip library checks for faster compilation
-      "esModuleInterop": true, // Ensures module compatibility
-      "forceConsistentCasingInFileNames": true,
-      "declaration": true, // Generate `.d.ts` declaration files for shared types
-      "outDir": "./dist", // Output to a common dist folder
-      "baseUrl": ".", // Set the base path for relative imports
-      "paths": {
-         "*": [
-            "node_modules/*",
-            "src/*"
-         ]
-      },
-      "composite": true, // Enable composite project mode
-   },
-   "include": [
-      "src"
-   ], // Include the shared source code
-   "exclude": [
-      "node_modules"
-   ] // Exclude node_modules
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "declaration": true,            // Generate .d.ts files for types
+    "declarationMap": true,         // Optional: Generate sourcemaps for declarations
+    "outDir": "./dist",             // Output compiled files to the dist folder
+    "esModuleInterop": true,
+    "strict": true,
+    "composite": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",                 // Base path for module resolution
+    "paths": {
+      "*": ["src/*"]                // Allow resolution from src for shared package
+    }
+  },
+  "include": [
+    "src/**/*"                      // Include all source files for the package
+  ],
+  "exclude": [
+    "node_modules",                 // Exclude node_modules
+    "dist"                           // Exclude dist folder
+  ]
 }

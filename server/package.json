@@ -15,7 +15,8 @@
   "dependencies": {
     "express": "^4.21.1",
     "socket.io": "^4.8.1",
-    "uuid": "^11.0.3"
+    "uuid": "^11.0.3",
+    "web-geo-game-shared": "file:../shared"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",

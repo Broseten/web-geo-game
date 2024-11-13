@@ -1,0 +1,1 @@
+Everytime a file gets changed here, don't forget to run `npm run build` to update tha package.
