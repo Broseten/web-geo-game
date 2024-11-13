@@ -7,6 +7,8 @@ import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useState } from "react";
 import '../../Theme/theme.css';
 import MapSelection from "./MapAreaSelection";
+import { socket } from "../../main";
+import initSocket from "../../Hooks/useSocket";
 
 export default function Customizations() {
     const { setCurrentScreen } = useScreenSelection();
@@ -15,6 +17,10 @@ export default function Customizations() {
     const time = 400;
     const budget = 100000;
 
+    initSocket('room-assigned', (roomID: string) => {
+        setCurrentScreen('lobby');
+        console.log("joined room: " + roomID);
+     });
 
     return (
         <VStack align="left">
@@ -174,7 +180,8 @@ export default function Customizations() {
                     onClick={() => {
                         // TODO first check if the polygon in the polygon context is null
                         //      if it is null, assign approximate rectangular location from the map visible area
-                        setCurrentScreen('lobby');
+
+                        socket.emit('create-room');
                     }}>
                     {/* TODO - make roomName appear */}
                     Create {roomName}

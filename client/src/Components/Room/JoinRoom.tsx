@@ -4,12 +4,19 @@
 
 import { Box, Button, Center, Text, VStack } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
+import initSocket from "../../Hooks/useSocket";
+import { socket } from "../../main";
 
 export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
 
    // TODO get from server
    const rooms = ['Hufflepuff', 'Gryffindor', 'Ravenclaw', 'Slytherin', 'Poseidon', 'Aphrodite', 'Ophelia', 'Room G', 'Room R', 'Room A', 'Room C', 'Room E'];
+
+   initSocket('room-assigned', (roomID: string) => {
+      setCurrentScreen('lobby');
+      console.log("joined room: " + roomID);
+   });
 
    return (
       <Box>
@@ -37,15 +44,12 @@ export default function JoinRoom() {
                <VStack>
                   {
                      rooms.map((room) => (
-                        <Button 
+                        <Button
                            bg="brand.yellow" color="brand.grey" variant="outline"
-                           _hover={{bg: "brand.off", borderColor: "brand.yellow", borderWidth: "2px"}}
+                           _hover={{ bg: "brand.off", borderColor: "brand.yellow", borderWidth: "2px" }}
                            key={room}
                            onClick={() => {
-                              // TO DO - join room lobby
-
-                              // switch to play screen
-                              setCurrentScreen('lobby');
+                              socket.emit('join-room');
                            }}>{room}
                         </Button>))
                   }

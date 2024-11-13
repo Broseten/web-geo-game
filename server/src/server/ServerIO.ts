@@ -38,11 +38,13 @@ export class ServerIO {
 
       // TODO let the user to specify room parameters
       clientSocket.on('create-room', () => {
-         // TODO
+         // TODO this is just a placeholder
+         const roomId = this.roomManager.assignPlayerToRoom(clientSocket);
+         clientSocket.emit('room-assigned', roomId);
       });
 
       // TODO let the user to select which room to join
-      clientSocket.on('join-room', (callback: (uid: string) => void) => {
+      clientSocket.on('join-room', () => {
          // TODO move the reconnection functionality somewhere?
          //      -- just a separate handshake before joining the room? -> then send list of rooms
          let uid = this.allUsers[clientSocket.id];
@@ -52,10 +54,6 @@ export class ServerIO {
          }
          uid = v4();
          this.allUsers[uid] = clientSocket.id;
-         // will get called back on the client to notify about its uid
-         callback(uid);
-
-
 
          const roomId = this.roomManager.assignPlayerToRoom(clientSocket);
          clientSocket.emit('room-assigned', roomId);
