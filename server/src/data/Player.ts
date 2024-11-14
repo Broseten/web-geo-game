@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 
 export class Player {
-   // TODO use player data from the shared project
+   // TODO use player data from the shared project?
    public id: string;
    public role: string;
    public color: string;

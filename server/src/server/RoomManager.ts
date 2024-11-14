@@ -1,5 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { GameRoom } from './GameRoom';
+import { RoomData } from 'data/RoomData';
 
 export class RoomManager {
    private ioServer: Server;
@@ -12,31 +13,29 @@ export class RoomManager {
       this.playerRoomMap = new Map();
    }
 
-   // Assigns a player to a room and returns the room ID
-   assignPlayerToRoom(clientSocket: Socket): string {
-      // TODO let users select rooms
-      // Find an available room that is not full
-      let targetRoom = [...this.rooms.values()].find(room => !room.isFull());
+   public createRoom(roomData: RoomData): string {
+      // TODO let users create a room and assigned them as a facilitator
+      let targetRoom = new GameRoom(this.ioServer, roomData);
+      this.rooms.set(targetRoom.id, targetRoom);
+      console.info(`Created new room with ID: ${targetRoom.id}`);
+      return targetRoom.id;
+   }
+
+   public joinRoom(clientSocket: Socket, roomID: string): RoomData | undefined {
+      let targetRoom = this.rooms.get(roomID);
 
       if (!targetRoom) {
-         // Create a new room if all existing rooms are full
-         targetRoom = this.createRoom();
+         // TODO notify the client that the room does not exist
+         return undefined;
       }
 
       // Add the player to the target room
       targetRoom.addPlayer(clientSocket);
-      this.playerRoomMap.set(clientSocket.id, targetRoom.id);
+      this.playerRoomMap.set(clientSocket.id, roomID);
 
-      console.info(`Player ${clientSocket.id} assigned to room ${targetRoom.id}`);
-      return targetRoom.id;
-   }
-
-   createRoom(): GameRoom {
-      // TODO let users create a room and assigned them as a facilitator
-      let targetRoom = new GameRoom(this.ioServer);
-      this.rooms.set(targetRoom.id, targetRoom);
-      console.info(`Created new room with ID: ${targetRoom.id}`);
-      return targetRoom;
+      console.info(`Player ${clientSocket.id} joined room ${roomID}`);
+      // TODO actually send all data about the room, not only the initial
+      return targetRoom.roomInitData;
    }
 
    // Starts a round in the specified room
@@ -57,6 +56,14 @@ export class RoomManager {
    // Retrieves a specific GameRoom instance by its ID
    getRoom(roomId: string): GameRoom | undefined {
       return this.rooms.get(roomId);
+   }
+
+   // Retrieves "tuples" with roomId and room name
+   getRoomList(): { id: string; name: string }[] {
+      return Array.from(this.rooms.entries()).map(([roomID, gameRoom]) => ({
+         id: roomID,
+         name: gameRoom.roomInitData.name
+      }));
    }
 
    // Handles player disconnection
