@@ -3,8 +3,7 @@
 
 import { Box, Button, Center, Text } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
-import UserList from "./UserList_Player";
-import UserListF from "./UserList_Facilitator";
+import UserList from "./UserList";
 
 export default function Lobby() {
 
@@ -28,10 +27,8 @@ export default function Lobby() {
                 </Text>
             </Center>
 
-            {/* Player and role boxes in the lobby */}
+            {/* Player cards in the room lobby */}
             <Center>
-                {/* TODO - User list depends on whether you are a facilitator or player */}
-                {/* <UserList /> or <UserListF />*/}
                 <UserList />
             </Center>
 

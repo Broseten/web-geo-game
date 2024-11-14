@@ -15,7 +15,7 @@ export default function CreateRoom() {
          h='calc(100vh)'
          overflow="auto"
          // background image is sourced from pexels.com 
-         backgroundImage="/src/Theme/images/Dublin.jpg"
+         backgroundImage="/images/Dublin.jpg"
          backgroundSize="cover"
          backgroundPosition="center"
          backgroundRepeat="no-repeat"

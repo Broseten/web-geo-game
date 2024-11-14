@@ -1,9 +1,9 @@
 // Import necessary modules
-import { Avatar, Box, Button, ButtonGroup, FormControl, FormLabel, Grid, Popover, PopoverArrow, PopoverCloseButton, PopoverContent, PopoverTrigger, Stack, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Box, Button, ButtonGroup, FormControl, FormLabel, Grid, Popover, PopoverArrow, PopoverCloseButton, PopoverContent, PopoverTrigger, Stack, Tooltip, useDisclosure } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
 import React from "react";
 import FocusLock from "react-focus-lock";
-import '../../Theme/theme.css'; 
+import '../../Theme/theme.css';
 
 // Define prop types for Form
 interface FormProps {
@@ -106,7 +106,7 @@ const Icon: React.FC<IconProps> = ({ you, color }) => {
     }
 
     // Returns icon with NO edit feature for other players
-    return (
+    else return (
         <Box alignSelf="center" ml="10px" mr="21px">
             <Avatar display='inline-block' bg={userColor}></Avatar>
         </Box>

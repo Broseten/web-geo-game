@@ -14,8 +14,6 @@ export default function HomeScreen() {
          // background image is sourced from pexels.com 
          backgroundImage="/images/Dublin.jpg"
          backgroundSize="cover"
-         //filter="auto" blur="5px"
-         //backdropFilter="auto" backdropBlur="5px"
          backgroundPosition="center"
          backgroundRepeat="no-repeat"
       >
