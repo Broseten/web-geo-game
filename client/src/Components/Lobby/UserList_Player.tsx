@@ -5,10 +5,19 @@ import { Box, Card, CardBody, Heading, Select, Text } from "@chakra-ui/react";
 import React from "react";
 //import { useScreenSelection } from "../Contexts/useScreenSelection";
 import Icon from "./Icon";
-import '../../Theme/theme.css'; 
+import '../../Theme/theme.css';
 import { useState } from "react";
 
-export default function UserList() {
+interface User {
+    name: string;
+    // TODO
+}
+
+interface UserList {
+    users: User[];
+}
+
+export default function UserList(users: UserList) {
 
     //const { setCurrentScreen } = useScreenSelection();
     const playerName = ""
@@ -71,7 +80,7 @@ export default function UserList() {
                     width="800px"
                     mb="5px"
                 >
-                    <Icon you={true} color={"red"}/>
+                    <Icon you={true} color={"red"} />
 
                     <CardBody ml="10px">
                         <Heading size='md'>Harrison Kircher</Heading>
@@ -106,7 +115,7 @@ export default function UserList() {
                     width="800px"
                     mb="5px"
                 >
-                    <Icon you={false} color={"blue"}/>
+                    <Icon you={false} color={"blue"} />
 
                     <CardBody ml="10px">
                         <Heading size='md'>Morgan Wallen</Heading>
@@ -115,7 +124,7 @@ export default function UserList() {
 
                     <CardBody>
                         <Select isDisabled
-                            maxWidth="300" bg="gray.300" 
+                            maxWidth="300" bg="gray.300"
                             borderColor="brand.teal" borderWidth="2px"
 
                             // TODO - their role would go here (as a variable)
@@ -135,7 +144,7 @@ export default function UserList() {
                     width="800px"
                     mb="5px"
                 >
-                    <Icon you={false} color={"green"}/>
+                    <Icon you={false} color={"green"} />
 
                     <CardBody ml="10px">
                         <Heading size='md'>Sabrina Carpenter</Heading>
@@ -144,7 +153,7 @@ export default function UserList() {
 
                     <CardBody>
                         <Select isDisabled
-                            maxWidth="300" bg="gray.300" 
+                            maxWidth="300" bg="gray.300"
                             borderColor="brand.teal" borderWidth="2px"
 
                             // TODO - their role would go here (as a variable)
@@ -164,7 +173,7 @@ export default function UserList() {
                     width="800px"
                     mb="5px"
                 >
-                    <Icon you={false} color={"yellow"}/>
+                    <Icon you={false} color={"yellow"} />
 
                     <CardBody ml="10px">
                         <Heading size='md'>Harry Styles</Heading>
@@ -173,7 +182,7 @@ export default function UserList() {
 
                     <CardBody>
                         <Select isDisabled
-                            maxWidth="300" bg="gray.300" 
+                            maxWidth="300" bg="gray.300"
                             borderColor="brand.teal" borderWidth="2px"
 
                             // TODO - their role would go here (as a variable)
@@ -193,7 +202,7 @@ export default function UserList() {
                     width="800px"
                     mb="5px"
                 >
-                    <Icon you={false} color={"pink"}/>
+                    <Icon you={false} color={"pink"} />
 
                     <CardBody ml="10px">
                         <Heading size='md'>Carrie Underwood</Heading>
@@ -202,7 +211,7 @@ export default function UserList() {
 
                     <CardBody>
                         <Select isDisabled
-                            maxWidth="300" bg="gray.300" 
+                            maxWidth="300" bg="gray.300"
                             borderColor="brand.teal" borderWidth="2px"
 
                             // TODO - their role would go here (as a variable)
@@ -222,7 +231,7 @@ export default function UserList() {
                     width="800px"
                     mb="5px"
                 >
-                    <Icon you={false} color={"purple"}/>
+                    <Icon you={false} color={"purple"} />
 
                     <CardBody ml="10px">
                         <Heading size='md'>Keith Urban</Heading>
@@ -231,7 +240,7 @@ export default function UserList() {
 
                     <CardBody>
                         <Select isDisabled
-                            maxWidth="300" bg="gray.300" 
+                            maxWidth="300" bg="gray.300"
                             borderColor="brand.teal" borderWidth="2px"
 
                             // TODO - their role would go here (as a variable)
