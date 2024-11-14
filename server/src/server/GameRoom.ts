@@ -1,7 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
 import { Player } from '../data/Player';
-import { RoomData } from 'data/DataTypes';
+import { RoomData, RoomUpdate } from 'data/DataTypes';
 
 const gameRoomMaxPlayers = 4;
 
@@ -47,17 +47,8 @@ export class GameRoom {
       console.info(`Player ${clientSocket.id} joined room ${this.id}`);
 
       // Notify all players in the room about the new player
-      this.ioServer.to(this.id).emit('player-joined', {
-         id: player.id,
-         role: player.role,
-         color: player.color,
-         name: player.name,
-      });
-
-      // Start the game if room is full
-      if (this.isFull()) {
-         this.progressGame();
-      }
+      const roomUpdate: RoomUpdate = { players: this.getPlayers() };
+      this.ioServer.to(this.id).emit('room-update', roomUpdate);
    }
 
    // Removes a player from the room

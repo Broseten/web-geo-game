@@ -3,7 +3,7 @@ import { Socket, Server } from 'socket.io';
 import { v4 } from 'uuid';
 import { RoomManager } from './RoomManager';
 import { MapHandler } from './handlers/MapHandler';
-import { RoomData } from 'data/DataTypes';
+import { RoomData, RoomUpdate } from 'data/DataTypes';
 
 export class ServerIO {
    public static instance: ServerIO;
@@ -69,7 +69,10 @@ export class ServerIO {
          if (!roomInfo) {
             clientSocket.emit('room-not-found');
          } else {
-            clientSocket.emit('room-info', roomInfo);
+            // TODO one better message
+            clientSocket.emit('room-info', roomInfo.roomInitData);
+            const roomUpdate: RoomUpdate = { players: roomInfo.getPlayers() };
+            clientSocket.emit('room-update', roomUpdate);
          }
       });
 
@@ -79,6 +82,7 @@ export class ServerIO {
 
       clientSocket.on('leave-room', () => {
          // TODO?
+         // TODO update all clients in the room
       });
 
       clientSocket.on('progress-game', () => {

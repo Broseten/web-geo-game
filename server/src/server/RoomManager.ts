@@ -30,12 +30,11 @@ export class RoomManager {
       return targetRoom.id;
    }
 
-   public joinRoom(clientSocket: Socket, roomID: string): RoomData | undefined {
+   public joinRoom(clientSocket: Socket, roomID: string): GameRoom | null {
       let targetRoom = this.rooms.get(roomID);
 
       if (!targetRoom) {
-         // TODO notify the client that the room does not exist
-         return undefined;
+         return null;
       }
 
       // Add the player to the target room
@@ -44,7 +43,7 @@ export class RoomManager {
 
       console.info(`Player ${clientSocket.id} joined room ${roomID}`);
       // TODO actually send all data about the room, not only the initial
-      return targetRoom.roomInitData;
+      return targetRoom;
    }
 
    // Starts a round in the specified room
