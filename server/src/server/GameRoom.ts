@@ -42,10 +42,10 @@ export class GameRoom {
 
       // Notify all players in the room about the new player
       this.ioServer.to(this.id).emit('player-joined', {
-         id: player.data.id,
-         role: player.data.role,
-         color: player.data.color,
-         name: player.data.name,
+         id: player.id,
+         role: player.role,
+         color: player.color,
+         name: player.name,
       });
 
       // Start the game if room is full
@@ -63,9 +63,9 @@ export class GameRoom {
          console.info(`Player ${playerId} left room ${this.id}`);
 
          // Return attributes for reassigning in the future
-         this.roles.push(player.data.role);
-         this.colors.push(player.data.color);
-         this.names.push(player.data.name);
+         this.roles.push(player.role);
+         this.colors.push(player.color);
+         this.names.push(player.name);
 
          // Notify remaining players
          this.ioServer.to(this.id).emit('player-left', playerId);
@@ -115,10 +115,10 @@ export class GameRoom {
    // Returns the current players in the room with their attributes
    getPlayers(): Array<{ id: string; role: string; color: string; name: string }> {
       return Array.from(this.players.values()).map(player => ({
-         id: player.data.id,
-         role: player.data.role,
-         color: player.data.color,
-         name: player.data.name,
+         id: player.id,
+         role: player.role,
+         color: player.color,
+         name: player.name,
       }));
    }
 }
