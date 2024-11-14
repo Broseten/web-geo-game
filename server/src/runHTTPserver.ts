@@ -45,10 +45,11 @@ export default function runServer() {
 
     /** User Information */
     application.get('/users', (req: Request, res: Response) => {
-        return res.status(200).json({ users: ServerIO.instance.allUsers });
+        return res.status(200).json({ users: ServerIO.instance.allConnectedUsers });
     });
-    application.get('/sockets', (req: Request, res: Response) => {
-        return res.status(200).json({ sockets: ServerIO.instance.allSockets });
+
+    application.get('/rooms', (req: Request, res: Response) => {
+        return res.status(200).json({ rooms: ServerIO.instance.roomManager.getRoomList() });
     });
 
     /** Serve client assets (development or production) */

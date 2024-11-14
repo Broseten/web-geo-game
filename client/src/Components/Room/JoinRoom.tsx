@@ -6,17 +6,31 @@ import { Box, Button, Center, Text, VStack } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
+import { RoomData } from "./RoomData";
+import { useState } from "react";
 
 export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
+   const [rooms, setRooms] = useState<{ id: string; name: string }[] | undefined>(undefined);
 
-   // TODO get from server
-   const rooms = ['Hufflepuff', 'Gryffindor', 'Ravenclaw', 'Slytherin', 'Poseidon', 'Aphrodite', 'Ophelia', 'Room G', 'Room R', 'Room A', 'Room C', 'Room E'];
+   initSocket('room-list', (roomList: { id: string; name: string }[]) => {
+      setRooms(roomList);
+   });
 
-   initSocket('room-assigned', (roomID: string) => {
+   initSocket('room-info', (roomID: string) => {
       setCurrentScreen('lobby');
       console.log("joined room: " + roomID);
    });
+
+   initSocket('room-info', (roomData: RoomData) => {
+      setCurrentScreen('lobby');
+      // TODO do something with the data on the frontend
+      console.log(roomData);
+   });
+
+   // TODO add a button to refresh or do it automatically in intervals
+   //      (or actually let the server notify all clients about a change)
+   socket.emit('request-room-list');
 
    return (
       <Box>
@@ -43,14 +57,16 @@ export default function JoinRoom() {
                w="400px">
                <VStack>
                   {
+                     rooms
+                     &&
                      rooms.map((room) => (
                         <Button
                            bg="brand.yellow" color="brand.grey" variant="outline"
                            _hover={{ bg: "brand.off", borderColor: "brand.yellow", borderWidth: "2px" }}
-                           key={room}
+                           key={room.name}
                            onClick={() => {
-                              socket.emit('join-room');
-                           }}>{room}
+                              socket.emit('join-room', room.id);
+                           }}>{room.name}
                         </Button>))
                   }
                </VStack>

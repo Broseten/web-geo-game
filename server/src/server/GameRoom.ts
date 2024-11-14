@@ -1,39 +1,43 @@
 import { Server, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
 import { Player } from '../data/Player';
+import { RoomData } from 'data/RoomData';
+
+const gameRoomMaxPlayers = 4;
 
 export class GameRoom {
    public id: string;
    private ioServer: Server;
    private players: Map<string, Player>; // Map of playerId to Player instance
-   private maxPlayers: number;
-   private currentRound: number;
-   private totalRounds: number;
-   private roles = ['warrior', 'mage', 'archer'];
-   private colors = ['red', 'blue', 'green'];
-   private names = ['Alice', 'Bob', 'Charlie'];
+   public roomInitData: RoomData;
+   private availableRoles: string[];
+   private availableColors = ["red", "green", "blue", "yellow"];
+   private availableNames = ["Alice", "Bob", "Charlie", "David"];
+
+   // placeholders
+   private totalRounds = 3;
+   private currentRound = 0;
 
    // TODO add Map handler for each player in the room
 
-   constructor(ioServer: Server, maxPlayers = 4, totalRounds = 5) {
+   constructor(ioServer: Server, initialRoomData: RoomData) {
       this.id = uuidv4(); // Unique ID for the room
       this.ioServer = ioServer;
       this.players = new Map();
-      this.maxPlayers = maxPlayers;
-      this.currentRound = 0;
-      this.totalRounds = totalRounds;
+      this.roomInitData = initialRoomData;
+      this.availableRoles = initialRoomData.roles;
    }
 
    // Adds a player to the room
    addPlayer(clientSocket: Socket): void {
-      if (this.players.size >= this.maxPlayers) {
+      if (this.players.size >= gameRoomMaxPlayers) {
          console.warn(`Room ${this.id} is full. Cannot add player ${clientSocket.id}.`);
          return;
       }
 
-      const role = this.roles.shift() || 'explorer';
-      const color = this.colors.shift() || 'gray';
-      const name = this.names.shift() || `Player ${clientSocket.id}`;
+      const role = this.availableRoles.shift() || "explorer";
+      const color = this.availableColors.shift() || "gray";
+      const name = this.availableNames.shift() || `Player ${clientSocket.id}`;
       const player = new Player(clientSocket, role, color, name);
 
       this.players.set(clientSocket.id, player);
@@ -63,9 +67,9 @@ export class GameRoom {
          console.info(`Player ${playerId} left room ${this.id}`);
 
          // Return attributes for reassigning in the future
-         this.roles.push(player.role);
-         this.colors.push(player.color);
-         this.names.push(player.name);
+         this.availableRoles.push(player.role);
+         this.availableColors.push(player.color);
+         this.availableNames.push(player.name);
 
          // Notify remaining players
          this.ioServer.to(this.id).emit('player-left', playerId);
@@ -104,7 +108,7 @@ export class GameRoom {
 
    // Checks if the room has reached its maximum player capacity
    isFull(): boolean {
-      return this.players.size >= this.maxPlayers;
+      return this.players.size >= gameRoomMaxPlayers;
    }
 
    // Checks if the room is empty

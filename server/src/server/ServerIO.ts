@@ -3,18 +3,18 @@ import { Socket, Server } from 'socket.io';
 import { v4 } from 'uuid';
 import { RoomManager } from './RoomManager';
 import { MapHandler } from './handlers/MapHandler';
+import { RoomData } from 'data/RoomData';
 
 export class ServerIO {
    public static instance: ServerIO;
    public ioServer: Server;
-   public allUsers: { [uid: string]: string };
-   public allSockets: string[];
-   private roomManager: RoomManager;
+   // to keep track of users that were previously in a room, to be able to reconnect them
+   public allConnectedUsers: { [uid: string]: string };
+   public roomManager: RoomManager;
 
    constructor(httpServer: HttpServer) {
       ServerIO.instance = this;
-      this.allUsers = {};
-      this.allSockets = [];
+      this.allConnectedUsers = {};
       this.ioServer = new Server(httpServer, {
          serveClient: false,
          pingInterval: 10000,
@@ -31,32 +31,50 @@ export class ServerIO {
 
    OnClientConnected = (clientSocket: Socket) => {
       console.info('Connection established with ' + clientSocket.id);
-      // just a placeholder now
-      this.allSockets.push(clientSocket.id);
 
+      // TODO move this to a game
       new MapHandler(this.ioServer).startListeners(clientSocket);
 
-      // TODO let the user to specify room parameters
-      clientSocket.on('create-room', () => {
-         // TODO this is just a placeholder
-         const roomId = this.roomManager.assignPlayerToRoom(clientSocket);
-         clientSocket.emit('room-assigned', roomId);
+      // TODO remember the id in the future
+      // // if the user was already on the server, reconnect
+      // let uid = this.allConnectedUsers[clientSocket.id];
+      // if (uid) {
+      //    // reconnected
+      //    // TODO notify the client about the room etc.
+      //    return;
+      // }
+      // uid = v4();
+      // this.allConnectedUsers[uid] = clientSocket.id;
+
+
+      // TODO let the user to specify other room parameters
+      clientSocket.on('create-room', (name: string) => {
+         const roomData: RoomData = {
+            name: name,
+            polygon: undefined,
+            solutionIDs: ["solution 1", "solution 2", "solution 3"],
+            roles: ["role 1", "role 2", "role 3", "role 4"],
+            timePerRound: 30,
+            initialBudget: 10000,
+            budgetPerRound: 3000
+         };
+
+         const roomId = this.roomManager.createRoom(roomData);
+
+         clientSocket.emit('room-created', roomId);
       });
 
-      // TODO let the user to select which room to join
-      clientSocket.on('join-room', () => {
-         // TODO move the reconnection functionality somewhere?
-         //      -- just a separate handshake before joining the room? -> then send list of rooms
-         let uid = this.allUsers[clientSocket.id];
-         if (uid) {
-            // reconnected
-            return;
+      clientSocket.on('join-room', (roomID: string) => {
+         const roomInfo = this.roomManager.joinRoom(clientSocket, roomID);
+         if (!roomInfo) {
+            clientSocket.emit('room-not-found');
+         } else {
+            clientSocket.emit('room-info', roomInfo);
          }
-         uid = v4();
-         this.allUsers[uid] = clientSocket.id;
+      });
 
-         const roomId = this.roomManager.assignPlayerToRoom(clientSocket);
-         clientSocket.emit('room-assigned', roomId);
+      clientSocket.on('request-room-list', () => {
+         clientSocket.emit('room-list', this.roomManager.getRoomList());
       });
 
       clientSocket.on('leave-room', () => {
@@ -81,11 +99,11 @@ export class ServerIO {
       clientSocket.on('disconnect', () => {
          const uid = this.GetUidFromSocketID(clientSocket.id);
          if (uid) {
-            delete this.allUsers[uid];
+            delete this.allConnectedUsers[uid];
             this.roomManager.handleDisconnect(clientSocket);
          }
       });
    };
 
-   GetUidFromSocketID = (id: string) => Object.keys(this.allUsers).find((uid) => this.allUsers[uid] === id);
+   GetUidFromSocketID = (id: string) => Object.keys(this.allConnectedUsers).find((uid) => this.allConnectedUsers[uid] === id);
 }
