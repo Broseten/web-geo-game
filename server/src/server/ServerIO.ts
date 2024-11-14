@@ -10,7 +10,7 @@ export class ServerIO {
    public ioServer: Server;
    // to keep track of users that were previously in a room, to be able to reconnect them
    public allConnectedUsers: { [uid: string]: string };
-   private roomManager: RoomManager;
+   public roomManager: RoomManager;
 
    constructor(httpServer: HttpServer) {
       ServerIO.instance = this;

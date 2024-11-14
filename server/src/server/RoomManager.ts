@@ -18,6 +18,7 @@ export class RoomManager {
       let targetRoom = new GameRoom(this.ioServer, roomData);
       this.rooms.set(targetRoom.id, targetRoom);
       console.info(`Created new room with ID: ${targetRoom.id}`);
+      // TODO notify all clients (that are in the lobby?) that a new room was created to refresh
       return targetRoom.id;
    }
 

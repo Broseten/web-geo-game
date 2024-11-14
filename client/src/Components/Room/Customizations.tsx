@@ -9,6 +9,7 @@ import '../../Theme/theme.css';
 import MapSelection from "./MapAreaSelection";
 import { socket } from "../../main";
 import initSocket from "../../Hooks/useSocket";
+import { RoomData } from "./RoomData";
 
 export default function Customizations() {
     const { setCurrentScreen } = useScreenSelection();
@@ -17,10 +18,15 @@ export default function Customizations() {
     const time = 400;
     const budget = 100000;
 
-    initSocket('room-assigned', (roomID: string) => {
+    initSocket('room-created', (roomID: string) => {
+        socket.emit('join-room', roomID);
+    });
+
+    initSocket('room-info', (roomData: RoomData) => {
         setCurrentScreen('lobby');
-        console.log("joined room: " + roomID);
-     });
+        // TODO do something with the data on the frontend
+        console.log(roomData);
+    });
 
     return (
         <VStack align="left">
@@ -39,10 +45,9 @@ export default function Customizations() {
                         _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
                         fontSize="14px"
                         _hover={{ borderWidth: "2px" }}
-
-                    // TODO - set room name variable 
-                    // value={roomName}
-                    // onChange={(event) => setRoomName(event.target.value)}
+                        // TODO - set room name variable 
+                        value={roomName}
+                        onChange={(event) => setRoomName(event.target.value)}
                     ></Input>
                 </InputGroup>
             </Box>
@@ -181,7 +186,7 @@ export default function Customizations() {
                         // TODO first check if the polygon in the polygon context is null
                         //      if it is null, assign approximate rectangular location from the map visible area
 
-                        socket.emit('create-room');
+                        socket.emit('create-room', roomName);
                     }}>
                     {/* TODO - make roomName appear */}
                     Create {roomName}
