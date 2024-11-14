@@ -1,7 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
 import { Player } from '../data/Player';
-import { RoomData } from 'data/RoomData';
+import { RoomData } from 'data/DataTypes';
 
 const gameRoomMaxPlayers = 4;
 

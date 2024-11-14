@@ -1,6 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { GameRoom } from './GameRoom';
-import { RoomData } from 'data/RoomData';
+import { RoomData } from 'data/DataTypes';
 
 export class RoomManager {
    private ioServer: Server;

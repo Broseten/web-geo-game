@@ -6,8 +6,8 @@ import { Box, Button, Center, Text, VStack } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
-import { RoomData } from "./RoomData";
 import { useState } from "react";
+import { RoomData } from "../../data/DataTypes";
 
 export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();

@@ -3,7 +3,7 @@ import { Socket, Server } from 'socket.io';
 import { v4 } from 'uuid';
 import { RoomManager } from './RoomManager';
 import { MapHandler } from './handlers/MapHandler';
-import { RoomData } from 'data/RoomData';
+import { RoomData } from 'data/DataTypes';
 
 export class ServerIO {
    public static instance: ServerIO;

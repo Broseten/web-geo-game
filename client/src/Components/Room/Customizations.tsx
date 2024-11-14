@@ -9,7 +9,7 @@ import '../../Theme/theme.css';
 import MapSelection from "./MapAreaSelection";
 import { socket } from "../../main";
 import initSocket from "../../Hooks/useSocket";
-import { RoomData } from "./RoomData";
+import { RoomData } from "../../data/DataTypes";
 
 export default function Customizations() {
     const { setCurrentScreen } = useScreenSelection();
