@@ -4,8 +4,14 @@ import { RoomJoined } from "../../data/DataTypes";
 interface GameRoomContextProps {
     roomID: string | null;
     roomInfo: RoomJoined | null;
+    roomStatus: RoomStatus | null;
+    setRoomStatus: (roomStatus: RoomStatus) => void;
     setGameRoom: (roomID: string, roomInfo: RoomJoined) => void;
     clearGameRoom: () => void;
+}
+
+interface RoomStatus {
+    selectSolutionID: string;
 }
 
 const GameRoomContext = createContext<GameRoomContextProps | undefined>(undefined);
@@ -13,6 +19,7 @@ const GameRoomContext = createContext<GameRoomContextProps | undefined>(undefine
 export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     const [roomID, setRoomID] = useState<string | null>(null);
     const [roomInfo, setRoomInfo] = useState<RoomJoined | null>(null);
+    const [roomStatus, setRoomStatus] = useState<RoomStatus | null>(null);
 
     const setGameRoom = (id: string, info: RoomJoined) => {
         setRoomID(id);
@@ -25,7 +32,7 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <GameRoomContext.Provider value={{ roomID, roomInfo, setGameRoom, clearGameRoom }}>
+        <GameRoomContext.Provider value={{ roomID, roomInfo, setGameRoom, clearGameRoom, roomStatus, setRoomStatus}}>
             {children}
         </GameRoomContext.Provider>
     );
