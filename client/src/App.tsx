@@ -1,24 +1,32 @@
-import { Box } from '@chakra-ui/react'
-import Play from './Components/Play/Play';
-import HomeScreen from './Components/Home/HomeScreen';
+import { Box } from '@chakra-ui/react';
 import { useState } from 'react';
-import initSocket from './Hooks/useSocket';
-import { useScreenSelection } from './Components/Contexts/useScreenSelection';
-import JoinRoom from './Components/Room/JoinRoom';
-import CreateRoom from './Components/Room/CreateRoom';
-import Lobby from './Components/Lobby/Lobby';
-import Results from './Components/Results/Results';
-import EndScreen from './Components/Results/EndScreen';
+import { useGameRoom } from './Components/Contexts/GameRoomContext';
 import { PolygonProvider } from './Components/Contexts/PolygonContext';
-import { GameRoomProvider } from './Components/Contexts/GameRoomContext';
+import { useScreenSelection } from './Components/Contexts/useScreenSelection';
+import HomeScreen from './Components/Home/HomeScreen';
+import Lobby from './Components/Lobby/Lobby';
+import Play from './Components/Play/Play';
+import EndScreen from './Components/Results/EndScreen';
+import Results from './Components/Results/Results';
+import CreateRoom from './Components/Room/CreateRoom';
+import JoinRoom from './Components/Room/JoinRoom';
+import { RoomInfo } from './data/DataTypes';
+import initSocket from './Hooks/useSocket';
 
 function App() {
    const [isConnected, setIsConnected] = useState(false);
+   const { currentScreen, setCurrentScreen } = useScreenSelection(); // Get the current screen from context
+   const { setGameRoom } = useGameRoom();
 
    initSocket('connect', () => setIsConnected(true)); // on connected
    initSocket('disconnect', () => setIsConnected(false)); // on disconnected
 
-   const { currentScreen } = useScreenSelection(); // Get the current screen from context
+   // same for the facilitator (creator of the room) and for the players just directly joining
+   initSocket('room-joined', (roomInfo: RoomInfo) => {
+      setGameRoom(roomInfo.id, roomInfo.data);
+      setCurrentScreen('lobby');
+      console.log("joined room: " + roomInfo.data.name);
+   });
 
    // Function to switch between screens
    const renderScreen = () => {
@@ -49,17 +57,15 @@ function App() {
    // room screen    -- (join/create) to configure a room, username and join
    // play screen    -- to acutally play the game (can use a parametr with id of the room to rejoin on refresh)
    return (
-      <GameRoomProvider>
-         <PolygonProvider>
-            <Box
-               className="app"
-               h='calc(100vh)'
-               bg="brand.blue"
-            >
-               {renderScreen()}
-            </Box>
-         </PolygonProvider>
-      </GameRoomProvider>
+      <PolygonProvider>
+         <Box
+            className="app"
+            h='calc(100vh)'
+            bg="brand.blue"
+         >
+            {renderScreen()}
+         </Box>
+      </PolygonProvider>
    )
 }
 

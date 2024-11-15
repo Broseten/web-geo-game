@@ -32,25 +32,23 @@ export class ServerIO {
    OnClientConnected = (clientSocket: Socket) => {
       console.info('Connection established with ' + clientSocket.id);
 
-      // TODO move this to a game
-      new MapHandler(this.ioServer).startListeners(clientSocket);
-
       // TODO remember the id in the future
-      // // if the user was already on the server, reconnect
-      // let uid = this.allConnectedUsers[clientSocket.id];
-      // if (uid) {
-      //    // reconnected
-      //    // TODO notify the client about the room etc.
-      //    return;
-      // }
-      // uid = v4();
-      // this.allConnectedUsers[uid] = clientSocket.id;
+      // if the user was already on the server, reconnect
+      let uid = this.allConnectedUsers[clientSocket.id];
+      if (!uid) {
+         uid = v4();
+         this.allConnectedUsers[uid] = clientSocket.id;
+      } else {
+         // TODO reconnected
+      }
 
-
-      // TODO let the user to specify other room parameters
       clientSocket.on('create-room', (data: RoomJoined) => {
          const roomId = this.roomManager.createRoom(data, clientSocket);
-         if (roomId) clientSocket.emit('room-created', roomId);
+         if (roomId) {
+            clientSocket.emit('room-created', roomId);
+            // update all clients that a new room has been created
+            this.ioServer.sockets.emit('room-list', this.roomManager.getRoomList());
+         }
          else clientSocket.emit('room-exists');
       });
 

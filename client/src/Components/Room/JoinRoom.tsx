@@ -13,16 +13,9 @@ import { useScreenSelection } from "../Contexts/useScreenSelection";
 export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
    const [rooms, setRooms] = useState<{ id: string; name: string }[] | undefined>(undefined);
-   const { setGameRoom } = useGameRoom();
 
    initSocket('room-list', (roomList: { id: string; name: string }[]) => {
       setRooms(roomList);
-   });
-
-   initSocket('room-joined', (roomInfo: RoomInfo) => {
-      setGameRoom(roomInfo.id, roomInfo.data);
-      setCurrentScreen('lobby');
-      console.log("joined room: " + roomInfo.data.name);
    });
 
    initSocket('room-not-found', () => {

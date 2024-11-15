@@ -21,7 +21,10 @@ export default function UserList() {
     // const players: PlayerData[] = [{ id: "1", role: "Developer", color: "red", name: "Harrison" }, { id: "2", role: "Envvironmentalist", color: "green", name: "Taylor" }, { id: "3", role: "Officer", color: "blue", name: "Violet" }, { id: "4", role: "Politician", color: "yellow", name: "John" }];
 
     initSocket('room-players-info', (roomUpdate: RoomPlayersInfo) => {
-        setIsFacilitator(socket.id === roomUpdate.facilitatorID);
+        const fac = socket.id === roomUpdate.facilitatorID;
+        setIsFacilitator(fac);
+        // TODO test if this works
+        console.log(fac);
         setPlayers(roomUpdate.players);
         console.log(roomUpdate);
     });
@@ -30,7 +33,7 @@ export default function UserList() {
         // TODO better error handling - both server and client-side
         console.log("Room not found");
     });
-    
+
     useEffect(() => {
         socket.emit('request-room-players-info', roomID);
     }, []);
@@ -39,72 +42,33 @@ export default function UserList() {
     return (
         <Box>
             {/* Header Card */}
-            <Card direction={{ base: 'column', sm: 'row' }}
-                variant='outline' mb="10px"
-            >
+            <Card direction={{ base: 'column', sm: 'row' }} variant='outline' mb="10px">
                 <CardBody ml="-5px" pr="0px">
                     <Heading size='sm'>Icon</Heading>
                 </CardBody>
-
                 <CardBody ml="-120px">
                     <Heading size='sm'>User</Heading>
                 </CardBody>
-
                 <CardBody ml="0px">
                     <Heading size='sm'>Role</Heading>
                 </CardBody>
-
                 <CardBody ml="px">
                     <Heading size='sm' textAlign="center">Actions</Heading>
                 </CardBody>
             </Card>
-
             {
-                isFacilitator ? (
-
-                    // result if you are the facilitator 
-                    <Box overflow="auto" height="350px">
-                        {/* Facilitator Card */}
-                        <Card bg="none" shadow="none">
-                            <FacilitatorCard you={isFacilitator} />
-                        </Card>
-
-                        {/* This would be a for loop */}
-                        {
-                            players
-                            &&
-                            players.map((player) => (
-                                <Card bg="none" shadow="none">
-                                    <PlayerCard you={!isFacilitator} player={player} />
-                                </Card>
-                            ))
-                        }
-                    </Box>
-
-                ) : (
-
-                    // result if you are the player 
-                    <Box overflow="auto" height="350px">
-                        {/* Facilitator Card */}
-                        <Card bg="none" shadow="none">
-                            <FacilitatorCard you={isFacilitator} />
-                        </Card>
-
-                        {/* For loop */}
-                        {
-                            players
-                            &&
-                            players.map((player) => (
-
-                                // TODO - fix so you can only edit your own card 
-                                <Card bg="none" shadow="none">
-                                    <PlayerCard you={!isFacilitator} player={player} />
-                                </Card>
-                            ))
-                        }
-                    </Box>
-                )
-
+                <Box overflow="auto" height="350px">
+                    <Card bg="none" shadow="none">
+                        <FacilitatorCard you={isFacilitator} />
+                    </Card>
+                    {
+                        players && players.map((player) => (
+                            <Card bg="none" shadow="none" key={player.id}>
+                                <PlayerCard you={!isFacilitator} player={player} />
+                            </Card>
+                        ))
+                    }
+                </Box>
             }
         </Box>
     );

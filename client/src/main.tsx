@@ -1,10 +1,11 @@
 //import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import { ChakraProvider } from '@chakra-ui/react'
-import customTheme from './Theme/Theme.ts'
+import { ChakraProvider } from '@chakra-ui/react';
+import { createRoot } from 'react-dom/client';
 import { io } from 'socket.io-client';
+import App from './App.tsx';
+import { GameRoomProvider } from './Components/Contexts/GameRoomContext.tsx';
 import { ScreenProvider } from './Components/Contexts/useScreenSelection.tsx';
+import customTheme from './Theme/Theme.ts';
 
 const URL = 'http://localhost:1337';
 
@@ -17,7 +18,9 @@ createRoot(document.getElementById('root')!).render(
    //<StrictMode>
    <ChakraProvider theme={customTheme}>
       <ScreenProvider>
-         <App />
+         <GameRoomProvider>
+            <App />
+         </GameRoomProvider>
       </ ScreenProvider>
    </ChakraProvider>
    //</StrictMode>,

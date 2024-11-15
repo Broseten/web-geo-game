@@ -2,6 +2,7 @@ import { Server, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
 import { Player } from '../data/Player';
 import { RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
+import { MapHandler } from './handlers/MapHandler';
 
 const gameRoomMaxPlayers = 4;
 
@@ -19,7 +20,7 @@ export class GameRoom {
    private totalRounds = 3;
    private currentRound = 0;
 
-   // TODO add Map handler for each player in the room
+   private mapHandler: MapHandler;
 
    constructor(ioServer: Server, initialRoomData: RoomJoined, facilitator: Socket) {
       this.id = uuidv4(); // Unique ID for the room
@@ -28,6 +29,7 @@ export class GameRoom {
       this.roomInitData = initialRoomData;
       this.availableRoles = initialRoomData.roles;
       this.facilitator = facilitator.id;
+      this.mapHandler = new MapHandler(this.ioServer, this.id);
    }
 
    // Adds a player to the room
@@ -45,6 +47,9 @@ export class GameRoom {
       this.players.set(clientSocket.id, player);
       clientSocket.join(this.id);
       console.info(`Player ${clientSocket.id} joined room ${this.id}`);
+
+      // init the map handler
+      this.mapHandler.startListeners(clientSocket);
 
       // Notify all players in the room about the new player
       const roomUpdate: RoomPlayersInfo = {
@@ -82,7 +87,7 @@ export class GameRoom {
 
       this.currentRound++;
       console.info(`Starting round ${this.currentRound} in room ${this.id}`);
-      this.ioServer.to(this.id).emit('round-started', { round: this.currentRound });
+      this.ioServer.to(this.id).emit('round-info', { round: this.currentRound });
 
       // Example: Handle round logic, e.g., resetting player actions, etc.
       this.handleRoundLogic();
