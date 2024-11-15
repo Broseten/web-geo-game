@@ -25,26 +25,10 @@ export default function Customizations() {
         'Projection Mapping on Kinetic Surfaces',
         'AR Enriched Human-place Interaction'
     ];
-    const [solutions, setSolutions] = useState<boolean[]>(Array.from(solutionsList.map(() => false)));
-    const [isChecked, setIsChecked] = useState(false);
-    const handleCheckboxChange = (index: number, isChecked: boolean) => {
-        // Create a copy of the solutions array
-        const newSolutions = [...solutions];
-        console.log("newSolutions: " + newSolutions);
-        console.log("index: " + index);
-        console.log("isChecked: " + isChecked);
-
-        newSolutions[index] = isChecked; // Set the correct index based on checkbox state
-        console.log("new  solutions after: " + newSolutions);
-
-        setSolutions(newSolutions); // Update the state with the new solutions array
-    };
+    const [checkedSolutions, setCheckedSolutions] = useState<boolean[]>(Array.from(solutionsList.map(() => false)));
 
     // room role variables 
     const [roles, setRoles] = useState<string[]>([]);
-
-    // count variable 
-    const [count, setCount] = useState<number>(0);
 
 
     initSocket('room-created', (roomID: string) => {
@@ -103,18 +87,17 @@ export default function Customizations() {
                         solutionsList
                         &&
                         solutionsList.map((solution, index) => (
-                            <Checkbox borderColor="orange" color="brand.grey" value={'solution ' + count}
+                            <Checkbox borderColor="orange" color="brand.grey" value={'solution ' + index}
                                 key={index}
-                                //checked={solutions[index]}
-                                // set the solutions 
-                                isChecked={solutions[index]}
-                                onChange={(event) => {
-                                    setIsChecked(event.target.checked)
-                                    handleCheckboxChange(index, event.target.checked);
-                                    console.log("event target checked: " + event.target.checked);
-                                    setCount((prevCount) => prevCount + 1);
-                                    console.log(solutions);
-                                }}>
+                                isChecked={checkedSolutions[index]}
+                                onChange={(e) =>
+                                    setCheckedSolutions([
+                                        ...checkedSolutions.slice(0, index),
+                                        e.target.checked,
+                                        ...checkedSolutions.slice(index + 1)
+                                    ])
+                                }
+                            >
                                 {solution}
                             </Checkbox>
                         ))
