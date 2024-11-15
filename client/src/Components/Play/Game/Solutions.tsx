@@ -3,22 +3,12 @@
 
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Center, Image, Text } from "@chakra-ui/react";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
+import { global_solutions } from "../../../data/data";
 
 
 export default function Solutions() {
 
     const { setRoomStatus } = useGameRoom();
-
-    // TODO - get Solution Data from somewhere more permanent 
-    const solutions = [
-        { id: "1", name: "Digitally Fabricated Vegetable Garden", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", image: "SolutionsPins_ARenriched", price: 500 },
-        { id: "2", name: "Small Scale Pavillion Structure", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", image: "SolutionsPins_ARenriched", price: 800 },
-        { id: "3", name: "Temporary Structures from Recycled Material", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", image: "SolutionsPins_ARenriched", price: 1000 },
-        { id: "4", name: "Reactivation of Open Spaces through NBS", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", image: "SolutionsPins_ARenriched", price: 1200 },
-        { id: "5", name: "Projection Mapping on Kinetic Surfaces", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", image: "SolutionsPins_ARenriched", price: 1800 },
-        { id: "6", name: "AR Enriched Human-place Interaction", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", image: "SolutionsPins_ARenriched", price: 2000 }
-    ];
-
 
     return (
         <Box overflow="auto" width="300px" height="400px" borderRadius="lg">
@@ -31,7 +21,7 @@ export default function Solutions() {
 
                     {/* For Loop of Solutions*/}
                     {
-                        solutions && solutions.map((solution) => (
+                        global_solutions?.map((solution) => (
                             <AccordionItem>
                                 <h2>
                                     <AccordionButton p="2">

@@ -34,3 +34,11 @@ export interface RoomPlayersInfo {
     facilitatorID: string;
     players: PlayerData[]
 }
+
+export interface Solution {
+    id: string;
+    name: string;
+    description: string;
+    image: string;
+    price: number;
+ } 

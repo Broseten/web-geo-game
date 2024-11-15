@@ -2,7 +2,7 @@
 // This file displays a grid of the different customizations  
 // for when the facilitator creates a room
 
-import { Box, Button, Center, Checkbox, CheckboxGroup, Grid, Input, InputGroup, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Checkbox, CheckboxGroup, Input, InputGroup, Text, VStack } from "@chakra-ui/react";
 import L from "leaflet";
 import { useRef, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
@@ -11,40 +11,36 @@ import { RoomJoined } from "../../data/DataTypes";
 import { socket } from "../../main";
 import { usePolygon } from "../Contexts/PolygonContext";
 import MapAreaSelection, { MapAreaSelectionRef } from "./MapAreaSelection";
+import { global_roles, global_solutions, maxPlayers as global_maxPlayers } from "../../data/data";
+import RoleSelector from "./RoleSelector";
 
 export default function Customizations() {
     // room input variables  
     const [roomName, setRoomName] = useState('');
-    const [time, setTime] = useState<number>(0);
-    const [budget, setBudget] = useState<number>(0);
+    // TODO use a different way of setting time per round?
+    const [time, setTime] = useState<number>(240);
+    // TODO default values from a file?
+    const [initialBudget, setInitialBudget] = useState<number>(10000);
+    const [budgetPerRound, setBudgetPerRound] = useState<number>(5000);
     const { polygon: mapPolygon } = usePolygon();
     const mapSelectionRef = useRef<MapAreaSelectionRef>(null);
+    const [checkedSolutions, setCheckedSolutions] = useState<Record<string, boolean>>(
+        () =>
+            global_solutions.reduce((acc, solution) => {
+                acc[solution.id] = true;
+                return acc;
+            }, {} as Record<string, boolean>)
+    );
 
-    // room solution variables 
-    const solutionsList = [
-        'Digitally Fabricated Vegetable Garden',
-        'Small Scale Pavillion Structure',
-        'Temporary Structures from Recycled Material',
-        'Reactivation of Open Spaces through NBS',
-        'Projection Mapping on Kinetic Surfaces',
-        'AR Enriched Human-place Interaction'
-    ];
-    const [checkedSolutions, setCheckedSolutions] = useState<boolean[]>(Array.from(solutionsList.map(() => false)));
+    // Toggle the checked state of a solution
+    const toggleSolution = (id: string) => {
+        setCheckedSolutions((prev) => ({
+            ...prev,
+            [id]: !prev[id],
+        }));
+    };
 
-    // room role variables 
-    const rolesList = [
-        'Community Leader',
-        'Developer',
-        'Elder',
-        'Environmentalist',
-        'Historian',
-        'Non-government Organization',
-        'Officer',
-        'Politician',
-        'Young Person',
-        'Other'
-    ];
-    const [checkedRoles, setCheckedRoles] = useState<boolean[]>(Array.from(rolesList.map(() => false)));
+    const roleSelectorRef = useRef<{ getSelectedRoles: () => string[] }>(null);
 
     initSocket('room-created', (roomID: string) => {
         socket.emit('join-room', roomID);
@@ -68,7 +64,7 @@ export default function Customizations() {
                         _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
                         fontSize="14px"
                         _hover={{ borderWidth: "2px" }}
-                        
+
                         // set room name variable 
                         value={roomName}
                         onChange={(event) => setRoomName(event.target.value)}
@@ -101,29 +97,21 @@ export default function Customizations() {
                 <CheckboxGroup colorScheme='orange'>
                     <VStack align="left" gap="0">
                         {
-                            solutionsList
-                            &&
-                            solutionsList.map((solution, index) => (
-                                <Checkbox borderColor="orange" color="brand.grey" value={'solution ' + index}
-                                    key={index}
-                                    isChecked={checkedSolutions[index]}
-                                    onChange={(e) =>
-                                        setCheckedSolutions([
-                                            ...checkedSolutions.slice(0, index),
-                                            e.target.checked,
-                                            ...checkedSolutions.slice(index + 1)
-                                        ])
-                                    }
+                            global_solutions?.map((solution) => (
+                                <Checkbox
+                                    borderColor="orange"
+                                    color="brand.grey"
+                                    key={solution.id}
+                                    isChecked={checkedSolutions[solution.id]}
+                                    onChange={() => toggleSolution(solution.id)}
                                 >
-                                    {solution}
+                                    {solution.name}
                                 </Checkbox>
                             ))
                         }
                     </VStack>
                 </CheckboxGroup>
             </Box>
-
-
 
             {/* Select Roles */}
             <Box pb="20px">
@@ -131,33 +119,8 @@ export default function Customizations() {
                     Select roles from the options
                 </Text>
 
-                {/* Role Checkboxes */}
-                <CheckboxGroup colorScheme='orange'>
-                    <VStack align="left" gap="0">
-                        {
-                            rolesList
-                            &&
-                            rolesList.map((role, index) => (
-                                <Checkbox borderColor="orange" color="brand.grey" value={'role ' + index}
-                                    key={index}
-                                    isChecked={checkedRoles[index]}
-                                    onChange={(e) =>
-                                        setCheckedRoles([
-                                            ...checkedRoles.slice(0, index),
-                                            e.target.checked,
-                                            ...checkedRoles.slice(index + 1)
-                                        ])
-                                    }
-                                >
-                                    {role}
-                                </Checkbox>
-                            ))
-                        }
-                    </VStack>
-                </CheckboxGroup>
+                <RoleSelector ref={roleSelectorRef} />
             </Box>
-
-
 
             {/* Enter Time */}
             <Box pb="20px">
@@ -173,7 +136,7 @@ export default function Customizations() {
                         _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
                         fontSize="14px"
                         _hover={{ borderWidth: "2px" }}
-                        
+
                         // set time variable 
                         type="number"
                         value={time}
@@ -182,12 +145,10 @@ export default function Customizations() {
                 </InputGroup>
             </Box>
 
-
-
-            {/* Enter Budget */}
+            {/* TODO change these to sliders? */}
             <Box pb="20px">
                 <Text className="h2" color="brand.grey">
-                    Budget per team
+                    Initial budget
                 </Text>
 
                 <InputGroup>
@@ -198,16 +159,37 @@ export default function Customizations() {
                         _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
                         fontSize="14px"
                         _hover={{ borderWidth: "2px" }}
-                        
+
                         // set budget variable 
                         type="number"
-                        value={budget}
-                        onChange={(event) => setBudget(Number(event.target.value))}
+                        value={initialBudget}
+                        onChange={(event) => setInitialBudget(Number(event.target.value))}
                     ></Input>
                 </InputGroup>
             </Box>
 
+            {/* Enter Budget */}
+            <Box pb="20px">
+                <Text className="h2" color="brand.grey">
+                    Budget per round
+                </Text>
 
+                <InputGroup>
+                    <Input
+                        borderColor="brand.teal"
+                        color="brand.teal"
+                        placeholder='Enter in euros...'
+                        _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
+                        fontSize="14px"
+                        _hover={{ borderWidth: "2px" }}
+
+                        // set budget variable 
+                        type="number"
+                        value={budgetPerRound}
+                        onChange={(event) => setBudgetPerRound(Number(event.target.value))}
+                    ></Input>
+                </InputGroup>
+            </Box>
 
             {/* Creates the room and goes into lobby */}
             <Center>
@@ -234,15 +216,23 @@ export default function Customizations() {
                             }
                         }
 
-                        // TODO correctly set all the data
+                        let roles = roleSelectorRef.current?.getSelectedRoles();
+                        if (!roles) {
+                            roles = global_roles.slice(0, global_maxPlayers);
+                        }
+                        if (roles.length === 0 && global_roles.length > 0) {
+                            roles.push(global_roles[0]);
+                        }
+
+                        // set all the data that go to the server
                         const roomData: RoomJoined = {
                             name: roomName,
                             polygonLatLngs: polygon?.getLatLngs(),
-                            solutionIDs: ["solution 1", "solution 2", "solution 3"],
-                            roles: ["role 1", "role 2", "role 3", "role 4"],
+                            solutionIDs: Object.keys(checkedSolutions).filter((id) => checkedSolutions[id]),
+                            roles: roles,
                             timePerRound: time,
-                            initialBudget: budget,
-                            budgetPerRound: budget
+                            initialBudget: initialBudget,
+                            budgetPerRound: budgetPerRound
                         };
                         socket.emit('create-room', roomData);
                     }}>
