@@ -59,9 +59,9 @@ export class ServerIO {
             budgetPerRound: 3000
          };
 
-         const roomId = this.roomManager.createRoom(roomData);
-
-         clientSocket.emit('room-created', roomId);
+         const roomId = this.roomManager.createRoom(roomData, clientSocket);
+         if (roomId) clientSocket.emit('room-created', roomId);
+         else clientSocket.emit('room-exists');
       });
 
       clientSocket.on('join-room', (roomID: string) => {

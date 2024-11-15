@@ -8,6 +8,7 @@ const gameRoomMaxPlayers = 4;
 export class GameRoom {
    public id: string;
    private ioServer: Server;
+   private facilitator: string; //player ID of the facilitator
    private players: Map<string, Player>; // Map of playerId to Player instance
    public roomInitData: RoomData;
    private availableRoles: string[];
@@ -20,12 +21,13 @@ export class GameRoom {
 
    // TODO add Map handler for each player in the room
 
-   constructor(ioServer: Server, initialRoomData: RoomData) {
+   constructor(ioServer: Server, initialRoomData: RoomData, facilitator: Socket) {
       this.id = uuidv4(); // Unique ID for the room
       this.ioServer = ioServer;
       this.players = new Map();
       this.roomInitData = initialRoomData;
       this.availableRoles = initialRoomData.roles;
+      this.facilitator = facilitator.id;
    }
 
    // Adds a player to the room

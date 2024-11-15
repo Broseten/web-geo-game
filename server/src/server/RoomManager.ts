@@ -13,9 +13,17 @@ export class RoomManager {
       this.playerRoomMap = new Map();
    }
 
-   public createRoom(roomData: RoomData): string {
-      // TODO let users create a room and assigned them as a facilitator
-      let targetRoom = new GameRoom(this.ioServer, roomData);
+   private roomExists(name: string): boolean {
+      return Array.from(this.rooms.values()).some(room => room.roomInitData.name === name);
+   }
+
+   // TODO check if room with the same name exists
+   public createRoom(roomData: RoomData, socket: Socket): string | null {
+      if (this.roomExists(roomData.name)) {
+         return null;
+      }
+      // TODO let users create a room and assign them as a facilitator
+      let targetRoom = new GameRoom(this.ioServer, roomData, socket);
       this.rooms.set(targetRoom.id, targetRoom);
       console.info(`Created new room with ID: ${targetRoom.id}`);
       // TODO notify all clients (that are in the lobby?) that a new room was created to refresh
