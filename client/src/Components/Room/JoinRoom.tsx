@@ -4,10 +4,8 @@
 
 import { Box, Button, Center, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { RoomInfo } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
-import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 
 export default function JoinRoom() {

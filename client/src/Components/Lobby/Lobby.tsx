@@ -14,7 +14,9 @@ export default function Lobby() {
 
     const { setCurrentScreen } = useScreenSelection();
 
+    // TODO use a different message for game start?
     initSocket('round-info', (info) => {
+        // Start the game
         console.log(info);
         setCurrentScreen('play');
     });
