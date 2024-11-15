@@ -185,8 +185,18 @@ export default function Customizations() {
                     onClick={() => {
                         // TODO first check if the polygon in the polygon context is null
                         //      if it is null, assign approximate rectangular location from the map visible area
-
-                        socket.emit('create-room', roomName);
+                        
+                        // TODO send all the data
+                        const roomData: RoomData = {
+                            name: roomName,
+                            polygon: undefined,
+                            solutionIDs: ["solution 1", "solution 2", "solution 3"],
+                            roles: ["role 1", "role 2", "role 3", "role 4"],
+                            timePerRound: 30,
+                            initialBudget: 10000,
+                            budgetPerRound: 3000
+                        };
+                        socket.emit('create-room', roomData);
                     }}>
                     {/* TODO - make roomName appear */}
                     Create {roomName}
