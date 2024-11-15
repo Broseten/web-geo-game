@@ -1,7 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useGameRoom } from './Components/Contexts/GameRoomContext';
-import { PolygonProvider } from './Components/Contexts/PolygonContext';
 import { useScreenSelection } from './Components/Contexts/useScreenSelection';
 import HomeScreen from './Components/Home/HomeScreen';
 import Lobby from './Components/Lobby/Lobby';
@@ -24,6 +23,8 @@ function App() {
    // same for the facilitator (creator of the room) and for the players just directly joining
    initSocket('room-joined', (roomInfo: RoomInfo) => {
       setGameRoom(roomInfo.id, roomInfo.data);
+      // not necessary since we use it only for the facilitator
+      //setMapPolygon(roomInfo.data.polygonLatLngs);
       setCurrentScreen('lobby');
       console.log("joined room: " + roomInfo.data.name);
    });
@@ -57,15 +58,13 @@ function App() {
    // room screen    -- (join/create) to configure a room, username and join
    // play screen    -- to acutally play the game (can use a parametr with id of the room to rejoin on refresh)
    return (
-      <PolygonProvider>
-         <Box
-            className="app"
-            h='calc(100vh)'
-            bg="brand.blue"
-         >
-            {renderScreen()}
-         </Box>
-      </PolygonProvider>
+      <Box
+         className="app"
+         h='calc(100vh)'
+         bg="brand.blue"
+      >
+         {renderScreen()}
+      </Box>
    )
 }
 

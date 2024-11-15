@@ -13,19 +13,10 @@ export interface PlayerData {
     name: string;
 }
 
-export interface LatLng {
-    latitude: number;
-    longitude: number;
-}
-
-export interface Polygon {
-    points: LatLng[];
-}
-
 // initial data to setup the room
 export interface RoomJoined {
     name: string;
-    polygon: Polygon | undefined;
+    polygon: any;
     solutionIDs: string[];
     roles: string[];
     timePerRound: number;

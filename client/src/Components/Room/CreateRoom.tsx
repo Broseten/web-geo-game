@@ -6,6 +6,7 @@ import { Box, Button, Center, Text } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import '../../Theme/theme.css';
 import Customizations from "./Customizations";
+import { PolygonProvider } from "../Contexts/PolygonContext";
 
 export default function CreateRoom() {
    const { setCurrentScreen } = useScreenSelection();
@@ -45,21 +46,23 @@ export default function CreateRoom() {
                   <Box bg="white" overflow="auto"
                      width="500px" height="520px"
                      borderRadius="5px" padding="5">
-                     <Customizations />
+                     <PolygonProvider>
+                        <Customizations />
+                     </PolygonProvider>
                   </Box>
                </Center>
             </Box>
 
             {/* home button at the top */}
             <Button position="absolute" top="0" left="0"
-                bg="none"
-                _hover={{ background: "none" }}
-                onClick={() => {
-                    setCurrentScreen('home');
-                }}>
-                <Text color="brand.grey" _hover={{ textDecoration: "underline" }}>
-                    NegoDesign
-                </Text>
+               bg="none"
+               _hover={{ background: "none" }}
+               onClick={() => {
+                  setCurrentScreen('home');
+               }}>
+               <Text color="brand.grey" _hover={{ textDecoration: "underline" }}>
+                  NegoDesign
+               </Text>
             </Button>
          </Center>
       </Box>

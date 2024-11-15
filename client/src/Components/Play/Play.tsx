@@ -3,16 +3,15 @@
 // which includes the left game screen, map, and modals 
 
 import { HStack } from "@chakra-ui/react";
-import { socket } from "../../main";
-import GameMap from "./Map/GameMap";
 import { useEffect, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
+import { socket } from "../../main";
+import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
-import PlayModal from "./PlayModal";
 import Game from "./Game/Game";
-import Voting from "./Voting/Voting";
+import GameMap from "./Map/GameMap";
+import PlayModal from "./PlayModal";
 import L from "leaflet";
-import { usePolygon } from "../Contexts/PolygonContext";
 
 interface Play {
    isConnected: boolean;
@@ -20,7 +19,7 @@ interface Play {
 
 export default function Play({ isConnected }: Play) {
    console.log("connected: " + isConnected);
-   const { polygon } = usePolygon();
+   const { roomInfo } = useGameRoom();
    const { setCurrentScreen } = useScreenSelection();
    const [testCounter, setTestCounter] = useState(0);
 
@@ -45,7 +44,7 @@ export default function Play({ isConnected }: Play) {
          <Game />
 
          {/* Adding in the Game Map */}
-         <GameMap polygon={polygon} />
+         <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} />
       </HStack>
    );
 }

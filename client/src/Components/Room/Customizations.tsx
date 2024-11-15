@@ -2,19 +2,23 @@
 // This file displays a grid of the different customizations  
 // for when the facilitator creates a room
 
-import { Box, Button, Center, Checkbox, CheckboxGroup, Grid, Input, InputGroup, Select, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
-import '../../Theme/theme.css';
-import MapSelection from "./MapAreaSelection";
-import { socket } from "../../main";
+import { Box, Button, Center, Checkbox, CheckboxGroup, Grid, Input, InputGroup, Text, VStack } from "@chakra-ui/react";
+import L from "leaflet";
+import { useRef, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
+import '../../Theme/theme.css';
 import { RoomJoined } from "../../data/DataTypes";
+import { socket } from "../../main";
+import { usePolygon } from "../Contexts/PolygonContext";
+import MapAreaSelection, { MapAreaSelectionRef } from "./MapAreaSelection";
 
 export default function Customizations() {
     // room input variables  
     const [roomName, setRoomName] = useState('');
     const [time, setTime] = useState<number>(0);
     const [budget, setBudget] = useState<number>(0);
+    const { polygon: mapPolygon } = usePolygon();
+    const mapSelectionRef = useRef<MapAreaSelectionRef>(null);
 
     // room solution variables 
     const solutionsList = [
@@ -81,7 +85,7 @@ export default function Customizations() {
                 </Text>
 
                 <Box h="400px">
-                    <MapSelection />
+                    <MapAreaSelection ref={mapSelectionRef} />
                 </Box>
             </Box>
 
@@ -211,13 +215,29 @@ export default function Customizations() {
                     bg='brand.teal' color="white" variant='outline'
                     _hover={{ bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px" }}
                     onClick={() => {
-                        // TODO first check if the polygon in the polygon context is null
-                        //      if it is null, assign approximate rectangular location from the map visible area
+                        let polygon = mapPolygon;
+                        // Set polygon from view bounds if userPolygon is not set
+                        // first check if the polygon in the polygon context is null
+                        // if it is null, assign rectangular location from the map visible area
+                        if (polygon === null) {
+                            const map = mapSelectionRef?.current?.getMapInstance();
+                            if (map) {
+                                const bounds = map.getBounds();
+                                const corners = [
+                                    bounds.getSouthWest(),
+                                    bounds.getNorthWest(),
+                                    bounds.getNorthEast(),
+                                    bounds.getSouthEast(),
+                                ];
+                                polygon = L.polygon(corners);
+                                console.log(polygon);
+                            }
+                        }
 
-                        // TODO send all the data
+                        // TODO correctly set all the data
                         const roomData: RoomJoined = {
                             name: roomName,
-                            polygon: undefined,
+                            polygonLatLngs: polygon?.getLatLngs(),
                             solutionIDs: ["solution 1", "solution 2", "solution 3"],
                             roles: ["role 1", "role 2", "role 3", "role 4"],
                             timePerRound: time,
