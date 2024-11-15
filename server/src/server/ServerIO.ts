@@ -48,18 +48,8 @@ export class ServerIO {
 
 
       // TODO let the user to specify other room parameters
-      clientSocket.on('create-room', (name: string) => {
-         const roomData: RoomData = {
-            name: name,
-            polygon: undefined,
-            solutionIDs: ["solution 1", "solution 2", "solution 3"],
-            roles: ["role 1", "role 2", "role 3", "role 4"],
-            timePerRound: 30,
-            initialBudget: 10000,
-            budgetPerRound: 3000
-         };
-
-         const roomId = this.roomManager.createRoom(roomData, clientSocket);
+      clientSocket.on('create-room', (data: RoomData) => {
+         const roomId = this.roomManager.createRoom(data, clientSocket);
          if (roomId) clientSocket.emit('room-created', roomId);
          else clientSocket.emit('room-exists');
       });
@@ -71,7 +61,11 @@ export class ServerIO {
          } else {
             // TODO one better message
             clientSocket.emit('room-info', roomInfo.roomInitData);
-            const roomUpdate: RoomUpdate = { players: roomInfo.getPlayers() };
+            const roomUpdate: RoomUpdate = {
+               facilitatorID: roomInfo.getFacilitatorID(),
+               players: roomInfo.getPlayers()
+
+            };
             clientSocket.emit('room-update', roomUpdate);
          }
       });

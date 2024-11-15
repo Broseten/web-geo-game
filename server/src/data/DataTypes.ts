@@ -35,5 +35,6 @@ export interface RoomData {
 
 // sent to all users in one room when something changes
 export interface RoomUpdate {
+    facilitatorID: string;
     players: PlayerData[]
 }

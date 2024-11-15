@@ -47,7 +47,10 @@ export class GameRoom {
       console.info(`Player ${clientSocket.id} joined room ${this.id}`);
 
       // Notify all players in the room about the new player
-      const roomUpdate: RoomUpdate = { players: this.getPlayers() };
+      const roomUpdate: RoomUpdate = {
+         facilitatorID: this.facilitator,
+         players: this.getPlayers()
+      };
       this.ioServer.to(this.id).emit('room-update', roomUpdate);
    }
 
@@ -107,6 +110,10 @@ export class GameRoom {
    // Checks if the room is empty
    isEmpty(): boolean {
       return this.players.size === 0;
+   }
+
+   getFacilitatorID(): string {
+      return this.facilitator;
    }
 
    // Returns the current players in the room with their attributes
