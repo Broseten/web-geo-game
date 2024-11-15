@@ -8,7 +8,7 @@ import '../../Theme/theme.css';
 import MapSelection from "./MapAreaSelection";
 import { socket } from "../../main";
 import initSocket from "../../Hooks/useSocket";
-import { RoomData } from "../../data/DataTypes";
+import { RoomJoined } from "../../data/DataTypes";
 
 export default function Customizations() {
     // room input variables  
@@ -210,7 +210,7 @@ export default function Customizations() {
                         //      if it is null, assign approximate rectangular location from the map visible area
 
                         // TODO send all the data
-                        const roomData: RoomData = {
+                        const roomData: RoomJoined = {
                             name: roomName,
                             polygon: undefined,
                             solutionIDs: ["solution 1", "solution 2", "solution 3"],

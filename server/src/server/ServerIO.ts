@@ -3,7 +3,7 @@ import { Socket, Server } from 'socket.io';
 import { v4 } from 'uuid';
 import { RoomManager } from './RoomManager';
 import { MapHandler } from './handlers/MapHandler';
-import { RoomData, RoomUpdate } from 'data/DataTypes';
+import { RoomInfo, RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
 
 export class ServerIO {
    public static instance: ServerIO;
@@ -32,41 +32,49 @@ export class ServerIO {
    OnClientConnected = (clientSocket: Socket) => {
       console.info('Connection established with ' + clientSocket.id);
 
-      // TODO move this to a game
-      new MapHandler(this.ioServer).startListeners(clientSocket);
-
       // TODO remember the id in the future
-      // // if the user was already on the server, reconnect
-      // let uid = this.allConnectedUsers[clientSocket.id];
-      // if (uid) {
-      //    // reconnected
-      //    // TODO notify the client about the room etc.
-      //    return;
-      // }
-      // uid = v4();
-      // this.allConnectedUsers[uid] = clientSocket.id;
+      // if the user was already on the server, reconnect
+      let uid = this.allConnectedUsers[clientSocket.id];
+      if (!uid) {
+         uid = v4();
+         this.allConnectedUsers[uid] = clientSocket.id;
+      } else {
+         // TODO reconnected
+      }
 
-
-      // TODO let the user to specify other room parameters
-      clientSocket.on('create-room', (data: RoomData) => {
+      clientSocket.on('create-room', (data: RoomJoined) => {
          const roomId = this.roomManager.createRoom(data, clientSocket);
-         if (roomId) clientSocket.emit('room-created', roomId);
+         if (roomId) {
+            clientSocket.emit('room-created', roomId);
+            // update all clients that a new room has been created
+            this.ioServer.sockets.emit('room-list', this.roomManager.getRoomList());
+         }
          else clientSocket.emit('room-exists');
       });
 
       clientSocket.on('join-room', (roomID: string) => {
-         const roomInfo = this.roomManager.joinRoom(clientSocket, roomID);
-         if (!roomInfo) {
+         const gameRoom = this.roomManager.joinRoom(clientSocket, roomID);
+         if (!gameRoom) {
             clientSocket.emit('room-not-found');
          } else {
-            // TODO one better message
-            clientSocket.emit('room-info', roomInfo.roomInitData);
-            const roomUpdate: RoomUpdate = {
-               facilitatorID: roomInfo.getFacilitatorID(),
-               players: roomInfo.getPlayers()
+            const roomInfo: RoomInfo = {
+               id: gameRoom.id,
+               data: gameRoom.roomInitData
+            }
+            clientSocket.emit('room-joined', roomInfo);
+         }
+      });
 
+      clientSocket.on('request-room-players-info', (roomID) => {
+         const room = this.roomManager.getRoom(roomID);
+         if (room) {
+            const roomUpdate: RoomPlayersInfo = {
+               facilitatorID: room.getFacilitatorID(),
+               players: room.getPlayers()
             };
-            clientSocket.emit('room-update', roomUpdate);
+            clientSocket.emit('room-players-info', roomUpdate);
+         } else {
+            clientSocket.emit('room-not-found');
          }
       });
 

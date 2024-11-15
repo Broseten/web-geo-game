@@ -1,7 +1,8 @@
 import { Server, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
 import { Player } from '../data/Player';
-import { RoomData, RoomUpdate } from 'data/DataTypes';
+import { RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
+import { MapHandler } from './handlers/MapHandler';
 
 const gameRoomMaxPlayers = 4;
 
@@ -10,7 +11,7 @@ export class GameRoom {
    private ioServer: Server;
    private facilitator: string; //player ID of the facilitator
    private players: Map<string, Player>; // Map of playerId to Player instance
-   public roomInitData: RoomData;
+   public roomInitData: RoomJoined;
    private availableRoles: string[];
    private availableColors = ["red", "green", "blue", "yellow"];
    private availableNames = ["Alice", "Bob", "Charlie", "David"];
@@ -19,15 +20,16 @@ export class GameRoom {
    private totalRounds = 3;
    private currentRound = 0;
 
-   // TODO add Map handler for each player in the room
+   private mapHandler: MapHandler;
 
-   constructor(ioServer: Server, initialRoomData: RoomData, facilitator: Socket) {
+   constructor(ioServer: Server, initialRoomData: RoomJoined, facilitator: Socket) {
       this.id = uuidv4(); // Unique ID for the room
       this.ioServer = ioServer;
       this.players = new Map();
       this.roomInitData = initialRoomData;
       this.availableRoles = initialRoomData.roles;
       this.facilitator = facilitator.id;
+      this.mapHandler = new MapHandler(this.ioServer, this.id);
    }
 
    // Adds a player to the room
@@ -46,12 +48,15 @@ export class GameRoom {
       clientSocket.join(this.id);
       console.info(`Player ${clientSocket.id} joined room ${this.id}`);
 
+      // init the map handler
+      this.mapHandler.startListeners(clientSocket);
+
       // Notify all players in the room about the new player
-      const roomUpdate: RoomUpdate = {
+      const roomUpdate: RoomPlayersInfo = {
          facilitatorID: this.facilitator,
          players: this.getPlayers()
       };
-      this.ioServer.to(this.id).emit('room-update', roomUpdate);
+      this.ioServer.to(this.id).emit('room-players-info', roomUpdate);
    }
 
    // Removes a player from the room
@@ -82,7 +87,7 @@ export class GameRoom {
 
       this.currentRound++;
       console.info(`Starting round ${this.currentRound} in room ${this.id}`);
-      this.ioServer.to(this.id).emit('round-started', { round: this.currentRound });
+      this.ioServer.to(this.id).emit('round-info', { round: this.currentRound });
 
       // Example: Handle round logic, e.g., resetting player actions, etc.
       this.handleRoundLogic();

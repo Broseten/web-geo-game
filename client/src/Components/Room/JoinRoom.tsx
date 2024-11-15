@@ -3,11 +3,12 @@
 // players can select what room they want to join
 
 import { Box, Button, Center, Text, VStack } from "@chakra-ui/react";
-import { useScreenSelection } from "../Contexts/useScreenSelection";
+import { useEffect, useState } from "react";
+import { RoomInfo } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
-import { useState } from "react";
-import { RoomData } from "../../data/DataTypes";
+import { useGameRoom } from "../Contexts/GameRoomContext";
+import { useScreenSelection } from "../Contexts/useScreenSelection";
 
 export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
@@ -17,20 +18,16 @@ export default function JoinRoom() {
       setRooms(roomList);
    });
 
-   initSocket('room-info', (roomID: string) => {
-      setCurrentScreen('lobby');
-      console.log("joined room: " + roomID);
+   initSocket('room-not-found', () => {
+      // TODO better error handling - both server and client-side
+      console.log("Room not found");
    });
 
-   initSocket('room-info', (roomData: RoomData) => {
-      setCurrentScreen('lobby');
-      // TODO do something with the data on the frontend
-      console.log(roomData);
-   });
-
-   // TODO add a button to refresh or do it automatically in intervals
-   //      (or actually let the server notify all clients about a change)
-   socket.emit('request-room-list');
+   useEffect(() => {
+      // TODO add a button to refresh or do it automatically in intervals
+      //      (or actually let the server notify all clients about a change)
+      socket.emit('request-room-list');
+   }, []); // empty array to execute this only once on refresh
 
    return (
       <Box>
