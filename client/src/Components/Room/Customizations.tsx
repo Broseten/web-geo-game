@@ -28,8 +28,19 @@ export default function Customizations() {
     const [checkedSolutions, setCheckedSolutions] = useState<boolean[]>(Array.from(solutionsList.map(() => false)));
 
     // room role variables 
-    const [roles, setRoles] = useState<string[]>([]);
-
+    const rolesList = [
+        'Community Leader',
+        'Developer',
+        'Elder',
+        'Environmentalist',
+        'Historian',
+        'Non-government Organization',
+        'Officer',
+        'Politician',
+        'Young Person',
+        'Other'
+    ];
+    const [checkedRoles, setCheckedRoles] = useState<boolean[]>(Array.from(rolesList.map(() => false)));
 
     initSocket('room-created', (roomID: string) => {
         socket.emit('join-room', roomID);
@@ -53,6 +64,7 @@ export default function Customizations() {
                         _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
                         fontSize="14px"
                         _hover={{ borderWidth: "2px" }}
+                        
                         // set room name variable 
                         value={roomName}
                         onChange={(event) => setRoomName(event.target.value)}
@@ -83,25 +95,27 @@ export default function Customizations() {
 
                 {/* Solution Checkboxes */}
                 <CheckboxGroup colorScheme='orange'>
-                    {
-                        solutionsList
-                        &&
-                        solutionsList.map((solution, index) => (
-                            <Checkbox borderColor="orange" color="brand.grey" value={'solution ' + index}
-                                key={index}
-                                isChecked={checkedSolutions[index]}
-                                onChange={(e) =>
-                                    setCheckedSolutions([
-                                        ...checkedSolutions.slice(0, index),
-                                        e.target.checked,
-                                        ...checkedSolutions.slice(index + 1)
-                                    ])
-                                }
-                            >
-                                {solution}
-                            </Checkbox>
-                        ))
-                    }
+                    <VStack align="left" gap="0">
+                        {
+                            solutionsList
+                            &&
+                            solutionsList.map((solution, index) => (
+                                <Checkbox borderColor="orange" color="brand.grey" value={'solution ' + index}
+                                    key={index}
+                                    isChecked={checkedSolutions[index]}
+                                    onChange={(e) =>
+                                        setCheckedSolutions([
+                                            ...checkedSolutions.slice(0, index),
+                                            e.target.checked,
+                                            ...checkedSolutions.slice(index + 1)
+                                        ])
+                                    }
+                                >
+                                    {solution}
+                                </Checkbox>
+                            ))
+                        }
+                    </VStack>
                 </CheckboxGroup>
             </Box>
 
@@ -114,22 +128,28 @@ export default function Customizations() {
                 </Text>
 
                 {/* Role Checkboxes */}
-                <CheckboxGroup colorScheme='orange'
-                    defaultValue={['role 1', 'role 2', 'role 3', 'role 4', 'role 5', 'role 6', 'role 7', 'role 8', 'role 9', 'other']}>
-
-                    <Grid color="brand.grey">
-                        {/* TODO - all creator solutions go here*/}
-                        <Checkbox borderColor="orange" value='role 1'>      Community Leader</Checkbox>
-                        <Checkbox borderColor="orange" value='role 2'>      Developer</Checkbox>
-                        <Checkbox borderColor="orange" value='role 3'>      Elder</Checkbox>
-                        <Checkbox borderColor="orange" value='role 4'>      Environmentalist</Checkbox>
-                        <Checkbox borderColor="orange" value='role 5'>      Historian</Checkbox>
-                        <Checkbox borderColor="orange" value='role 6'>      Non-government Organization</Checkbox>
-                        <Checkbox borderColor="orange" value='role 7'>      Officer</Checkbox>
-                        <Checkbox borderColor="orange" value='role 8'>      Politician</Checkbox>
-                        <Checkbox borderColor="orange" value='role 9'>      Young Person</Checkbox>
-                        <Checkbox borderColor="orange" value='other'>       Other</Checkbox>
-                    </Grid>
+                <CheckboxGroup colorScheme='orange'>
+                    <VStack align="left" gap="0">
+                        {
+                            rolesList
+                            &&
+                            rolesList.map((role, index) => (
+                                <Checkbox borderColor="orange" color="brand.grey" value={'role ' + index}
+                                    key={index}
+                                    isChecked={checkedRoles[index]}
+                                    onChange={(e) =>
+                                        setCheckedRoles([
+                                            ...checkedRoles.slice(0, index),
+                                            e.target.checked,
+                                            ...checkedRoles.slice(index + 1)
+                                        ])
+                                    }
+                                >
+                                    {role}
+                                </Checkbox>
+                            ))
+                        }
+                    </VStack>
                 </CheckboxGroup>
             </Box>
 
@@ -149,6 +169,7 @@ export default function Customizations() {
                         _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
                         fontSize="14px"
                         _hover={{ borderWidth: "2px" }}
+                        
                         // set time variable 
                         type="number"
                         value={time}
@@ -173,6 +194,7 @@ export default function Customizations() {
                         _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
                         fontSize="14px"
                         _hover={{ borderWidth: "2px" }}
+                        
                         // set budget variable 
                         type="number"
                         value={budget}
@@ -183,7 +205,7 @@ export default function Customizations() {
 
 
 
-            {/* This button creates the room and goes to its lobby */}
+            {/* Creates the room and goes into lobby */}
             <Center>
                 <Button //className="dark-button" 
                     bg='brand.teal' color="white" variant='outline'
@@ -204,7 +226,6 @@ export default function Customizations() {
                         };
                         socket.emit('create-room', roomData);
                     }}>
-                    {/* TODO - make roomName appear */}
                     Create {roomName}
                 </Button>
             </Center>
