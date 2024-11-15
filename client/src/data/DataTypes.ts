@@ -33,6 +33,11 @@ export interface RoomJoined {
     budgetPerRound: number;
 }
 
+export interface RoomInfo {
+    id: string,
+    data: RoomJoined
+}
+
 // sent to all users in one room when something changes
 export interface RoomPlayersInfo {
     facilitatorID: string;

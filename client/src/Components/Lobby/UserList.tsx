@@ -2,16 +2,18 @@
 // User cards in the lobby
 
 import { Box, Card, CardBody, Heading } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
 import '../../Theme/theme.css';
 import { PlayerData, RoomPlayersInfo } from "../../data/DataTypes";
 import { socket } from "../../main";
 import FacilitatorCard from "./FacilitatorCard";
 import PlayerCard from "./PlayerCard";
+import { useGameRoom } from "../Contexts/GameRoomContext";
 
 
 export default function UserList() {
+    const { roomID } = useGameRoom();
     const [isFacilitator, setIsFacilitator] = useState<boolean>(false);
     // const isFacilitator = false;
 
@@ -28,8 +30,10 @@ export default function UserList() {
         // TODO better error handling - both server and client-side
         console.log("Room not found");
     });
-
-    socket.emit('request-room-players-info');
+    
+    useEffect(() => {
+        socket.emit('request-room-players-info', roomID);
+    }, []);
 
     // List view if the user is a player 
     return (

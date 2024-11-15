@@ -23,7 +23,6 @@ export interface Polygon {
 }
 
 // initial data to setup the room
-// TODO rename to: RoomCreationInfo
 export interface RoomJoined {
     name: string;
     polygon: Polygon | undefined;
@@ -32,6 +31,11 @@ export interface RoomJoined {
     timePerRound: number;
     initialBudget: number;
     budgetPerRound: number;
+}
+
+export interface RoomInfo {
+    id: string,
+    data: RoomJoined
 }
 
 // sent to all users in one room when something changes

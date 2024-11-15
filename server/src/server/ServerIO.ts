@@ -3,7 +3,7 @@ import { Socket, Server } from 'socket.io';
 import { v4 } from 'uuid';
 import { RoomManager } from './RoomManager';
 import { MapHandler } from './handlers/MapHandler';
-import { RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
+import { RoomInfo, RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
 
 export class ServerIO {
    public static instance: ServerIO;
@@ -55,11 +55,15 @@ export class ServerIO {
       });
 
       clientSocket.on('join-room', (roomID: string) => {
-         const roomInfo = this.roomManager.joinRoom(clientSocket, roomID);
-         if (!roomInfo) {
+         const gameRoom = this.roomManager.joinRoom(clientSocket, roomID);
+         if (!gameRoom) {
             clientSocket.emit('room-not-found');
          } else {
-            clientSocket.emit('room-joined', roomInfo.roomInitData);
+            const roomInfo: RoomInfo = {
+               id: gameRoom.id,
+               data: gameRoom.roomInitData
+            }
+            clientSocket.emit('room-joined', roomInfo);
          }
       });
 
