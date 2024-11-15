@@ -41,24 +41,6 @@ export default function SetUpInfo() {
                     }}>
                     Start
                 </Button>
-
-                {/*TEMPORARY - FOR ROOM BUILD */}
-                <Button colorScheme='purple'
-                    onClick={() => { setCurrentScreen('create') }}>
-                    Create
-                </Button>
-
-                {/*TEMPORARY - FOR PLAY*/}
-                <Button colorScheme='green'
-                    onClick={() => { setCurrentScreen('play') }}>
-                    Play
-                </Button>
-
-                {/*TEMPORARY - FOR LOBBY*/}
-                <Button colorScheme='red'
-                    onClick={() => { setCurrentScreen('lobby') }}>
-                    Lobby
-                </Button>
             </Box>
         )
     }
