@@ -3,7 +3,6 @@
 // for when the facilitator creates a room
 
 import { Box, Button, Center, Checkbox, CheckboxGroup, Grid, Input, InputGroup, Select, Text, VStack } from "@chakra-ui/react";
-import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useState } from "react";
 import '../../Theme/theme.css';
 import MapSelection from "./MapAreaSelection";
@@ -12,21 +11,46 @@ import initSocket from "../../Hooks/useSocket";
 import { RoomData } from "../../data/DataTypes";
 
 export default function Customizations() {
-    const { setCurrentScreen } = useScreenSelection();
-
+    // room input variables  
     const [roomName, setRoomName] = useState('');
-    const time = 400;
-    const budget = 100000;
+    const [time, setTime] = useState<number>(0);
+    const [budget, setBudget] = useState<number>(0);
+
+    // room solution variables 
+    const solutionsList = [
+        'Digitally Fabricated Vegetable Garden',
+        'Small Scale Pavillion Structure',
+        'Temporary Structures from Recycled Material',
+        'Reactivation of Open Spaces through NBS',
+        'Projection Mapping on Kinetic Surfaces',
+        'AR Enriched Human-place Interaction'
+    ];
+    const [solutions, setSolutions] = useState<boolean[]>(Array.from(solutionsList.map(() => false)));
+    const [isChecked, setIsChecked] = useState(false);
+    const handleCheckboxChange = (index: number, isChecked: boolean) => {
+        // Create a copy of the solutions array
+        const newSolutions = [...solutions];
+        console.log("newSolutions: " + newSolutions);
+        console.log("index: " + index);
+        console.log("isChecked: " + isChecked);
+
+        newSolutions[index] = isChecked; // Set the correct index based on checkbox state
+        console.log("new  solutions after: " + newSolutions);
+
+        setSolutions(newSolutions); // Update the state with the new solutions array
+    };
+
+    // room role variables 
+    const [roles, setRoles] = useState<string[]>([]);
+
+    // count variable 
+    const [count, setCount] = useState<number>(0);
+
 
     initSocket('room-created', (roomID: string) => {
         socket.emit('join-room', roomID);
     });
 
-    initSocket('room-info', (roomData: RoomData) => {
-        setCurrentScreen('lobby');
-        // TODO do something with the data on the frontend
-        console.log(roomData);
-    });
 
     return (
         <VStack align="left">
@@ -45,7 +69,7 @@ export default function Customizations() {
                         _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
                         fontSize="14px"
                         _hover={{ borderWidth: "2px" }}
-                        // TODO - set room name variable 
+                        // set room name variable 
                         value={roomName}
                         onChange={(event) => setRoomName(event.target.value)}
                     ></Input>
@@ -63,16 +87,6 @@ export default function Customizations() {
                 <Box h="400px">
                     <MapSelection />
                 </Box>
-                {/* TODO - insert map here
-                <Select bg="brand.teal" fontSize="14px"
-                    placeholder='Select map...'>
-                    <option value='ballina'>    Ballina</option>
-                    <option value='cork'>       Cork</option>
-                    <option value='dublin'>     Dublin</option>
-                    <option value='galway'>     Galway</option>
-                    <option value='limerick'>   Limerick</option>
-                    <option value='waterford'>  Waterford</option>
-                </Select> */}
             </Box>
 
 
@@ -83,19 +97,28 @@ export default function Customizations() {
                     Select solutions from the options
                 </Text>
 
-                {/* Checkboxes for the solutions */}
-                <CheckboxGroup colorScheme='orange'
-                    defaultValue={['garden', 'pavillion', 'structure', 'spaces', 'mapping', 'humanplace']}>
-
-                    <Grid color="brand.grey">
-                        {/* TODO - all creator solutions go here*/}
-                        <Checkbox borderColor="orange" value='garden'>       Digitally Fabricated Vegetable Garden</Checkbox>
-                        <Checkbox borderColor="orange" value='pavillion'>    Small Scale Pavillion Structure</Checkbox>
-                        <Checkbox borderColor="orange" value='structure'>    Temporary Structures from Recycled Material</Checkbox>
-                        <Checkbox borderColor="orange" value='spaces'>       Reactivation of Open Spaces through NBS</Checkbox>
-                        <Checkbox borderColor="orange" value='mapping'>      Projection Mapping on Kinetic Surfaces</Checkbox>
-                        <Checkbox borderColor="orange" value='humanplace'>   AR Enriched Human-place Interaction</Checkbox>
-                    </Grid>
+                {/* Solution Checkboxes */}
+                <CheckboxGroup colorScheme='orange'>
+                    {
+                        solutionsList
+                        &&
+                        solutionsList.map((solution, index) => (
+                            <Checkbox borderColor="orange" color="brand.grey" value={'solution ' + count}
+                                key={index}
+                                //checked={solutions[index]}
+                                // set the solutions 
+                                isChecked={solutions[index]}
+                                onChange={(event) => {
+                                    setIsChecked(event.target.checked)
+                                    handleCheckboxChange(index, event.target.checked);
+                                    console.log("event target checked: " + event.target.checked);
+                                    setCount((prevCount) => prevCount + 1);
+                                    console.log(solutions);
+                                }}>
+                                {solution}
+                            </Checkbox>
+                        ))
+                    }
                 </CheckboxGroup>
             </Box>
 
@@ -107,21 +130,21 @@ export default function Customizations() {
                     Select roles from the options
                 </Text>
 
-                {/* Checkboxes for the roles */}
+                {/* Role Checkboxes */}
                 <CheckboxGroup colorScheme='orange'
-                    defaultValue={['leader', 'developer', 'elder', 'environ', 'historian', 'ngo', 'officer', 'politician', 'young', 'other']}>
+                    defaultValue={['role 1', 'role 2', 'role 3', 'role 4', 'role 5', 'role 6', 'role 7', 'role 8', 'role 9', 'other']}>
 
                     <Grid color="brand.grey">
                         {/* TODO - all creator solutions go here*/}
-                        <Checkbox borderColor="orange" value='leader'>      Community Leader</Checkbox>
-                        <Checkbox borderColor="orange" value='developer'>   Developer</Checkbox>
-                        <Checkbox borderColor="orange" value='elder'>       Elder</Checkbox>
-                        <Checkbox borderColor="orange" value='environ'>     Environmentalist</Checkbox>
-                        <Checkbox borderColor="orange" value='historian'>   Historian</Checkbox>
-                        <Checkbox borderColor="orange" value='ngo'>         Non-government Organization</Checkbox>
-                        <Checkbox borderColor="orange" value='officer'>     Officer</Checkbox>
-                        <Checkbox borderColor="orange" value='politician'>  Politician</Checkbox>
-                        <Checkbox borderColor="orange" value='young'>       Young Person</Checkbox>
+                        <Checkbox borderColor="orange" value='role 1'>      Community Leader</Checkbox>
+                        <Checkbox borderColor="orange" value='role 2'>      Developer</Checkbox>
+                        <Checkbox borderColor="orange" value='role 3'>      Elder</Checkbox>
+                        <Checkbox borderColor="orange" value='role 4'>      Environmentalist</Checkbox>
+                        <Checkbox borderColor="orange" value='role 5'>      Historian</Checkbox>
+                        <Checkbox borderColor="orange" value='role 6'>      Non-government Organization</Checkbox>
+                        <Checkbox borderColor="orange" value='role 7'>      Officer</Checkbox>
+                        <Checkbox borderColor="orange" value='role 8'>      Politician</Checkbox>
+                        <Checkbox borderColor="orange" value='role 9'>      Young Person</Checkbox>
                         <Checkbox borderColor="orange" value='other'>       Other</Checkbox>
                     </Grid>
                 </CheckboxGroup>
@@ -143,10 +166,10 @@ export default function Customizations() {
                         _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
                         fontSize="14px"
                         _hover={{ borderWidth: "2px" }}
-
-                    // TODO - set time variable 
-                    // value={time}
-                    // onChange={(event) => setPlayerName(event.target.value)}
+                        // set time variable 
+                        type="number"
+                        value={time}
+                        onChange={(event) => setTime(Number(event.target.value))}
                     ></Input>
                 </InputGroup>
             </Box>
@@ -167,10 +190,10 @@ export default function Customizations() {
                         _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
                         fontSize="14px"
                         _hover={{ borderWidth: "2px" }}
-
-                    // TODO - set budget variable 
-                    // value={budget}
-                    // onChange={(event) => setPlayerName(event.target.value)}
+                        // set budget variable 
+                        type="number"
+                        value={budget}
+                        onChange={(event) => setBudget(Number(event.target.value))}
                     ></Input>
                 </InputGroup>
             </Box>
@@ -185,16 +208,16 @@ export default function Customizations() {
                     onClick={() => {
                         // TODO first check if the polygon in the polygon context is null
                         //      if it is null, assign approximate rectangular location from the map visible area
-                        
+
                         // TODO send all the data
                         const roomData: RoomData = {
                             name: roomName,
                             polygon: undefined,
                             solutionIDs: ["solution 1", "solution 2", "solution 3"],
                             roles: ["role 1", "role 2", "role 3", "role 4"],
-                            timePerRound: 30,
-                            initialBudget: 10000,
-                            budgetPerRound: 3000
+                            timePerRound: time,
+                            initialBudget: budget,
+                            budgetPerRound: budget
                         };
                         socket.emit('create-room', roomData);
                     }}>
