@@ -7,7 +7,7 @@ import { useScreenSelection } from "../Contexts/useScreenSelection";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
 import { useState } from "react";
-import { RoomData } from "../../data/DataTypes";
+import { RoomJoined } from "../../data/DataTypes";
 
 export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
@@ -17,16 +17,16 @@ export default function JoinRoom() {
       setRooms(roomList);
    });
 
-   initSocket('room-info', (roomID: string) => {
+   initSocket('room-joined', (roomData: RoomJoined) => {
       setCurrentScreen('lobby');
-      console.log("joined room: " + roomID);
-   });
-
-   initSocket('room-info', (roomData: RoomData) => {
-      setCurrentScreen('lobby');
-      // TODO do something with the data on the frontend
+      // TODO do something with the data on the frontend -- use context to store data about the room
       console.log(roomData);
    });
+   
+   initSocket('room-not-found', () => {
+      // TODO better error handling - both server and client-side
+      console.log("Room not found");
+  });
 
    // TODO add a button to refresh or do it automatically in intervals
    //      (or actually let the server notify all clients about a change)

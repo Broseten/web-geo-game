@@ -1,6 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { GameRoom } from './GameRoom';
-import { RoomData } from 'data/DataTypes';
+import { RoomJoined } from 'data/DataTypes';
 
 export class RoomManager {
    private ioServer: Server;
@@ -18,7 +18,7 @@ export class RoomManager {
    }
 
    // TODO check if room with the same name exists
-   public createRoom(roomData: RoomData, socket: Socket): string | null {
+   public createRoom(roomData: RoomJoined, socket: Socket): string | null {
       if (this.roomExists(roomData.name)) {
          return null;
       }

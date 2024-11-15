@@ -1,31 +1,35 @@
 // Authors: Vojta Bruza and Grace Houser
 // User cards in the lobby
 
-import { Box, Button, Card, CardBody, Heading } from "@chakra-ui/react";
+import { Box, Card, CardBody, Heading } from "@chakra-ui/react";
+import { useState } from "react";
+import initSocket from "../../Hooks/useSocket";
+import '../../Theme/theme.css';
+import { PlayerData, RoomPlayersInfo } from "../../data/DataTypes";
+import { socket } from "../../main";
 import FacilitatorCard from "./FacilitatorCard";
 import PlayerCard from "./PlayerCard";
-import '../../Theme/theme.css';
-import { PlayerData } from "../../data/DataTypes";
-import { useState } from "react";
-import { socket } from "../../main";
 
 
 export default function UserList() {
+    const [isFacilitator, setIsFacilitator] = useState<boolean>(false);
+    // const isFacilitator = false;
 
-    const playerName = ""
-    const status = "" // this would either be "Admin" or "Player"
+    const [players, setPlayers] = useState<PlayerData[]>([]);
+    // const players: PlayerData[] = [{ id: "1", role: "Developer", color: "red", name: "Harrison" }, { id: "2", role: "Envvironmentalist", color: "green", name: "Taylor" }, { id: "3", role: "Officer", color: "blue", name: "Violet" }, { id: "4", role: "Politician", color: "yellow", name: "John" }];
 
+    initSocket('room-players-info', (roomUpdate: RoomPlayersInfo) => {
+        setIsFacilitator(socket.id === roomUpdate.facilitatorID);
+        setPlayers(roomUpdate.players);
+        console.log(roomUpdate);
+    });
 
-    // TODO - needed variables 
-    // idea - fac id is always 0 
-    const isFacilitator = false;
-    const isYou = false;
-    const userID = "0";
+    initSocket('room-not-found', () => {
+        // TODO better error handling - both server and client-side
+        console.log("Room not found");
+    });
 
-    // TODO - "players" comes from the server 
-    // const [players, setPlayers] = useState<{ id: string; name: string }[] | undefined>(undefined);
-    const players: PlayerData[] = [{ id: "1", role: "Developer", color: "red", name: "Harrison" }, { id: "2", role: "Envvironmentalist", color: "green", name: "Taylor" }, { id: "3", role: "Officer", color: "blue", name: "Violet" }, { id: "4", role: "Politician", color: "yellow", name: "John" }];
-
+    socket.emit('request-room-players-info');
 
     // List view if the user is a player 
     return (

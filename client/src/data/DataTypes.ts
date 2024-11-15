@@ -1,3 +1,11 @@
+// TODO figure out a better way to share this between client and server?
+// TODO use this generic message everywhere?
+export interface Message {
+    status: "ok" | "error",
+    error?: any
+    data?: any
+}
+
 export interface PlayerData {
     id: string;
     role: string;
@@ -5,8 +13,6 @@ export interface PlayerData {
     name: string;
 }
 
-
-// TODO this is just copied form the server...we should figure out a better way... idk, no time
 export interface LatLng {
     latitude: number;
     longitude: number;
@@ -16,7 +22,8 @@ export interface Polygon {
     points: LatLng[];
 }
 
-export interface RoomData {
+// initial data to setup the room
+export interface RoomJoined {
     name: string;
     polygon: Polygon | undefined;
     solutionIDs: string[];
@@ -24,4 +31,10 @@ export interface RoomData {
     timePerRound: number;
     initialBudget: number;
     budgetPerRound: number;
+}
+
+// sent to all users in one room when something changes
+export interface RoomPlayersInfo {
+    facilitatorID: string;
+    players: PlayerData[]
 }

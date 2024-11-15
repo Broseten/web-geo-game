@@ -1,7 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
 import { Player } from '../data/Player';
-import { RoomData, RoomUpdate } from 'data/DataTypes';
+import { RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
 
 const gameRoomMaxPlayers = 4;
 
@@ -10,7 +10,7 @@ export class GameRoom {
    private ioServer: Server;
    private facilitator: string; //player ID of the facilitator
    private players: Map<string, Player>; // Map of playerId to Player instance
-   public roomInitData: RoomData;
+   public roomInitData: RoomJoined;
    private availableRoles: string[];
    private availableColors = ["red", "green", "blue", "yellow"];
    private availableNames = ["Alice", "Bob", "Charlie", "David"];
@@ -21,7 +21,7 @@ export class GameRoom {
 
    // TODO add Map handler for each player in the room
 
-   constructor(ioServer: Server, initialRoomData: RoomData, facilitator: Socket) {
+   constructor(ioServer: Server, initialRoomData: RoomJoined, facilitator: Socket) {
       this.id = uuidv4(); // Unique ID for the room
       this.ioServer = ioServer;
       this.players = new Map();
@@ -47,11 +47,11 @@ export class GameRoom {
       console.info(`Player ${clientSocket.id} joined room ${this.id}`);
 
       // Notify all players in the room about the new player
-      const roomUpdate: RoomUpdate = {
+      const roomUpdate: RoomPlayersInfo = {
          facilitatorID: this.facilitator,
          players: this.getPlayers()
       };
-      this.ioServer.to(this.id).emit('room-update', roomUpdate);
+      this.ioServer.to(this.id).emit('room-players-info', roomUpdate);
    }
 
    // Removes a player from the room

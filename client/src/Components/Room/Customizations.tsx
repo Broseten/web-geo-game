@@ -9,7 +9,7 @@ import '../../Theme/theme.css';
 import MapSelection from "./MapAreaSelection";
 import { socket } from "../../main";
 import initSocket from "../../Hooks/useSocket";
-import { RoomData } from "../../data/DataTypes";
+import { RoomJoined } from "../../data/DataTypes";
 
 export default function Customizations() {
     const { setCurrentScreen } = useScreenSelection();
@@ -22,7 +22,7 @@ export default function Customizations() {
         socket.emit('join-room', roomID);
     });
 
-    initSocket('room-info', (roomData: RoomData) => {
+    initSocket('room-joined', (roomData: RoomJoined) => {
         setCurrentScreen('lobby');
         // TODO do something with the data on the frontend
         console.log(roomData);
@@ -187,7 +187,7 @@ export default function Customizations() {
                         //      if it is null, assign approximate rectangular location from the map visible area
                         
                         // TODO send all the data
-                        const roomData: RoomData = {
+                        const roomData: RoomJoined = {
                             name: roomName,
                             polygon: undefined,
                             solutionIDs: ["solution 1", "solution 2", "solution 3"],

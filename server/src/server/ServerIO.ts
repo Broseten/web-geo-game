@@ -3,7 +3,7 @@ import { Socket, Server } from 'socket.io';
 import { v4 } from 'uuid';
 import { RoomManager } from './RoomManager';
 import { MapHandler } from './handlers/MapHandler';
-import { RoomData, RoomUpdate } from 'data/DataTypes';
+import { RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
 
 export class ServerIO {
    public static instance: ServerIO;
@@ -48,7 +48,7 @@ export class ServerIO {
 
 
       // TODO let the user to specify other room parameters
-      clientSocket.on('create-room', (data: RoomData) => {
+      clientSocket.on('create-room', (data: RoomJoined) => {
          const roomId = this.roomManager.createRoom(data, clientSocket);
          if (roomId) clientSocket.emit('room-created', roomId);
          else clientSocket.emit('room-exists');
@@ -59,14 +59,20 @@ export class ServerIO {
          if (!roomInfo) {
             clientSocket.emit('room-not-found');
          } else {
-            // TODO one better message
-            clientSocket.emit('room-info', roomInfo.roomInitData);
-            const roomUpdate: RoomUpdate = {
-               facilitatorID: roomInfo.getFacilitatorID(),
-               players: roomInfo.getPlayers()
+            clientSocket.emit('room-joined', roomInfo.roomInitData);
+         }
+      });
 
+      clientSocket.on('request-room-players-info', (roomID) => {
+         const room = this.roomManager.getRoom(roomID);
+         if (room) {
+            const roomUpdate: RoomPlayersInfo = {
+               facilitatorID: room.getFacilitatorID(),
+               players: room.getPlayers()
             };
-            clientSocket.emit('room-update', roomUpdate);
+            clientSocket.emit('room-players-info', roomUpdate);
+         } else {
+            clientSocket.emit('room-not-found');
          }
       });
 
