@@ -9,8 +9,9 @@ import initSocket from "../../Hooks/useSocket";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 
 export default function Lobby() {
-    // TODO add the info about who is the facilitator to the room info! 
+    // TODO - add the info about who is the facilitator to the room info! 
     const { roomInfo } = useGameRoom();
+    const isFacilitator = true;
 
     const { setCurrentScreen } = useScreenSelection();
 
@@ -23,7 +24,7 @@ export default function Lobby() {
 
     return (
         <Box>
-            {/* Text at the top of the screen */}
+            {/* Lobby Page Titles */}
             <Center>
                 <Text pt='50' fontSize="4xl" fontWeight="bold" color="brand.teal">
                     Welcome to the {roomInfo ? roomInfo.name : "unknown"} lobby!
@@ -32,33 +33,39 @@ export default function Lobby() {
 
             <Center>
                 <Text pb="10" pr="20" pl="20" fontSize="l" color="brand.grey" align="center">
-                    The facilitator will start the game when everyone is ready.
-                    {/* TODO - Show text below if user is the facilitator */}
-                    {/* Start the game when everyone is ready. */}
+                    {
+                        isFacilitator ?
+                            "Start the game when all players are ready."
+                            : "The facilitator will start the game when everyone is ready."
+                    }
                 </Text>
             </Center>
 
-            {/* Player cards in the room lobby */}
+            {/* User List */}
             <Center>
                 <UserList />
             </Center>
 
-            {/* TODO - This button should be disabled for players (only the facilitator can start the game) */}
-            {/* This button leaves the lobby and goes to the game */}
+            {/* Facilitator Button - leaves lobby and goes to game */}
             <Center>
-                <Button bg="brand.teal" color='white' borderColor="brand.teal" borderWidth="2px"
-                    mt="10"
-                    _hover={{
-                        bg: "white",
-                        color: "brand.teal",
-                        borderColor: "brand.teal",
-                        borderWidth: "2px"
-                    }}
-                    onClick={() => {
-                        socket.emit('progress-game');
-                    }}>
-                    Play
-                </Button>
+                {
+                    isFacilitator ?
+                        <Button bg="brand.teal" color='white' borderColor="brand.teal" borderWidth="2px"
+                            mt="10"
+                            _hover={{
+                                bg: "white",
+                                color: "brand.teal",
+                                borderColor: "brand.teal",
+                                borderWidth: "2px"
+                            }}
+                            onClick={() => {
+                                socket.emit('progress-game');
+                            }}>
+                            Play
+                        </Button>
+
+                        : <Box />
+                }
             </Center>
 
             {/* home button at the top */}
