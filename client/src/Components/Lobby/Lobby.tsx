@@ -26,7 +26,7 @@ export default function Lobby() {
         <Box>
             {/* Lobby Page Titles */}
             <Center>
-                <Text pt='50' fontSize="4xl" fontWeight="bold" color="brand.teal">
+                <Text pt='50' fontSize="4xl" fontWeight="bold" color="brand.teal" align="center">
                     Welcome to the {roomInfo ? roomInfo.name : "unknown"} lobby!
                 </Text>
             </Center>
