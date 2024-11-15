@@ -5,21 +5,23 @@ import { Box, Card, CardBody, HStack, Heading, IconButton, Select, Text, Tooltip
 import { CloseIcon, EditIcon } from "@chakra-ui/icons";
 import Icon from "./Icon";
 import '../../Theme/theme.css';
+import { PlayerData } from "../../data/DataTypes";
 
 
 // Main Icon component, accepting you and color props
 interface PlayerCardProps {
     you: boolean;
+    player: PlayerData;
 }
 
-export default function PlayerCard({ you }: PlayerCardProps) {
+export default function PlayerCard({ you, player }: PlayerCardProps) {
 
     // TODO - variables needed
     const isYou = you;
 
-    const playerName = "Player 1";
-    const playerRole = "PlayerRole";
-    const playerColor = "orange";
+    const playerName = player.name;
+    const playerRole = player.role;
+    const playerColor = player.color;
 
 
     // Your Player Card in Lobby 
