@@ -11,6 +11,7 @@ export interface PlayerData {
     role: string;
     color: string;
     name: string;
+    isFacilitator: boolean;
 }
 
 // initial data to setup the room
@@ -31,7 +32,6 @@ export interface RoomInfo {
 
 // sent to all users in one room when something changes
 export interface RoomPlayersInfo {
-    facilitatorID: string;
     players: PlayerData[]
 }
 

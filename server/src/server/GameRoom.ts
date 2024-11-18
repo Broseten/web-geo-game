@@ -1,7 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
 import { Player } from '../data/Player';
-import { RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
+import { PlayerData, RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
 import { MapHandler } from './handlers/MapHandler';
 
 const gameRoomMaxPlayers = 4;
@@ -64,7 +64,6 @@ export class GameRoom {
 
       // Notify all players in the room about the new player
       const roomUpdate: RoomPlayersInfo = {
-         facilitatorID: this.facilitator,
          players: this.getPlayers()
       };
       this.ioServer.to(this.id).emit('room-players-info', roomUpdate);
@@ -131,12 +130,13 @@ export class GameRoom {
    }
 
    // Returns the current players in the room with their attributes
-   getPlayers(): Array<{ id: string; role: string; color: string; name: string }> {
+   getPlayers(): Array<PlayerData> {
       return Array.from(this.players.values()).map(player => ({
          id: player.id,
          role: player.role,
          color: player.color,
          name: player.name,
+         isFacilitator: player.id === this.facilitator,
       }));
    }
 }

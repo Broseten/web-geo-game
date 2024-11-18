@@ -3,23 +3,17 @@
 
 import { Box, Card, CardBody, Heading } from "@chakra-ui/react";
 import '../../Theme/theme.css';
-import { PlayerData } from "../../data/DataTypes";
+import { useGameRoom } from "../Contexts/GameRoomContext";
 import FacilitatorCard from "./FacilitatorCard";
 import PlayerCard from "./PlayerCard";
-import { useGameRoom } from "../Contexts/GameRoomContext";
 
 
 interface UserList {
-    isFacilitator: boolean,
-    players: PlayerData[]
+    isThisFacilitator: boolean,
 }
 
-export default function UserList({ isFacilitator, players }: UserList) {
-    const { facilitatorID } = useGameRoom();
-
-    function playerIsFacilitator(player: PlayerData) {
-        return player.id === facilitatorID;
-    }
+export default function UserList({ isThisFacilitator }: UserList) {
+    const { players } = useGameRoom();
 
     // List view if the user is a player 
     return (
@@ -41,15 +35,13 @@ export default function UserList({ isFacilitator, players }: UserList) {
             </Card>
             {
                 <Box overflow="auto" height="350px">
-                    <Card bg="none" shadow="none">
-                        <FacilitatorCard isFac={isFacilitator} />
-                    </Card>
                     {
                         players && players.map((player) => (
-                            // skip facilitator
-                            !playerIsFacilitator(player) &&
                             <Card bg="none" shadow="none" key={player.id}>
-                                <PlayerCard isUser={!isFacilitator} player={player} />
+                                {player.isFacilitator &&
+                                    <FacilitatorCard isFac={isThisFacilitator} player={player} />}
+                                {!player.isFacilitator &&
+                                    <PlayerCard isUser={!isThisFacilitator} player={player} />}
                             </Card>
                         ))
                     }

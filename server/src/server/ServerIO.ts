@@ -69,7 +69,6 @@ export class ServerIO {
          const room = this.roomManager.getRoom(roomID);
          if (room) {
             const roomUpdate: RoomPlayersInfo = {
-               facilitatorID: room.getFacilitatorID(),
                players: room.getPlayers()
             };
             clientSocket.emit('room-players-info', roomUpdate);

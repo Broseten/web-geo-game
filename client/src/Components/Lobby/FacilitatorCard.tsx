@@ -6,18 +6,20 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import Icon from "./Icon";
 import '../../Theme/theme.css';
 import EditActionPopup from "./EditActionPopup";
+import { PlayerData } from "../../data/DataTypes";
 
 
 // Main component, accepting "user": if the user is yourself
 interface FacilitatorCardProps {
     isFac: boolean;
+    player: PlayerData;
 }
 
-export default function FacilitatorCard({ isFac }: FacilitatorCardProps) {
+export default function FacilitatorCard({ isFac, player }: FacilitatorCardProps) {
 
     // TODO - variables needed
     const isFacilitator = isFac;
-    const userName = "Facilitator";  // default facilitator name is "Facilitator"
+    const userName = player.name;  // default facilitator name is "Facilitator"
     const userColor = "default";
 
 
