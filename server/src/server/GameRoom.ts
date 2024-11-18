@@ -5,6 +5,8 @@ import { RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
 import { MapHandler } from './handlers/MapHandler';
 
 const gameRoomMaxPlayers = 4;
+const availableColors = ["red", "green", "blue", "yellow"];
+const defaultNames = ["Alice", "Bob", "Charlie", "David"];
 
 export class GameRoom {
    public id: string;
@@ -13,9 +15,6 @@ export class GameRoom {
    private players: Map<string, Player>; // Map of playerId to Player instance
    public roomInitData: RoomJoined;
    // list of roles without the role that has been asigned to the player
-   private availableRoles: string[];
-   private availableColors = ["red", "green", "blue", "yellow"];
-   private availableNames = ["Alice", "Bob", "Charlie", "David"];
 
    // placeholders
    private totalRounds = 3;
@@ -28,7 +27,6 @@ export class GameRoom {
       this.ioServer = ioServer;
       this.players = new Map();
       this.roomInitData = initialRoomData;
-      this.availableRoles = initialRoomData.roles;
       this.facilitator = facilitator.id;
       this.mapHandler = new MapHandler(this.ioServer, this.id);
    }
@@ -40,10 +38,22 @@ export class GameRoom {
          return;
       }
 
-      const role = this.availableRoles.shift() || "explorer";
-      const color = this.availableColors.shift() || "gray";
-      const name = this.availableNames.shift() || `Player ${clientSocket.id}`;
-      const player = new Player(clientSocket, role, color, name);
+      // if there is no role, than assign the first one (players can have same role)
+      const playerRole = this.roomInitData.roles.find((role) => {
+         return !Array.from(this.players.values()).some((player) => player.role === role);
+      }) || this.roomInitData.roles[0];
+
+      const color = availableColors.find((color) => {
+         return !Array.from(this.players.values()).some((player) => player.color === color);
+      });
+
+      if (!color) {
+         console.warn(`Cannot add player ${clientSocket.id} to room ${this.id} due to lack of colors.`);
+         return;
+      }
+
+      const name = defaultNames.shift() || `Player ${clientSocket.id}`;
+      const player = new Player(clientSocket, playerRole, color, name);
 
       this.players.set(clientSocket.id, player);
       clientSocket.join(this.id);
@@ -69,9 +79,7 @@ export class GameRoom {
          console.info(`Player ${playerId} left room ${this.id}`);
 
          // Return attributes for reassigning in the future
-         this.availableRoles.push(player.role);
-         this.availableColors.push(player.color);
-         this.availableNames.push(player.name);
+         defaultNames.push(player.name);
 
          // Notify remaining players
          this.ioServer.to(this.id).emit('player-left', playerId);
