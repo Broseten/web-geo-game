@@ -15,7 +15,7 @@ const RoleSelector = forwardRef((_, ref) => {
    // Filter selected roles as a string array
    const selectedRoles: string[] = Object.keys(checkedRoles).filter((role) => checkedRoles[role]);
 
-   // Toggle a role, enforcing the maxPlayers limit for checked roles
+   // Toggle a role
    const toggleRole = (role: string) => {
       setCheckedRoles((prev) => {
          const newCheckedRoles = { ...prev };

@@ -1,6 +1,8 @@
 import { DrawAreaSelection } from "@bopen/leaflet-area-selection";
 import "@bopen/leaflet-area-selection/dist/index.css";
 import * as L from "leaflet";
+import "leaflet-control-geocoder";
+import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import GestureHandling from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import "leaflet/dist/leaflet.css";
@@ -49,6 +51,22 @@ const MapAreaSelection = forwardRef<MapAreaSelectionRef>((_, ref) => {
 
          // Add the area selection control to the map
          map.addControl(areaSelection);
+
+         // Add the search control
+         const geocoder = L.Control.geocoder({
+            defaultMarkGeocode: true,
+            // Customize the position here 'topright', 'topleft', 'bottomleft', or 'bottomright'
+            position: "topleft",
+         })
+            .on("markgeocode", function (e: any) {
+               const bbox = e.geocode.bbox;
+               const bounds = L.latLngBounds(
+                  L.latLng(bbox.getSouthWest()),
+                  L.latLng(bbox.getNorthEast())
+               );
+               map.fitBounds(bounds);
+            })
+            .addTo(map);
 
          mapRef.current = map;
       }

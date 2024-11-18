@@ -212,15 +212,13 @@ export default function Customizations() {
                                     bounds.getSouthEast(),
                                 ];
                                 polygon = L.polygon(corners);
-                                console.log(polygon);
                             }
                         }
 
                         let roles = roleSelectorRef.current?.getSelectedRoles();
                         if (!roles) {
                             roles = global_roles.slice(0, global_maxPlayers);
-                        }
-                        if (roles.length === 0 && global_roles.length > 0) {
+                        } else if (roles.length === 0 && global_roles.length > 0) {
                             roles.push(global_roles[0]);
                         }
 

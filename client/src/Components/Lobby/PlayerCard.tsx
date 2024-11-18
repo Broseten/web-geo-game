@@ -6,7 +6,7 @@ import { CloseIcon, EditIcon } from "@chakra-ui/icons";
 import Icon from "./Icon";
 import '../../Theme/theme.css';
 import { PlayerData } from "../../data/DataTypes";
-import EditActionPopup from "./EditActionPopup";
+import { useGameRoom } from "../Contexts/GameRoomContext";
 
 
 // Main Icon component, accepting you and color props
@@ -16,6 +16,7 @@ interface PlayerCardProps {
 }
 
 export default function PlayerCard({ isUser, player }: PlayerCardProps) {
+    const { roomInfo } = useGameRoom();
 
     // TODO - variables needed
     const isYou = isUser;
@@ -25,14 +26,79 @@ export default function PlayerCard({ isUser, player }: PlayerCardProps) {
     const playerColor = player.color;
 
 
-    // Player Card 
-    return (
+    // Your Player Card in Lobby 
+    if (isYou) {
+        return (
+            <Card direction={{ base: 'column', sm: 'row' }}
+                variant='outline' bg="white" color="brand.grey"
+                width="800px" mb="5px"
+            >
+                {/* Icon */}
+                <Icon you={isYou} color={"red"} />
+
+                {/* Player Name */}
+                <CardBody ml="10px">
+                    <Heading size='md'>{playerName}</Heading> {/* TODO - filler player name is "Player 1", "Player 2", etc. */}
+                    <Text fontSize="12px">Player</Text>
+                </CardBody>
+
+                {/* Select Role Dropdown */}
+                <CardBody>
+                    <Select
+                        maxWidth="300"
+                        bg="gray.300"
+                        borderColor="brand.grey"
+                        borderWidth="2px"
+                        placeholder="Select role..."
+                    >
+                        {
+                            roomInfo?.roles &&
+                            roomInfo.roles.map((role) => (
+                                <option key={role} value={role}>
+                                    {role}
+                                </option>
+                            ))
+                        }
+                    </Select>
+                </CardBody>
+
+                {/* Action Buttons */}
+                <CardBody>
+                    <HStack>
+                        {/* Edit Name Action Button */}
+                        <Tooltip label="Edit name" fontSize="sm" placement="top" hasArrow>
+                            <IconButton
+                                bg="gray.200" color="black"
+                                _hover={{ bg: "gray.400" }}
+                                aria-label='Search database'
+                                icon={<EditIcon />}
+                                ml="70px" mr="5px"
+                            />
+                        </Tooltip>
+
+                        {/* Leave Room Action Button */}
+                        <Tooltip label="Leave room" fontSize="sm" placement="top" hasArrow>
+                            <IconButton
+                                colorScheme='red'
+                                aria-label='Search database'
+                                icon={<CloseIcon />}
+                            />
+                        </Tooltip>
+                    </HStack>
+                </CardBody>
+            </Card>
+        )
+    }
+
+
+    // Other Player Card in Lobby 
+    else return (
         <Card direction={{ base: 'column', sm: 'row' }}
             variant='outline' bg="white" color="brand.grey"
             width="800px" mb="5px"
         >
             {/* Icon */}
-            <Icon color={playerColor} />
+            <Icon you={isYou} color={playerColor} />
 
             {/* Player Name */}
             <CardBody ml="10px">
@@ -75,42 +141,42 @@ export default function PlayerCard({ isUser, player }: PlayerCardProps) {
 
             {/* Action Buttons */}
             <CardBody>
-                {
-                    isYou ?
-                        <HStack>
-                            {/* Edit Name Action Button */}
-                            <Tooltip label="Edit name" fontSize="sm" placement="top" hasArrow>
-                                <Box ml="70px">
-                                    <EditActionPopup />
-                                </Box>
-                            </Tooltip>
+                <HStack>
+                    {/* Edit Name Action Button */}
+                    <IconButton isDisabled
+                        bg="gray.200" color="black"
+                        _hover={{ bg: "gray.200" }}
+                        aria-label='Search database'
+                        icon={<EditIcon />}
+                        ml="70px" mr="5px"
+                    />
 
-                            {/* Leave Room Action Button */}
-                            <Tooltip label="Leave room" fontSize="sm" placement="top" hasArrow>
-                                <IconButton
-                                    colorScheme='red'
-                                    aria-label='Search database'
-                                    icon={<CloseIcon />}
-                                />
-                            </Tooltip>
-                        </HStack>
+                    {/* Leave Room Action Button */}
+                    <Tooltip label="Leave room" fontSize="sm" placement="top" hasArrow>
+                        <IconButton
+                            colorScheme='red'
+                            aria-label='Search database'
+                            icon={<CloseIcon />}
+                        />
+                    </Tooltip>
+                </HStack>
 
-                        :
-                        <HStack>
-                            {/* Buttons Disabled for other players */}
-                            <IconButton isDisabled
-                                bg="gray.200" color="black"
-                                aria-label='Search database'
-                                icon={<EditIcon />}
-                                ml="70px" mr="5px"
-                            />
-                            <IconButton isDisabled
-                                colorScheme='red'
-                                aria-label='Search database'
-                                icon={<CloseIcon />}
-                            />
-                        </HStack>
-                }
+                :
+                <HStack>
+                    {/* Buttons Disabled for other players */}
+                    <IconButton isDisabled
+                        bg="gray.200" color="black"
+                        aria-label='Search database'
+                        icon={<EditIcon />}
+                        ml="70px" mr="5px"
+                    />
+                    <IconButton isDisabled
+                        colorScheme='red'
+                        aria-label='Search database'
+                        icon={<CloseIcon />}
+                    />
+                </HStack>
+
             </CardBody>
         </Card>
     );
