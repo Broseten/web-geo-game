@@ -1,5 +1,5 @@
 // Authors: Vojta Bruza and Grace Houser
-// User cards in the lobby
+// User Cards in lobby
 
 import { Box, Card, CardBody, Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -14,18 +14,18 @@ import { useGameRoom } from "../Contexts/GameRoomContext";
 
 export default function UserList() {
     const { roomID } = useGameRoom();
-    const [isFacilitator, setIsFacilitator] = useState<boolean>(false);
-    // const isFacilitator = false;
+    //const [isFacilitator, setIsFacilitator] = useState<boolean>(false);
+    const isFacilitator = false;
 
-    const [players, setPlayers] = useState<PlayerData[]>([]);
-    // const players: PlayerData[] = [{ id: "1", role: "Developer", color: "red", name: "Harrison" }, { id: "2", role: "Envvironmentalist", color: "green", name: "Taylor" }, { id: "3", role: "Officer", color: "blue", name: "Violet" }, { id: "4", role: "Politician", color: "yellow", name: "John" }];
+    //const [players, setPlayers] = useState<PlayerData[]>([]);
+    const players: PlayerData[] = [{ id: "1", role: "Developer", color: "red", name: "Harrison" }, { id: "2", role: "Envvironmentalist", color: "green", name: "Taylor" }, { id: "3", role: "Officer", color: "blue", name: "Violet" }, { id: "4", role: "Politician", color: "yellow", name: "John" }];
 
     initSocket('room-players-info', (roomUpdate: RoomPlayersInfo) => {
         const fac = socket.id === roomUpdate.facilitatorID;
-        setIsFacilitator(fac);
+        //setIsFacilitator(fac);
         // TODO test if this works
         console.log(fac);
-        setPlayers(roomUpdate.players);
+        //setPlayers(roomUpdate.players);
         console.log(roomUpdate);
     });
 
@@ -38,11 +38,10 @@ export default function UserList() {
         socket.emit('request-room-players-info', roomID);
     }, []);
 
-    // List view if the user is a player 
     return (
         <Box>
             {/* Header Card */}
-            <Card direction={{ base: 'column', sm: 'row' }} variant='outline' mb="10px">
+            <Card direction={{ base: 'column', sm: 'row' }} bg="#1b202b" color="white" mb="10px">
                 <CardBody ml="-5px" pr="0px">
                     <Heading size='sm'>Icon</Heading>
                 </CardBody>
@@ -59,12 +58,16 @@ export default function UserList() {
             {
                 <Box overflow="auto" height="350px">
                     <Card bg="none" shadow="none">
-                        <FacilitatorCard you={isFacilitator} />
+                        <FacilitatorCard isFac={isFacilitator} />
                     </Card>
                     {
                         players && players.map((player) => (
                             <Card bg="none" shadow="none" key={player.id}>
-                                <PlayerCard you={!isFacilitator} player={player} />
+
+                                {/* TODO - need an if statement here */}
+                                {/*     if it is your player id,        isUser=true */}
+                                {/*     if it is NOT your player id,    isUser=false */}
+                                <PlayerCard isUser={false} player={player} />
                             </Card>
                         ))
                     }
