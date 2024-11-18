@@ -42,14 +42,14 @@ export default function UserList({ isFacilitator, players }: UserList) {
             {
                 <Box overflow="auto" height="350px">
                     <Card bg="none" shadow="none">
-                        <FacilitatorCard you={isFacilitator} />
+                        <FacilitatorCard isFac={isFacilitator} />
                     </Card>
                     {
                         players && players.map((player) => (
                             // skip facilitator
                             !playerIsFacilitator(player) &&
                             <Card bg="none" shadow="none" key={player.id}>
-                                <PlayerCard you={!isFacilitator} player={player} />
+                                <PlayerCard isUser={!isFacilitator} player={player} />
                             </Card>
                         ))
                     }

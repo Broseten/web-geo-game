@@ -4,8 +4,8 @@
 import { Box, Card, CardBody, HStack, Heading, IconButton, Text, Tooltip } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import Icon from "./Icon";
-import EditActionPopup from "./EditActionPopup";
 import '../../Theme/theme.css';
+import EditActionPopup from "./EditActionPopup";
 
 
 // Main component, accepting "user": if the user is yourself
@@ -28,7 +28,7 @@ export default function FacilitatorCard({ isFac }: FacilitatorCardProps) {
             width="800px" mb="5px"
         >
             {/* Icon */}
-            <Icon color={userColor} />
+            <Icon color={userColor} you={isFac} />
 
             {/* Player Name */}
             <CardBody ml="10px">
