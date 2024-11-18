@@ -12,6 +12,7 @@ export class GameRoom {
    private facilitator: string; //player ID of the facilitator
    private players: Map<string, Player>; // Map of playerId to Player instance
    public roomInitData: RoomJoined;
+   // list of roles without the role that has been asigned to the player
    private availableRoles: string[];
    private availableColors = ["red", "green", "blue", "yellow"];
    private availableNames = ["Alice", "Bob", "Charlie", "David"];

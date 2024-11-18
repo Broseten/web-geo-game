@@ -18,7 +18,7 @@ export default function JoinRoom() {
 
    initSocket('room-not-found', () => {
       // TODO better error handling - both server and client-side
-      console.log("Room not found");
+      console.error("Room not found");
    });
 
    useEffect(() => {

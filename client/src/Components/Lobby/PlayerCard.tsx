@@ -6,6 +6,7 @@ import { CloseIcon, EditIcon } from "@chakra-ui/icons";
 import Icon from "./Icon";
 import '../../Theme/theme.css';
 import { PlayerData } from "../../data/DataTypes";
+import { useGameRoom } from "../Contexts/GameRoomContext";
 
 
 // Main Icon component, accepting you and color props
@@ -15,6 +16,7 @@ interface PlayerCardProps {
 }
 
 export default function PlayerCard({ you, player }: PlayerCardProps) {
+    const { roomInfo } = useGameRoom();
 
     // TODO - variables needed
     const isYou = you;
@@ -43,20 +45,20 @@ export default function PlayerCard({ you, player }: PlayerCardProps) {
                 {/* Select Role Dropdown */}
                 <CardBody>
                     <Select
-                        maxWidth="300" bg="gray.300"
-                        borderColor="brand.grey" borderWidth="2px"
-
-                        placeholder='Select role...'>
-                        <option value='Community Leader'>               Community Leader</option>
-                        <option value='Developer'>                      Developer</option>
-                        <option value='Elder'>                          Elder</option>
-                        <option value='Environmentalist'>               Environmentalist</option>
-                        <option value='Historian'>                      Historian</option>
-                        <option value='Non-government Organization'>    Non-government Organization</option>
-                        <option value='Officer'>                        Officer</option>
-                        <option value='Politician'>                     Politician</option>
-                        <option value='Young Person'>                   Young Person</option>
-                        <option value='Other'>                          Other</option>
+                        maxWidth="300"
+                        bg="gray.300"
+                        borderColor="brand.grey"
+                        borderWidth="2px"
+                        placeholder="Select role..."
+                    >
+                        {
+                            roomInfo?.roles &&
+                            roomInfo.roles.map((role) => (
+                                <option key={role} value={role}>
+                                    {role}
+                                </option>
+                            ))
+                        }
                     </Select>
                 </CardBody>
 
@@ -119,7 +121,7 @@ export default function PlayerCard({ you, player }: PlayerCardProps) {
                     {/* Edit Name Action Button */}
                     <IconButton isDisabled
                         bg="gray.200" color="black"
-                        _hover={{bg: "gray.200"}}
+                        _hover={{ bg: "gray.200" }}
                         aria-label='Search database'
                         icon={<EditIcon />}
                         ml="70px" mr="5px"

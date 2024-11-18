@@ -41,4 +41,4 @@ export interface Solution {
     description: string;
     image: string;
     price: number;
- } 
+} 

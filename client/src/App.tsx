@@ -26,7 +26,6 @@ function App() {
       // not necessary since we use it only for the facilitator
       //setMapPolygon(roomInfo.data.polygonLatLngs);
       setCurrentScreen('lobby');
-      console.log("joined room:");
       console.log(roomInfo);
    });
 

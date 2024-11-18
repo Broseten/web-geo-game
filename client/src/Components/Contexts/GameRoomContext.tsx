@@ -8,6 +8,8 @@ interface GameRoomContextProps {
     setRoomStatus: (roomStatus: RoomStatus) => void;
     setGameRoom: (roomID: string, roomInfo: RoomJoined) => void;
     clearGameRoom: () => void;
+    facilitatorID: string | null;
+    setFacilitatorID: (id: string) => void;
 }
 
 interface RoomStatus {
@@ -20,6 +22,7 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     const [roomID, setRoomID] = useState<string | null>(null);
     const [roomInfo, setRoomInfo] = useState<RoomJoined | null>(null);
     const [roomStatus, setRoomStatus] = useState<RoomStatus | null>(null);
+    const [facilitatorID, setFacilitatorID] = useState<string | null>(null);
 
     const setGameRoom = (id: string, info: RoomJoined) => {
         setRoomID(id);
@@ -32,7 +35,10 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <GameRoomContext.Provider value={{ roomID, roomInfo, setGameRoom, clearGameRoom, roomStatus, setRoomStatus}}>
+        <GameRoomContext.Provider value={{
+            roomID, roomInfo, setGameRoom, clearGameRoom,
+            roomStatus, setRoomStatus, facilitatorID, setFacilitatorID
+        }}>
             {children}
         </GameRoomContext.Provider>
     );

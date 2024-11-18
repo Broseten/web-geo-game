@@ -13,7 +13,6 @@ interface FormProps {
 
 // Create the Form component with expected props
 const Form: React.FC<FormProps> = ({ firstFieldRef, onCancel }) => {
-    console.log(firstFieldRef);
     return (
         <Stack spacing={4} >
             <FormControl pr="0" mr="0">

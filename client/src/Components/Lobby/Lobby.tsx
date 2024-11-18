@@ -7,20 +7,41 @@ import UserList from "./UserList";
 import { socket } from "../../main";
 import initSocket from "../../Hooks/useSocket";
 import { useGameRoom } from "../Contexts/GameRoomContext";
+import { useEffect, useState } from "react";
+import { PlayerData, RoomPlayersInfo } from "../../data/DataTypes";
 
 export default function Lobby() {
-    // TODO - add the info about who is the facilitator to the room info! 
-    const { roomInfo } = useGameRoom();
-    const isFacilitator = true;
-
+    const { roomID, roomInfo, facilitatorID, setFacilitatorID } = useGameRoom();
     const { setCurrentScreen } = useScreenSelection();
+    // TODO better data handling about the current game
+    const [players, setPlayers] = useState<PlayerData[]>([]);
+    // const players: PlayerData[] = [{ id: "1", role: "Developer", color: "red", name: "Harrison" }, { id: "2", role: "Envvironmentalist", color: "green", name: "Taylor" }, { id: "3", role: "Officer", color: "blue", name: "Violet" }, { id: "4", role: "Politician", color: "yellow", name: "John" }];
 
     // TODO use a different message for game start?
     initSocket('round-info', (info) => {
         // Start the game
-        console.log(info);
         setCurrentScreen('play');
     });
+
+    initSocket('room-players-info', (roomUpdate: RoomPlayersInfo) => {
+        setFacilitatorID(roomUpdate.facilitatorID);
+        setPlayers(roomUpdate.players);
+        console.log("Room update:");
+        console.log(roomUpdate);
+    });
+
+    initSocket('room-not-found', () => {
+        // TODO better error handling - both server and client-side
+        console.log("Room not found");
+    });
+
+    useEffect(() => {
+        socket.emit('request-room-players-info', roomID);
+    }, []);
+
+    function isFacilitator(): boolean {
+        return socket.id === facilitatorID;
+    }
 
     return (
         <Box>
@@ -34,7 +55,7 @@ export default function Lobby() {
             <Center>
                 <Text pb="10" pr="20" pl="20" fontSize="l" color="brand.grey" align="center">
                     {
-                        isFacilitator ?
+                        isFacilitator() ?
                             "Start the game when all players are ready."
                             : "The facilitator will start the game when everyone is ready."
                     }
@@ -43,13 +64,13 @@ export default function Lobby() {
 
             {/* User List */}
             <Center>
-                <UserList />
+                <UserList isFacilitator={isFacilitator()} players={players} />
             </Center>
 
             {/* Facilitator Button - leaves lobby and goes to game */}
             <Center>
                 {
-                    isFacilitator ?
+                    isFacilitator() ?
                         <Button bg="brand.teal" color='white' borderColor="brand.teal" borderWidth="2px"
                             mt="10"
                             _hover={{
