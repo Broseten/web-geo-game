@@ -98,7 +98,7 @@ export default function PlayerCard({ isUser, player }: PlayerCardProps) {
             width="800px" mb="5px"
         >
             {/* Icon */}
-            <Icon you={isYou} color={playerColor} />
+            <Icon color={playerColor} />
 
             {/* Player Name */}
             <CardBody ml="10px">
