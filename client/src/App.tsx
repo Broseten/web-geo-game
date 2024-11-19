@@ -51,9 +51,6 @@ function App() {
       }
    };
 
-   // TODO use grid for the layout somewhere?
-
-   // TODO three different pages? home + join/create + play
    // home screen    -- for info before connecting to the socket.io server
    // room screen    -- (join/create) to configure a room, username and join
    // play screen    -- to acutally play the game (can use a parametr with id of the room to rejoin on refresh)

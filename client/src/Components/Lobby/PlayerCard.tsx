@@ -1,183 +1,132 @@
-// Authors: Vojta Bruza and Grace Houser
-// Player Card in lobby 
-
-import { Box, Card, CardBody, HStack, Heading, IconButton, Select, Text, Tooltip } from "@chakra-ui/react";
-import { CloseIcon, EditIcon } from "@chakra-ui/icons";
-import Icon from "./Icon";
-import '../../Theme/theme.css';
+// Authors: Vojtech Bruza and Grace Houser
+import { CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Card,
+  Flex,
+  Heading,
+  IconButton,
+  Select,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
+import { useState } from "react";
 import { PlayerData } from "../../data/DataTypes";
+import { socket } from "../../main";
 import { useGameRoom } from "../Contexts/GameRoomContext";
+import EditActionPopup from "./EditActionPopup";
+import Icon from "./Icon";
 
-
-// Main Icon component, accepting you and color props
 interface PlayerCardProps {
-    isUser: boolean;
-    player: PlayerData;
+  player: PlayerData;
 }
 
-export default function PlayerCard({ isUser, player }: PlayerCardProps) {
-    const { roomInfo } = useGameRoom();
+export default function PlayerCard({ player }: PlayerCardProps) {
+  const { roomInfo, isFacilitator } = useGameRoom();
+  const [isEditing, setIsEditing] = useState(false);
 
-    // TODO - variables needed
-    const isYou = isUser;
+  const isLocalPlayer = socket.id === player.id;
+  const isFac = player.isFacilitator;
+  const isLocalPlayerFacilitator = isFacilitator(socket.id);
 
-    const playerName = player.name;
-    const playerRole = player.role;
-    const playerColor = player.color;
+  const handleEditClick = () => {
+    setIsEditing(!isEditing);
+  };
 
+  return (
+    <Card
+      variant="outline"
+      bg="white"
+      color="brand.grey"
+      width="100%"
+      mb="10px"
+      p={4}
+      boxShadow="sm"
+    >
+      <Flex align="center" justifyContent="space-between" gap={6}>
+        {/* Icon */}
+        <Box flex="1" textAlign="left">
+          <Icon color={player.color} />
+        </Box>
 
-    // Your Player Card in Lobby 
-    if (isYou) {
-        return (
-            <Card direction={{ base: 'column', sm: 'row' }}
-                variant='outline' bg="white" color="brand.grey"
-                width="800px" mb="5px"
+        {/* Player Info */}
+        <Box flex="2" textAlign="left">
+          <Heading size="sm">{player.name}</Heading>
+          <Text fontSize="sm">{isFac ? "Facilitator" : "Player"}</Text>
+        </Box>
+
+        {/* Role Dropdown */}
+        <Box flex="2" textAlign="left">
+          {isLocalPlayer ? (
+            <Select
+              maxWidth="300px"
+              bg="gray.300"
+              borderColor="brand.grey"
+              borderWidth="2px"
+              placeholder="Select role..."
             >
-                {/* Icon */}
-                <Icon color={"red"} />
+              {roomInfo?.roles &&
+                roomInfo.roles.map((role) => (
+                  <option key={role} value={role}>
+                    {role}
+                  </option>
+                ))}
+            </Select>
+          ) : (
+            <Select
+              isDisabled
+              maxWidth="300px"
+              bg="gray.300"
+              borderColor="brand.grey"
+              borderWidth="2px"
+              placeholder={player.role}
+            />
+          )}
+        </Box>
 
-                {/* Player Name */}
-                <CardBody ml="10px">
-                    <Heading size='md'>{playerName}</Heading> {/* TODO - filler player name is "Player 1", "Player 2", etc. */}
-                    <Text fontSize="12px">Player</Text>
-                </CardBody>
+        {/* Action Buttons */}
+        <Flex flex="1" justifyContent="flex-start" alignItems="center" gap={2}>
+          {isLocalPlayer && (
+            <>
+              <Tooltip label="Edit name" fontSize="sm" placement="top" hasArrow>
+                <IconButton
+                  bg="gray.200"
+                  color="black"
+                  _hover={{ bg: "gray.400" }}
+                  aria-label="Edit name"
+                  icon={<EditIcon />}
+                  onClick={handleEditClick}
+                />
+              </Tooltip>
+              <Tooltip label="Leave room" fontSize="sm" placement="top" hasArrow>
+                <IconButton
+                  colorScheme="red"
+                  aria-label="Leave room"
+                  icon={<CloseIcon />}
+                />
+              </Tooltip>
+            </>
+          )}
+          {!isFac && isLocalPlayerFacilitator && (
+            <Tooltip label="Remove player" fontSize="sm" placement="top" hasArrow>
+              <IconButton
+                colorScheme="red"
+                aria-label="Remove player"
+                icon={<DeleteIcon />}
+              />
+            </Tooltip>
+          )}
+        </Flex>
+      </Flex>
 
-                {/* Select Role Dropdown */}
-                <CardBody>
-                    <Select
-                        maxWidth="300"
-                        bg="gray.300"
-                        borderColor="brand.grey"
-                        borderWidth="2px"
-                        placeholder="Select role..."
-                    >
-                        {
-                            roomInfo?.roles &&
-                            roomInfo.roles.map((role) => (
-                                <option key={role} value={role}>
-                                    {role}
-                                </option>
-                            ))
-                        }
-                    </Select>
-                </CardBody>
-
-                {/* Action Buttons */}
-                <CardBody>
-                    <HStack>
-                        {/* Edit Name Action Button */}
-                        <Tooltip label="Edit name" fontSize="sm" placement="top" hasArrow>
-                            <IconButton
-                                bg="gray.200" color="black"
-                                _hover={{ bg: "gray.400" }}
-                                aria-label='Search database'
-                                icon={<EditIcon />}
-                                ml="70px" mr="5px"
-                            />
-                        </Tooltip>
-
-                        {/* Leave Room Action Button */}
-                        <Tooltip label="Leave room" fontSize="sm" placement="top" hasArrow>
-                            <IconButton
-                                colorScheme='red'
-                                aria-label='Search database'
-                                icon={<CloseIcon />}
-                            />
-                        </Tooltip>
-                    </HStack>
-                </CardBody>
-            </Card>
-        )
-    }
-
-
-    // Other Player Card in Lobby 
-    else return (
-        <Card direction={{ base: 'column', sm: 'row' }}
-            variant='outline' bg="white" color="brand.grey"
-            width="800px" mb="5px"
-        >
-            {/* Icon */}
-            <Icon color={playerColor} />
-
-            {/* Player Name */}
-            <CardBody ml="10px">
-                {/* TODO - default player name is "Player 1", "Player 2", etc. */}
-                <Heading size='md'>{playerName}</Heading>
-                <Text fontSize="12px">Player</Text>
-            </CardBody>
-
-            {/* Select Role Dropdown */}
-            <CardBody>
-                {
-                    isYou ?
-                        <Select
-                            maxWidth="300" bg="gray.300"
-                            borderColor="brand.grey" borderWidth="2px"
-
-                            placeholder='Select role...'>
-                            <option value='Community Leader'>               Community Leader</option>
-                            <option value='Developer'>                      Developer</option>
-                            <option value='Elder'>                          Elder</option>
-                            <option value='Environmentalist'>               Environmentalist</option>
-                            <option value='Historian'>                      Historian</option>
-                            <option value='Non-government Organization'>    Non-government Organization</option>
-                            <option value='Officer'>                        Officer</option>
-                            <option value='Politician'>                     Politician</option>
-                            <option value='Young Person'>                   Young Person</option>
-                            <option value='Other'>                          Other</option>
-                        </Select>
-
-                        :
-                        <Box display="flex" justifyContent="flex-start">
-                            <Select isDisabled
-                                maxWidth="300" bg="gray.300"
-                                borderColor="brand.grey" borderWidth="2px"
-                                placeholder={playerRole}>
-                            </Select>
-                        </Box>
-                }
-            </CardBody>
-
-            {/* Action Buttons */}
-            <CardBody>
-                <HStack>
-                    {/* Edit Name Action Button */}
-                    <IconButton isDisabled
-                        bg="gray.200" color="black"
-                        _hover={{ bg: "gray.200" }}
-                        aria-label='Search database'
-                        icon={<EditIcon />}
-                        ml="70px" mr="5px"
-                    />
-
-                    {/* Leave Room Action Button */}
-                    <Tooltip label="Leave room" fontSize="sm" placement="top" hasArrow>
-                        <IconButton
-                            colorScheme='red'
-                            aria-label='Search database'
-                            icon={<CloseIcon />}
-                        />
-                    </Tooltip>
-                </HStack>
-
-                :
-                <HStack>
-                    {/* Buttons Disabled for other players */}
-                    <IconButton isDisabled
-                        bg="gray.200" color="black"
-                        aria-label='Search database'
-                        icon={<EditIcon />}
-                        ml="70px" mr="5px"
-                    />
-                    <IconButton isDisabled
-                        colorScheme='red'
-                        aria-label='Search database'
-                        icon={<CloseIcon />}
-                    />
-                </HStack>
-
-            </CardBody>
-        </Card>
-    );
+      {/* Edit Action Popup */}
+      {isEditing && (
+        <EditActionPopup
+          isOpen={isEditing}
+          onClose={() => setIsEditing(false)}
+          player={{ name: player.name, color: player.color }}
+        />
+      )}
+    </Card>
+  );
 }

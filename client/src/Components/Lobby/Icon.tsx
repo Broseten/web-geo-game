@@ -1,34 +1,25 @@
-// Authors: Vojta Bruza and Grace Houser
-// Icon for User Cards in lobby 
-
+// Authors: Vojtech Bruza and Grace Houser
 import { Avatar, Box } from "@chakra-ui/react";
 import React from "react";
-import '../../Theme/theme.css';
+import "../../Theme/theme.css";
+import { ICON_COLORS } from "./EditActionPopup";
 
-
-// main Icon component, accepting color prop
+// IconProps interface
 interface IconProps {
     color: string;
 }
 
 const Icon: React.FC<IconProps> = ({ color }) => {
 
-    // color options from theme.css file 
-    const themeColors = ['pink', 'red', 'orange', 'yellow', 'green', 'tur', 'blue', 'purple']
+    // Determine the CSS variable for the user's selected color
+    const userColor = ICON_COLORS.includes(color)
+        ? `var(--icon-${color})`
+        : "var(--icon-default)";
 
-    // determine icon color from user input
-    var userColor = "";
-    {
-        themeColors.includes(color) ?
-            userColor = "var(--icon-${color})"
-            :
-            userColor = "var(--icon-default)"
-    }
-
-    // returns icon 
+    // Return the Icon with the appropriate background color
     return (
         <Box alignSelf="center" ml="10px" mr="21px">
-            <Avatar display='inline-block' bg={userColor}></Avatar>
+            <Avatar display="inline-block" bg={userColor} />
         </Box>
     );
 };

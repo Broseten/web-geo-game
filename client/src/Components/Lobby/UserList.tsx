@@ -1,52 +1,56 @@
-// Authors: Vojta Bruza and Grace Houser
-// User cards in the lobby
-
-import { Box, Card, CardBody, Heading } from "@chakra-ui/react";
-import '../../Theme/theme.css';
+// Authors: Vojtech Bruza and Grace Houser
+import { Box, Flex } from "@chakra-ui/react";
 import { useGameRoom } from "../Contexts/GameRoomContext";
-import FacilitatorCard from "./FacilitatorCard";
 import PlayerCard from "./PlayerCard";
 
-
-interface UserList {
-    isThisFacilitator: boolean,
-}
-
-export default function UserList({ isThisFacilitator }: UserList) {
+export default function UserList() {
     const { players } = useGameRoom();
 
-    // List view if the user is a player 
     return (
-        <Box>
-            {/* Header Card */}
-            <Card direction={{ base: 'column', sm: 'row' }} variant='outline' mb="10px">
-                <CardBody ml="-5px" pr="0px">
-                    <Heading size='sm'>Icon</Heading>
-                </CardBody>
-                <CardBody ml="-120px">
-                    <Heading size='sm'>User</Heading>
-                </CardBody>
-                <CardBody ml="0px">
-                    <Heading size='sm'>Role</Heading>
-                </CardBody>
-                <CardBody ml="px">
-                    <Heading size='sm' textAlign="center">Actions</Heading>
-                </CardBody>
-            </Card>
-            {
-                <Box overflow="auto" height="350px">
-                    {
-                        players && players.map((player) => (
-                            <Card bg="none" shadow="none" key={player.id}>
-                                {player.isFacilitator &&
-                                    <FacilitatorCard isFac={isThisFacilitator} player={player} />}
-                                {!player.isFacilitator &&
-                                    <PlayerCard isUser={!isThisFacilitator} player={player} />}
-                            </Card>
+        <Flex
+            direction="column"
+            align="center"
+            justify="center"
+            w="100%"
+            p={4}
+        >
+            <Box
+                maxWidth={{ base: "100%", md: "80%", lg: "70%" }} // Responsive width
+                width="100%" // Full width for smaller screens
+                mx="auto" // Center horizontally
+                bg="gray.50" // Optional background
+                borderRadius="lg"
+                boxShadow="md"
+                p={4}
+            >
+                {/* Header */}
+                <Flex
+                    direction="row"
+                    justifyContent="space-between"
+                    mb={4}
+                    px={4}
+                    fontWeight="bold"
+                    textAlign="left"
+                >
+                    <Box flex="1">Icon</Box>
+                    <Box flex="2">User</Box>
+                    <Box flex="2">Role</Box>
+                    <Box flex="1">Actions</Box>
+                </Flex>
+
+                {/* Player Cards */}
+                <Box overflowY="auto" maxHeight="350px" px={2}>
+                    {players && players.length > 0 ? (
+                        players.map((player) => (
+                            <PlayerCard key={player.id} player={player} />
                         ))
-                    }
+                    ) : (
+                        <Flex justifyContent="center" py={4} color="gray.500">
+                            No players connected.
+                        </Flex>
+                    )}
                 </Box>
-            }
-        </Box>
+            </Box>
+        </Flex>
     );
 }

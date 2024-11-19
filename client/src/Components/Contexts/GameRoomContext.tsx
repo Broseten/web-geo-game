@@ -35,6 +35,11 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
         setRoomInfo(null);
     };
 
+    const updatePlayer = (player: PlayerData) => {
+        // TODO update the player in a room (color, name) in the context and send update to the server
+        // TODO add listener for player change
+    };
+
     const isFacilitator = (playerID: string | undefined): boolean => {
         const player = players.find((p) => p.id === playerID);
         if (!player) {
