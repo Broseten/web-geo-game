@@ -1,7 +1,7 @@
 // Authors: Vojta Bruza and Grace Houser
 // Card of the solution that was clicked on the map during voting
 
-import { Box, Button, Card, CardBody, CardFooter, CardHeader, Center, HStack, Image, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardFooter, CardHeader, Image, Text } from "@chakra-ui/react";
 import { useState } from "react";
 
 export default function Information() {
@@ -12,12 +12,15 @@ export default function Information() {
     const solution = "Temporary Structures from Recycled Material"
     const location = "O'Connell Street"
     const price = "$1,000"
+    const image = "SolutionsPins_ARenriched"
     const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 
 
-    {/* Shows when a solution on the map is clicked */ }
+    {/* shows when a solution on the map is selected (by being click) */ }
     if (isSelected) {
         return (
+            
+            // Solution Information Card 
             <Card
                 bg="brand.yellow" color="brand.grey"
                 borderColor="brand.yellow" borderWidth="10px"
@@ -25,7 +28,7 @@ export default function Information() {
 
                 <CardHeader bg="white" borderRadius="lg" justifyItems="center" p="2">
                     <Image height="80px" width="80px"
-                        src="src/Theme/images/solution-icons/RED/SolutionsPins_ARenriched.png">
+                        src={"images/solution-icons/RED/" + image + ".png"}>
                     </Image>
                 </CardHeader>
 
@@ -63,8 +66,8 @@ export default function Information() {
 
     return (
         <Box>
-            {/* Deafult, when no solutions are selected */}
-            <Text align="center">
+            {/* Default, when no solutions are selected */}
+            <Text align="center" color="white">
                 Click on a solution to learn more
             </Text>
         </Box>

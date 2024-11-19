@@ -9,6 +9,7 @@ import { socket } from "../../main";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import Game from "./Game/Game";
+import Voting from "./Voting/Voting";
 import GameMap from "./Map/GameMap";
 import PlayModal from "./PlayModal";
 import L from "leaflet";
@@ -41,7 +42,7 @@ export default function Play({ isConnected }: Play) {
 
          {/* TODO - can use isVoting to switch from Game.tsx and Voting.tsx */}
          {/* <Game /> */} {/* <Voting /> */}
-         <Game />
+         <Voting />
 
          {/* Adding in the Game Map */}
          <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} />

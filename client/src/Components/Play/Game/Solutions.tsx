@@ -1,5 +1,5 @@
 // Authors: Vojta Bruza and Grace Houser
-// This file displays the accordion of solution options 
+// accordion of solution options for the game play 
 
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Center, Image, Text } from "@chakra-ui/react";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
@@ -11,7 +11,14 @@ export default function Solutions() {
     const { setRoomStatus } = useGameRoom();
 
     return (
-        <Box overflow="auto" width="300px" height="400px" borderRadius="lg">
+        <Box overflow="auto" width="300px" borderRadius="lg"
+        height={{
+            // responsive height 
+            base: '150px',  // For mobile screens (sm and below)
+            md: '300px',    // For medium screens (tablet)
+            lg: '500px',    // For large screens (desktop)
+            xl: '600px',    // For extra-large screens
+          }}>
             <Center>
 
                 {/* Solution Options */}

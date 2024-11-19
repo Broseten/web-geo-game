@@ -7,7 +7,7 @@ import { useScreenSelection } from "../../Contexts/useScreenSelection";
 import { useEffect, useState } from "react";
 import initSocket from "../../../Hooks/useSocket";
 import Information from "./Information";
-
+import Timer from "../Timer";
 
 
 export default function Voting() {
@@ -16,6 +16,7 @@ export default function Voting() {
     const [testCounter, setTestCounter] = useState(0);
 
     // TODO - needed variables 
+    const isFacilitator = true;
     const role = 'Developer'
     const playerBudget = '$200,000'
     const playerScore = 5
@@ -30,17 +31,16 @@ export default function Voting() {
     }, []);
 
 
-
-    {/* Section left of the game map */ }
+    {/* Voting Section - left of the game map */ }
     return (
 
         <VStack align={"top"}>
 
-            {/* Home button at the top */}
-            <Button bg="none" p="0" pl="1.5" color="brand.yellow" 
+            {/* Logo at the top */}
+            <Heading bg="none" pt="5px" color="brand.yellow" textAlign="center"
                 fontSize="18px" fontFamily="Avenir Next" fontWeight="bold">
                 NegoDesign
-            </Button>
+            </Heading>
 
             <hr />
 
@@ -48,44 +48,42 @@ export default function Voting() {
             <Center>
                 <HStack justifyContent="center">
 
-                    {/* Only the Facilitator has this button */}
+                    {/* End Voting Button - only for the facilitator */}
                     <Button bg="brand.red" color="white" mr="40px"
+                        _hover={{ color: "brand.red", background: "red.100" }}
                         onClick={() => { setCurrentScreen('results') }}>
                         End Voting
                     </Button>
 
-                    {/* Only the players have this text */}
-                    {/*
-                    <Heading size="md" color="white" mr="40px" lineHeight="1" textAlign="center">
-                        You are <br /> voting!
-                    </Heading>
-                    */}
+                    {/* Time */}
+                    {
+                        isFacilitator ?
+                            <VStack gap="0">
+                                <Heading size="md" color="white">
+                                    <Timer />
+                                </Heading>
 
-                    <VStack>
-                        <Heading size="lg" color="white">Time</Heading>
-
-                        <Text align="center">
-                            {time}
-                        </Text>
-                    </VStack>
+                                <Text fontSize="14px" color="white">Time</Text>
+                            </VStack>
+                            :
+                            <Text size="md" fontWeight="bold" color="white" mr="40px" lineHeight="1" textAlign="center">
+                                You are <br /> voting!
+                            </Text>
+                    }
                 </HStack>
             </Center>
 
             <hr />
 
-            {/* Another Section */}
+            {/* Solution Information Section */}
             <Center>
-                <VStack>
-
-                    {/* TO DO - make size flexible depending on screen width*/}
-                    <Box width="300px"></Box>
-
+                <VStack w="300px">
                     <Heading size="lg" color="white" mt="5px" lineHeight="1" textAlign="center">
-                        Solution <br/>
+                        Solution <br />
                         Information
                     </Heading>
 
-                    {/* Information about placed solutions */}
+                    {/* solution information */}
                     <Information />
                 </VStack>
             </Center>

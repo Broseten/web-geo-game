@@ -2,12 +2,18 @@
 // This file contains the modals that will appear during gameplay and voting
 
 import { Box, Button, Center, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react";
+import Icon from "../Lobby/Icon";
 
 
 // somehow pass in variable 
 export default function PlayModal() {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    // TODO - needed variable 
+    const userColor = "default";
+    // message is custom to player roles 
+    const message = "As developer, you want to create an inviting space for the community while keeping the impact of the surrounding environment in mind.";
 
     const reminder = false;
     const timesUp_facilitator = false;
@@ -26,18 +32,15 @@ export default function PlayModal() {
                         <ModalCloseButton />
 
                         {/* this text would be customizable to roles */}
-                        <ModalBody>
-                            As developer, you want to create an inviting space for the community
-                            while keeping the impact of the surrounding environment in mind.
-                        </ModalBody>
+                        <ModalBody mb="10px"> {message} </ModalBody>
 
                         <Center>
-                            <Text>*role icon goes here*</Text>
+                            <Icon color={userColor} />
                         </Center>
 
                         {/* ideally, color would match player color */}
                         <ModalFooter>
-                            <Button bgColor='brand.red' mr={3} onClick={onClose}>
+                            <Button bgColor='brand.teal' color="white" mr={3} onClick={onClose}>
                                 Okay
                             </Button>
                         </ModalFooter>
@@ -63,9 +66,14 @@ export default function PlayModal() {
                             Start the voting section when teams are ready
                         </ModalBody>
 
-                        {/* ideally, color would match player color */}
                         <ModalFooter>
-                            <Button bgColor='white' color="brand.grey" mr={3} onClick={onClose}>
+                            <Button bg='brand.teal' color="white" 
+                                rounded='md' mr={3} 
+                                _hover={{
+                                    background: "gray.100",
+                                    color: "brand.teal",
+                                }}
+                                onClick={onClose}>
                                 Go to voting
                             </Button>
                         </ModalFooter>
@@ -95,21 +103,17 @@ export default function PlayModal() {
         )
     }
 
-    // Else show an error message 
+    // Else, show an error message 
     else return (
-
         <Box>
-            {/*
-            <Button onClick={onOpen}>Error</Button>
-            */}
-
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalCloseButton />
                     <Center>
                         <ModalBody pb="50" fontWeight="bold">
-                            Error
+                            Error <br />
+                            play modal did not show 
                         </ModalBody>
                     </Center>
                 </ModalContent>
