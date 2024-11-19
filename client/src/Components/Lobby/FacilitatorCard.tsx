@@ -30,7 +30,7 @@ export default function FacilitatorCard({ isFac, player }: FacilitatorCardProps)
             width="800px" mb="5px"
         >
             {/* Icon */}
-            <Icon color={userColor} you={isFac} />
+            <Icon color={userColor} />
 
             {/* Player Name */}
             <CardBody ml="10px">

@@ -34,7 +34,7 @@ export default function PlayerCard({ isUser, player }: PlayerCardProps) {
                 width="800px" mb="5px"
             >
                 {/* Icon */}
-                <Icon you={isYou} color={"red"} />
+                <Icon color={"red"} />
 
                 {/* Player Name */}
                 <CardBody ml="10px">
