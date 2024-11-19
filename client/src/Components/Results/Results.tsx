@@ -4,16 +4,17 @@
 import { Box, Button, Center, Heading, Text } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import Rankings from "./Rankings";
+import { useGameRoom } from "../Contexts/GameRoomContext";
+import { socket } from "../../main";
 
 
 export default function Results() {
-
+    const { isFacilitator } = useGameRoom();
     const { setCurrentScreen } = useScreenSelection();
 
-    // TODO - make dynamic 
-    const firstRound = true; //this assumes two rounds total
-    const isFacilitator = true;
-
+    const isFac = isFacilitator(socket.id); //this assumes two rounds total
+    // TODO networking
+    let roundIndex = 0;
 
     return (
         <Box overflow="auto" h="100%">
@@ -22,7 +23,7 @@ export default function Results() {
             <Center>
                 <Text pt="70px"
                     fontSize="4xl" fontWeight="bold" color="brand.teal">
-                    {firstRound ? "Round One " : "Final "} Results!
+                    {"Round " + (roundIndex + 1)} Results!
                 </Text>
             </Center>
 
@@ -30,11 +31,10 @@ export default function Results() {
                 <Text pb="20px" align="center"
                     fontSize="lg" color="brand.grey">
                     {
-                        firstRound && !isFacilitator
-                            ? "Check out your score! The facilitator will begin the next round when ready."
-                            : firstRound && isFacilitator
-                                ? "Please begin the next round when ready."
-                                : "Check out the final scores!"
+                        isFac ?
+                            "Please begin next round when everyone is ready."
+                            :
+                            "Check out your score! The facilitator will begin progress the game when ready."
                     }
                 </Text>
             </Center>
@@ -57,24 +57,18 @@ export default function Results() {
 
             {/* Next Button - to second round or end screen */}
             <Center>
-                {firstRound && isFacilitator && (
+                {isFac &&
                     <Button
                         mb="80px"
                         bg='brand.teal' color="white"
                         _hover={{ bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px" }}
-                        onClick={() => { setCurrentScreen('play'); }}>
-                        Start Round Two
+                        onClick={() => {
+                            // TODO networking
+                            setCurrentScreen('play');
+                        }}>
+                        Continue
                     </Button>
-                )}
-                {!firstRound && isFacilitator && (
-                    <Button
-                        mb="80px"
-                        bg='brand.teal' color="white"
-                        _hover={{ bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px" }}
-                        onClick={() => { setCurrentScreen('end'); }}>
-                        End Game
-                    </Button>
-                )}
+                }
             </Center>
 
             {/* home button at the top */}
