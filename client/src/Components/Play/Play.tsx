@@ -20,19 +20,7 @@ interface Play {
 
 export default function Play({ isConnected }: Play) {
    console.log("connected: " + isConnected);
-   const { roomInfo } = useGameRoom();
-   const { setCurrentScreen } = useScreenSelection();
-   const [testCounter, setTestCounter] = useState(0);
-
-   const isVoting = false;
-
-   initSocket('countClient', (count: number) => setTestCounter(count));
-   initSocket('init-count-client', (count: number) => setTestCounter(count));
-
-   useEffect(() => {
-      // init the state
-      socket.emit('init-count');
-   }, []);
+   const { roomInfo, roundIndex } = useGameRoom();
 
    {/* Section left of the game map */ }
    return (
@@ -40,9 +28,7 @@ export default function Play({ isConnected }: Play) {
 
          <PlayModal />
 
-         {/* TODO - can use isVoting to switch from Game.tsx and Voting.tsx */}
-         {/* <Game /> */} {/* <Voting /> */}
-         <Voting />
+         {roundIndex % 2 === 1 ? <Game /> : <Voting />}
 
          {/* Adding in the Game Map */}
          <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} />

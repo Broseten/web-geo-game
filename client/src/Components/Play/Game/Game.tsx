@@ -1,7 +1,7 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays the left section of the game play 
 
-import { Box, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
 import { socket } from "../../../main";
 import { useScreenSelection } from "../../Contexts/useScreenSelection";
 import { useEffect, useState } from "react";
@@ -43,6 +43,12 @@ export default function Game() {
 
             {/* Budget and Time Section */}
             <HStack justifyContent="center">
+
+                <Button bg="brand.red" color="white" mr="40px"
+                    _hover={{ color: "brand.red", background: "red.100" }}
+                    onClick={() => { socket.emit('progress-game') }}>
+                    WIP Button Voting
+                </Button>
 
                 {/* Budget */}
                 <VStack gap="0">

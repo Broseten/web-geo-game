@@ -51,7 +51,7 @@ export default function Voting() {
                     {/* End Voting Button - only for the facilitator */}
                     <Button bg="brand.red" color="white" mr="40px"
                         _hover={{ color: "brand.red", background: "red.100" }}
-                        onClick={() => { setCurrentScreen('results') }}>
+                        onClick={() => { socket.emit('progress-game') }}>
                         End Voting
                     </Button>
 

@@ -7,6 +7,7 @@ interface GameRoomContextProps {
     roomID: string | null;
     roomInfo: RoomJoined | null;
     roomStatus: RoomStatus | null;
+    roundIndex: number;
     setRoomStatus: (roomStatus: RoomStatus) => void;
     setGameRoom: (roomID: string, roomInfo: RoomJoined) => void;
     clearGameRoom: () => void;
@@ -30,6 +31,7 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     const [roomStatus, setRoomStatus] = useState<RoomStatus | null>(null);
     const [players, setPlayers] = useState<PlayerData[]>([]);
     // TODO rounds and game data
+    const [roundIndex, setRoundIndex] = useState<number>(0);
 
     // TODO leaving a room should reset this context! (also restarting the game)
 
@@ -80,11 +82,17 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
         console.error(mess);
     });
 
+    
+    initSocket('round-info', ({round}) => {
+        setRoundIndex(round);
+    });
+
     return (
         <GameRoomContext.Provider
             value={{
                 roomID,
                 roomInfo,
+                roundIndex,
                 setGameRoom,
                 clearGameRoom,
                 roomStatus,
