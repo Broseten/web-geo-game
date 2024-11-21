@@ -1,4 +1,4 @@
-import { Solution } from "./DataTypes";
+import { Solution } from "../../DataTypes";
 
 // TODO move this data to a json config file or somewhere that it can get loaded at runtime (HTTP request probably)
 

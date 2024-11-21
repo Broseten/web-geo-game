@@ -15,10 +15,6 @@ export default function Lobby() {
         setCurrentScreen("play");
     });
 
-    initSocket("room-players-info", (roomUpdate) => {
-        setPlayers(roomUpdate.players);
-    });
-
     initSocket("room-not-found", () => {
         console.log("Room not found");
     });

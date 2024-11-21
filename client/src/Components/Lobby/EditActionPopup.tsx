@@ -14,10 +14,10 @@ import {
     ModalOverlay,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { socket } from "../../main";
+import { useGameRoom } from "../Contexts/GameRoomContext";
 import TextInput from "./TextInput";
-
-// Color List
-export const ICON_COLORS = ["pink", "red", "orange", "yellow", "green", "blue"];
+import { global_icon_colors } from "../../data/data";
 
 // Props Interface
 interface EditActionPopupProps {
@@ -35,13 +35,19 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
     onClose,
     player,
 }) => {
+    const { updatePlayer, getPlayerData, players } = useGameRoom();
     const [name, setName] = useState(player.name || "");
     const [selectedColor, setSelectedColor] = useState(player.color || "default");
     const firstFieldRef = React.useRef<HTMLInputElement>(null);
 
     const handleSave = () => {
-        console.log("Saved Name:", name);
-        console.log("Selected Color:", selectedColor);
+        let localPlayer = getPlayerData(socket.id);
+        if (!localPlayer) {
+            throw Error("Local player not found");
+        }
+        localPlayer.color = selectedColor;
+        localPlayer.name = name;
+        updatePlayer(localPlayer);
         onClose();
     };
 
@@ -72,14 +78,16 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
                                 templateColumns="repeat(auto-fit, minmax(60px, 1fr))"
                                 width="100%"
                             >
-                                {ICON_COLORS.map((color) => (
+                                {global_icon_colors.map((color) => (
                                     <Button
+                                        // is the color taken by another player?
+                                        isDisabled={players.some(p => p.color === color && p.id !== socket.id)}
                                         key={color}
                                         bg={`var(--icon-${color})`}
                                         _hover={{ opacity: "0.8" }}
                                         onClick={() => setSelectedColor(color)}
                                         border={
-                                            selectedColor === color ? "2px solid black" : "none"
+                                            selectedColor === color ? "3px solid black" : "none"
                                         }
                                         height="40px"
                                     />

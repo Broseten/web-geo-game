@@ -1,5 +1,7 @@
-import { createContext, useContext, useState, ReactNode } from "react";
-import { PlayerData, RoomJoined } from "../../data/DataTypes";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { PlayerData, PlayerInfoUpdate, RoomJoined } from "../../data/DataTypes";
+import initSocket from "../../Hooks/useSocket";
+import { socket } from "../../main";
 
 interface GameRoomContextProps {
     roomID: string | null;
@@ -10,20 +12,26 @@ interface GameRoomContextProps {
     clearGameRoom: () => void;
     players: PlayerData[];
     setPlayers: (players: PlayerData[]) => void;
+    getPlayerData: (playerID: string | undefined) => PlayerData | undefined;
+    updatePlayer: (player: PlayerData) => void;
     getFacilitator: () => PlayerData | undefined;
     isFacilitator: (id: string | undefined) => boolean;
 }
 
 interface RoomStatus {
-    selectSolutionID: string;
+    selectedSolutionID: string;
 }
 
 const GameRoomContext = createContext<GameRoomContextProps | undefined>(undefined);
+
 export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     const [roomID, setRoomID] = useState<string | null>(null);
     const [roomInfo, setRoomInfo] = useState<RoomJoined | null>(null);
     const [roomStatus, setRoomStatus] = useState<RoomStatus | null>(null);
     const [players, setPlayers] = useState<PlayerData[]>([]);
+    // TODO rounds and game data
+
+    // TODO leaving a room should reset this context! (also restarting the game)
 
     const setGameRoom = (id: string, info: RoomJoined) => {
         setRoomID(id);
@@ -36,14 +44,21 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const updatePlayer = (player: PlayerData) => {
-        // TODO update the player in a room (color, name) in the context and send update to the server
-        // TODO add listener for player change
+        setPlayers((prevPlayers) =>
+            prevPlayers.map((p) => (p.id === player.id ? { ...p, ...player } : p))
+        );
+        const data: PlayerInfoUpdate = { player };
+        socket.emit('update-player-info', data);
     };
+
+    const getPlayerData = (playerID: string | undefined): PlayerData | undefined => players.find((p) => p.id === playerID)
 
     const isFacilitator = (playerID: string | undefined): boolean => {
         const player = players.find((p) => p.id === playerID);
         if (!player) {
-            console.error(`No such player (${playerID}) found in the current players list for Room ${roomID}.`);
+            console.error(
+                `No such player (${playerID}) found in the current players list for Room ${roomID}.`
+            );
             return false;
         }
         return player?.isFacilitator;
@@ -57,18 +72,35 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
         return facilitator;
     };
 
+    initSocket('room-players-info', (roomUpdate: { players: PlayerData[] }) => {
+        setPlayers(roomUpdate.players);
+    });
+
+    initSocket('update-player-error', (mess) => {
+        console.error(mess);
+    });
+
     return (
-        <GameRoomContext.Provider value={{
-            roomID, roomInfo, setGameRoom, clearGameRoom,
-            roomStatus, setRoomStatus,
-            players, setPlayers,
-            getFacilitator, isFacilitator
-        }}>
+        <GameRoomContext.Provider
+            value={{
+                roomID,
+                roomInfo,
+                setGameRoom,
+                clearGameRoom,
+                roomStatus,
+                setRoomStatus,
+                players,
+                setPlayers,
+                getPlayerData,
+                updatePlayer,
+                getFacilitator,
+                isFacilitator,
+            }}
+        >
             {children}
         </GameRoomContext.Provider>
     );
 };
-
 
 export const useGameRoom = () => {
     const context = useContext(GameRoomContext);

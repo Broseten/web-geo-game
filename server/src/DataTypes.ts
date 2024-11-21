@@ -35,6 +35,10 @@ export interface RoomPlayersInfo {
     players: PlayerData[]
 }
 
+export interface PlayerInfoUpdate {
+    player: PlayerData
+}
+
 export interface Solution {
     id: string;
     name: string;

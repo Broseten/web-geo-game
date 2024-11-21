@@ -11,9 +11,7 @@ export default function Rankings() {
 
     const { players } = useGameRoom();
 
-    // TODO - needed variables 
-    const name = "Harrison";
-    const role = "Developer";
+    // TODO networking
     const score = "100";
 
     return (

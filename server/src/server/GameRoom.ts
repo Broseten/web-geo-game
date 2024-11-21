@@ -1,12 +1,11 @@
+import { PlayerData, RoomJoined, RoomPlayersInfo } from '../DataTypes';
 import { Server, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
-import { Player } from '../data/Player';
-import { PlayerData, RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
 import { MapHandler } from './handlers/MapHandler';
+import { Player } from './Player';
+import { global_icon_colors } from './data/data';
 
 const gameRoomMaxPlayers = 4;
-const availableColors = ["red", "green", "blue", "yellow"];
-const defaultNames = ["Alice", "Bob", "Charlie", "David"];
 
 export class GameRoom {
    public id: string;
@@ -14,7 +13,10 @@ export class GameRoom {
    private facilitator: string; //player ID of the facilitator
    private players: Map<string, Player>; // Map of playerId to Player instance
    public roomInitData: RoomJoined;
-   // list of roles without the role that has been asigned to the player
+   // copy the global list of colors for this room
+   private availableColors = global_icon_colors.slice();
+   // TODO smarter way for assigning names
+   private defaultNames = ["Alice", "Bob", "Charlie", "David"];
 
    // placeholders
    private totalRounds = 3;
@@ -25,7 +27,7 @@ export class GameRoom {
    constructor(ioServer: Server, initialRoomData: RoomJoined, facilitator: Socket) {
       this.id = uuidv4(); // Unique ID for the room
       this.ioServer = ioServer;
-      this.players = new Map();
+      this.players = new Map<string, Player>();
       this.roomInitData = initialRoomData;
       this.facilitator = facilitator.id;
       this.mapHandler = new MapHandler(this.ioServer, this.id);
@@ -42,8 +44,10 @@ export class GameRoom {
       const playerRole = this.roomInitData.roles.find((role) => {
          return !Array.from(this.players.values()).some((player) => player.role === role);
       }) || this.roomInitData.roles[0];
+      // TODO assign no role at first and then make sure that to role is assigned when starting the game
+      // const playerRole = "";
 
-      const color = availableColors.find((color) => {
+      const color = this.availableColors.find((color) => {
          return !Array.from(this.players.values()).some((player) => player.color === color);
       });
 
@@ -52,7 +56,7 @@ export class GameRoom {
          return;
       }
 
-      const name = defaultNames.shift() || `Player ${clientSocket.id}`;
+      const name = this.defaultNames.shift() || `Player ${clientSocket.id}`;
       const player = new Player(clientSocket, playerRole, color, name);
 
       this.players.set(clientSocket.id, player);
@@ -63,26 +67,50 @@ export class GameRoom {
       this.mapHandler.startListeners(clientSocket);
 
       // Notify all players in the room about the new player
-      const roomUpdate: RoomPlayersInfo = {
-         players: this.getPlayers()
-      };
-      this.ioServer.to(this.id).emit('room-players-info', roomUpdate);
+      this.sendPlayersUpdate();
+   }
+
+   updatePlayer(playerData: PlayerData) {
+      const p = this.getPlayer(playerData.id);
+      if (!p) {
+         return false;
+      }
+      if (Array.from(this.players.values()).find(p => p.color === playerData.color)) {
+         return false;
+      }
+      // update from player data
+      p.update(playerData);
+      // update the player
+      this.players.set(p.id, p);
+      this.sendPlayersUpdate();
+      return true;
    }
 
    // Removes a player from the room
    removePlayer(playerId: string): void {
-      const player = this.players.get(playerId);
+      const player = this.getPlayer(playerId);
       if (player) {
          player.getSocket().leave(this.id);
          this.players.delete(playerId);
          console.info(`Player ${playerId} left room ${this.id}`);
 
          // Return attributes for reassigning in the future
-         defaultNames.push(player.name);
+         this.defaultNames.push(player.name);
 
          // Notify remaining players
          this.ioServer.to(this.id).emit('player-left', playerId);
       }
+   }
+
+   private getPlayer(playerId: string) {
+      return this.players.get(playerId);
+   }
+
+   private sendPlayersUpdate() {
+      const roomUpdate: RoomPlayersInfo = {
+         players: this.getPlayers()
+      };
+      this.ioServer.to(this.id).emit('room-players-info', roomUpdate);
    }
 
    // Starts the next round in the game room

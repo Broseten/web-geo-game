@@ -1,9 +1,8 @@
+import { PlayerInfoUpdate, RoomInfo, RoomJoined, RoomPlayersInfo } from '../DataTypes';
 import { Server as HttpServer } from 'http';
-import { Socket, Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { v4 } from 'uuid';
 import { RoomManager } from './RoomManager';
-import { MapHandler } from './handlers/MapHandler';
-import { RoomInfo, RoomJoined, RoomPlayersInfo } from 'data/DataTypes';
 
 export class ServerIO {
    public static instance: ServerIO;
@@ -41,6 +40,23 @@ export class ServerIO {
       } else {
          // TODO reconnected
       }
+
+      clientSocket.on('update-player-info', (playerInfo: PlayerInfoUpdate) => {
+         const roomID = this.roomManager.getRoomIdByPlayer(playerInfo.player.id);
+         const room = this.roomManager.getRoom(roomID!);
+         if (!room) {
+            const message = "no room found";
+            console.error(message + " for player " + playerInfo.player);
+            clientSocket.emit('update-player-error', message);
+            return;
+         }
+         if (!room.updatePlayer(playerInfo.player)) {
+            // should never happen since we search for the room based on the player...
+            const message = "the player data is invalid (color probably taken)";
+            console.error(message);
+            clientSocket.emit('update-player-error', message);
+         }
+      });
 
       clientSocket.on('create-room', (data: RoomJoined) => {
          const roomId = this.roomManager.createRoom(data, clientSocket);

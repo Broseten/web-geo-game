@@ -1,6 +1,6 @@
+import { RoomJoined } from '../DataTypes';
 import { Server, Socket } from 'socket.io';
 import { GameRoom } from './GameRoom';
-import { RoomJoined } from 'data/DataTypes';
 
 export class RoomManager {
    private ioServer: Server;
@@ -54,6 +54,11 @@ export class RoomManager {
       } else {
          console.warn(`Room ${roomId} not found.`);
       }
+   }
+
+   // Retrieves the room ID of a given player based on the player's socket ID
+   getRoomIdByPlayer(playerID: string): string | undefined {
+      return this.playerRoomMap.get(playerID);
    }
 
    // Retrieves the room ID of a given player based on their socket ID

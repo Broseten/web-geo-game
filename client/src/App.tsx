@@ -23,10 +23,10 @@ function App() {
    // same for the facilitator (creator of the room) and for the players just directly joining
    initSocket('room-joined', (roomInfo: RoomInfo) => {
       setGameRoom(roomInfo.id, roomInfo.data);
-      // not necessary since we use it only for the facilitator
+      // not necessary since we use it only for the facilitator:
       //setMapPolygon(roomInfo.data.polygonLatLngs);
       setCurrentScreen('lobby');
-      console.log(roomInfo);
+      // console.log(roomInfo);
    });
 
    // Function to switch between screens

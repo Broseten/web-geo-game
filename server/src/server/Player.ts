@@ -1,4 +1,5 @@
 import { Socket } from 'socket.io';
+import { PlayerData } from '../DataTypes';
 
 export class Player {
    // TODO use player data from the shared project?
@@ -16,11 +17,10 @@ export class Player {
       this.socket = socket;
    }
 
-   // Method to update player's attributes
-   updateAttributes(role?: string, color?: string, name?: string): void {
-      if (role) this.role = role;
-      if (color) this.color = color;
-      if (name) this.name = name;
+   update(playerData: PlayerData) {
+      this.name = playerData.name;
+      this.color = playerData.color;
+      this.role = playerData.role;
    }
 
    // Method to retrieve player's socket for emitting messages, etc.

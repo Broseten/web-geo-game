@@ -1,4 +1,3 @@
-// Authors: Vojtech Bruza and Grace Houser
 import { CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -22,7 +21,7 @@ interface PlayerCardProps {
 }
 
 export default function PlayerCard({ player }: PlayerCardProps) {
-  const { roomInfo, isFacilitator } = useGameRoom();
+  const { roomInfo, isFacilitator, updatePlayer } = useGameRoom();
   const [isEditing, setIsEditing] = useState(false);
 
   const isLocalPlayer = socket.id === player.id;
@@ -31,6 +30,12 @@ export default function PlayerCard({ player }: PlayerCardProps) {
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
+  };
+
+  const handleRoleChange = (selectedRole: string) => {
+    // Ensure local player is updated in the context
+    const updatedPlayer = { ...player, role: selectedRole };
+    updatePlayer(updatedPlayer);
   };
 
   return (
@@ -63,7 +68,9 @@ export default function PlayerCard({ player }: PlayerCardProps) {
               bg="gray.300"
               borderColor="brand.grey"
               borderWidth="2px"
-              placeholder="Select role..."
+              value={player.role || ""} // Default to an empty string if no role is selected
+              placeholder={player.role ? undefined : "Select role..."}
+              onChange={(e) => handleRoleChange(e.target.value)} // Handle role change
             >
               {roomInfo?.roles &&
                 roomInfo.roles.map((role) => (
@@ -72,6 +79,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
                   </option>
                 ))}
             </Select>
+
           ) : (
             <Select
               isDisabled

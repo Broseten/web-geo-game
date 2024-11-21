@@ -2,7 +2,7 @@
 import { Avatar, Box } from "@chakra-ui/react";
 import React from "react";
 import "../../Theme/theme.css";
-import { ICON_COLORS } from "./EditActionPopup";
+import { global_icon_colors } from "../../data/data";
 
 // IconProps interface
 interface IconProps {
@@ -12,7 +12,7 @@ interface IconProps {
 const Icon: React.FC<IconProps> = ({ color }) => {
 
     // Determine the CSS variable for the user's selected color
-    const userColor = ICON_COLORS.includes(color)
+    const userColor = global_icon_colors.includes(color)
         ? `var(--icon-${color})`
         : "var(--icon-default)";
 
