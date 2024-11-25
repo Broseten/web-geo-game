@@ -1,4 +1,4 @@
-import { PlayerInfoUpdate, RoomInfo, RoomJoined, RoomPlayersInfo } from '../DataTypes';
+import { PlayerInfoUpdate, RoomInfo, RoomJoined, RoomPlayersInfo } from './DataTypes';
 import { Server as HttpServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import { v4 } from 'uuid';

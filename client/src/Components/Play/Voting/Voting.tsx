@@ -1,35 +1,15 @@
-// Authors: Vojta Bruza and Grace Houser
+// Authors: Vojtech Bruza and Grace Houser
 // This file is the voting screen famework 
 
-import { Box, Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
+import { Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
 import { socket } from "../../../main";
-import { useScreenSelection } from "../../Contexts/useScreenSelection";
-import { useEffect, useState } from "react";
-import initSocket from "../../../Hooks/useSocket";
-import Information from "./Information";
 import Timer from "../Timer";
+import Information from "./Information";
 
 
 export default function Voting() {
-
-    const { setCurrentScreen } = useScreenSelection();
-    const [testCounter, setTestCounter] = useState(0);
-
     // TODO - needed variables 
     const isFacilitator = true;
-    const role = 'Developer'
-    const playerBudget = '$200,000'
-    const playerScore = 5
-    const time = '5:00.00'
-
-    initSocket('countClient', (count: number) => setTestCounter(count));
-    initSocket('init-count-client', (count: number) => setTestCounter(count));
-
-    useEffect(() => {
-        // init the state
-        socket.emit('init-count');
-    }, []);
-
 
     {/* Voting Section - left of the game map */ }
     return (
@@ -52,7 +32,7 @@ export default function Voting() {
                     <Button bg="brand.red" color="white" mr="40px"
                         _hover={{ color: "brand.red", background: "red.100" }}
                         onClick={() => { socket.emit('progress-game') }}>
-                        End Voting
+                        WIP Next
                     </Button>
 
                     {/* Time */}
