@@ -22,6 +22,7 @@ const NumSlider: React.FC<NumSliderProps> = ({ value, onChange, min, max }) => {
         onChange={onChange}  // Update value on change
         min={min}  // Minimum value
         max={max}  // Maximum value
+        step={30}
         colorScheme="teal"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
