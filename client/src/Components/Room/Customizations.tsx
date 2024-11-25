@@ -2,7 +2,7 @@
 // This file displays a grid of the different customizations  
 // for when the facilitator creates a room
 
-import { Box, Button, Center, Checkbox, CheckboxGroup, Input, InputGroup, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Checkbox, CheckboxGroup, Input, InputGroup, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text, VStack } from "@chakra-ui/react";
 import L from "leaflet";
 import { useRef, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
@@ -13,15 +13,16 @@ import { usePolygon } from "../Contexts/PolygonContext";
 import MapAreaSelection, { MapAreaSelectionRef } from "./MapAreaSelection";
 import { global_roles, global_solutions, maxPlayers as global_maxPlayers } from "../../data/data";
 import RoleSelector from "./RoleSelector";
+import NumSlider from "./NumSlider";
 
 export default function Customizations() {
     // room input variables  
     const [roomName, setRoomName] = useState('');
     // TODO use a different way of setting time per round?
-    const [time, setTime] = useState<number>(240);
+    const [time, setTime] = useState(0);
     // TODO default values from a file?
-    const [initialBudget, setInitialBudget] = useState<number>(10000);
-    const [budgetPerRound, setBudgetPerRound] = useState<number>(5000);
+    const [initialBudget, setInitialBudget] = useState<number>(0);
+    const [budgetPerRound, setBudgetPerRound] = useState<number>(0);
     const { polygon: mapPolygon } = usePolygon();
     const mapSelectionRef = useRef<MapAreaSelectionRef>(null);
     const [checkedSolutions, setCheckedSolutions] = useState<Record<string, boolean>>(
@@ -124,71 +125,38 @@ export default function Customizations() {
 
             {/* Enter Time */}
             <Box pb="20px">
-                <Text className="h2" color="brand.grey">
-                    Time per round
-                </Text>
+                <Text className="h2" pb="0" color="brand.grey">Time per round</Text>
+                <Text fontSize="14px" color="brand.grey">{time} seconds</Text>
 
-                <InputGroup>
-                    <Input
-                        borderColor="brand.teal"
-                        color="brand.teal"
-                        placeholder='Enter in seconds...'
-                        _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
-                        fontSize="14px"
-                        _hover={{ borderWidth: "2px" }}
-
-                        // set time variable 
-                        type="number"
-                        value={time}
-                        onChange={(event) => setTime(Number(event.target.value))}
-                    ></Input>
-                </InputGroup>
+                <NumSlider value={time} onChange={setTime} min={0} max={240} />
             </Box>
 
-            {/* TODO change these to sliders? */}
+            {/* Initial Budget */}
             <Box pb="20px">
-                <Text className="h2" color="brand.grey">
-                    Initial budget
-                </Text>
+                <Text className="h2" pb="0" color="brand.grey">Initial budget</Text>
 
-                <InputGroup>
-                    <Input
-                        borderColor="brand.teal"
-                        color="brand.teal"
-                        placeholder='Enter in euros...'
-                        _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
-                        fontSize="14px"
-                        _hover={{ borderWidth: "2px" }}
-
-                        // set budget variable 
-                        type="number"
-                        value={initialBudget}
-                        onChange={(event) => setInitialBudget(Number(event.target.value))}
-                    ></Input>
-                </InputGroup>
+                <NumberInput value={"€" + initialBudget} onChange={(valueString) => setInitialBudget(Number(valueString))}
+                    defaultValue={0} min={0} max={10000} >
+                    <NumberInputField />
+                    <NumberInputStepper >
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
             </Box>
 
-            {/* Enter Budget */}
+            {/* Budget Per Round */}
             <Box pb="20px">
-                <Text className="h2" color="brand.grey">
-                    Budget per round
-                </Text>
+                <Text className="h2" pb="0" color="brand.grey">Budget per round</Text>
 
-                <InputGroup>
-                    <Input
-                        borderColor="brand.teal"
-                        color="brand.teal"
-                        placeholder='Enter in euros...'
-                        _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
-                        fontSize="14px"
-                        _hover={{ borderWidth: "2px" }}
-
-                        // set budget variable 
-                        type="number"
-                        value={budgetPerRound}
-                        onChange={(event) => setBudgetPerRound(Number(event.target.value))}
-                    ></Input>
-                </InputGroup>
+                <NumberInput value={"€" + budgetPerRound} onChange={(valueString) => setBudgetPerRound(Number(valueString))}
+                    defaultValue={0} min={0} max={10000} >
+                    <NumberInputField />
+                    <NumberInputStepper >
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
             </Box>
 
             {/* Creates the room and goes into lobby */}
