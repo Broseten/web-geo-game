@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
-import { BaseHandler } from "./BaseHandler";
+import { BaseRoomHandler } from "./BaseRoomHandler";
 
-export class TimerHandler extends BaseHandler {
+export class TimerHandler extends BaseRoomHandler {
    private timerSeconds = 0;
    private timerId: NodeJS.Timeout | null = null;
 
@@ -9,28 +9,25 @@ export class TimerHandler extends BaseHandler {
       socket.on('request-timer-update', () => {
          socket.emit('timer-update', this.timerSeconds); // Send current timer to the requesting client
       });
-
-      socket.on('start-timer', (seconds: number) => {
-         this.timerSeconds = seconds;
-         this.startTimer();
-      });
    }
 
-   private startTimer() {
+   public startTimer(seconds: number, onTimerEnd: () => void) {
       if (this.timerId !== null) {
          clearTimeout(this.timerId);
          this.timerId = null;
       }
-      this.doTimer();
+      this.timerSeconds = seconds;
+      this.doTimer(onTimerEnd);
    }
 
-   private async doTimer() {
+   private async doTimer(onTimerEnd: () => void) {
       while (this.timerSeconds > 0) {
-         this.io.emit('timer-update', this.timerSeconds); // Broadcast to all connected clients
+         this.io.to(this.roomID).emit('timer-update', this.timerSeconds); // Broadcast to all connected clients
          await this.delay(1000);
          this.timerSeconds--;
       }
-      this.io.emit('timer-complete'); // Notify all clients when the timer ends
+      onTimerEnd();
+      this.io.to(this.roomID).emit('timer-complete'); // Notify all clients when the timer ends
    }
 
    private delay(delay: number) {

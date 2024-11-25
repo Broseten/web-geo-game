@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { MapHandler } from './handlers/MapHandler';
 import { Player } from './Player';
 import { global_icon_colors } from './data/data';
+import { TimerHandler } from './handlers/TimerHandler';
 
 const gameRoomMaxPlayers = 4;
 
@@ -23,6 +24,7 @@ export class GameRoom {
    private currentRound = 0;
 
    private mapHandler: MapHandler;
+   private timerHandler: TimerHandler;
 
    constructor(ioServer: Server, initialRoomData: RoomJoined, facilitator: Socket) {
       this.id = uuidv4(); // Unique ID for the room
@@ -31,6 +33,7 @@ export class GameRoom {
       this.roomInitData = initialRoomData;
       this.facilitator = facilitator.id;
       this.mapHandler = new MapHandler(this.ioServer, this.id);
+      this.timerHandler = new TimerHandler(this.ioServer, this.id);
    }
 
    // Adds a player to the room
@@ -63,8 +66,10 @@ export class GameRoom {
       clientSocket.join(this.id);
       console.info(`Player ${clientSocket.id} joined room ${this.id}`);
 
-      // init the map handler
+      // init the map handler listeners for the new player
       this.mapHandler.startListeners(clientSocket);
+      // init the room timer handler
+      this.timerHandler.startListeners(clientSocket);
 
       // Notify all players in the room about the new player
       this.sendPlayersUpdate();
@@ -124,6 +129,9 @@ export class GameRoom {
       this.currentRound++;
       console.info(`Starting round ${this.currentRound} in room ${this.id}`);
       this.ioServer.to(this.id).emit('round-info', { round: this.currentRound });
+      this.timerHandler.startTimer(this.roomInitData.timePerRound, () => {
+         this.progressGame();
+      });
 
       // Example: Handle round logic, e.g., resetting player actions, etc.
       this.handleRoundLogic();
