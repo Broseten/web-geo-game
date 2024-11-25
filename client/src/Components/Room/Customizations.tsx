@@ -136,7 +136,7 @@ export default function Customizations() {
                 <Text className="h2" pb="0" color="brand.grey">Initial budget</Text>
 
                 <NumberInput value={"€" + initialBudget} onChange={(valueString) => setInitialBudget(Number(valueString))}
-                    defaultValue={0} min={0} max={10000} step={50}>
+                    defaultValue={initialBudget} min={0} max={10000} step={50}>
                     <NumberInputField />
                     <NumberInputStepper >
                         <NumberIncrementStepper />
@@ -150,7 +150,7 @@ export default function Customizations() {
                 <Text className="h2" pb="0" color="brand.grey">Budget per round</Text>
 
                 <NumberInput value={"€" + budgetPerRound} onChange={(valueString) => setBudgetPerRound(Number(valueString))}
-                    defaultValue={0} min={0} max={10000} step={50}>
+                    defaultValue={budgetPerRound} min={0} max={10000} step={50}>
                     <NumberInputField />
                     <NumberInputStepper >
                         <NumberIncrementStepper />
