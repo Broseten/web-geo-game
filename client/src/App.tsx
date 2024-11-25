@@ -17,6 +17,7 @@ function App() {
    const { currentScreen, setCurrentScreen } = useScreenSelection(); // Get the current screen from context
    const { setGameRoom } = useGameRoom();
 
+   // TODO create and move to connection context
    initSocket('connect', () => setIsConnected(true)); // on connected
    initSocket('disconnect', () => setIsConnected(false)); // on disconnected
 

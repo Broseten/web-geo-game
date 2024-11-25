@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { PlayerData, PlayerInfoUpdate, RoomJoined } from "../../data/DataTypes";
+import { createContext, ReactNode, useContext, useState } from "react";
+import { GameRoomState, PlayerData, PlayerInfoUpdate, RoomJoined, RoundState } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
 
@@ -7,7 +7,8 @@ interface GameRoomContextProps {
     roomID: string | null;
     roomInfo: RoomJoined | null;
     roomStatus: RoomStatus | null;
-    roundIndex: number;
+    gameRoomState: GameRoomState | undefined;
+    setGameRoomState: (gameRoomState: GameRoomState) => void;
     setRoomStatus: (roomStatus: RoomStatus) => void;
     setGameRoom: (roomID: string, roomInfo: RoomJoined) => void;
     clearGameRoom: () => void;
@@ -30,10 +31,10 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     const [roomInfo, setRoomInfo] = useState<RoomJoined | null>(null);
     const [roomStatus, setRoomStatus] = useState<RoomStatus | null>(null);
     const [players, setPlayers] = useState<PlayerData[]>([]);
-    // TODO rounds and game data
-    const [roundIndex, setRoundIndex] = useState<number>(0);
+    const [gameRoomState, setGameRoomState] = useState<GameRoomState | undefined>(undefined);
 
     // TODO leaving a room should reset this context! (also restarting the game)
+    // TODO clear room state on finishing a game...cleanup in general
 
     const setGameRoom = (id: string, info: RoomJoined) => {
         setRoomID(id);
@@ -82,9 +83,10 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
         console.error(mess);
     });
 
-    
-    initSocket('round-info', ({round}) => {
-        setRoundIndex(round);
+
+    initSocket('room-state', (gameRoomState: GameRoomState) => {
+        setGameRoomState(gameRoomState);
+        console.log(gameRoomState);
     });
 
     return (
@@ -92,7 +94,8 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
             value={{
                 roomID,
                 roomInfo,
-                roundIndex,
+                gameRoomState,
+                setGameRoomState,
                 setGameRoom,
                 clearGameRoom,
                 roomStatus,

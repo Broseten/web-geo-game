@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import { PlayerData } from '../DataTypes';
+import { PlayerData } from './DataTypes';
 
 export class Player {
    // TODO use player data from the shared project?

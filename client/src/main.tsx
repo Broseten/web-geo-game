@@ -7,6 +7,7 @@ import { GameRoomProvider } from './Components/Contexts/GameRoomContext.tsx';
 import { ScreenProvider } from './Components/Contexts/useScreenSelection.tsx';
 import customTheme from './Theme/Theme.ts';
 
+// TODO get the server address from the server that provides the client website
 const URL = 'http://localhost:1337';
 
 // TODO ensure that the client has the same ID when reconnecting (cookie)

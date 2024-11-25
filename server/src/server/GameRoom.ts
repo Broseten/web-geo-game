@@ -1,10 +1,11 @@
-import { PlayerData, RoomJoined, RoomPlayersInfo } from '../DataTypes';
 import { Server, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
-import { MapHandler } from './handlers/MapHandler';
-import { Player } from './Player';
 import { global_icon_colors } from './data/data';
+import { PlayerData, ProgressState, RoomJoined, RoomPlayersInfo } from './DataTypes';
+import { GameRoomProgress } from './GameRoomProgress';
+import { MapHandler } from './handlers/MapHandler';
 import { TimerHandler } from './handlers/TimerHandler';
+import { Player } from './Player';
 
 const gameRoomMaxPlayers = 4;
 
@@ -19,12 +20,10 @@ export class GameRoom {
    // TODO smarter way for assigning names
    private defaultNames = ["Alice", "Bob", "Charlie", "David"];
 
-   // placeholders
-   private totalRounds = 3;
-   private currentRound = 0;
-
    private mapHandler: MapHandler;
    private timerHandler: TimerHandler;
+
+   private gameRoomProgress: GameRoomProgress;
 
    constructor(ioServer: Server, initialRoomData: RoomJoined, facilitator: Socket) {
       this.id = uuidv4(); // Unique ID for the room
@@ -34,6 +33,7 @@ export class GameRoom {
       this.facilitator = facilitator.id;
       this.mapHandler = new MapHandler(this.ioServer, this.id);
       this.timerHandler = new TimerHandler(this.ioServer, this.id);
+      this.gameRoomProgress = new GameRoomProgress(this.id, initialRoomData.totalRounds);
    }
 
    // Adds a player to the room
@@ -118,37 +118,34 @@ export class GameRoom {
       this.ioServer.to(this.id).emit('room-players-info', roomUpdate);
    }
 
-   // Starts the next round in the game room
+   // Starts the next round in the game room and notifies all players
    progressGame(): void {
-      // TODO just placeholder functionality now
-      if (this.currentRound >= this.totalRounds) {
-         this.endGame();
+      console.log("Trying to progress game");
+      if (this.gameRoomProgress?.getGameProgressState() === ProgressState.NotStarted) {
+         this.gameRoomProgress.startGame();
+         const roomState = this.gameRoomProgress.getRoomState();
+         this.ioServer.to(this.id).emit('start-game', roomState);
          return;
       }
-
-      this.currentRound++;
-      console.info(`Starting round ${this.currentRound} in room ${this.id}`);
-      this.ioServer.to(this.id).emit('round-info', { round: this.currentRound });
-      this.timerHandler.startTimer(this.roomInitData.timePerRound, () => {
-         this.progressGame();
-      });
-
-      // Example: Handle round logic, e.g., resetting player actions, etc.
-      this.handleRoundLogic();
-   }
-
-   // Game logic for each round (stub function to be customized)
-   private handleRoundLogic() {
-      // Implement per-round game logic here, such as timing, scoring, etc.
-      console.info(`Handling logic for round ${this.currentRound} in room ${this.id}`);
-      // Emit updates to all players as needed during the round
-   }
-
-   // Ends the game and notifies players
-   private endGame(): void {
-      console.info(`Ending game in room ${this.id}`);
-      this.ioServer.to(this.id).emit('game-ended', { totalRounds: this.totalRounds });
-      // Optionally, clear the room or reset data if needed for reuse
+      if (this.gameRoomProgress.next()) {
+         const roomState = this.gameRoomProgress.getRoomState();
+         // notify all players in the room
+         this.ioServer.to(this.id).emit('room-state', roomState);
+         // if any stage is in progress (placing/voting), then start the timer
+         if (roomState.round.stageProgress === ProgressState.Finished) {
+            this.timerHandler.tryStopTimer();
+         }
+         else if (roomState.round.stageProgress === ProgressState.InProgress) {
+            // when the timer finishes, progress the stage again
+            console.log(`Starting timer for ${this.roomInitData.timePerRound} in room ${this.id}.`)
+            this.timerHandler.startTimer(this.roomInitData.timePerRound, () => {
+               this.progressGame();
+            });
+         }
+         // if (roomState.gameState === ProgressState.Finished) {
+         //    // TODO cleanup after game end?
+         // }
+      }
    }
 
    // Checks if the room has reached its maximum player capacity

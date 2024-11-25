@@ -1,4 +1,4 @@
-import { RoomJoined } from '../DataTypes';
+import { RoomJoined } from './DataTypes';
 import { Server, Socket } from 'socket.io';
 import { GameRoom } from './GameRoom';
 
