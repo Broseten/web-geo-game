@@ -56,13 +56,13 @@ export default function PlayerCard({ player }: PlayerCardProps) {
 
         {/* Player Info */}
         <Box flex="2" textAlign="left">
-          <Heading size="sm">{player.name}</Heading>
-          <Text fontSize="sm">{isFac ? "Facilitator" : "Player"}</Text>
+          <Heading size="md">{player.name}</Heading>
+          <Text fontSize="12px">{isFac ? "Facilitator" : "Player"}</Text>
         </Box>
 
         {/* Role Dropdown */}
         <Box flex="2" textAlign="left">
-          {isLocalPlayer ? (
+          {!isFac && isLocalPlayer ? (
             <Select
               maxWidth="300px"
               bg="gray.300"
@@ -80,6 +80,9 @@ export default function PlayerCard({ player }: PlayerCardProps) {
                 ))}
             </Select>
 
+          ) : isFac ? (
+            <></>
+
           ) : (
             <Select
               isDisabled
@@ -89,7 +92,8 @@ export default function PlayerCard({ player }: PlayerCardProps) {
               borderWidth="2px"
               placeholder={player.role}
             />
-          )}
+          )
+          }
         </Box>
 
         {/* Action Buttons */}

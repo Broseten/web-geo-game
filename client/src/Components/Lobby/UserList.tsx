@@ -32,7 +32,7 @@ export default function UserList() {
                     fontWeight="bold"
                     textAlign="left"
                 >
-                    <Box flex="1">Icon</Box>
+                    <Box ml="20px" flex="1">Icon</Box>
                     <Box flex="2">User</Box>
                     <Box flex="2">Role</Box>
                     <Box flex="1">Actions</Box>
