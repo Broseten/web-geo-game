@@ -70,6 +70,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
               borderWidth="2px"
               value={player.role || ""} // Default to an empty string if no role is selected
               placeholder={player.role ? undefined : "Select role..."}
+              fontSize="sm"
               onChange={(e) => handleRoleChange(e.target.value)} // Handle role change
             >
               {roomInfo?.roles &&
