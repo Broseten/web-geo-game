@@ -11,6 +11,7 @@ import CreateRoom from './Components/Room/CreateRoom';
 import JoinRoom from './Components/Room/JoinRoom';
 import { RoomInfo } from './data/DataTypes';
 import initSocket from './Hooks/useSocket';
+import { LocalGameDataProvider } from './Components/Contexts/LocalGameContext';
 
 function App() {
    const [isConnected, setIsConnected] = useState(false);
@@ -42,7 +43,7 @@ function App() {
          case 'lobby':
             return <Lobby />
          case 'play':
-            return <Play isConnected={isConnected} />;
+            return <LocalGameDataProvider><Play isConnected={isConnected} /></LocalGameDataProvider>;
          case 'results':
             return <Results />;
          case 'end':

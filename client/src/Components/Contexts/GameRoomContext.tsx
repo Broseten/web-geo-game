@@ -6,10 +6,8 @@ import { socket } from "../../main";
 interface GameRoomContextProps {
     roomID: string | null;
     roomInfo: RoomJoined | null;
-    roomStatus: RoomStatus | null;
     gameRoomState: GameRoomState | undefined;
     setGameRoomState: (gameRoomState: GameRoomState) => void;
-    setRoomStatus: (roomStatus: RoomStatus) => void;
     setGameRoom: (roomID: string, roomInfo: RoomJoined) => void;
     clearGameRoom: () => void;
     players: PlayerData[];
@@ -20,21 +18,17 @@ interface GameRoomContextProps {
     isFacilitator: (id: string | undefined) => boolean;
 }
 
-interface RoomStatus {
-    selectedSolutionID: string;
-}
-
 const GameRoomContext = createContext<GameRoomContextProps | undefined>(undefined);
 
 export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     const [roomID, setRoomID] = useState<string | null>(null);
     const [roomInfo, setRoomInfo] = useState<RoomJoined | null>(null);
-    const [roomStatus, setRoomStatus] = useState<RoomStatus | null>(null);
     const [players, setPlayers] = useState<PlayerData[]>([]);
     const [gameRoomState, setGameRoomState] = useState<GameRoomState | undefined>(undefined);
 
     // TODO leaving a room should reset this context! (also restarting the game)
     // TODO clear room state on finishing a game...cleanup in general
+    // it should be ok to just shuffle the hiararchy and "render" this later when connecting to a room
 
     const setGameRoom = (id: string, info: RoomJoined) => {
         setRoomID(id);
@@ -98,8 +92,6 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
                 setGameRoomState,
                 setGameRoom,
                 clearGameRoom,
-                roomStatus,
-                setRoomStatus,
                 players,
                 setPlayers,
                 getPlayerData,

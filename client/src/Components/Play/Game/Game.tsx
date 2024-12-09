@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import initSocket from "../../../Hooks/useSocket";
 import { socket } from "../../../main";
 import { useScreenSelection } from "../../Contexts/useScreenSelection";
+import ConfirmationModal from "../ConfirmationModal";
 import Timer from "../Timer";
 import Solutions from "./Solutions";
-import ConfirmationModal from "../ConfirmationModal";
 
 interface GameProps {
     isFacilitator: boolean;
@@ -100,13 +100,13 @@ export default function Game({ isFacilitator }: GameProps) {
             <Box textAlign="center" color="white">
                 <Heading size="lg">Solutions</Heading>
 
-                <Text fontSize="14px" lineHeight="1.15" ml="20px" mr="20px">
+                {/* <Text fontSize="14px" lineHeight="1.15" ml="20px" mr="20px">
                     Choose a pin option below to help meet your goals as a{" "}
                     <Text as="span" fontWeight="bold">
                         {role}
                     </Text>
                     .
-                </Text>
+                </Text> */}
             </Box>
 
             {/* accordion of solutions */}
