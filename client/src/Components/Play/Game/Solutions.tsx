@@ -1,7 +1,7 @@
 // Authors: Vojta Bruza and Grace Houser
 // accordion of solution options for the game play 
 
-import { Accordion, Box, Center } from "@chakra-ui/react";
+import { Accordion, Box, Center, Text, VStack } from "@chakra-ui/react";
 import { global_solutions } from "../../../data/data";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import { SolutionAccordionItem } from "./SolutionAccordionItem";
@@ -62,12 +62,15 @@ export default function Solutions() {
                     </Box>
                     :
                     // If a solution is selected, display it
-                    <SolutionItem
-                        key={selectedSolution.id}
-                        solution={selectedSolution}
-                        onClick={() => setSelectedSolutionID(null)}
-                        buttonText={"Cancel"}
-                    />
+                    <VStack>
+                        <SolutionItem
+                            key={selectedSolution.id}
+                            solution={selectedSolution}
+                            onClick={() => setSelectedSolutionID(null)}
+                            buttonText={"Cancel"}
+                        />
+                        <Text as={"b"}>Click on the map to place the selected solution.</Text>
+                    </VStack>
             }
         </>
     );

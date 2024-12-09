@@ -25,7 +25,7 @@ export default function MapMarker({ marker }: MapMarkerProps) {
                   alignItems="flex-end"
                   justifyContent="flex-end"
                   gap={2}
-                  p={5}
+                  p={2}
                >
                   <Button
                      onClick={() => setSelectedSolutionID(marker.solutionID)}
