@@ -14,12 +14,13 @@ import MapAreaSelection, { MapAreaSelectionRef } from "./MapAreaSelection";
 import { global_roles, global_solutions, maxPlayers as global_maxPlayers } from "../../data/data";
 import RoleSelector from "./RoleSelector";
 import NumSlider from "./NumSlider";
+import TimeInput from "./TimeInput";
 
 export default function Customizations() {
     // room input variables  
     const [roomName, setRoomName] = useState('');
     // TODO use a different way of setting time per round?
-    const [time, setTime] = useState(0);
+    const [time, setTime] = useState(180);
     // TODO default values from a file?
     const [initialBudget, setInitialBudget] = useState<number>(0);
     const [budgetPerRound, setBudgetPerRound] = useState<number>(0);
@@ -126,9 +127,11 @@ export default function Customizations() {
             {/* Enter Time */}
             <Box pb="20px">
                 <Text className="h2" pb="0" color="brand.grey">Time per round</Text>
-                <Text fontSize="14px" color="brand.grey">{time} seconds</Text>
-
-                <NumSlider value={time} onChange={setTime} min={0} max={300} />
+                <TimeInput
+                    onChange={setTime}
+                    initialMinutes={Math.floor(time / 60)}
+                    initialSeconds={Math.round((time % 60) / 15) * 15}
+                ></TimeInput>
             </Box>
 
             {/* Initial Budget */}
@@ -198,7 +201,8 @@ export default function Customizations() {
                             roles: roles,
                             timePerRound: time,
                             initialBudget: initialBudget,
-                            budgetPerRound: budgetPerRound
+                            budgetPerRound: budgetPerRound,
+                            totalRounds: 3
                         };
                         socket.emit('create-room', roomData);
                     }}>

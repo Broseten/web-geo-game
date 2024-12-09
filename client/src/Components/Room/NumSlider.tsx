@@ -10,9 +10,10 @@ interface NumSliderProps {
   onChange: (value: number) => void;  // Callback function to update the value in the parent component
   min?: number;  // Optional min value, default is 0
   max?: number;  // Optional max value, default is 100
+  step?: number;  // Optional step
 }
 
-const NumSlider: React.FC<NumSliderProps> = ({ value, onChange, min, max }) => {
+const NumSlider: React.FC<NumSliderProps> = ({ value, onChange, min, max, step = 30 }) => {
   const [showTooltip, setShowTooltip] = React.useState(false);
 
   return (
@@ -22,7 +23,7 @@ const NumSlider: React.FC<NumSliderProps> = ({ value, onChange, min, max }) => {
         onChange={onChange}  // Update value on change
         min={min}  // Minimum value
         max={max}  // Maximum value
-        step={30}
+        step={step}
         colorScheme="teal"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
