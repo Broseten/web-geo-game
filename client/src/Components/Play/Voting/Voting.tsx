@@ -5,11 +5,19 @@ import { Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react"
 import { socket } from "../../../main";
 import Timer from "../Timer";
 import Information from "./Information";
+import { useState } from "react";
+import ConfirmationModal from "../ConfirmationModal";
 
 
 export default function Voting() {
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     // TODO - needed variables 
     const isFacilitator = true;
+
+    const handleFinishRound = () => {
+        socket.emit("progress-game");
+        setIsConfirmModalOpen(false);
+    };
 
     {/* Voting Section - left of the game map */ }
     return (
@@ -31,8 +39,8 @@ export default function Voting() {
                     {/* End Voting Button - only for the facilitator */}
                     <Button bg="brand.red" color="white" mr="40px"
                         _hover={{ color: "brand.red", background: "red.100" }}
-                        onClick={() => { socket.emit('progress-game') }}>
-                        WIP Next
+                        onClick={() => { setIsConfirmModalOpen(true) }}>
+                        Finish Voting
                     </Button>
 
                     {/* Time */}
@@ -68,6 +76,13 @@ export default function Voting() {
                 </VStack>
             </Center>
 
+            {/* Confirmation Modal */}
+            <ConfirmationModal
+                isOpen={isConfirmModalOpen}
+                onClose={() => setIsConfirmModalOpen(false)}
+                onConfirm={handleFinishRound}
+                message="Are you sure you want to finish voting before the timer runs out?"
+            />
         </VStack>
     );
 }

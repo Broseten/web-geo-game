@@ -1,41 +1,48 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays the left section of the game play 
-
 import { Box, Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
-import { socket } from "../../../main";
-import { useScreenSelection } from "../../Contexts/useScreenSelection";
 import { useEffect, useState } from "react";
 import initSocket from "../../../Hooks/useSocket";
-import Solutions from "./Solutions";
+import { socket } from "../../../main";
+import { useScreenSelection } from "../../Contexts/useScreenSelection";
 import Timer from "../Timer";
-
+import Solutions from "./Solutions";
+import ConfirmationModal from "../ConfirmationModal";
 
 export default function Game() {
-
     const { setCurrentScreen } = useScreenSelection();
     const [testCounter, setTestCounter] = useState(0);
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
-    // TODO - needed variables 
-    const role = 'Developer'
-    const playerBudget = '€20,000'
+    // TODO - needed variables
+    const role = "Developer";
+    const playerBudget = "€20,000";
 
-    initSocket('countClient', (count: number) => setTestCounter(count));
-    initSocket('init-count-client', (count: number) => setTestCounter(count));
+    initSocket("countClient", (count: number) => setTestCounter(count));
+    initSocket("init-count-client", (count: number) => setTestCounter(count));
 
     useEffect(() => {
         // init the state
-        socket.emit('init-count');
+        socket.emit("init-count");
     }, []);
 
+    const handleFinishRound = () => {
+        socket.emit("progress-game");
+        setIsConfirmModalOpen(false);
+    };
 
-
-    {/* Section left of the game map */ }
     return (
         <VStack align={"top"}>
-
             {/* Logo at the top */}
-            <Heading bg="none" pt="5px" color="brand.yellow" textAlign="center"
-                fontSize="18px" fontFamily="Avenir Next" fontWeight="bold">
+            <Heading
+                bg="none"
+                pt="5px"
+                color="brand.yellow"
+                textAlign="center"
+                fontSize="18px"
+                fontFamily="Avenir Next"
+                fontWeight="bold"
+            >
                 NegoDesign
             </Heading>
 
@@ -43,11 +50,14 @@ export default function Game() {
 
             {/* Budget and Time Section */}
             <HStack justifyContent="center">
-
-                <Button bg="brand.red" color="white" mr="40px"
+                <Button
+                    bg="brand.red"
+                    color="white"
+                    mr="40px"
                     _hover={{ color: "brand.red", background: "red.100" }}
-                    onClick={() => { socket.emit('progress-game') }}>
-                    WIP Button Voting
+                    onClick={() => setIsConfirmModalOpen(true)}
+                >
+                    Finish Round
                 </Button>
 
                 {/* Budget */}
@@ -56,7 +66,9 @@ export default function Game() {
                         {playerBudget}
                     </Heading>
 
-                    <Text fontSize="14px" color="white">Budget</Text>
+                    <Text fontSize="14px" color="white">
+                        Budget
+                    </Text>
                 </VStack>
 
                 {/* just for spacing */}
@@ -68,7 +80,9 @@ export default function Game() {
                         <Timer />
                     </Heading>
 
-                    <Text fontSize="14px" color="white">Time</Text>
+                    <Text fontSize="14px" color="white">
+                        Time
+                    </Text>
                 </VStack>
             </HStack>
 
@@ -79,15 +93,26 @@ export default function Game() {
                 <Heading size="lg">Solutions</Heading>
 
                 <Text fontSize="14px" lineHeight="1.15" ml="20px" mr="20px">
-                    Choose a pin option below to help meet your goals as a <Text as="span" fontWeight="bold">{role}</Text>.
+                    Choose a pin option below to help meet your goals as a{" "}
+                    <Text as="span" fontWeight="bold">
+                        {role}
+                    </Text>
+                    .
                 </Text>
             </Box>
-
 
             {/* accordion of solutions */}
             <Center>
                 <Solutions />
             </Center>
+
+            {/* Confirmation Modal */}
+            <ConfirmationModal
+                isOpen={isConfirmModalOpen}
+                onClose={() => setIsConfirmModalOpen(false)}
+                onConfirm={handleFinishRound}
+                message="Are you sure you want to finish this round before the timer runs out?"
+            />
         </VStack>
     );
 }
