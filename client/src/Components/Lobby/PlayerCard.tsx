@@ -62,7 +62,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
 
         {/* Role Dropdown */}
         <Box flex="2" textAlign="left">
-          {!isFac && isLocalPlayer ? (
+          {isLocalPlayer ? (
             <Select
               maxWidth="300px"
               bg="gray.300"
@@ -80,9 +80,6 @@ export default function PlayerCard({ player }: PlayerCardProps) {
                   </option>
                 ))}
             </Select>
-
-          ) : isFac ? (
-            <></>
 
           ) : (
             <Select
