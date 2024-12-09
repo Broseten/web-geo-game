@@ -11,6 +11,8 @@ import GameMap from "./Map/GameMap";
 import PlayModal from "./PlayModal";
 import Voting from "./Voting/Voting";
 import { socket } from "../../main";
+import { useEffect } from "react";
+import { useScreenSelection } from "../Contexts/useScreenSelection";
 
 // TODO get rid of this, instead move it to connection context
 interface Play {
@@ -18,10 +20,18 @@ interface Play {
 }
 
 export default function Play({ isConnected }: Play) {
+   const { setCurrentScreen } = useScreenSelection(); // Get the current screen from context
    console.log("connected: " + isConnected);
    const { roomInfo, gameRoomState, isFacilitator } = useGameRoom();
 
    let isFac = isFacilitator(socket.id);
+
+   useEffect(() => {
+      // switch to the results screen if the game has finished
+      if (gameRoomState?.gameState === ProgressState.Finished) {
+         setCurrentScreen('results');
+      }
+   }, [gameRoomState]);
 
    return (
       <>
