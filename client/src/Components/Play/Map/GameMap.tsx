@@ -1,12 +1,16 @@
-import { useState, useEffect } from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L, { LatLngExpression } from "leaflet";
+import L, { LatLng, LatLngExpression } from "leaflet";
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-import MapMask from "./MapMask";
-import { socket } from "../../../main";
+import "leaflet/dist/leaflet.css";
+import { useEffect, useState } from "react";
+import { MapContainer, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import initSocket from "../../../Hooks/useSocket";
+import { MapMarkerData } from "../../../data/DataTypes";
+import { socket } from "../../../main";
+import { useLocalGameData } from "../../Contexts/LocalGameContext";
+import MapMarker from "./MapMarker";
+import MapMask from "./MapMask";
+import MapInitializer from "./MapInitializer";
 
 let DefaultIcon = L.icon({
    iconSize: [25, 41],
@@ -22,54 +26,45 @@ interface GameMapProps {
    polygon: L.Polygon | null;
 }
 
-function MapInitializer({ bounds, onClick }: { bounds: L.LatLngBounds, onClick: (latlng: LatLngExpression) => void }) {
-   const map = useMap();
-
-   useEffect(() => {
-      // init the map properly
-      if (map) {
-         // pan and zoom on the bounds 
-         map.fitBounds(bounds);
-         // set the min zoom distance according to the bounds
-         const zoom = Math.floor(map.getBoundsZoom(bounds));
-         map.setMinZoom(zoom);
-      }
-   }, []);
-
-   useMapEvents({
-      // add listeners
-      click(e) {
-         onClick([e.latlng.lat, e.latlng.lng]);
-      }
-   });
-
-   return null;
-}
-
 export default function GameMap({ polygon }: GameMapProps) {
    if (!polygon) {
       console.error("Error: Polygon is null in GameMap component.");
       return null;
    }
-
+   const { selectedSolutionID, setSelectedSolutionID } = useLocalGameData();
    const bounds = polygon.getBounds();
    const polygonCoords = polygon.getLatLngs()[0] as LatLngExpression[];
 
-   const [markers, setMarkers] = useState<[number, LatLngExpression][]>([]);
+   const [markers, setMarkers] = useState<MapMarkerData[]>([]);
 
-   const addMarkerRPC = 'add-marker';
-   const setMarkersRPC = 'set-markers';
-
-   initSocket(addMarkerRPC, (marker: [number, LatLngExpression]) => {
+   initSocket('marker-added', (marker: MapMarkerData) => {
       setMarkers((current) => [...current, marker]);
    });
-   initSocket(setMarkersRPC, (newMarkers: [number, LatLngExpression][]) => {
+
+   initSocket('set-markers', (newMarkers: MapMarkerData[]) => {
       setMarkers(newMarkers);
    });
 
    useEffect(() => {
       socket.emit('request-map-markers');
    }, []);
+
+   const onMapClicked = (position: LatLng) => {
+      if (selectedSolutionID) {
+         let data: MapMarkerData = {
+            coordinates: { lat: position.lat, lng: position.lng },
+            id: -1,
+            solutionID: selectedSolutionID,
+            // TODO use locally stored ID instead of directly reading it from the socket
+            ownerPlayerID: socket.id!
+         }
+         setSelectedSolutionID(null);
+         socket.emit('add-marker', data);
+      }
+      else {
+         console.error("No solution selected");
+      }
+   }
 
    return (
       <div className="gamemap">
@@ -83,9 +78,7 @@ export default function GameMap({ polygon }: GameMapProps) {
          >
             <MapInitializer
                bounds={bounds}
-               onClick={(position) => {
-                  socket.emit('add-marker', position);
-               }}
+               onClick={onMapClicked}
             />
 
             <TileLayer
@@ -95,27 +88,10 @@ export default function GameMap({ polygon }: GameMapProps) {
             />
 
             {markers.map((marker) => (
-               <Marker key={marker[0]} position={marker[1]}>
-                  <Popup>
-                     <div style={{ textAlign: 'center' }}>
-                        <p>You clicked here! ({marker[1].toString()})</p>
-                        <button
-                           onClick={() => socket.emit('remove-marker', marker[0])}
-                           style={{
-                              backgroundColor: '#BF4C50',
-                              color: 'white',
-                              padding: '5px 10px',
-                              border: 'none',
-                              borderRadius: '5px',
-                              cursor: 'pointer',
-                              marginTop: '0px'
-                           }}
-                        >
-                           Delete
-                        </button>
-                     </div>
-                  </Popup>
-               </Marker>
+               <MapMarker
+                  key={marker.id}
+                  marker={marker}
+               />
             ))}
 
             <MapMask polygonCoords={polygonCoords} />

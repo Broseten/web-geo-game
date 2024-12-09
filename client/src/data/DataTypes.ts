@@ -83,3 +83,17 @@ export interface RoundState {
    stage: RoundStage;
    stageProgress: ProgressState;
 }
+
+//// MAP
+
+export interface CustomLatLng {
+   lat: number;
+   lng: number;
+}
+
+export interface MapMarkerData {
+   id: number;
+   coordinates: CustomLatLng;
+   solutionID: string;
+   ownerPlayerID: string;
+}

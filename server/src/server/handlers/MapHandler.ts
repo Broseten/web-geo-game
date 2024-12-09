@@ -1,10 +1,9 @@
+import { MapMarkerData } from "server/DataTypes";
 import { Socket } from "socket.io";
 import { BaseRoomHandler } from "./BaseRoomHandler";
 
 export class MapHandler extends BaseRoomHandler {
-   // array of tuples (id, position)
-   // TODO use position type instead of any
-   private markers: [number, any][] = [];
+   private markers: MapMarkerData[] = [];
    private markerIDCounter = 0;
 
    override startListeners(socket: Socket) {
@@ -12,16 +11,17 @@ export class MapHandler extends BaseRoomHandler {
          socket.emit('set-markers', this.markers);
       });
 
-      socket.on('add-marker', (position: any) => {
+      socket.on('add-marker', (newMarker: MapMarkerData) => {
          this.markerIDCounter += 1;
          let id = this.markerIDCounter;
-         let marker: [number, any] = [id, position];
-         this.io.to(this.roomID).emit('add-marker', marker);
-         this.markers.push(marker);
+         newMarker.id = id;
+         this.io.to(this.roomID).emit('marker-added', newMarker);
+         this.markers.push(newMarker);
       });
 
       socket.on('remove-marker', (id: number) => {
-         this.markers = this.markers.filter((marker) => marker[0] !== id);
+         // TODO allow only owning player
+         this.markers = this.markers.filter((marker) => marker.id !== id);
          this.io.to(this.roomID).emit('set-markers', this.markers);
       });
    }
