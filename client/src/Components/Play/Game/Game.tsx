@@ -9,7 +9,11 @@ import Timer from "../Timer";
 import Solutions from "./Solutions";
 import ConfirmationModal from "../ConfirmationModal";
 
-export default function Game() {
+interface GameProps {
+    isFacilitator: boolean;
+}
+
+export default function Game({ isFacilitator }: GameProps) {
     const { setCurrentScreen } = useScreenSelection();
     const [testCounter, setTestCounter] = useState(0);
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
@@ -50,15 +54,19 @@ export default function Game() {
 
             {/* Budget and Time Section */}
             <HStack justifyContent="center">
-                <Button
-                    bg="brand.red"
-                    color="white"
-                    mr="40px"
-                    _hover={{ color: "brand.red", background: "red.100" }}
-                    onClick={() => setIsConfirmModalOpen(true)}
-                >
-                    Finish Round
-                </Button>
+                {
+                    isFacilitator
+                    &&
+                    <Button
+                        bg="brand.red"
+                        color="white"
+                        mr="40px"
+                        _hover={{ color: "brand.red", background: "red.100" }}
+                        onClick={() => setIsConfirmModalOpen(true)}
+                    >
+                        Finish Round
+                    </Button>
+                }
 
                 {/* Budget */}
                 <VStack gap="0">

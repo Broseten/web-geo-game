@@ -8,11 +8,12 @@ import Information from "./Information";
 import { useState } from "react";
 import ConfirmationModal from "../ConfirmationModal";
 
+interface VoteProps {
+    isFacilitator: boolean;
+}
 
-export default function Voting() {
+export default function Voting({ isFacilitator }: VoteProps) {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-    // TODO - needed variables 
-    const isFacilitator = true;
 
     const handleFinishRound = () => {
         socket.emit("progress-game");
@@ -37,27 +38,28 @@ export default function Voting() {
                 <HStack justifyContent="center">
 
                     {/* End Voting Button - only for the facilitator */}
-                    <Button bg="brand.red" color="white" mr="40px"
-                        _hover={{ color: "brand.red", background: "red.100" }}
-                        onClick={() => { setIsConfirmModalOpen(true) }}>
-                        Finish Voting
-                    </Button>
+                    {
+                        isFacilitator
+                        &&
+                        <Button bg="brand.red" color="white" mr="40px"
+                            _hover={{ color: "brand.red", background: "red.100" }}
+                            onClick={() => { setIsConfirmModalOpen(true) }}>
+                            Finish Voting
+                        </Button>
+                    }
 
                     {/* Time */}
-                    {
-                        isFacilitator ?
-                            <VStack gap="0">
-                                <Heading size="md" color="white">
-                                    <Timer />
-                                </Heading>
+                    <VStack gap="0">
+                        <Heading size="md" color="white">
+                            <Timer />
+                        </Heading>
 
-                                <Text fontSize="14px" color="white">Time</Text>
-                            </VStack>
-                            :
-                            <Text size="md" fontWeight="bold" color="white" mr="40px" lineHeight="1" textAlign="center">
-                                You are <br /> voting!
-                            </Text>
-                    }
+                        <Text fontSize="14px" color="white">Time</Text>
+                    </VStack>
+                    {/* :
+                    <Text size="md" fontWeight="bold" color="white" mr="40px" lineHeight="1" textAlign="center">
+                        You are <br /> voting!
+                    </Text> */}
                 </HStack>
             </Center>
 
