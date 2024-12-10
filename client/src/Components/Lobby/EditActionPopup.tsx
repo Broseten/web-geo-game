@@ -18,6 +18,7 @@ import { socket } from "../../main";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import TextInput from "./TextInput";
 import { global_icon_colors } from "../../data/data";
+import { global_playerID } from "../Contexts/ConnectionContext";
 
 // Props Interface
 interface EditActionPopupProps {
@@ -41,7 +42,7 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
     const firstFieldRef = React.useRef<HTMLInputElement>(null);
 
     const handleSave = () => {
-        let localPlayer = getPlayerData(socket.id);
+        let localPlayer = getPlayerData(global_playerID);
         if (!localPlayer) {
             throw Error("Local player not found");
         }
@@ -81,7 +82,7 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
                                 {global_icon_colors.map((color) => (
                                     <Button
                                         // is the color taken by another player?
-                                        isDisabled={players.some(p => p.color === color && p.id !== socket.id)}
+                                        isDisabled={players.some(p => p.color === color && p.id !== global_playerID)}
                                         key={color}
                                         bg={`var(--icon-${color})`}
                                         _hover={{ opacity: "0.8" }}

@@ -1,9 +1,9 @@
-import { Server, Socket } from "socket.io";
+import { ServerIO } from "server/ServerIO";
+import { Socket } from "socket.io";
 
 export class BaseHandler {
-   io: Server;
 
-   constructor(io: Server) {
+   constructor(protected io: ServerIO) {
       this.io = io;
    }
 

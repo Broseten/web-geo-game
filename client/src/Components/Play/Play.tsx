@@ -4,27 +4,22 @@
 
 import { HStack } from "@chakra-ui/react";
 import L from "leaflet";
+import { useEffect, useMemo } from "react";
 import { ProgressState, RoundStage } from "../../data/DataTypes";
+import { socket } from "../../main";
 import { useGameRoom } from "../Contexts/GameRoomContext";
+import { useScreenSelection } from "../Contexts/useScreenSelection";
 import Game from "./Game/Game";
 import GameMap from "./Map/GameMap";
 import PlayModal from "./PlayModal";
 import Voting from "./Voting/Voting";
-import { socket } from "../../main";
-import { useEffect, useMemo } from "react";
-import { useScreenSelection } from "../Contexts/useScreenSelection";
+import { global_playerID } from "../Contexts/ConnectionContext";
 
-// TODO get rid of this, instead move it to connection context
-interface Play {
-   isConnected: boolean;
-}
-
-export default function Play({ isConnected }: Play) {
+export default function Play() {
    const { setCurrentScreen } = useScreenSelection(); // Get the current screen from context
-   console.log("connected: " + isConnected);
    const { roomInfo, gameRoomState, isFacilitator } = useGameRoom();
-   
-   const isFac = useMemo(() => isFacilitator(socket.id), [socket.id, isFacilitator]);
+
+   const isFac = useMemo(() => isFacilitator(global_playerID), [global_playerID, isFacilitator]);
 
    useEffect(() => {
       // switch to the results screen if the game has finished

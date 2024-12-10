@@ -6,6 +6,7 @@ import { MapMarkerData, RoundStage } from "../../../data/DataTypes";
 import { socket } from "../../../main";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
+import { global_playerID } from "../../Contexts/ConnectionContext";
 
 interface MapInitializerProps {
    bounds: L.LatLngBounds;
@@ -41,7 +42,7 @@ export default function MapInitializer({ bounds }: MapInitializerProps) {
          coordinates: { lat: position.lat, lng: position.lng },
          id: -1,
          solutionID: selectedSolutionID,
-         ownerPlayerID: socket.id!,
+         ownerPlayerID: global_playerID!,
          roundIndex: roundIndex,
          votes: [],
       };

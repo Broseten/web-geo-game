@@ -6,6 +6,7 @@ import { socket } from "../../../main";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { getSolution } from "../../../data/data";
 import ConfirmationModal from "../ConfirmationModal";
+import { global_playerID } from "../../Contexts/ConnectionContext";
 
 // helper
 const coordsToString = (coords: CustomLatLng) => {
@@ -41,7 +42,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
         setPlayerVotes(playerVotes + 1);
         const vote: Vote = {
             markerID: votedMarker.id,
-            playerID: socket.id!,
+            playerID: global_playerID!,
             roundIndex: gameRoomState!.round.index,
         }
 
@@ -89,7 +90,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
             <CardFooter pt="0" display="flex" justifyContent="flex-end" alignItems="center" gap="2">
                 {
                     // cannot vote for own solutions
-                    socket.id !== marker.ownerPlayerID
+                    global_playerID !== marker.ownerPlayerID
                     &&
                     gameRoomState?.round.stage === RoundStage.Voting
                     &&
@@ -113,7 +114,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                         </Button>
 
                         {
-                            marker.ownerPlayerID === socket.id
+                            marker.ownerPlayerID === global_playerID
                             &&
                             marker.roundIndex === gameRoomState?.round.index
                             &&

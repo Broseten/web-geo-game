@@ -2,7 +2,7 @@
 // This file is the join room screen where 
 // players can select what room they want to join
 
-import { Box, Button, Center, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Text, useToast, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
@@ -14,11 +14,6 @@ export default function JoinRoom() {
 
    initSocket('room-list', (roomList: { id: string; name: string }[]) => {
       setRooms(roomList);
-   });
-
-   initSocket('room-not-found', () => {
-      // TODO better error handling - both server and client-side
-      console.error("Room not found");
    });
 
    useEffect(() => {
@@ -64,6 +59,14 @@ export default function JoinRoom() {
                               socket.emit('join-room', room.id);
                            }}>{room.name || "No name"}
                         </Button>))
+                  }
+                  {
+                     !rooms || rooms.length <= 0
+                     &&
+                     <>
+                        <Text>No Rooms Available</Text>
+                        <Button onClick={() => setCurrentScreen('home')}>Back</Button>
+                     </>
                   }
                </VStack>
             </Box>

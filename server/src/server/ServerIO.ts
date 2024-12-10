@@ -1,20 +1,18 @@
-import { PlayerInfoUpdate, RoomInfo, RoomJoined, RoomPlayersInfo } from './DataTypes';
 import { Server as HttpServer } from 'http';
 import { Server, Socket } from 'socket.io';
-import { v4 } from 'uuid';
+import { PlayerInfoUpdate, RoomInfo, RoomJoined, RoomPlayersInfo } from './DataTypes';
 import { RoomManager } from './RoomManager';
 
 export class ServerIO {
    public static instance: ServerIO;
-   public ioServer: Server;
-   // to keep track of users that were previously in a room, to be able to reconnect them
-   public allConnectedUsers: { [uid: string]: string };
+   public socketServer: Server;
+   public allUsers: { [uid: string]: string };
    public roomManager: RoomManager;
 
    constructor(httpServer: HttpServer) {
       ServerIO.instance = this;
-      this.allConnectedUsers = {};
-      this.ioServer = new Server(httpServer, {
+      this.allUsers = {};
+      this.socketServer = new Server(httpServer, {
          serveClient: false,
          pingInterval: 10000,
          pingTimeout: 5000,
@@ -22,8 +20,8 @@ export class ServerIO {
          cors: { origin: '*' }
       });
 
-      this.roomManager = new RoomManager(this.ioServer);
-      this.ioServer.on('connect', this.OnClientConnected);
+      this.roomManager = new RoomManager(this);
+      this.socketServer.on('connect', this.OnClientConnected);
 
       console.log("Socket IO started");
    }
@@ -31,15 +29,15 @@ export class ServerIO {
    OnClientConnected = (clientSocket: Socket) => {
       console.info('Connection established with ' + clientSocket.id);
 
-      // TODO remember the id in the future
-      // if the user was already on the server, reconnect
-      let uid = this.allConnectedUsers[clientSocket.id];
-      if (!uid) {
-         uid = v4();
-         this.allConnectedUsers[uid] = clientSocket.id;
-      } else {
-         // TODO reconnected
-      }
+      // to be able to search for the player even when first connected
+      this.allUsers[clientSocket.id] = clientSocket.id;
+
+      clientSocket.on('reconnect', (uid: string) => {
+         console.log("Reconnected: " + uid);
+         // save new pointer for the player
+         this.allUsers[clientSocket.id] = uid;
+         clientSocket.emit('reconnected');
+      });
 
       clientSocket.on('update-player-info', (playerInfo: PlayerInfoUpdate) => {
          const roomID = this.roomManager.getRoomIdByPlayer(playerInfo.player.id);
@@ -63,22 +61,13 @@ export class ServerIO {
          if (roomId) {
             clientSocket.emit('room-created', roomId);
             // update all clients that a new room has been created
-            this.ioServer.sockets.emit('room-list', this.roomManager.getRoomList());
+            this.socketServer.sockets.emit('room-list', this.roomManager.getRoomList());
          }
          else clientSocket.emit('room-exists');
       });
 
       clientSocket.on('join-room', (roomID: string) => {
-         const gameRoom = this.roomManager.joinRoom(clientSocket, roomID);
-         if (!gameRoom) {
-            clientSocket.emit('room-not-found');
-         } else {
-            const roomInfo: RoomInfo = {
-               id: gameRoom.id,
-               data: gameRoom.roomInitData
-            }
-            clientSocket.emit('room-joined', roomInfo);
-         }
+         this.roomManager.joinRoom(clientSocket, roomID);
       });
 
       clientSocket.on('request-room-players-info', (roomID) => {
@@ -118,13 +107,12 @@ export class ServerIO {
       });
 
       clientSocket.on('disconnect', () => {
-         const uid = this.GetUidFromSocketID(clientSocket.id);
-         if (uid) {
-            delete this.allConnectedUsers[uid];
-            this.roomManager.handleDisconnect(clientSocket);
-         }
+         this.roomManager.handleDisconnect(clientSocket);
+         delete this.allUsers[clientSocket.id];
       });
    };
 
-   GetUidFromSocketID = (id: string) => Object.keys(this.allConnectedUsers).find((uid) => this.allConnectedUsers[uid] === id);
+   public GetPlayerID(socketID: string): string {
+      return this.allUsers[socketID];
+   }
 }

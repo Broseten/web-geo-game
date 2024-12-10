@@ -45,7 +45,7 @@ export default function runServer() {
 
     /** User Information */
     application.get('/users', (req: Request, res: Response) => {
-        return res.status(200).json({ users: ServerIO.instance.allConnectedUsers });
+        return res.status(200).json({ users: ServerIO.instance.allUsers });
     });
 
     application.get('/rooms', (req: Request, res: Response) => {

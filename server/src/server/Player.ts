@@ -9,8 +9,8 @@ export class Player {
    public name: string;
    private socket: Socket;
 
-   constructor(socket: Socket, role: string, color: string, name: string) {
-      this.id = socket.id;
+   constructor(socket: Socket, role: string, color: string, name: string, id: string) {
+      this.id = id;
       this.role = role;
       this.color = color;
       this.name = name;

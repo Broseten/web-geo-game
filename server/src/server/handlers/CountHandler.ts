@@ -13,7 +13,7 @@ export class CountHandler extends BaseHandler {
 
       socket.on('count', () => {
          this.count += 1;
-         this.io.sockets.emit('countClient', this.count);
+         this.io.socketServer.sockets.emit('countClient', this.count);
       });
    }
 }

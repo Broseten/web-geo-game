@@ -2,17 +2,17 @@
 // Results Page 
 
 import { Box, Button, Center, Heading, Text } from "@chakra-ui/react";
+import { global_playerID } from "../Contexts/ConnectionContext";
+import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import Rankings from "./Rankings";
-import { useGameRoom } from "../Contexts/GameRoomContext";
-import { socket } from "../../main";
 
 
 export default function Results() {
     const { isFacilitator } = useGameRoom();
     const { setCurrentScreen } = useScreenSelection();
 
-    const isFac = isFacilitator(socket.id); //this assumes two rounds total
+    const isFac = isFacilitator(global_playerID); //this assumes two rounds total
     // TODO networking
     let roundIndex = 0;
 

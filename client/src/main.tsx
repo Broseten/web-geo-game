@@ -7,6 +7,7 @@ import { GameRoomProvider } from './Components/Contexts/GameRoomContext.tsx';
 import { ScreenProvider } from './Components/Contexts/useScreenSelection.tsx';
 import customTheme from './Theme/Theme.ts';
 import { GameMarkersProvider } from './Components/Contexts/GameMarkersContext.tsx';
+import { ConnectionProvider } from './Components/Contexts/ConnectionContext.tsx';
 
 // TODO get the server address from the server that provides the client website
 const URL = 'http://localhost:1337';
@@ -19,13 +20,15 @@ export const socket = io(URL, {
 createRoot(document.getElementById('root')!).render(
    //<StrictMode>
    <ChakraProvider theme={customTheme}>
-      <ScreenProvider>
-         <GameRoomProvider>
-            <GameMarkersProvider>
-               <App />
-            </GameMarkersProvider>
-         </GameRoomProvider>
-      </ ScreenProvider>
+      <ConnectionProvider>
+         <ScreenProvider>
+            <GameRoomProvider>
+               <GameMarkersProvider>
+                  <App />
+               </GameMarkersProvider>
+            </GameRoomProvider>
+         </ ScreenProvider>
+      </ConnectionProvider>
    </ChakraProvider>
    //</StrictMode>,
 )

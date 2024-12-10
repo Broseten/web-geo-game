@@ -15,14 +15,14 @@ export class MapHandler extends BaseRoomHandler {
          this.markerIDCounter += 1;
          let id = this.markerIDCounter;
          newMarker.id = id;
-         this.io.to(this.roomID).emit('marker-added', newMarker);
+         this.io.socketServer.to(this.roomID).emit('marker-added', newMarker);
          this.markers.push(newMarker);
       });
 
       socket.on('remove-marker', (id: number) => {
          // TODO allow only owning player
          this.markers = this.markers.filter((marker) => marker.id !== id);
-         this.io.to(this.roomID).emit('set-markers', this.markers);
+         this.io.socketServer.to(this.roomID).emit('set-markers', this.markers);
       });
 
       socket.on('vote', (vote: Vote) => {
@@ -41,7 +41,7 @@ export class MapHandler extends BaseRoomHandler {
          });
          if (updatedMarker) {
             // Emit updated marker to all clients in the room
-            this.io.to(this.roomID).emit('update-marker', updatedMarker);
+            this.io.socketServer.to(this.roomID).emit('update-marker', updatedMarker);
          } else {
             console.error("Could not add vote... Marker does not exist.");
             console.error(vote);

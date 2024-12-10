@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { PlayerData } from "../../data/DataTypes";
-import { socket } from "../../main";
+import { global_playerID } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import EditActionPopup from "./EditActionPopup";
 import Icon from "./Icon";
@@ -24,9 +24,9 @@ export default function PlayerCard({ player }: PlayerCardProps) {
   const { roomInfo, isFacilitator, updatePlayer } = useGameRoom();
   const [isEditing, setIsEditing] = useState(false);
 
-  const isLocalPlayer = socket.id === player.id;
+  const isLocalPlayer = global_playerID === player.id;
   const isFac = player.isFacilitator;
-  const isLocalPlayerFacilitator = isFacilitator(socket.id);
+  const isLocalPlayerFacilitator = isFacilitator(global_playerID);
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);

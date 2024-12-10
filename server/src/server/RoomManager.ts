@@ -1,13 +1,13 @@
-import { RoomJoined } from './DataTypes';
-import { Server, Socket } from 'socket.io';
+import { Socket } from 'socket.io';
+import { RoomInfo, RoomJoined } from './DataTypes';
 import { GameRoom } from './GameRoom';
+import { ServerIO } from './ServerIO';
 
 export class RoomManager {
-   private ioServer: Server;
    private rooms: Map<string, GameRoom>; // Map of roomId to GameRoom
    private playerRoomMap: Map<string, string>; // Map of socketId to roomId
 
-   constructor(ioServer: Server) {
+   constructor(private ioServer: ServerIO) {
       this.ioServer = ioServer;
       this.rooms = new Map();
       this.playerRoomMap = new Map();
@@ -17,32 +17,42 @@ export class RoomManager {
       return Array.from(this.rooms.values()).some(room => room.roomInitData.name === name);
    }
 
-   // TODO check if room with the same name exists
    public createRoom(roomData: RoomJoined, socket: Socket): string | null {
       if (this.roomExists(roomData.name)) {
          return null;
       }
-      // TODO let users create a room and assign them as a facilitator
-      let targetRoom = new GameRoom(this.ioServer, roomData, socket);
+      let targetRoom = new GameRoom(this.ioServer, roomData, this.ioServer.GetPlayerID(socket.id));
       this.rooms.set(targetRoom.id, targetRoom);
       console.info(`Created new room with ID: ${targetRoom.id}`);
-      // TODO notify all clients (that are in the lobby?) that a new room was created to refresh
       return targetRoom.id;
    }
 
-   public joinRoom(clientSocket: Socket, roomID: string): GameRoom | null {
-      let targetRoom = this.rooms.get(roomID);
+   public joinRoom(clientSocket: Socket, roomID: string) {
+      const targetRoom = this.rooms.get(roomID);
+      const playerID = this.ioServer.GetPlayerID(clientSocket.id);
 
       if (!targetRoom) {
-         return null;
+         clientSocket.emit('room-join-error', "Room not found");
+         return;
+      }
+
+      if (targetRoom.getPlayers().find((p) => p.id === playerID)) {
+         clientSocket.emit('room-join-error', "Player already in the room");
+         return;
       }
 
       // Add the player to the target room
       targetRoom.addPlayer(clientSocket);
-      this.playerRoomMap.set(clientSocket.id, roomID);
+      this.playerRoomMap.set(playerID, roomID);
 
-      console.info(`Player ${clientSocket.id} joined room ${roomID}`);
+      console.info(`Player ${playerID} joined room ${roomID}`);
       // TODO actually send all data about the room, not only the initial
+
+      const roomInfo: RoomInfo = {
+         id: targetRoom.id,
+         data: targetRoom.roomInitData
+      }
+      clientSocket.emit('room-joined', roomInfo);
       return targetRoom;
    }
 
@@ -63,7 +73,7 @@ export class RoomManager {
 
    // Retrieves the room ID of a given player based on their socket ID
    getRoomIdBySocket(clientSocket: Socket): string | undefined {
-      return this.playerRoomMap.get(clientSocket.id);
+      return this.playerRoomMap.get(this.ioServer.GetPlayerID(clientSocket.id));
    }
 
    // Retrieves a specific GameRoom instance by its ID
@@ -81,12 +91,12 @@ export class RoomManager {
 
    // Handles player disconnection
    handleDisconnect(clientSocket: Socket) {
-      const roomId = this.playerRoomMap.get(clientSocket.id);
+      const roomId = this.playerRoomMap.get(this.ioServer.GetPlayerID(clientSocket.id));
       if (roomId) {
          const room = this.rooms.get(roomId);
          if (room) {
-            room.removePlayer(clientSocket.id);
-            console.info(`Player ${clientSocket.id} removed from room ${roomId}`);
+            room.removePlayer(this.ioServer.GetPlayerID(clientSocket.id));
+            console.info(`Player ${this.ioServer.GetPlayerID(clientSocket.id)} removed from room ${roomId}`);
 
             // Clean up empty room
             if (room.isEmpty()) {
@@ -94,7 +104,7 @@ export class RoomManager {
                console.info(`Room ${roomId} is empty and has been deleted.`);
             }
          }
-         this.playerRoomMap.delete(clientSocket.id);
+         this.playerRoomMap.delete(this.ioServer.GetPlayerID(clientSocket.id));
       }
    }
 }

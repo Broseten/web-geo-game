@@ -6,12 +6,12 @@ import { GameRoomProgress } from './GameRoomProgress';
 import { MapHandler } from './handlers/MapHandler';
 import { TimerHandler } from './handlers/TimerHandler';
 import { Player } from './Player';
+import { ServerIO } from './ServerIO';
 
 const gameRoomMaxPlayers = 4;
 
 export class GameRoom {
    public id: string;
-   private ioServer: Server;
    private facilitator: string; //player ID of the facilitator
    private players: Map<string, Player>; // Map of playerId to Player instance
    public roomInitData: RoomJoined;
@@ -25,12 +25,12 @@ export class GameRoom {
 
    private gameRoomProgress: GameRoomProgress;
 
-   constructor(ioServer: Server, initialRoomData: RoomJoined, facilitator: Socket) {
+   constructor(private ioServer: ServerIO, initialRoomData: RoomJoined, facilitatorID: string) {
       this.id = uuidv4(); // Unique ID for the room
       this.ioServer = ioServer;
       this.players = new Map<string, Player>();
       this.roomInitData = initialRoomData;
-      this.facilitator = facilitator.id;
+      this.facilitator =  facilitatorID;
       this.mapHandler = new MapHandler(this.ioServer, this.id);
       this.timerHandler = new TimerHandler(this.ioServer, this.id);
       this.gameRoomProgress = new GameRoomProgress(this.id, initialRoomData.totalRounds);
@@ -38,8 +38,10 @@ export class GameRoom {
 
    // Adds a player to the room
    addPlayer(clientSocket: Socket): void {
+      const playerID = this.ioServer.GetPlayerID(clientSocket.id);
+
       if (this.players.size >= gameRoomMaxPlayers) {
-         console.warn(`Room ${this.id} is full. Cannot add player ${clientSocket.id}.`);
+         console.warn(`Room ${this.id} is full. Cannot add player ${playerID}.`);
          return;
       }
 
@@ -55,16 +57,16 @@ export class GameRoom {
       });
 
       if (!color) {
-         console.warn(`Cannot add player ${clientSocket.id} to room ${this.id} due to lack of colors.`);
+         console.warn(`Cannot add player ${playerID} to room ${this.id} due to lack of colors.`);
          return;
       }
 
-      const name = this.defaultNames.shift() || `Player ${clientSocket.id}`;
-      const player = new Player(clientSocket, playerRole, color, name);
+      const name = this.defaultNames.shift() || `Player ${playerID}`;
+      const player = new Player(clientSocket, playerRole, color, name, playerID);
 
-      this.players.set(clientSocket.id, player);
+      this.players.set(playerID, player);
       clientSocket.join(this.id);
-      console.info(`Player ${clientSocket.id} joined room ${this.id}`);
+      console.info(`Player ${playerID} joined room ${this.id}`);
 
       // init the map handler listeners for the new player
       this.mapHandler.startListeners(clientSocket);
@@ -103,7 +105,7 @@ export class GameRoom {
          this.defaultNames.push(player.name);
 
          // Notify remaining players
-         this.ioServer.to(this.id).emit('player-left', playerId);
+         this.ioServer.socketServer.to(this.id).emit('player-left', playerId);
       }
    }
 
@@ -115,7 +117,7 @@ export class GameRoom {
       const roomUpdate: RoomPlayersInfo = {
          players: this.getPlayers()
       };
-      this.ioServer.to(this.id).emit('room-players-info', roomUpdate);
+      this.ioServer.socketServer.to(this.id).emit('room-players-info', roomUpdate);
    }
 
    // Starts the next round in the game room and notifies all players
@@ -124,13 +126,13 @@ export class GameRoom {
       if (this.gameRoomProgress?.getGameProgressState() === ProgressState.NotStarted) {
          this.gameRoomProgress.startGame();
          const roomState = this.gameRoomProgress.getRoomState();
-         this.ioServer.to(this.id).emit('start-game', roomState);
+         this.ioServer.socketServer.to(this.id).emit('start-game', roomState);
          return;
       }
       if (this.gameRoomProgress.next()) {
          const roomState = this.gameRoomProgress.getRoomState();
          // notify all players in the room
-         this.ioServer.to(this.id).emit('room-state', roomState);
+         this.ioServer.socketServer.to(this.id).emit('room-state', roomState);
          // if any stage is in progress (placing/voting), then start the timer
          if (roomState.round.stageProgress === ProgressState.Finished) {
             this.timerHandler.tryStopTimer();

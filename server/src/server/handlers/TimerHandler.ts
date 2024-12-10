@@ -29,7 +29,7 @@ export class TimerHandler extends BaseRoomHandler {
 
    private async doTimer() {
       while (this.timerSeconds > 0) {
-         this.io.to(this.roomID).emit('timer-update', this.timerSeconds); // Broadcast to all connected clients
+         this.io.socketServer.to(this.roomID).emit('timer-update', this.timerSeconds); // Broadcast to all connected clients
          await this.delay(1000);
          this.timerSeconds--;
       }

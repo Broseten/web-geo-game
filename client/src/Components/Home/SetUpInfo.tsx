@@ -13,7 +13,6 @@ export default function SetUpInfo() {
 
     const { setCurrentScreen } = useScreenSelection();
     const [isStartButtonClicked, setIsStartButtonClicked] = useState(false);
-    const [isPlayerNameEntered, setIsPlayerNameEntered] = useState(false);
     if (socket.connected) {
         // auto disconnect if still connected
         socket.disconnect;
@@ -36,6 +35,8 @@ export default function SetUpInfo() {
                     mt="100px"
                     onClick={() => {
                         // TODO probably navigate only after connecting?
+                        // TODO when to disconnect? What if a user goes back here and tries to connect again
+                        //      - cookie with ID + custom reconnect message
                         socket.connect();
                         setIsStartButtonClicked(true);
                     }}>
@@ -69,7 +70,7 @@ export default function SetUpInfo() {
                         _hover={{ bg: "brand.teal", color: "white" }}
                         variant='solid'
                         onClick={() => {
-                            setCurrentScreen('join') // future code
+                            setCurrentScreen('join') // future code?
                             // setCurrentScreen('play') // for ease
                         }}>
                         Join

@@ -1,5 +1,5 @@
 // Authors: Vojtech Bruza and Grace Houser
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Text, useToast } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { GameRoomState } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
@@ -7,6 +7,7 @@ import { socket } from "../../main";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import UserList from "./UserList";
+import { global_playerID } from "../Contexts/ConnectionContext";
 
 export default function Lobby() {
    const { roomID, roomInfo, isFacilitator, setGameRoomState } = useGameRoom();
@@ -15,10 +16,6 @@ export default function Lobby() {
    initSocket('start-game', (roomState: GameRoomState) => {
       setGameRoomState(roomState);
       setCurrentScreen("play");
-   });
-
-   initSocket("room-not-found", () => {
-      console.log("Room not found");
    });
 
    useEffect(() => {
@@ -44,7 +41,7 @@ export default function Lobby() {
             Welcome to the {roomInfo ? roomInfo.name : "unknown"} lobby!
          </Text>
          <Text pb={10} fontSize="md" color="brand.grey" textAlign="center">
-            {isFacilitator(socket.id)
+            {isFacilitator(global_playerID)
                ? "Start the game when all players are ready."
                : "The facilitator will start the game when everyone is ready."}
          </Text>
@@ -53,7 +50,7 @@ export default function Lobby() {
          <UserList />
 
          {/* Start Game Button */}
-         {isFacilitator(socket.id) && (
+         {isFacilitator(global_playerID) && (
             <Button
                mt={10}
                colorScheme="teal"
