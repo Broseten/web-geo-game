@@ -16,12 +16,12 @@ export default function ConfirmationModal({ isOpen, onClose, onConfirm, message,
             <ModalBody>
                <Text textAlign="center">{message}</Text>
             </ModalBody>
-            <ModalFooter justifyContent="center">
+            <ModalFooter justifyContent="center" gap={10}>
+               <Button colorScheme="red" onClick={onConfirm}>
+                  Yes
+               </Button>
                <Button variant="outline" onClick={onClose}>
                   No
-               </Button>
-               <Button colorScheme="red" onClick={onConfirm} mr={3}>
-                  Yes
                </Button>
             </ModalFooter>
          </ModalContent>

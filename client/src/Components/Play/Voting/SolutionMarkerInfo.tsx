@@ -1,13 +1,11 @@
-// Authors: Vojta Bruza and Grace Houser
-// Card of the solution that was clicked on the map during voting
-
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Image, Text } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { CustomLatLng, Vote } from "../../../data/DataTypes";
+import { useEffect, useState } from "react";
+import { CustomLatLng, MapMarkerData, Vote } from "../../../data/DataTypes";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import { socket } from "../../../main";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { getSolution } from "../../../data/data";
+import ConfirmationModal from "../ConfirmationModal";
 
 // helper
 const coordsToString = (coords: CustomLatLng) => {
@@ -16,13 +14,36 @@ const coordsToString = (coords: CustomLatLng) => {
 }
 
 export default function SolutionMarkerInfo() {
-    const { gameRoomState } = useGameRoom();
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+    const { gameRoomState, roomInfo } = useGameRoom();
     const { getSelectedMarker, setSelectedMarkerID } = useLocalGameData();
+    const [playerVotes, setPlayerVotes] = useState<number>(0);
 
     useEffect(() => {
         // reset selected marker on cleanup
         return () => setSelectedMarkerID(null);
     }, []);
+
+    if (!roomInfo) {
+        console.error("No room info");
+        return;
+    }
+
+    const onVote = (marker: MapMarkerData) => {
+        if (playerVotes >= roomInfo.maxVotes) {
+            // Prevent voting if the player has already voted 3 times
+            return;
+        }
+        setPlayerVotes(playerVotes + 1);
+        const vote: Vote = {
+            markerID: marker.id,
+            playerID: socket.id!,
+            roundIndex: gameRoomState!.round.index,
+        }
+
+        // Emit vote event to the server
+        socket.emit('vote', vote);
+    }
 
     const selectedMarker = getSelectedMarker();
     if (selectedMarker) {
@@ -32,7 +53,6 @@ export default function SolutionMarkerInfo() {
             return;
         }
         return (
-
             // Solution Information Card 
             <Card
                 bg="brand.yellow" color="brand.grey"
@@ -41,24 +61,21 @@ export default function SolutionMarkerInfo() {
 
                 <CardHeader bg="white" borderRadius="lg" justifyItems="center" p="2">
                     <Image height="80px" width="80px"
-                        src={"images/solution-icons/RED/" + selectedSolution.image + ".png"}>
-                    </Image>
+                        src={"images/solution-icons/RED/" + selectedSolution.image + ".png"} />
                 </CardHeader>
 
                 <CardHeader fontWeight="bold" lineHeight="1.15" textAlign="center" pb="2">
                     {selectedSolution.name}
                 </CardHeader>
 
-                <hr color="black"></hr>
+                <hr color="black" />
 
                 <CardBody pt="2" pb="2" fontWeight="bold" fontSize="12.5px">
                     Location: {
-                        // TODO geocoding address from coordinates
                         coordsToString(selectedMarker.coordinates)
                     } <br />
                     Price: {selectedSolution.price} <br />
                     Placed in round: {selectedMarker.roundIndex + 1} <br />
-                    {/* TODO? Show who placed it? At least role? */}
                     Votes count: {selectedMarker.votes?.length || 0} <br />
                 </CardBody>
 
@@ -73,20 +90,22 @@ export default function SolutionMarkerInfo() {
                         &&
                         <Button bg="brand.red" color="white" fontSize="14px" height="30px" width="80px" mt="2"
                             _hover={{ borderColor: "brand.red", borderWidth: "2px", background: "red.100", color: "brand.red" }}
-                            onClick={() => {
-                                const vote: Vote = {
-                                    markerID: selectedMarker.id,
-                                    // TODO actual player ID
-                                    playerID: socket.id!,
-                                    // TODO get rid of the exclamation?
-                                    roundIndex: gameRoomState!.round.index,
-                                }
-                                // TODO avoid spamming this!
-                                socket.emit('vote', vote);
-                            }}>
+                            onClick={() => setIsConfirmModalOpen(true)}
+                            isDisabled={playerVotes >= roomInfo.maxVotes}
+                        >
                             Vote
                         </Button>
                     }
+
+                    <ConfirmationModal
+                        isOpen={isConfirmModalOpen}
+                        onClose={() => setIsConfirmModalOpen(false)}
+                        onConfirm={() => {
+                            onVote(selectedMarker);
+                            setIsConfirmModalOpen(false);
+                        }}
+                        message={`Are you sure you want to vote for ${getSolution(selectedMarker.solutionID)?.name}?`}
+                    />
                 </CardFooter>
 
             </Card>

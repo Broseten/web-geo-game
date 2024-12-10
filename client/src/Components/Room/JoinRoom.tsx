@@ -56,12 +56,13 @@ export default function JoinRoom() {
                      &&
                      rooms.map((room) => (
                         <Button
+                           w="90%"
                            bg="brand.yellow" color="brand.grey" variant="outline"
                            _hover={{ bg: "brand.off", borderColor: "brand.yellow", borderWidth: "2px" }}
                            key={room.name}
                            onClick={() => {
                               socket.emit('join-room', room.id);
-                           }}>{room.name}
+                           }}>{room.name || "No name"}
                         </Button>))
                   }
                </VStack>

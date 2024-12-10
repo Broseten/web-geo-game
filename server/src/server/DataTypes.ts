@@ -22,8 +22,9 @@ export interface RoomJoined {
    roles: string[];
    timePerRound: number;
    initialBudget: number;
-   budgetPerRound: number;
    totalRounds: number;
+   // max votes per player per round
+   maxVotes: number;
 }
 
 export interface RoomInfo {
