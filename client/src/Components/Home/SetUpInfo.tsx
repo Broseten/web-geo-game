@@ -3,20 +3,21 @@
 // and join/create room option of the home screen design
 
 import { Box, Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
-import { socket } from "../../main";
-import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useState } from "react";
+import { socket } from "../../main";
 import '../../Theme/theme.css';
-
+import { useScreenSelection } from "../Contexts/useScreenSelection";
 
 export default function SetUpInfo() {
-
     const { setCurrentScreen } = useScreenSelection();
     const [isStartButtonClicked, setIsStartButtonClicked] = useState(false);
     if (socket.connected) {
         // auto disconnect if still connected
         socket.disconnect;
     }
+
+    const lastRoomData = sessionStorage.getItem('lastRoom');
+    console.log(lastRoomData);
 
     // conditional statements for the middle display of the Home page  
 
@@ -75,6 +76,24 @@ export default function SetUpInfo() {
                         }}>
                         Join
                     </Button>
+
+                    {
+                        lastRoomData
+                        &&
+                        <Button bg='white' color="brand.teal"
+                            borderColor="brand.teal" borderWidth="1px"
+                            _hover={{ bg: "brand.teal", color: "white" }}
+                            variant='solid'
+                            onClick={() => {
+                                // try joining room
+                                console.log("Rejoining room");
+                                const { lastRoomID } = JSON.parse(lastRoomData);
+                                // Emit reconnect event to the server
+                                socket.emit('join-room', lastRoomID);
+                            }}>
+                            Try rejoin
+                        </Button>
+                    }
                 </HStack>
             </VStack>
         </Center>

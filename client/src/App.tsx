@@ -8,13 +8,36 @@ import EndScreen from './Components/Results/EndScreen';
 import Results from './Components/Results/Results';
 import CreateRoom from './Components/Room/CreateRoom';
 import JoinRoom from './Components/Room/JoinRoom';
+import { useGameRoom } from './Components/Contexts/GameRoomContext';
+import { ProgressState } from './data/DataTypes';
 
 function App() {
    const { currentScreen } = useScreenSelection(); // Get the current screen from context
+   const { gameRoomState } = useGameRoom();
 
+   console.log("currentScreen");
    // Function to switch between screens
    const renderScreen = () => {
-      switch (currentScreen) {
+      let screenToSwitch = currentScreen;
+      // override
+      // TODO get rid of this override and make a smarter way to handle this with the networking now
+      if (gameRoomState) {
+         console.log("trying force switch");
+         switch (gameRoomState.gameState) {
+            case ProgressState.NotStarted:
+               screenToSwitch = 'lobby';
+               break;
+            case ProgressState.InProgress:
+               screenToSwitch = 'play';
+               break;
+            case ProgressState.Finished:
+               screenToSwitch = 'end';
+               break;
+            default:
+               break;
+         }
+      }
+      switch (screenToSwitch) {
          case 'home':
             return <HomeScreen />;
          case 'join':

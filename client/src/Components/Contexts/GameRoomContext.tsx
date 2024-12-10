@@ -30,7 +30,6 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     const [roomInfo, setRoomInfo] = useState<RoomJoined | null>(null);
     const [players, setPlayers] = useState<PlayerData[]>([]);
     const [gameRoomState, setGameRoomState] = useState<GameRoomState | undefined>(undefined);
-    const { setCurrentScreen } = useScreenSelection();
     const toast = useToast();
 
     initSocket('room-join-error', (msg: string) => {
@@ -92,15 +91,12 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
         setGameRoomState(gameRoomState);
     });
 
-
     // same for the facilitator (creator of the room) and for the players just directly joining
     initSocket('room-joined', (roomInfo: RoomInfo) => {
         const lastRoomID = roomInfo.id;
         sessionStorage.setItem('lastRoom', JSON.stringify({ lastRoomID }));
         setGameRoom(roomInfo.id, roomInfo.data);
-        // not necessary since we use it only for the facilitator:
-        //setMapPolygon(roomInfo.data.polygonLatLngs);
-        setCurrentScreen('lobby');
+        setGameRoomState(roomInfo.roomState);
     });
 
     // Memoize room-specific values to avoid rerenders

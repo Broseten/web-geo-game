@@ -41,16 +41,17 @@ export const ConnectionProvider = ({ children }: { children: ReactNode }) => {
    });
 
    initSocket('reconnected', () => {
-      // load cookie
-      const lastRoomData = sessionStorage.getItem('lastRoom');
-      if (lastRoomData) {
-         // try joining room
-         console.log("Rejoining room");
-         const { lastRoomID } = JSON.parse(lastRoomData);
+      console.log("welcome back");
+      // // load cookie
+      // const lastRoomData = sessionStorage.getItem('lastRoom');
+      // if (lastRoomData) {
+      //    // try joining room
+      //    console.log("Rejoining room");
+      //    const { lastRoomID } = JSON.parse(lastRoomData);
 
-         // Emit reconnect event to the server
-         socket.emit('join-room', lastRoomID);
-      }
+      //    // Emit reconnect event to the server
+      //    socket.emit('join-room', lastRoomID);
+      // }
    });
 
    // on disconnected

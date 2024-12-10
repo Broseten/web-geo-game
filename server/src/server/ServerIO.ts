@@ -70,6 +70,14 @@ export class ServerIO {
          this.roomManager.joinRoom(clientSocket, roomID);
       });
 
+      clientSocket.on('request-room-state', (roomID) => {
+         const room = this.roomManager.getRoom(roomID);
+         const roomState = room?.getGameRoomProgress().getRoomState();
+         if (roomState) {
+            clientSocket.emit('room-state', roomState);
+         }
+      });
+
       clientSocket.on('request-room-players-info', (roomID) => {
          const room = this.roomManager.getRoom(roomID);
          if (room) {

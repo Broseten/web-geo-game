@@ -30,6 +30,7 @@ export interface RoomJoined {
 export interface RoomInfo {
    id: string;
    data: RoomJoined;
+   roomState: GameRoomState;
 }
 
 // sent to all users in one room when something changes

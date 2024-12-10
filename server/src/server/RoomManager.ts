@@ -50,7 +50,8 @@ export class RoomManager {
 
       const roomInfo: RoomInfo = {
          id: targetRoom.id,
-         data: targetRoom.roomInitData
+         data: targetRoom.roomInitData,
+         roomState: targetRoom.getGameRoomProgress().getRoomState()
       }
       clientSocket.emit('room-joined', roomInfo);
       return targetRoom;

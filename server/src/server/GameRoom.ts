@@ -30,7 +30,7 @@ export class GameRoom {
       this.ioServer = ioServer;
       this.players = new Map<string, Player>();
       this.roomInitData = initialRoomData;
-      this.facilitator =  facilitatorID;
+      this.facilitator = facilitatorID;
       this.mapHandler = new MapHandler(this.ioServer, this.id);
       this.timerHandler = new TimerHandler(this.ioServer, this.id);
       this.gameRoomProgress = new GameRoomProgress(this.id, initialRoomData.totalRounds);
@@ -162,6 +162,10 @@ export class GameRoom {
 
    getFacilitatorID(): string {
       return this.facilitator;
+   }
+
+   getGameRoomProgress(): GameRoomProgress {
+      return this.gameRoomProgress;
    }
 
    // Returns the current players in the room with their attributes
