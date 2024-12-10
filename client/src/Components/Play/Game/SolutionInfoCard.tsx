@@ -7,7 +7,7 @@ interface ExpandedSolutionProps {
    buttonText: string;
 }
 
-export function SolutionItem({ solution, onClick, buttonText, }: ExpandedSolutionProps) {
+export function SolutionInfoCard({ solution, onClick, buttonText, }: ExpandedSolutionProps) {
    return (
       <Box
          border="1px solid"

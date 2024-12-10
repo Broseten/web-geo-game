@@ -1,6 +1,6 @@
-import { Box, Button, Card, CardBody, CardFooter, CardHeader, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardFooter, CardHeader, HStack, Image, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { CustomLatLng, MapMarkerData, Vote } from "../../../data/DataTypes";
+import { CustomLatLng, MapMarkerData, RoundStage, Vote } from "../../../data/DataTypes";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import { socket } from "../../../main";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
@@ -13,10 +13,14 @@ const coordsToString = (coords: CustomLatLng) => {
     return `${Math.round(coords.lat * rounding) / rounding} lat, ${Math.round(coords.lng * rounding) / rounding} lng`;
 }
 
-export default function SolutionMarkerInfo() {
+export interface MarkerInfoProps {
+    marker: MapMarkerData;
+}
+
+export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const { gameRoomState, roomInfo } = useGameRoom();
-    const { getSelectedMarker, setSelectedMarkerID } = useLocalGameData();
+    const { setSelectedMarkerID, setSelectedSolutionID } = useLocalGameData();
     const [playerVotes, setPlayerVotes] = useState<number>(0);
 
     useEffect(() => {
@@ -29,14 +33,14 @@ export default function SolutionMarkerInfo() {
         return;
     }
 
-    const onVote = (marker: MapMarkerData) => {
+    const onVote = (votedMarker: MapMarkerData) => {
         if (playerVotes >= roomInfo.maxVotes) {
             // Prevent voting if the player has already voted 3 times
             return;
         }
         setPlayerVotes(playerVotes + 1);
         const vote: Vote = {
-            markerID: marker.id,
+            markerID: votedMarker.id,
             playerID: socket.id!,
             roundIndex: gameRoomState!.round.index,
         }
@@ -45,9 +49,8 @@ export default function SolutionMarkerInfo() {
         socket.emit('vote', vote);
     }
 
-    const selectedMarker = getSelectedMarker();
-    if (selectedMarker) {
-        const selectedSolution = getSolution(selectedMarker.solutionID);
+    if (marker) {
+        const selectedSolution = getSolution(marker.solutionID);
         if (!selectedSolution) {
             console.error("Solution from the marker does not exist...");
             return;
@@ -72,11 +75,11 @@ export default function SolutionMarkerInfo() {
 
                 <CardBody pt="2" pb="2" fontWeight="bold" fontSize="12.5px">
                     Location: {
-                        coordsToString(selectedMarker.coordinates)
+                        coordsToString(marker.coordinates)
                     } <br />
                     Price: {selectedSolution.price} <br />
-                    Placed in round: {selectedMarker.roundIndex + 1} <br />
-                    Votes count: {selectedMarker.votes?.length || 0} <br />
+                    Placed in round: {marker.roundIndex + 1} <br />
+                    Votes count: {marker.votes?.length || 0} <br />
                 </CardBody>
 
                 <CardBody pt="0" fontSize="12.5px" overflow="auto">
@@ -86,7 +89,9 @@ export default function SolutionMarkerInfo() {
                 <CardFooter pt="0" display="flex" justifyContent="flex-end" alignItems="center" gap="2">
                     {
                         // cannot vote for own solutions
-                        socket.id !== selectedMarker.ownerPlayerID
+                        socket.id !== marker.ownerPlayerID
+                        &&
+                        gameRoomState?.round.stage === RoundStage.Voting
                         &&
                         <Button bg="brand.red" color="white" fontSize="14px" height="30px" width="80px" mt="2"
                             _hover={{ borderColor: "brand.red", borderWidth: "2px", background: "red.100", color: "brand.red" }}
@@ -96,15 +101,42 @@ export default function SolutionMarkerInfo() {
                             Vote
                         </Button>
                     }
+                    {
+                        gameRoomState?.round.stage === RoundStage.Placing
+                        &&
+                        <HStack spacing="1" align="flex-end">
+                            <Button variant="outline" size="sm"
+                                onClick={() => setSelectedMarkerID(null)}
+                                isDisabled={playerVotes >= roomInfo.maxVotes}
+                            >
+                                Back to List
+                            </Button>
+
+                            {
+                                marker.ownerPlayerID === socket.id
+                                &&
+                                marker.roundIndex === gameRoomState?.round.index
+                                &&
+                                <Button colorScheme="red" size="sm"
+                                    onClick={() => {
+                                        setSelectedMarkerID(null);
+                                        socket.emit("remove-marker", marker.id)
+                                    }}
+                                >
+                                    Delete
+                                </Button>
+                            }
+                        </HStack>
+                    }
 
                     <ConfirmationModal
                         isOpen={isConfirmModalOpen}
                         onClose={() => setIsConfirmModalOpen(false)}
                         onConfirm={() => {
-                            onVote(selectedMarker);
+                            onVote(marker);
                             setIsConfirmModalOpen(false);
                         }}
-                        message={`Are you sure you want to vote for ${getSolution(selectedMarker.solutionID)?.name}?`}
+                        message={`Are you sure you want to vote for ${getSolution(marker.solutionID)?.name}?`}
                     />
                 </CardFooter>
 

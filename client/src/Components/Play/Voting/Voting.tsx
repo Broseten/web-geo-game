@@ -4,9 +4,10 @@
 import { Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
 import { socket } from "../../../main";
 import Timer from "../Timer";
-import SolutionMarkerInfo from "./SolutionMarkerInfo";
+import MarkerInfoCard from "./MarkerInfoCard";
 import { useState } from "react";
 import ConfirmationModal from "../ConfirmationModal";
+import { useLocalGameData } from "../../Contexts/LocalGameContext";
 
 interface VoteProps {
     isFacilitator: boolean;
@@ -16,6 +17,8 @@ interface VoteProps {
 
 export default function Voting({ isFacilitator }: VoteProps) {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+    const { getSelectedMarker } = useLocalGameData();
+    const selectedMarker = getSelectedMarker();
 
     const handleFinishRound = () => {
         socket.emit("progress-game");
@@ -75,8 +78,10 @@ export default function Voting({ isFacilitator }: VoteProps) {
                         Information
                     </Heading>
 
-                    {/* solution information */}
-                    <SolutionMarkerInfo />
+                    {
+                        // solution information
+                        selectedMarker && <MarkerInfoCard marker={selectedMarker} />
+                    }
                 </VStack>
             </Center>
 
