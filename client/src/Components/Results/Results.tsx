@@ -23,7 +23,7 @@ export default function Results() {
             <Center>
                 <Text pt="70px"
                     fontSize="4xl" fontWeight="bold" color="brand.teal">
-                    {"Round " + (roundIndex + 1)} Results!
+                    WIP Results!
                 </Text>
             </Center>
 
@@ -63,8 +63,7 @@ export default function Results() {
                         bg='brand.teal' color="white"
                         _hover={{ bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px" }}
                         onClick={() => {
-                            // TODO networking
-                            setCurrentScreen('play');
+                            console.log("TODO");
                         }}>
                         Continue
                     </Button>

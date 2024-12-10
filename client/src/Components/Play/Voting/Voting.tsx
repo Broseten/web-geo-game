@@ -4,13 +4,15 @@
 import { Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
 import { socket } from "../../../main";
 import Timer from "../Timer";
-import Information from "./Information";
+import SolutionMarkerInfo from "./SolutionMarkerInfo";
 import { useState } from "react";
 import ConfirmationModal from "../ConfirmationModal";
 
 interface VoteProps {
     isFacilitator: boolean;
 }
+
+// TODO Voting -- will need to enable voting buttons on the markers on the map + visualize the voting somehow?
 
 export default function Voting({ isFacilitator }: VoteProps) {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
@@ -74,7 +76,7 @@ export default function Voting({ isFacilitator }: VoteProps) {
                     </Heading>
 
                     {/* solution information */}
-                    <Information />
+                    <SolutionMarkerInfo />
                 </VStack>
             </Center>
 

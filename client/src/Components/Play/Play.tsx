@@ -56,11 +56,19 @@ export default function Play({ isConnected }: Play) {
             )
          }
          <HStack bg="brand.teal" align="flex.start">
-            {gameRoomState?.round.stage === RoundStage.Placing && <Game isFacilitator={isFac} />}
-            {gameRoomState?.round.stage === RoundStage.Voting && <Voting isFacilitator={isFac} />}
+            {
+               gameRoomState?.round.stage === RoundStage.Placing
+               &&
+               <Game isFacilitator={isFac} />
+            }
+            {
+               gameRoomState?.round.stage === RoundStage.Voting
+               &&
+               <Voting isFacilitator={isFac} />
+            }
 
             {/* Adding in the Game Map */}
-            <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} />
+            <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} voting={gameRoomState?.round.stage === RoundStage.Voting}/>
          </HStack>
       </>
    );

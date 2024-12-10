@@ -2,24 +2,33 @@
 // Card of the solution that was clicked on the map during voting
 
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Image, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useLocalGameData } from "../../Contexts/LocalGameContext";
+import { CustomLatLng } from "../../../data/DataTypes";
+import { useEffect } from "react";
 
-export default function Information() {
+// helper
+const coordsToString = (coords: CustomLatLng) => {
+    const rounding = 10000;
+    return `${Math.round(coords.lat * rounding) / rounding} lat, ${Math.round(coords.lng * rounding) / rounding} lng`;
+}
 
-    const [isSelected, setIsSelected] = useState(true);
+export default function SolutionMarkerInfo() {
+    const { getSelectedMarker, getSolution, setSelectedMarkerID } = useLocalGameData();
 
-    {/* TODO - variables from solution pin */ }
-    const solution = "Temporary Structures from Recycled Material"
-    const location = "O'Connell Street"
-    const price = "$1,000"
-    const image = "SolutionsPins_ARenriched"
-    const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    useEffect(() => {
+        // reset selected marker on cleanup
+        return () => setSelectedMarkerID(null);
+    }, []);
 
-
-    {/* shows when a solution on the map is selected (by being click) */ }
-    if (isSelected) {
+    const selectedMarker = getSelectedMarker();
+    if (selectedMarker) {
+        const selectedSolution = getSolution(selectedMarker.solutionID);
+        if (!selectedSolution) {
+            console.error("Solution from the marker does not exist...");
+            return;
+        }
         return (
-            
+
             // Solution Information Card 
             <Card
                 bg="brand.yellow" color="brand.grey"
@@ -28,23 +37,26 @@ export default function Information() {
 
                 <CardHeader bg="white" borderRadius="lg" justifyItems="center" p="2">
                     <Image height="80px" width="80px"
-                        src={"images/solution-icons/RED/" + image + ".png"}>
+                        src={"images/solution-icons/RED/" + selectedSolution.image + ".png"}>
                     </Image>
                 </CardHeader>
 
                 <CardHeader fontWeight="bold" lineHeight="1.15" textAlign="center" pb="2">
-                    {solution}
+                    {selectedSolution.name}
                 </CardHeader>
 
                 <hr color="black"></hr>
 
                 <CardBody pt="2" pb="2" fontWeight="bold" fontSize="12.5px">
-                    Location: {location} <br />
-                    Price: {price} <br />
+                    Location: {
+                        // TODO geocoding address from coordinates
+                        coordsToString(selectedMarker.coordinates)
+                    } <br />
+                    Price: {selectedSolution.price} <br />
                 </CardBody>
 
                 <CardBody pt="0" fontSize="12.5px" overflow="auto">
-                    {description}
+                    {selectedSolution.description}
                 </CardBody>
 
                 <CardFooter pt="0" display="flex" justifyContent="flex-end" >
