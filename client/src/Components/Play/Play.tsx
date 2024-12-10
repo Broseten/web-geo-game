@@ -29,7 +29,7 @@ export default function Play({ isConnected }: Play) {
    useEffect(() => {
       // switch to the results screen if the game has finished
       if (gameRoomState?.gameState === ProgressState.Finished) {
-         setCurrentScreen('results');
+         setCurrentScreen('end');
       }
    }, [gameRoomState]);
 

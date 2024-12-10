@@ -7,6 +7,7 @@ import { CustomLatLng, Vote } from "../../../data/DataTypes";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import { socket } from "../../../main";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
+import { getSolution } from "../../../data/data";
 
 // helper
 const coordsToString = (coords: CustomLatLng) => {
@@ -16,7 +17,7 @@ const coordsToString = (coords: CustomLatLng) => {
 
 export default function SolutionMarkerInfo() {
     const { gameRoomState } = useGameRoom();
-    const { getSelectedMarker, getSolution, setSelectedMarkerID } = useLocalGameData();
+    const { getSelectedMarker, setSelectedMarkerID } = useLocalGameData();
 
     useEffect(() => {
         // reset selected marker on cleanup

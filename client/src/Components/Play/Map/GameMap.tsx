@@ -71,6 +71,7 @@ export default function GameMap({ polygon, voting }: GameMapProps) {
          // TODO use locally stored ID instead of directly reading it from the socket
          ownerPlayerID: socket.id!,
          roundIndex: roundIndex,
+         votes: [],
       }
       // reset selected solution
       setSelectedSolutionID(null);

@@ -4,6 +4,7 @@ import { Solution } from "./DataTypes";
 
 export const maxPlayers = 4;
 
+// TODO better image path
 export const global_solutions: Solution[] = [
    { id: "1", name: "Digitally Fabricated Vegetable Garden", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", image: "SolutionsPins_ARenriched", price: 500 },
    { id: "2", name: "Small Scale Pavillion Structure", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", image: "SolutionsPins_ARenriched", price: 800 },
@@ -12,6 +13,10 @@ export const global_solutions: Solution[] = [
    { id: "5", name: "Projection Mapping on Kinetic Surfaces", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", image: "SolutionsPins_ARenriched", price: 1800 },
    { id: "6", name: "AR Enriched Human-place Interaction", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", image: "SolutionsPins_ARenriched", price: 2000 }
 ];
+
+export const getSolution = (solutionID: string | null) => {
+   return solutionID === null ? undefined : global_solutions.find((sol) => sol.id === solutionID);
+};
 
 export const global_roles = [
    'Community Leader',
