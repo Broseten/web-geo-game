@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import { GameRoomState, MapMarkerData, PlayerData, PlayerInfoUpdate, RoomJoined } from "../../data/DataTypes";
+import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import { GameRoomState, PlayerData, PlayerInfoUpdate, RoomJoined } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
 
@@ -11,7 +11,6 @@ interface GameRoomContextProps {
     setGameRoom: (roomID: string, roomInfo: RoomJoined) => void;
     clearGameRoom: () => void;
     players: PlayerData[];
-    markers: MapMarkerData[];
     setPlayers: (players: PlayerData[]) => void;
     getPlayerData: (playerID: string | undefined) => PlayerData | undefined;
     updatePlayer: (player: PlayerData) => void;
@@ -21,34 +20,14 @@ interface GameRoomContextProps {
 
 const GameRoomContext = createContext<GameRoomContextProps | undefined>(undefined);
 
+// TODO leaving a room should reset this context! (also restarting the game)
+// TODO clear room state on finishing a game...cleanup in general
+// it should be ok to just shuffle the hiararchy and "render" this later when connecting to a room
 export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     const [roomID, setRoomID] = useState<string | null>(null);
     const [roomInfo, setRoomInfo] = useState<RoomJoined | null>(null);
     const [players, setPlayers] = useState<PlayerData[]>([]);
     const [gameRoomState, setGameRoomState] = useState<GameRoomState | undefined>(undefined);
-    const [markers, setMarkers] = useState<MapMarkerData[]>([]);
-
-    initSocket('marker-added', (marker: MapMarkerData) => {
-        setMarkers((current) => [...current, marker]);
-    });
-
-    // used to add votes to the marker
-    initSocket('update-marker', (updatedMarker: MapMarkerData) => {
-        console.log(updatedMarker);
-        setMarkers((prevMarkers) =>
-            prevMarkers.map((marker) =>
-                marker.id === updatedMarker.id ? updatedMarker : marker
-            )
-        );
-    });
-
-    initSocket('set-markers', (newMarkers: MapMarkerData[]) => {
-        setMarkers(newMarkers);
-    });
-
-    // TODO leaving a room should reset this context! (also restarting the game)
-    // TODO clear room state on finishing a game...cleanup in general
-    // it should be ok to just shuffle the hiararchy and "render" this later when connecting to a room
 
     const setGameRoom = (id: string, info: RoomJoined) => {
         setRoomID(id);
@@ -97,29 +76,37 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
         console.error(mess);
     });
 
-
     initSocket('room-state', (gameRoomState: GameRoomState) => {
         setGameRoomState(gameRoomState);
     });
 
+    // Memoize room-specific values to avoid rerenders
+    const memoizedRoomInfo = useMemo(() => roomInfo, [roomInfo]);
+    const memoizedGameRoomState = useMemo(() => gameRoomState, [gameRoomState]);
+    const memoizedPlayers = useMemo(() => players, [players]);
+
+    const value = useMemo(() => ({
+        roomID,
+        roomInfo: memoizedRoomInfo,
+        gameRoomState: memoizedGameRoomState,
+        setGameRoomState,
+        setGameRoom,
+        clearGameRoom,
+        players: memoizedPlayers,
+        setPlayers,
+        getPlayerData,
+        updatePlayer,
+        getFacilitator,
+        isFacilitator,
+    }), [
+        roomID,
+        memoizedRoomInfo,
+        memoizedGameRoomState,
+        memoizedPlayers,
+    ]);
+
     return (
-        <GameRoomContext.Provider
-            value={{
-                roomID,
-                roomInfo,
-                gameRoomState,
-                setGameRoomState,
-                setGameRoom,
-                clearGameRoom,
-                players,
-                markers,
-                setPlayers,
-                getPlayerData,
-                updatePlayer,
-                getFacilitator,
-                isFacilitator,
-            }}
-        >
+        <GameRoomContext.Provider value={value}>
             {children}
         </GameRoomContext.Provider>
     );

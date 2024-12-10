@@ -11,7 +11,7 @@ import GameMap from "./Map/GameMap";
 import PlayModal from "./PlayModal";
 import Voting from "./Voting/Voting";
 import { socket } from "../../main";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 
 // TODO get rid of this, instead move it to connection context
@@ -23,8 +23,8 @@ export default function Play({ isConnected }: Play) {
    const { setCurrentScreen } = useScreenSelection(); // Get the current screen from context
    console.log("connected: " + isConnected);
    const { roomInfo, gameRoomState, isFacilitator } = useGameRoom();
-
-   let isFac = isFacilitator(socket.id);
+   
+   const isFac = useMemo(() => isFacilitator(socket.id), [socket.id, isFacilitator]);
 
    useEffect(() => {
       // switch to the results screen if the game has finished
@@ -68,7 +68,7 @@ export default function Play({ isConnected }: Play) {
             }
 
             {/* Adding in the Game Map */}
-            <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} voting={gameRoomState?.round.stage === RoundStage.Voting}/>
+            <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} />
          </HStack>
       </>
    );

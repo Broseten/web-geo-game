@@ -1,14 +1,16 @@
-// Authors: Vojta Bruza and Grace Houser
+// Authors: Vojtech Bruza and Grace Houser
 
 import { Card, CardBody, Heading, Text, VStack } from "@chakra-ui/react";
 import { getSolution } from "../../data/data";
 import '../../Theme/theme.css';
+import { useGameMarkers } from "../Contexts/GameMarkersContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import Icon from "../Lobby/Icon";
 
 
 export default function SolutionRanking() {
-   const { markers, getPlayerData } = useGameRoom();
+   const { markers } = useGameMarkers();
+   const { getPlayerData } = useGameRoom();
 
    return (
       <VStack overflow="auto" spacing="2px">
