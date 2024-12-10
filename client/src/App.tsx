@@ -15,14 +15,12 @@ function App() {
    const { currentScreen } = useScreenSelection(); // Get the current screen from context
    const { gameRoomState } = useGameRoom();
 
-   console.log("currentScreen");
    // Function to switch between screens
    const renderScreen = () => {
       let screenToSwitch = currentScreen;
       // override
       // TODO get rid of this override and make a smarter way to handle this with the networking now
       if (gameRoomState) {
-         console.log("trying force switch");
          switch (gameRoomState.gameState) {
             case ProgressState.NotStarted:
                screenToSwitch = 'lobby';

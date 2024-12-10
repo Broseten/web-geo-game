@@ -16,7 +16,6 @@ export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
    });
 
    initSocket('update-marker', (updatedMarker: MapMarkerData) => {
-      console.log(updatedMarker);
       setMarkers((prevMarkers) =>
          prevMarkers.map((marker) =>
             marker.id === updatedMarker.id ? updatedMarker : marker

@@ -17,7 +17,6 @@ export default function SetUpInfo() {
     }
 
     const lastRoomData = sessionStorage.getItem('lastRoom');
-    console.log(lastRoomData);
 
     // conditional statements for the middle display of the Home page  
 
@@ -76,25 +75,23 @@ export default function SetUpInfo() {
                         }}>
                         Join
                     </Button>
-
-                    {
-                        lastRoomData
-                        &&
-                        <Button bg='white' color="brand.teal"
-                            borderColor="brand.teal" borderWidth="1px"
-                            _hover={{ bg: "brand.teal", color: "white" }}
-                            variant='solid'
-                            onClick={() => {
-                                // try joining room
-                                console.log("Rejoining room");
-                                const { lastRoomID } = JSON.parse(lastRoomData);
-                                // Emit reconnect event to the server
-                                socket.emit('join-room', lastRoomID);
-                            }}>
-                            Try rejoin
-                        </Button>
-                    }
                 </HStack>
+                {
+                    lastRoomData
+                    &&
+                    <Button mt={5} bg='white' color="brand.teal"
+                        borderColor="brand.teal" borderWidth="1px"
+                        _hover={{ bg: "brand.teal", color: "white" }}
+                        onClick={() => {
+                            // try joining room
+                            console.log("Rejoining room");
+                            const { lastRoomID } = JSON.parse(lastRoomData);
+                            // Emit reconnect event to the server
+                            socket.emit('join-room', lastRoomID);
+                        }}>
+                        Try rejoin
+                    </Button>
+                }
             </VStack>
         </Center>
     )

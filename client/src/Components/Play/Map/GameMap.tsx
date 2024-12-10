@@ -36,8 +36,6 @@ export default function GameMap({ polygon }: GameMapProps) {
       socket.emit('request-map-markers');
    }, []);
 
-   console.log("Map render");
-
    return (
       <div className="gamemap">
          <MapContainer
