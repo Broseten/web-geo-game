@@ -49,107 +49,97 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
         socket.emit('vote', vote);
     }
 
-    if (marker) {
-        const selectedSolution = getSolution(marker.solutionID);
-        if (!selectedSolution) {
-            console.error("Solution from the marker does not exist...");
-            return;
-        }
-        return (
-            // Solution Information Card 
-            <Card
-                bg="brand.yellow" color="brand.grey"
-                borderColor="brand.yellow" borderWidth="10px"
-                mt="10px" w="275px">
-
-                <CardHeader bg="white" borderRadius="lg" justifyItems="center" p="2">
-                    <Image height="80px" width="80px"
-                        src={"images/solution-icons/RED/" + selectedSolution.image + ".png"} />
-                </CardHeader>
-
-                <CardHeader fontWeight="bold" lineHeight="1.15" textAlign="center" pb="2">
-                    {selectedSolution.name}
-                </CardHeader>
-
-                <hr color="black" />
-
-                <CardBody pt="2" pb="2" fontWeight="bold" fontSize="12.5px">
-                    Location: {
-                        coordsToString(marker.coordinates)
-                    } <br />
-                    Price: {selectedSolution.price} <br />
-                    Placed in round: {marker.roundIndex + 1} <br />
-                    Votes count: {marker.votes?.length || 0} <br />
-                </CardBody>
-
-                <CardBody pt="0" fontSize="12.5px" overflow="auto">
-                    {selectedSolution.description}
-                </CardBody>
-
-                <CardFooter pt="0" display="flex" justifyContent="flex-end" alignItems="center" gap="2">
-                    {
-                        // cannot vote for own solutions
-                        socket.id !== marker.ownerPlayerID
-                        &&
-                        gameRoomState?.round.stage === RoundStage.Voting
-                        &&
-                        <Button bg="brand.red" color="white" fontSize="14px" height="30px" width="80px" mt="2"
-                            _hover={{ borderColor: "brand.red", borderWidth: "2px", background: "red.100", color: "brand.red" }}
-                            onClick={() => setIsConfirmModalOpen(true)}
-                            isDisabled={playerVotes >= roomInfo.maxVotes}
-                        >
-                            Vote
-                        </Button>
-                    }
-                    {
-                        gameRoomState?.round.stage === RoundStage.Placing
-                        &&
-                        <HStack spacing="1" align="flex-end">
-                            <Button variant="outline" size="sm"
-                                onClick={() => setSelectedMarkerID(null)}
-                                isDisabled={playerVotes >= roomInfo.maxVotes}
-                            >
-                                Back to List
-                            </Button>
-
-                            {
-                                marker.ownerPlayerID === socket.id
-                                &&
-                                marker.roundIndex === gameRoomState?.round.index
-                                &&
-                                <Button colorScheme="red" size="sm"
-                                    onClick={() => {
-                                        setSelectedMarkerID(null);
-                                        socket.emit("remove-marker", marker.id)
-                                    }}
-                                >
-                                    Delete
-                                </Button>
-                            }
-                        </HStack>
-                    }
-
-                    <ConfirmationModal
-                        isOpen={isConfirmModalOpen}
-                        onClose={() => setIsConfirmModalOpen(false)}
-                        onConfirm={() => {
-                            onVote(marker);
-                            setIsConfirmModalOpen(false);
-                        }}
-                        message={`Are you sure you want to vote for ${getSolution(marker.solutionID)?.name}?`}
-                    />
-                </CardFooter>
-
-            </Card>
-        )
+    const selectedSolution = getSolution(marker.solutionID);
+    if (!selectedSolution) {
+        console.error("Solution from the marker does not exist...");
+        return;
     }
 
     return (
-        <Box>
-            {/* Default, when no solutions are selected */}
-            <Text align="center" color="white">
-                Click on a solution to learn more
-            </Text>
-        </Box>
-    );
+        // Solution Information Card 
+        <Card
+            bg="brand.yellow" color="brand.grey"
+            borderColor="brand.yellow" borderWidth="10px"
+            mt="10px" w="275px">
+
+            <CardHeader bg="white" borderRadius="lg" justifyItems="center" p="2">
+                <Image height="80px" width="80px"
+                    src={"images/solution-icons/RED/" + selectedSolution.image + ".png"} />
+            </CardHeader>
+
+            <CardHeader fontWeight="bold" lineHeight="1.15" textAlign="center" pb="2">
+                {selectedSolution.name}
+            </CardHeader>
+
+            <hr color="black" />
+
+            <CardBody pt="2" pb="2" fontWeight="bold" fontSize="12.5px">
+                Location: {
+                    coordsToString(marker.coordinates)
+                } <br />
+                Price: {selectedSolution.price} <br />
+                Placed in round: {marker.roundIndex + 1} <br />
+                Votes count: {marker.votes?.length || 0} <br />
+            </CardBody>
+
+            <CardBody pt="0" fontSize="12.5px" overflow="auto">
+                {selectedSolution.description}
+            </CardBody>
+
+            <CardFooter pt="0" display="flex" justifyContent="flex-end" alignItems="center" gap="2">
+                {
+                    // cannot vote for own solutions
+                    socket.id !== marker.ownerPlayerID
+                    &&
+                    gameRoomState?.round.stage === RoundStage.Voting
+                    &&
+                    <Button bg="brand.red" color="white" fontSize="14px" height="30px" width="80px" mt="2"
+                        _hover={{ borderColor: "brand.red", borderWidth: "2px", background: "red.100", color: "brand.red" }}
+                        onClick={() => setIsConfirmModalOpen(true)}
+                        isDisabled={playerVotes >= roomInfo.maxVotes}
+                    >
+                        Vote
+                    </Button>
+                }
+                {
+                    gameRoomState?.round.stage === RoundStage.Placing
+                    &&
+                    <HStack spacing="1" align="flex-end">
+                        <Button variant="outline" size="sm"
+                            onClick={() => setSelectedMarkerID(null)}
+                            isDisabled={playerVotes >= roomInfo.maxVotes}
+                        >
+                            Back to List
+                        </Button>
+
+                        {
+                            marker.ownerPlayerID === socket.id
+                            &&
+                            marker.roundIndex === gameRoomState?.round.index
+                            &&
+                            <Button colorScheme="red" size="sm"
+                                onClick={() => {
+                                    setSelectedMarkerID(null);
+                                    socket.emit("remove-marker", marker.id)
+                                }}
+                            >
+                                Delete
+                            </Button>
+                        }
+                    </HStack>
+                }
+
+                <ConfirmationModal
+                    isOpen={isConfirmModalOpen}
+                    onClose={() => setIsConfirmModalOpen(false)}
+                    onConfirm={() => {
+                        onVote(marker);
+                        setIsConfirmModalOpen(false);
+                    }}
+                    message={`Are you sure you want to vote for ${getSolution(marker.solutionID)?.name}?`}
+                />
+            </CardFooter>
+
+        </Card>
+    )
 }

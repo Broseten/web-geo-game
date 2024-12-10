@@ -1,7 +1,7 @@
 // Authors: Vojtech Bruza and Grace Houser
 // This file is the voting screen famework 
 
-import { Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
 import { socket } from "../../../main";
 import Timer from "../Timer";
 import MarkerInfoCard from "./MarkerInfoCard";
@@ -79,8 +79,15 @@ export default function Voting({ isFacilitator }: VoteProps) {
                     </Heading>
 
                     {
-                        // solution information
-                        selectedMarker && <MarkerInfoCard marker={selectedMarker} />
+                        selectedMarker
+                            // marker information
+                            ? <MarkerInfoCard marker={selectedMarker} />
+                            // fefault, when no solutions are selected
+                            : <Box>
+                                <Text align="center" color="white">
+                                    Click on a solution to learn more
+                                </Text>
+                            </Box>
                     }
                 </VStack>
             </Center>
