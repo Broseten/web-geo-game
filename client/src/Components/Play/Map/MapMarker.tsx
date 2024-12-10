@@ -41,6 +41,9 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
                   <Text fontSize="12px">
                      Placed in round {marker.roundIndex + 1}
                   </Text>
+                  <Text fontSize="12px">
+                     Votes: {marker.votes?.length || 0}
+                  </Text>
                   {/* Container for buttons */}
                   <Box
                      display="flex"
@@ -51,7 +54,10 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
                      p={2}
                   >
                      <Button
-                        onClick={() => setSelectedSolutionID(marker.solutionID)}
+                        onClick={() =>
+                           // TODO display the solution marker info instead!
+                           setSelectedSolutionID(marker.solutionID)
+                        }
                         colorScheme="gray"
                         size="sm"
                      >

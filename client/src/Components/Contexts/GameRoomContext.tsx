@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { GameRoomState, PlayerData, PlayerInfoUpdate, RoomJoined, RoundState } from "../../data/DataTypes";
+import { GameRoomState, MapMarkerData, PlayerData, PlayerInfoUpdate, RoomJoined } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
 
@@ -11,6 +11,7 @@ interface GameRoomContextProps {
     setGameRoom: (roomID: string, roomInfo: RoomJoined) => void;
     clearGameRoom: () => void;
     players: PlayerData[];
+    markers: MapMarkerData[];
     setPlayers: (players: PlayerData[]) => void;
     getPlayerData: (playerID: string | undefined) => PlayerData | undefined;
     updatePlayer: (player: PlayerData) => void;
@@ -25,6 +26,25 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     const [roomInfo, setRoomInfo] = useState<RoomJoined | null>(null);
     const [players, setPlayers] = useState<PlayerData[]>([]);
     const [gameRoomState, setGameRoomState] = useState<GameRoomState | undefined>(undefined);
+    const [markers, setMarkers] = useState<MapMarkerData[]>([]);
+
+    initSocket('marker-added', (marker: MapMarkerData) => {
+        setMarkers((current) => [...current, marker]);
+    });
+
+    // used to add votes to the marker
+    initSocket('update-marker', (updatedMarker: MapMarkerData) => {
+        console.log(updatedMarker);
+        setMarkers((prevMarkers) =>
+            prevMarkers.map((marker) =>
+                marker.id === updatedMarker.id ? updatedMarker : marker
+            )
+        );
+    });
+
+    initSocket('set-markers', (newMarkers: MapMarkerData[]) => {
+        setMarkers(newMarkers);
+    });
 
     // TODO leaving a room should reset this context! (also restarting the game)
     // TODO clear room state on finishing a game...cleanup in general
@@ -80,7 +100,6 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
 
     initSocket('room-state', (gameRoomState: GameRoomState) => {
         setGameRoomState(gameRoomState);
-        console.log(gameRoomState);
     });
 
     return (
@@ -93,6 +112,7 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
                 setGameRoom,
                 clearGameRoom,
                 players,
+                markers,
                 setPlayers,
                 getPlayerData,
                 updatePlayer,

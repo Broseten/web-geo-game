@@ -1,14 +1,13 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { global_solutions } from "../../data/data";
 import { MapMarkerData, Solution } from "../../data/DataTypes";
-import initSocket from "../../Hooks/useSocket";
+import { useGameRoom } from "./GameRoomContext";
 
 interface LocalGameDataContextProps {
    selectedSolutionID: string | null;
    setSelectedSolutionID: (id: string | null) => void;
    getSelectedSolution: () => Solution | undefined;
    getSolution: (id: string | null) => Solution | undefined;
-   markers: MapMarkerData[];
    selectedMarkerID: number | null;
    setSelectedMarkerID: (id: number | null) => void;
    getSelectedMarker: () => MapMarkerData | undefined;
@@ -17,17 +16,10 @@ interface LocalGameDataContextProps {
 const LocalGameDataContext = createContext<LocalGameDataContextProps | undefined>(undefined);
 
 export const LocalGameDataProvider = ({ children }: { children: ReactNode }) => {
+   const { markers } = useGameRoom();
    const [selectedSolutionID, setSelectedSolutionID] = useState<string | null>(null);
-   const [markers, setMarkers] = useState<MapMarkerData[]>([]);
    const [selectedMarkerID, setSelectedMarkerID] = useState<number | null>(null);
 
-   initSocket('marker-added', (marker: MapMarkerData) => {
-      setMarkers((current) => [...current, marker]);
-   });
-
-   initSocket('set-markers', (newMarkers: MapMarkerData[]) => {
-      setMarkers(newMarkers);
-   });
 
    const getSelectedSolution = () => {
       return getSolution(selectedSolutionID);
@@ -48,7 +40,6 @@ export const LocalGameDataProvider = ({ children }: { children: ReactNode }) => 
             setSelectedSolutionID,
             getSelectedSolution,
             getSolution,
-            markers,
             selectedMarkerID,
             setSelectedMarkerID,
             getSelectedMarker,

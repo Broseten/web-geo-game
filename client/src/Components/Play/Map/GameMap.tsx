@@ -34,8 +34,8 @@ export default function GameMap({ polygon, voting }: GameMapProps) {
       return null;
    }
    const toast = useToast();
-   const { markers, selectedSolutionID, setSelectedSolutionID } = useLocalGameData();
-   const { gameRoomState } = useGameRoom();
+   const { selectedSolutionID, setSelectedSolutionID } = useLocalGameData();
+   const { markers, gameRoomState } = useGameRoom();
 
    const bounds = polygon.getBounds();
    const polygonCoords = polygon.getLatLngs()[0] as LatLngExpression[];

@@ -97,4 +97,14 @@ export interface MapMarkerData {
    solutionID: string;
    ownerPlayerID: string;
    roundIndex: number;
+   votes: Vote[];
+}
+
+export interface Vote {
+   // what
+   markerID: number;
+   // who
+   playerID: string;
+   // when
+   roundIndex: number;
 }
