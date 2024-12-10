@@ -96,4 +96,5 @@ export interface MapMarkerData {
    coordinates: CustomLatLng;
    solutionID: string;
    ownerPlayerID: string;
+   roundIndex: number;
 }

@@ -20,7 +20,7 @@ export default function Customizations() {
     // room input variables  
     const [roomName, setRoomName] = useState('');
     // TODO use a different way of setting time per round?
-    const [time, setTime] = useState(180);
+    const [time, setTime] = useState(300);
     // TODO default values from a file?
     const [initialBudget, setInitialBudget] = useState<number>(0);
     const [budgetPerRound, setBudgetPerRound] = useState<number>(0);

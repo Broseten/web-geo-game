@@ -4,6 +4,7 @@ import { MapMarkerData } from "../../../data/DataTypes";
 import { global_solutions } from "../../../data/data";
 import { socket } from "../../../main";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
+import { useGameRoom } from "../../Contexts/GameRoomContext";
 
 interface MapMarkerProps {
    marker: MapMarkerData;
@@ -11,7 +12,12 @@ interface MapMarkerProps {
 }
 
 export default function MapMarker({ marker, voting }: MapMarkerProps) {
+   const { gameRoomState } = useGameRoom();
    const { setSelectedSolutionID, setSelectedMarkerID } = useLocalGameData();
+
+   if (gameRoomState === null) {
+      console.error("No game room state");
+   }
 
    return (
       <Marker
@@ -29,8 +35,12 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
          {!voting && (
             <Popup>
                <Box>
-                  <Text as="b">{global_solutions.find((sol) => sol.id === marker.solutionID)?.name}</Text>
+                  <Text fontSize="14px" as="b">{global_solutions.find((sol) => sol.id === marker.solutionID)?.name}</Text>
 
+                  {/* TODO Better positioning */}
+                  <Text fontSize="12px">
+                     Placed in round {marker.roundIndex + 1}
+                  </Text>
                   {/* Container for buttons */}
                   <Box
                      display="flex"
@@ -48,7 +58,7 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
                         Select
                      </Button>
 
-                     {marker.ownerPlayerID === socket.id && (
+                     {marker.ownerPlayerID === socket.id && marker.roundIndex === gameRoomState?.round.index && (
                         <Button
                            onClick={() => socket.emit("remove-marker", marker.id)}
                            colorScheme="red"

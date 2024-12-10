@@ -2,9 +2,9 @@
 // Card of the solution that was clicked on the map during voting
 
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Image, Text } from "@chakra-ui/react";
-import { useLocalGameData } from "../../Contexts/LocalGameContext";
-import { CustomLatLng } from "../../../data/DataTypes";
 import { useEffect } from "react";
+import { CustomLatLng } from "../../../data/DataTypes";
+import { useLocalGameData } from "../../Contexts/LocalGameContext";
 
 // helper
 const coordsToString = (coords: CustomLatLng) => {
@@ -58,20 +58,17 @@ export default function SolutionMarkerInfo() {
                 <CardBody pt="0" fontSize="12.5px" overflow="auto">
                     {selectedSolution.description}
                 </CardBody>
-
-                <CardFooter pt="0" display="flex" justifyContent="flex-end" >
-                    <Button bg="brand.red" color="white" fontSize="14px"
-                        height="30px" width="80px"
-                        mt="2"
-                        _hover={{
-                            borderColor: "brand.red",
-                            borderWidth: "2px",
-                            background: "red.100",
-                            color: "brand.red"
-                        }}>
+                <CardFooter pt="0" display="flex" justifyContent="flex-end" alignItems="center" gap="2">
+                    {/* TODO Better positioning */}
+                    <Text fontSize="14px" color="black" fontWeight="medium" lineHeight="30px">
+                        Placed in round {selectedMarker.roundIndex + 1}
+                    </Text>
+                    <Button bg="brand.red" color="white" fontSize="14px" height="30px" width="80px" mt="2"
+                        _hover={{ borderColor: "brand.red", borderWidth: "2px", background: "red.100", color: "brand.red" }} >
                         Vote
                     </Button>
                 </CardFooter>
+
             </Card>
         )
     }

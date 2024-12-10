@@ -11,6 +11,7 @@ import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import MapInitializer from "./MapInitializer";
 import MapMarker from "./MapMarker";
 import MapMask from "./MapMask";
+import { useGameRoom } from "../../Contexts/GameRoomContext";
 
 let DefaultIcon = L.icon({
    iconSize: [25, 41],
@@ -33,8 +34,8 @@ export default function GameMap({ polygon, voting }: GameMapProps) {
       return null;
    }
    const toast = useToast();
-   const { selectedSolutionID, setSelectedSolutionID } = useLocalGameData();
-   const { markers } = useLocalGameData();
+   const { markers, selectedSolutionID, setSelectedSolutionID } = useLocalGameData();
+   const { gameRoomState } = useGameRoom();
 
    const bounds = polygon.getBounds();
    const polygonCoords = polygon.getLatLngs()[0] as LatLngExpression[];
@@ -57,13 +58,19 @@ export default function GameMap({ polygon, voting }: GameMapProps) {
          console.log("No solution selected.");
          return;
       }
+      if (!gameRoomState) {
+         console.error("gameRoomState does not exist.");
+         return;
+      }
+      const roundIndex = gameRoomState.round.index;
       // Add new marker
       let data: MapMarkerData = {
          coordinates: { lat: position.lat, lng: position.lng },
          id: -1,
          solutionID: selectedSolutionID,
          // TODO use locally stored ID instead of directly reading it from the socket
-         ownerPlayerID: socket.id!
+         ownerPlayerID: socket.id!,
+         roundIndex: roundIndex,
       }
       // reset selected solution
       setSelectedSolutionID(null);
