@@ -1,3 +1,6 @@
+// Authors: Vojta Bruza and Grace Houser
+// Single solution item when selected from accordian 
+
 import { Box, Button, Image, Text, } from "@chakra-ui/react";
 import { Solution } from "../../../data/DataTypes";
 
@@ -14,11 +17,14 @@ export function SolutionInfoCard({ solution, onClick, buttonText, }: ExpandedSol
          borderColor="gray.300"
          borderRadius="md"
          overflow="hidden"
+         color="brand.grey"
          backgroundColor="white"
          p={2}
          mb={4}
       >
          <Box display="flex" alignItems="center" mb={2}>
+
+            {/* Solution Image */}
             <Image
                height="40px"
                width="40px"
@@ -26,6 +32,8 @@ export function SolutionInfoCard({ solution, onClick, buttonText, }: ExpandedSol
                src={`/images/solution-icons/RED/${solution.image}.png`}
                alt={solution.name}
             />
+
+            {/* Solution Name and Price */}
             <Box flex="1" textAlign="left">
                <Text lineHeight="1.15" fontSize="14px" fontWeight="bold">
                   {solution.name}
@@ -35,9 +43,13 @@ export function SolutionInfoCard({ solution, onClick, buttonText, }: ExpandedSol
                </Text>
             </Box>
          </Box>
+
+         {/* Solution Description */}
          <Box fontSize="12px" mb={2}>
             {solution.description}
          </Box>
+
+         {/* Cancel Button */}
          <Button
             bg="brand.red"
             color="white"

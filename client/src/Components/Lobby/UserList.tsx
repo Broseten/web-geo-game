@@ -1,4 +1,6 @@
 // Authors: Vojtech Bruza and Grace Houser
+// Displays active users in a list format 
+
 import { Box, Flex } from "@chakra-ui/react";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import PlayerCard from "./PlayerCard";
@@ -15,10 +17,10 @@ export default function UserList() {
             p={4}
         >
             <Box
-                maxWidth={{ base: "100%", md: "80%", lg: "70%" }} // Responsive width
-                width="100%" // Full width for smaller screens
-                mx="auto" // Center horizontally
-                bg="gray.50" // Optional background
+                maxWidth={{ base: "100%", md: "80%", lg: "70%" }} // responsive width
+                width="100%" // full width for smaller screens
+                mx="auto" // center horizontally
+                bg="gray.50" // optional background
                 borderRadius="lg"
                 boxShadow="md"
                 p={4}
@@ -32,6 +34,7 @@ export default function UserList() {
                     fontWeight="bold"
                     textAlign="left"
                     fontSize="lg"
+                    color="brand.grey"
                 >
                     <Box ml="20px" flex="1">Icon</Box>
                     <Box flex="2">User</Box>

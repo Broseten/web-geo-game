@@ -1,5 +1,5 @@
 // Authors: Vojta Bruza and Grace Houser
-// This file displays the home screen design 
+// This file displays the home screen  
 
 import { Box, Center, HStack, Heading, Icon, Image, Link, Text } from "@chakra-ui/react";
 import { InfoOutlineIcon } from '@chakra-ui/icons';
@@ -35,11 +35,11 @@ export default function HomeScreen() {
                   </Text>
                </Center>
 
-               {/* Start, Player Name, Join/Create Room Options */}
+               {/* Buttons - Start and Join/Create Room */}
                <Center>{<SetUpInfo />}</Center> 
 
 
-               {/* HeritACT info link at the bottom */}
+               {/* HeritACT info link */}
                <Center position="absolute" left="50%" bottom="10" transform="translateX(-50%)">
                   <Link href="https://www.heritact.eu" isExternal>
                      <HStack>

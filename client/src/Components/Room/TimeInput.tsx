@@ -51,13 +51,14 @@ export default function TimeInput({ initialMinutes, initialSeconds, onChange }: 
 
    return (
       <Box>
-         <HStack spacing={4}>
+         <HStack spacing={4} mt="0.5">
             <Select
                ref={minutesRef}
                value={minutes}
                onChange={handleMinutesChange}
                width="70px"
-               borderColor={isError ? "red.500" : "gray.200"}
+               borderColor={isError ? "red.500" : "gray.300"}
+               color="brand.grey"
             >
                {[...Array(21).keys()].map((minute) => (
                   <option key={minute} value={minute}>
@@ -66,14 +67,15 @@ export default function TimeInput({ initialMinutes, initialSeconds, onChange }: 
                ))}
             </Select>
 
-            <Text fontSize="16px" my="auto">minutes</Text>
+            <Text fontSize="16px" color="brand.grey" my="auto">minutes</Text>
 
             <Select
                ref={secondsRef}
                value={seconds}
                onChange={handleSecondsChange}
                width="70px"
-               borderColor={isError ? "red.500" : "gray.200"}
+               borderColor={isError ? "red.500" : "gray.300"}
+               color="brand.grey"
             >
                {[0, 15, 30, 45].map((second) => (
                   <option key={second} value={second}>
@@ -81,7 +83,7 @@ export default function TimeInput({ initialMinutes, initialSeconds, onChange }: 
                   </option>
                ))}
             </Select>
-            <Text fontSize="16px" my="auto">seconds</Text>
+            <Text fontSize="16px" color="brand.grey" my="auto">seconds</Text>
          </HStack>
          {isError && (
             <Text fontSize="14px" color="red.500" mt="2">

@@ -1,5 +1,5 @@
 // Authors: Vojta Bruza and Grace Houser
-// This file is the final result screen of the game
+// This end screen displays the final results of the players 
 
 import { Box, Button, Center, Heading, Stack, } from "@chakra-ui/react";
 import '../../Theme/theme.css';

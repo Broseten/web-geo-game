@@ -1,3 +1,4 @@
+// Authors: Vojtech Bruza and Grace Houser
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, } from "@chakra-ui/react";
 
 interface ConfirmationModalProps {
@@ -16,6 +17,8 @@ export default function ConfirmationModal({ isOpen, onClose, onConfirm, message,
             <ModalBody>
                <Text textAlign="center">{message}</Text>
             </ModalBody>
+
+            {/* Yes or No Button */}
             <ModalFooter justifyContent="center" gap={10}>
                <Button colorScheme="red" onClick={onConfirm}>
                   Yes

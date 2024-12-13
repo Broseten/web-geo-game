@@ -1,3 +1,6 @@
+// Authors: Vojta Bruza and Grace Houser
+// Displays all room customizations a facilitator can choose
+
 // src/components/Customizations.tsx
 import { Box, Button, Center, Checkbox, CheckboxGroup, Input, InputGroup, Text, VStack } from "@chakra-ui/react";
 import { useRef, useState } from "react";
@@ -49,12 +52,12 @@ export default function Customizations() {
                 <Text className="h2" color="brand.grey">Name your room</Text>
                 <InputGroup>
                     <Input
-                        borderColor="brand.teal"
-                        color="brand.teal"
+                        borderColor="gray.300"
+                        color="brand.grey"
                         placeholder="Room name..."
-                        _placeholder={{ color: 'brand.teal', fontSize: "14px" }}
+                        _placeholder={{ color: 'gray.400', fontSize: "14px" }}
                         fontSize="14px"
-                        _hover={{ borderWidth: "2px" }}
+                        _hover={{ borderWidth: "1px" }}
                         value={roomName}
                         onChange={(event) => setRoomName(event.target.value)}
                     />

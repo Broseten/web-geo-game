@@ -1,6 +1,6 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays the left section of the game play 
-import { Box, Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Grid, HStack, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import initSocket from "../../../Hooks/useSocket";
 import { socket } from "../../../main";
@@ -36,8 +36,8 @@ export default function Game({ isFacilitator }: GameProps) {
     };
 
     return (
-        <VStack align={"top"}>
-            {/* Logo at the top */}
+        <VStack align={"top"} w="25vw" minW="250px">
+            {/* Logo */}
             <Heading
                 bg="none"
                 pt="5px"
@@ -52,25 +52,35 @@ export default function Game({ isFacilitator }: GameProps) {
 
             <hr />
 
-            {/* Budget and Time Section */}
-            <HStack justifyContent="center">
+            {/* End Round, Budget, and Time Section */}
+            <SimpleGrid justifyContent="center"
+                columns={[ 1, 1, 2, 3 ]} // base, small, medium, large
+                //spacingX={4} // base, small, medium, large
+                spacingY={4}
+                width="100%"
+            >
                 {
+                    /* End Round Button */
                     isFacilitator
                     &&
                     <Button
                         bg="brand.red"
                         color="white"
-                        mr="40px"
+                        whiteSpace="normal"
+                        width="90%"
+                        //marginX="20"
+                        
+                        justifySelf="center"
                         _hover={{ color: "brand.red", background: "red.100" }}
                         onClick={() => setIsConfirmModalOpen(true)}
                     >
-                        Finish Round
+                        End Round
                     </Button>
                 }
 
                 {/* Budget */}
-                <VStack gap="0">
-                    <Heading size="md" color="white">
+                <VStack gap="0" justifyContent="center">
+                    <Heading size="md" color="white" lineHeight={0.8}>
                         {playerBudget}
                     </Heading>
 
@@ -79,12 +89,9 @@ export default function Game({ isFacilitator }: GameProps) {
                     </Text>
                 </VStack>
 
-                {/* just for spacing */}
-                <Text mr="40px"></Text>
-
                 {/* Time */}
-                <VStack gap="0">
-                    <Heading size="md" color="white">
+                <VStack gap="0" justifyContent="center">
+                    <Heading size="md" color="white" lineHeight={0.8}>
                         <Timer />
                     </Heading>
 
@@ -92,7 +99,7 @@ export default function Game({ isFacilitator }: GameProps) {
                         Time
                     </Text>
                 </VStack>
-            </HStack>
+            </SimpleGrid>
 
             <hr />
 
@@ -109,7 +116,7 @@ export default function Game({ isFacilitator }: GameProps) {
                 </Text> */}
             </Box>
 
-            {/* accordion of solutions */}
+            {/* Solution Accordion */}
             <Center>
                 <Solutions />
             </Center>

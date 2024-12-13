@@ -1,5 +1,5 @@
 // Authors: Vojtech Bruza and Grace Houser
-// This file is the voting screen famework 
+// This file displays the voting screen (left side)
 
 import { Box, Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
 import { socket } from "../../../main";
@@ -25,12 +25,12 @@ export default function Voting({ isFacilitator }: VoteProps) {
         setIsConfirmModalOpen(false);
     };
 
-    {/* Voting Section - left of the game map */ }
+    /* Voting Section */
     return (
 
-        <VStack align={"top"}>
+        <VStack align={"top"} w="25vw" minW="300px">
 
-            {/* Logo at the top */}
+            {/* Logo at top */}
             <Heading bg="none" pt="5px" color="brand.yellow" textAlign="center"
                 fontSize="18px" fontFamily="Avenir Next" fontWeight="bold">
                 NegoDesign
@@ -38,18 +38,18 @@ export default function Voting({ isFacilitator }: VoteProps) {
 
             <hr />
 
-            {/* Voting and Time Section */}
+            {/* End Voting and Time Section */}
             <Center>
                 <HStack justifyContent="center">
 
-                    {/* End Voting Button - only for the facilitator */}
+                    {/* End Voting Button - only for facilitator */}
                     {
                         isFacilitator
                         &&
                         <Button bg="brand.red" color="white" mr="40px"
                             _hover={{ color: "brand.red", background: "red.100" }}
                             onClick={() => { setIsConfirmModalOpen(true) }}>
-                            Finish Voting
+                            End Voting
                         </Button>
                     }
 
@@ -70,14 +70,13 @@ export default function Voting({ isFacilitator }: VoteProps) {
 
             <hr />
 
-            {/* Solution Information Section */}
+            {/* Solution Information Card */}
             <Center>
                 <VStack w="300px">
                     <Heading size="lg" color="white" mt="5px" lineHeight="1" textAlign="center">
                         Solution <br />
                         Information
                     </Heading>
-
                     {
                         selectedMarker
                             // marker information

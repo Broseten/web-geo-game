@@ -2,7 +2,7 @@
 // This file pieces together the entire pay screen,
 // which includes the left game screen, map, and modals 
 
-import { HStack } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 import L from "leaflet";
 import { useEffect, useMemo } from "react";
 import { ProgressState, RoundStage } from "../../data/DataTypes";
@@ -50,7 +50,9 @@ export default function Play() {
                />
             )
          }
-         <HStack bg="brand.teal" align="flex.start">
+         <HStack bg="brand.teal" align="flex-start" pl="0.5rem">
+
+            {/* Left Sidebar - Game or Voting */}
             {
                gameRoomState?.round.stage === RoundStage.Placing
                &&
@@ -62,8 +64,10 @@ export default function Play() {
                <Voting isFacilitator={isFac} />
             }
 
-            {/* Adding in the Game Map */}
-            <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} />
+            {/* Game Map */}
+            <Box>
+               <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} />
+            </Box>
          </HStack>
       </>
    );

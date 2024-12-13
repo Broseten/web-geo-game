@@ -1,4 +1,6 @@
 // Authors: Vojtech Bruza and Grace Houser
+// This file displays a room's lobby 
+
 import { Button, Flex, Text, useToast } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { GameRoomState } from "../../data/DataTypes";
@@ -28,7 +30,7 @@ export default function Lobby() {
          align="center"
          justify="top"
          w="100%"
-         h="100%" // Ensure it takes full height
+         h="100%" // ensure it takes full height
          px={4}
       >
          <Text

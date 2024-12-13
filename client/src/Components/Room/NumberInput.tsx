@@ -20,10 +20,10 @@ const NumberInputComponent = ({ value, onChange, label, min = 1, step = 1, curre
             onChange={(_, valueString) => onChange(Number(valueString))}
             defaultValue={value} min={min} step={step}
          >
-            <NumberInputField />
-            <NumberInputStepper>
-               <NumberIncrementStepper />
-               <NumberDecrementStepper />
+            <NumberInputField color="brand.grey" borderColor="gray.300" _hover={{ borderWidth: "1px" }} mt="0.5"/>
+            <NumberInputStepper borderColor="gray.300" borderTop="20">
+               <NumberIncrementStepper bgColor="gray.100" borderColor="gray.300" color="gray.400" />
+               <NumberDecrementStepper bgColor="gray.100" borderColor="gray.300" color="gray.400" />
             </NumberInputStepper>
          </NumberInput>
       </Box>

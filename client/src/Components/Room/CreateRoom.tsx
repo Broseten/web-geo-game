@@ -1,6 +1,5 @@
 // Authors: Vojta Bruza and Grace Houser
-// This file displays the general design for the 
-// facilitator when they create a room 
+// This file displays the framework for creating a room 
 
 import { Box, Button, Center, Text } from "@chakra-ui/react";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
@@ -41,7 +40,7 @@ export default function CreateRoom() {
                   </Text>
                </Center>
 
-               {/* Room customizations */}
+               {/* Room Customizations */}
                <Center>
                   <Box bg="white" overflow="auto"
                      width="500px" height="520px"

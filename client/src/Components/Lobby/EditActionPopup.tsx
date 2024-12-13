@@ -98,6 +98,7 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
                     </FormControl>
                 </ModalBody>
 
+                {/* Save/Cancel Button */}
                 <ModalFooter>
                     <Button colorScheme="teal" mr={3} onClick={handleSave}>
                         Save

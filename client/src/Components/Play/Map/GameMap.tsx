@@ -1,3 +1,4 @@
+// Authors: Vojtech Bruza and Grace Houser
 import L, { LatLngExpression } from "leaflet";
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -42,7 +43,7 @@ export default function GameMap({ polygon }: GameMapProps) {
             center={bounds.getCenter()}
             scrollWheelZoom={true}
             zoom={13}
-            style={{ height: "100vh", width: "70vw", margin: "auto" }}
+            style={{ height: "100vh", width: "75vw", margin: "auto" }}
             maxBounds={bounds}
             maxBoundsViscosity={0.8}
          >

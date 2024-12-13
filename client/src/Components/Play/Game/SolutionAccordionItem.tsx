@@ -1,3 +1,6 @@
+// Authors: Vojta Bruza and Grace Houser
+// Single solution accordion item for Solutions file
+
 import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Image, Text, } from "@chakra-ui/react";
 import { Solution } from "../../../data/DataTypes";
 
@@ -12,6 +15,8 @@ export function SolutionAccordionItem({ solution, onClick, buttonText, }: Soluti
       <AccordionItem>
          <h2>
             <AccordionButton p="2">
+
+               {/* Solution Image */}
                <Image
                   height="40px"
                   width="40px"
@@ -19,6 +24,8 @@ export function SolutionAccordionItem({ solution, onClick, buttonText, }: Soluti
                   mr="10px"
                   src={`/images/solution-icons/RED/${solution.image}.png`}
                />
+
+               {/* Solution Name and Price */}
                <Box flex="1" textAlign="left">
                   <Text lineHeight="1.15" fontSize="14px" fontWeight="bold">
                      {solution.name}
@@ -27,11 +34,17 @@ export function SolutionAccordionItem({ solution, onClick, buttonText, }: Soluti
                      €{solution.price}
                   </Text>
                </Box>
+
                <AccordionIcon />
             </AccordionButton>
          </h2>
+
          <AccordionPanel pb={4} fontSize="12px">
+
+            {/* Solution Description */}
             {solution.description}
+
+            {/* Select Button */}
             <Button
                bg="brand.red"
                color="white"

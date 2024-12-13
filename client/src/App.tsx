@@ -62,6 +62,7 @@ function App() {
       <Box
          className="app"
          h='calc(100vh)'
+         w='calc(100vw)'
          bg="brand.blue"
       >
          {renderScreen()}

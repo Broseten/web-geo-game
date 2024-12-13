@@ -1,6 +1,5 @@
 // Authors: Vojta Bruza and Grace Houser
-// This file displays start button, name input field, 
-// and join/create room option of the home screen design
+// Start and room option buttons for the Home Screen
 
 import { Box, Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
@@ -20,7 +19,7 @@ export default function SetUpInfo() {
 
     // conditional statements for the middle display of the Home page  
 
-    {/* Start button - inital display */ }
+    {/* Start Button - inital display */ }
     if (!isStartButtonClicked) {
         return (
             <Box>
@@ -46,7 +45,8 @@ export default function SetUpInfo() {
         )
     }
 
-    // Users decides if they want to create or join a room 
+    // Create or Join room button options - user decision 
+    // Rejoin option available if user refreshed page 
     else return (
         <Center>
             <VStack bg="white" borderRadius="5px" pl="0.5cm" pr="0.5cm" pb="20px">
@@ -56,6 +56,7 @@ export default function SetUpInfo() {
                 </Text>
 
                 <HStack>
+                    {/* Create Room */}
                     <Button bg='white' color="brand.teal"
                         borderColor="brand.teal" borderWidth="1px"
                         _hover={{ bg: "brand.teal", color: "white" }}
@@ -65,6 +66,7 @@ export default function SetUpInfo() {
                         Create
                     </Button>
 
+                    {/* Join Room */}
                     <Button bg='white' color="brand.teal"
                         borderColor="brand.teal" borderWidth="1px"
                         _hover={{ bg: "brand.teal", color: "white" }}
@@ -77,6 +79,7 @@ export default function SetUpInfo() {
                     </Button>
                 </HStack>
                 {
+                    /* Rejoin Room */
                     lastRoomData
                     &&
                     <Button mt={5} bg='white' color="brand.teal"
@@ -89,7 +92,7 @@ export default function SetUpInfo() {
                             // Emit reconnect event to the server
                             socket.emit('join-room', lastRoomID);
                         }}>
-                        Try rejoin
+                        Try Rejoin
                     </Button>
                 }
             </VStack>

@@ -25,7 +25,7 @@ export default function JoinRoom() {
    return (
       <Box>
 
-         {/* Text at the top of the screen */}
+         {/* Header */}
          <Center>
             <Text pt='50' fontSize="4xl" fontWeight="bold" color="brand.teal">
                Available Rooms

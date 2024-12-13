@@ -1,3 +1,6 @@
+// Authors: Vojtech Bruza and Grace Houser
+// Formats player info row for UserList in Lobby
+
 import { CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -49,6 +52,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
       boxShadow="sm"
     >
       <Flex align="center" justifyContent="space-between" gap={6}>
+
         {/* Icon */}
         <Box flex="1" textAlign="left">
           <Icon color={player.color} />

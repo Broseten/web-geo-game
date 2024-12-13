@@ -1,5 +1,5 @@
 // Authors: Vojta Bruza and Grace Houser
-// accordion of solution options for the game play 
+// Accordion of facilitator selected solutions for game play 
 
 import { Accordion, Box, Center, Text, VStack } from "@chakra-ui/react";
 import { global_solutions } from "../../../data/data";
@@ -50,7 +50,7 @@ export default function Solutions() {
                     }}>
                     <Center>
 
-                        {/* Solution Options */}
+                        {/* Solution Accordion */}
                         <Accordion
                             maxWidth="300px"
                             bg="white"
