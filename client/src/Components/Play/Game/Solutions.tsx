@@ -43,10 +43,10 @@ export default function Solutions() {
                     // TODO make this autofit the parent and make sure the parent is correctly scaling
                     height={{
                         // responsive height 
-                        base: '150px',  // For mobile screens (sm and below)
-                        md: '300px',    // For medium screens (tablet)
-                        lg: '500px',    // For large screens (desktop)
-                        xl: '600px',    // For extra-large screens
+                        base: '300px',  // For mobile screens (sm and below)
+                        md: '350px',    // For medium screens (tablet)
+                        lg: '450px',    // For large screens (desktop)
+                        xl: '550px',    // For extra-large screens
                     }}>
                     <Center>
 

@@ -17,8 +17,15 @@ export default function SolutionRanking() {
          {
             markers && markers.sort((a, b) => a.votes.length - b.votes.length).map((marker) => (
                // TODO make it responsive
-               < Card direction={{ base: 'column', sm: 'row' }} key={marker.id} width="300px"
-                  bg="white" color="brand.grey" mb="5px" align="center">
+               <Card
+                  direction={{ base: 'column', sm: 'row' }}
+                  key={marker.id}
+                  maxWidth={{ base: '90%', sm: '90%', md: '800px', lg: '1000px'}} // Adjusts based on screen size
+                  width="100%" // Full width by default
+                  bg="white"
+                  color="brand.grey"
+                  mb="5px"
+                  align="center">
 
                   <Icon color={getPlayerData(marker.ownerPlayerID)?.color || "white"} />
 

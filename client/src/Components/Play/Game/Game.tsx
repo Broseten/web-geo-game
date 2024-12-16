@@ -1,6 +1,6 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays the left section of the game play 
-import { Box, Button, Center, Grid, HStack, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import initSocket from "../../../Hooks/useSocket";
 import { socket } from "../../../main";
@@ -53,7 +53,9 @@ export default function Game({ isFacilitator }: GameProps) {
             <hr />
 
             {/* End Round, Budget, and Time Section */}
-            <SimpleGrid justifyContent="center"
+            <SimpleGrid 
+                justifyContent="center"
+                //justifyItems={isFacilitator ? "stretch" : "center"}
                 columns={[ 1, 1, 2, 3 ]} // base, small, medium, large
                 //spacingX={4} // base, small, medium, large
                 spacingY={4}
@@ -68,8 +70,6 @@ export default function Game({ isFacilitator }: GameProps) {
                         color="white"
                         whiteSpace="normal"
                         width="90%"
-                        //marginX="20"
-                        
                         justifySelf="center"
                         _hover={{ color: "brand.red", background: "red.100" }}
                         onClick={() => setIsConfirmModalOpen(true)}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Box, Select, HStack, Text } from "@chakra-ui/react";
+import { Box, Select, HStack, Text, color } from "@chakra-ui/react";
 
 interface TimeInputProps {
    initialMinutes: number;
@@ -51,13 +51,14 @@ export default function TimeInput({ initialMinutes, initialSeconds, onChange }: 
 
    return (
       <Box>
-         <HStack spacing={4} mt="0.5">
+         <HStack spacing={2} mt="0.5">
             <Select
                ref={minutesRef}
                value={minutes}
                onChange={handleMinutesChange}
                width="70px"
                borderColor={isError ? "red.500" : "gray.300"}
+               _hover={{borderColor: "grey.300"}}
                color="brand.grey"
             >
                {[...Array(21).keys()].map((minute) => (
@@ -67,7 +68,7 @@ export default function TimeInput({ initialMinutes, initialSeconds, onChange }: 
                ))}
             </Select>
 
-            <Text fontSize="16px" color="brand.grey" my="auto">minutes</Text>
+            <Text fontSize="16px" color="brand.grey" my="auto" mr="15px">minutes</Text>
 
             <Select
                ref={secondsRef}
@@ -75,6 +76,7 @@ export default function TimeInput({ initialMinutes, initialSeconds, onChange }: 
                onChange={handleSecondsChange}
                width="70px"
                borderColor={isError ? "red.500" : "gray.300"}
+               _hover={{borderColor: "grey.300"}}
                color="brand.grey"
             >
                {[0, 15, 30, 45].map((second) => (

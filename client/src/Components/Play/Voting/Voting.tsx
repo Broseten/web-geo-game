@@ -42,15 +42,25 @@ export default function Voting({ isFacilitator }: VoteProps) {
             <Center>
                 <HStack justifyContent="center">
 
-                    {/* End Voting Button - only for facilitator */}
                     {
-                        isFacilitator
-                        &&
-                        <Button bg="brand.red" color="white" mr="40px"
-                            _hover={{ color: "brand.red", background: "red.100" }}
-                            onClick={() => { setIsConfirmModalOpen(true) }}>
-                            End Voting
-                        </Button>
+                        isFacilitator 
+                        ? (
+                            /* End Voting Button - facilitator */
+                            <Button bg="brand.red" color="white" mr="40px"
+                                _hover={{ color: "brand.red", background: "red.100" }}
+                                onClick={() => { setIsConfirmModalOpen(true) }}>
+                                End Voting
+                            </Button>
+                        ) : (
+                            /* Votes Left - player */
+                            <VStack gap="0" mr="40px">
+                                <Heading size="md" color="white">
+                                    X
+                                </Heading>
+
+                                <Text fontSize="14px" color="white">Votes Left</Text>
+                            </VStack>
+                        )
                     }
 
                     {/* Time */}
@@ -61,10 +71,6 @@ export default function Voting({ isFacilitator }: VoteProps) {
 
                         <Text fontSize="14px" color="white">Time</Text>
                     </VStack>
-                    {/* :
-                    <Text size="md" fontWeight="bold" color="white" mr="40px" lineHeight="1" textAlign="center">
-                        You are <br /> voting!
-                    </Text> */}
                 </HStack>
             </Center>
 
@@ -98,6 +104,6 @@ export default function Voting({ isFacilitator }: VoteProps) {
                 onConfirm={handleFinishRound}
                 message="Are you sure you want to finish voting before the timer runs out?"
             />
-        </VStack>
+        </VStack >
     );
 }

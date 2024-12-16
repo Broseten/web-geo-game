@@ -50,7 +50,7 @@ export default function Play() {
                />
             )
          }
-         <HStack bg="brand.teal" align="flex-start" pl="0.5rem">
+         <HStack bg="brand.teal" align="flex-start" pl="0.5rem" h="100vh">
 
             {/* Left Sidebar - Game or Voting */}
             {
