@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import { MapMarkerData } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
+import { useToast } from "@chakra-ui/react";
 
 interface GameMarkersContextProps {
    markers: MapMarkerData[];
@@ -10,9 +11,19 @@ const GameMarkersContext = createContext<GameMarkersContextProps | undefined>(un
 
 export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
    const [markers, setMarkers] = useState<MapMarkerData[]>([]);
+   const toast = useToast();
 
    initSocket('marker-added', (marker: MapMarkerData) => {
       setMarkers((current) => [...current, marker]);
+   });
+
+   initSocket('marker-error', (msg: string) => {
+      // TODO use global error messages instead of marker-error
+      toast({
+         title: msg,
+         status: 'error',
+         isClosable: true,
+      });
    });
 
    initSocket('update-marker', (updatedMarker: MapMarkerData) => {

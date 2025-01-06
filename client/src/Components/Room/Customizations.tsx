@@ -9,19 +9,22 @@ import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
 import { usePolygon } from "../Contexts/PolygonContext";
 import MapAreaSelection, { MapAreaSelectionRef } from "./MapAreaSelection";
-import { global_roles, global_solutions, maxPlayers as global_maxPlayers } from "../../data/data";
+import { global_roles, global_solutions, maxPlayers as global_maxPlayers, global_solutions_total_price } from "../../data/data";
 import RoleSelector from "./RoleSelector";
 import TimeInput from "./TimeInput";
 import { RoomJoined } from "../../data/DataTypes";
 import NumberInputComponent from "./NumberInput";
+import { useScreenSelection } from "../Contexts/useScreenSelection";
 
 export default function Customizations() {
+    const { setCurrentScreen } = useScreenSelection();
     const [loading, setLoading] = useState(false);
     const [roomName, setRoomName] = useState('');
     const [time, setTime] = useState(300);
-    const [initialBudget, setInitialBudget] = useState(0);
+    const [initialBudget, setInitialBudget] = useState(global_solutions_total_price);
     const [totalRounds, setTotalRounds] = useState(3);
     const [maxVotes, setMaxVotes] = useState(3);
+    const [maxMarkers, setMaxMarkersPerRound] = useState(3);
     const { polygon: mapPolygon } = usePolygon();
     const mapSelectionRef = useRef<MapAreaSelectionRef>(null);
     const [checkedSolutions, setCheckedSolutions] = useState<Record<string, boolean>>(
@@ -66,7 +69,8 @@ export default function Customizations() {
 
             {/* Map Area */}
             <Box pb="20px">
-                <Text className="h2" color="brand.grey">Choose a map from the dropdown</Text>
+                <Text className="h2" color="brand.grey">Select area on the map</Text>
+                <Text color="brand.grey">Use the button in the top right corner</Text>
                 <Box h="400px">
                     <MapAreaSelection ref={mapSelectionRef} />
                 </Box>
@@ -108,7 +112,7 @@ export default function Customizations() {
                 />
             </Box>
 
-            {/* Initial Budget */}
+            {/* Initial budget */}
             <NumberInputComponent
                 value={initialBudget}
                 onChange={setInitialBudget}
@@ -118,7 +122,7 @@ export default function Customizations() {
                 currencySymbol="€"
             />
 
-            {/* Total Rounds */}
+            {/* Total rounds */}
             <NumberInputComponent
                 value={totalRounds}
                 onChange={setTotalRounds}
@@ -126,7 +130,15 @@ export default function Customizations() {
                 min={1}
             />
 
-            {/* Max Votes */}
+            {/* Max solutions per round */}
+            <NumberInputComponent
+                value={maxMarkers}
+                onChange={setMaxMarkersPerRound}
+                label="Max solutions per round per player"
+                min={0}
+            />
+
+            {/* Max votes */}
             <NumberInputComponent
                 value={maxVotes}
                 onChange={setMaxVotes}
@@ -136,6 +148,14 @@ export default function Customizations() {
 
             {/* Create Room Button */}
             <Center>
+                <Button
+                    onClick={() => {
+                        setCurrentScreen('home');
+                    }}
+                    variant="outline"
+                >
+                    Cancel
+                </Button>
                 <Button bg="brand.teal" color="white" variant="outline"
                     _hover={{ bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px", }}
                     isLoading={loading}
@@ -172,6 +192,7 @@ export default function Customizations() {
                             initialBudget: initialBudget,
                             totalRounds: totalRounds,
                             maxVotes: maxVotes,
+                            maxMarkers: maxMarkers,
                         };
                         socket.emit('create-room', roomData);
                     }

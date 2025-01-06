@@ -16,12 +16,12 @@ export default function EndScreen() {
             <Center>
                 <Stack spacing={8} mt="75px" mb="80px" align="center">
                     <Heading size="2xl" textAlign="center" color="brand.grey" textShadow="0px 0px 8px #444444">
-                        Thank you for playing Nego-Design!
+                        Thank you for playing!
                     </Heading>
 
                     <SolutionRanking />
 
-                    <Button
+                    {/* <Button
                         bg="brand.teal"
                         color="white"
                         variant="outline"
@@ -29,7 +29,7 @@ export default function EndScreen() {
                         onClick={() => setCurrentScreen('home')}
                     >
                         Play Again
-                    </Button>
+                    </Button> */}
                 </Stack>
             </Center>
         </Box>

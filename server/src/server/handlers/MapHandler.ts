@@ -12,6 +12,17 @@ export class MapHandler extends BaseRoomHandler {
       });
 
       socket.on('add-marker', (newMarker: MapMarkerData) => {
+         // check if player exceeds max markers per round
+         const maxMarkers = this.io.roomManager.getRoom(this.roomID)!.roomInitData.maxMarkers;
+         const allPlayerMarkersThisRound = this.markers.filter((m) =>
+            m.roundIndex === newMarker.roundIndex && m.ownerPlayerID === newMarker.ownerPlayerID);
+         if (allPlayerMarkersThisRound.length >= maxMarkers) {
+            socket.emit('marker-error', `Cannot place more then ${maxMarkers} markers per round`);
+            return;
+         }
+         // TODO check budget limit!
+
+         // place marker
          this.markerIDCounter += 1;
          let id = this.markerIDCounter;
          newMarker.id = id;

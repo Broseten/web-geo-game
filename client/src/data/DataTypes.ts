@@ -25,6 +25,7 @@ export interface RoomJoined {
    totalRounds: number;
    // max votes per player per round
    maxVotes: number;
+   maxMarkers: number;
 }
 
 export interface RoomInfo {
