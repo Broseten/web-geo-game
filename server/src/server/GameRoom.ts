@@ -10,6 +10,68 @@ import { ServerIO } from './ServerIO';
 
 const gameRoomMaxPlayers = 4;
 
+const animals = [
+   "Panda", "Koala", "Dolphin", "Penguin", "Otter",
+   "Bunny", "Hedgehog", "Fox", "Robin", "Squirrel",
+   "Deer", "Meerkat", "Cheetah", "Fawn", "Goldfinch",
+   "Butterfly", "Hummingbird", "Owl", "Swan", "Beaver",
+   "Kangaroo", "Llama", "Parrot", "Seal", "Whale",
+   "Puffin", "Chickadee", "Wolf", "Flamingo", "Badger",
+   "Tiger", "Leopard", "Lion", "Eagle", "Stork",
+   "Raccoon", "Chipmunk", "Bat", "Crane", "Toucan",
+   "Duck", "Goose", "Pelican", "Albatross", "Manatee",
+   "Walrus", "Sea Lion", "Zebra", "Horse", "Camel",
+   "Donkey", "Sheep", "Goat", "Cow", "Pig",
+   "Dog", "Cat", "Chameleon", "Iguana", "Tortoise",
+   "Turtle", "Octopus", "Seahorse", "Starfish", "Jellyfish",
+   "Clownfish", "Swordfish", "Shark", "Elephant", "Giraffe",
+   "Rhino", "Hippo", "Antelope", "Armadillo", "Sloth",
+   "Monkey", "Gorilla", "Orangutan", "Chimpanzee", "Frog",
+   "Toad", "Crocodile", "Alligator", "Peacock", "Lynx"
+];
+
+const adjectives = [
+   "Adventurous", "Affectionate", "Amazing", "Ambitious", "Amusing",
+   "Awesome", "Beautiful", "Brave", "Bright", "Brilliant",
+   "Calm", "Caring", "Charming", "Cheerful", "Clever",
+   "Confident", "Considerate", "Creative", "Curious", "Daring",
+   "Delightful", "Determined", "Diligent", "Dynamic", "Energetic",
+   "Enthusiastic", "Exceptional", "Fabulous", "Fantastic", "Friendly",
+   "Generous", "Gentle", "Genuine", "Graceful", "Happy",
+   "Hardworking", "Helpful", "Hilarious", "Honest", "Imaginative",
+   "Incredible", "Inspiring", "Joyful", "Kind", "Lively",
+   "Loving", "Loyal", "Magical", "Marvelous", "Optimistic",
+   "Outstanding", "Patient", "Peaceful", "Playful", "Positive",
+   "Remarkable", "Respectful", "Smart", "Strong", "Supportive",
+   "Talented", "Thoughtful", "Unique", "Vibrant", "Wonderful",
+   "Adaptable", "Approachable", "Astounding", "Attentive", "Authentic",
+   "Balanced", "Brilliant", "Capable", "Charismatic", "Classy",
+   "Compassionate", "Confident", "Courteous", "Creative", "Decisive",
+   "Devoted", "Empathetic", "Empowered", "Endearing", "Energetic",
+   "Engaging", "Enlightened", "Excellent", "Exciting", "Fabulous",
+   "Fair", "Fascinating", "Fearless", "Fierce", "Flawless",
+   "Flexible", "Flourishing", "Forgiving", "Friendly", "Generous",
+   "Gifted", "Glowing", "Grateful", "Grounded", "Hardworking",
+   "Heartwarming", "Helpful", "Heroic", "Honorable", "Humble",
+   "Idealistic", "Impressive", "Inclusive", "Independent", "Innovative",
+   "Inquisitive", "Insightful", "Inspirational", "Invincible", "Joyful",
+   "Kindhearted", "Knowledgeable", "Likeable", "Logical", "Lovable",
+   "Mature", "Meticulous", "Mindful", "Modest", "Motivated",
+   "Noble", "Noteworthy", "Nurturing", "Open-minded", "Optimistic",
+   "Organized", "Original", "Outstanding", "Passionate", "Patient",
+   "Perceptive", "Persistent", "Philosophical", "Playful", "Polished",
+   "Positive", "Practical", "Proactive", "Productive", "Protective",
+   "Radiant", "Rational", "Realistic", "Reliable", "Resilient",
+   "Resourceful", "Respectful", "Responsible", "Rewarding", "Savvy",
+   "Sensible", "Sensitive", "Serene", "Sincere", "Skillful",
+   "Sociable", "Spectacular", "Spirited", "Steady", "Strong",
+   "Supportive", "Sympathetic", "Talented", "Thankful", "Thoughtful",
+   "Tolerant", "Trustworthy", "Understanding", "Unstoppable", "Upbeat",
+   "Valiant", "Versatile", "Visionary", "Warmhearted", "Welcoming",
+   "Wise", "Witty", "Youthful", "Zestful"
+];
+
+
 export class GameRoom {
    public id: string;
    private facilitator: string; //player ID of the facilitator
@@ -17,8 +79,6 @@ export class GameRoom {
    public roomInitData: RoomJoined;
    // copy the global list of colors for this room
    private availableColors = global_icon_colors.slice();
-   // TODO smarter way for assigning names
-   private defaultNames = ["Alice", "Bob", "Charlie", "David"];
 
    private mapHandler: MapHandler;
    private timerHandler: TimerHandler;
@@ -61,7 +121,9 @@ export class GameRoom {
          return;
       }
 
-      const name = this.defaultNames.shift() || `Player ${playerID}`;
+      const animal = animals[Math.floor(Math.random() * animals.length)];
+      const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+      const name = `${adj} ${animal}`;
       const player = new Player(clientSocket, playerRole, color, name, playerID);
 
       this.players.set(playerID, player);
@@ -100,9 +162,6 @@ export class GameRoom {
          player.getSocket().leave(this.id);
          this.players.delete(playerId);
          console.info(`Player ${playerId} left room ${this.id}`);
-
-         // Return attributes for reassigning in the future
-         this.defaultNames.push(player.name);
 
          // Notify remaining players
          this.ioServer.socketServer.to(this.id).emit('player-left', playerId);
