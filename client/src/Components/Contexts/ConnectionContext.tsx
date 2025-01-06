@@ -26,17 +26,20 @@ export const ConnectionProvider = ({ children }: { children: ReactNode }) => {
       const lastSessionData = sessionStorage.getItem('lastSession');
       if (lastSessionData) {
          const { playerID }: LastSessionData = JSON.parse(lastSessionData);
+         // use the v4 id generated previously instead of the socket ID
          global_playerID = playerID;
          console.log("reconnecting with:" + playerID);
          socket.emit('reconnect', playerID);
       } else {
-         // create new if no saved
+         // no session was saved
+         // create new session
          const newSessiondata: LastSessionData = {
             playerID: v4()
          }
-         global_playerID = newSessiondata.playerID;
          console.log("Saving session: " + newSessiondata.playerID);
          sessionStorage.setItem('lastSession', JSON.stringify(newSessiondata));
+         // for now use the assigned socket ID instead of the v4
+         global_playerID = socket.id;
       }
    });
 
