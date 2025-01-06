@@ -1,34 +1,29 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays the left section of the game play 
 import { Box, Button, Center, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import initSocket from "../../../Hooks/useSocket";
+import { useState } from "react";
 import { socket } from "../../../main";
-import { useScreenSelection } from "../../Contexts/useScreenSelection";
 import ConfirmationModal from "../ConfirmationModal";
 import Timer from "../Timer";
 import Solutions from "./Solutions";
+import { useGameRoom } from "../../Contexts/GameRoomContext";
+import { global_playerID } from "../../Contexts/ConnectionContext";
+import { useGameMarkers } from "../../Contexts/GameMarkersContext";
 
 interface GameProps {
     isFacilitator: boolean;
 }
 
 export default function Game({ isFacilitator }: GameProps) {
-    const { setCurrentScreen } = useScreenSelection();
-    const [testCounter, setTestCounter] = useState(0);
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+    const { getPlayerData, roomInfo } = useGameRoom();
+    const { getPlayerSpentBudget } = useGameMarkers();
 
+    let localPlayer = getPlayerData(global_playerID);
+    
     // TODO - needed variables
-    const role = "Developer";
-    const playerBudget = "€20,000";
-
-    initSocket("countClient", (count: number) => setTestCounter(count));
-    initSocket("init-count-client", (count: number) => setTestCounter(count));
-
-    useEffect(() => {
-        // init the state
-        socket.emit("init-count");
-    }, []);
+    const playerRole = localPlayer?.role;
+    const playerRemainingBudget = roomInfo? roomInfo.initialBudget - getPlayerSpentBudget(global_playerID) : 0;
 
     const handleFinishRound = () => {
         socket.emit("progress-game");
@@ -53,35 +48,18 @@ export default function Game({ isFacilitator }: GameProps) {
             <hr />
 
             {/* End Round, Budget, and Time Section */}
-            <SimpleGrid 
+            <SimpleGrid
                 justifyContent="center"
                 //justifyItems={isFacilitator ? "stretch" : "center"}
-                columns={[ 1, 1, 2, 3 ]} // base, small, medium, large
+                columns={[1, 1, 2, 3]} // base, small, medium, large
                 //spacingX={4} // base, small, medium, large
                 spacingY={4}
                 width="100%"
             >
-                {
-                    /* End Round Button */
-                    isFacilitator
-                    &&
-                    <Button
-                        bg="brand.red"
-                        color="white"
-                        whiteSpace="normal"
-                        width="90%"
-                        justifySelf="center"
-                        _hover={{ color: "brand.red", background: "red.100" }}
-                        onClick={() => setIsConfirmModalOpen(true)}
-                    >
-                        End Round
-                    </Button>
-                }
-
                 {/* Budget */}
                 <VStack gap="0" justifyContent="center">
                     <Heading size="md" color="white" lineHeight={0.8}>
-                        {playerBudget}
+                        {playerRemainingBudget}
                     </Heading>
 
                     <Text fontSize="14px" color="white">
@@ -99,7 +77,35 @@ export default function Game({ isFacilitator }: GameProps) {
                         Time
                     </Text>
                 </VStack>
+
+                <VStack gap="0" justifyContent="center">
+                    <Heading size="md" color="white" lineHeight={0.8}>
+                        {playerRole}
+                    </Heading>
+
+                    <Text fontSize="14px" color="white">
+                        Role
+                    </Text>
+                </VStack>
             </SimpleGrid>
+
+            {
+                // TODO position button at the bottom? but first fix the layouts
+                /* End Round Button */
+                isFacilitator
+                &&
+                <Button
+                    bg="brand.red"
+                    color="white"
+                    whiteSpace="normal"
+                    width="90%"
+                    justifySelf="center"
+                    _hover={{ color: "brand.red", background: "red.100" }}
+                    onClick={() => setIsConfirmModalOpen(true)}
+                >
+                    End Round
+                </Button>
+            }
 
             <hr />
 
@@ -116,8 +122,8 @@ export default function Game({ isFacilitator }: GameProps) {
                 </Text> */}
             </Box>
 
-            {/* Solution Accordion */}
             <Center>
+                {/* Solution Accordion */}
                 <Solutions />
             </Center>
 

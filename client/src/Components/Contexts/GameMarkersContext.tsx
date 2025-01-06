@@ -2,9 +2,11 @@ import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import { MapMarkerData } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
 import { useToast } from "@chakra-ui/react";
+import { getSolution } from "../../data/data";
 
 interface GameMarkersContextProps {
    markers: MapMarkerData[];
+   getPlayerSpentBudget: (playerID: string | undefined) => number;
 }
 
 const GameMarkersContext = createContext<GameMarkersContextProps | undefined>(undefined);
@@ -12,6 +14,14 @@ const GameMarkersContext = createContext<GameMarkersContextProps | undefined>(un
 export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
    const [markers, setMarkers] = useState<MapMarkerData[]>([]);
    const toast = useToast();
+
+   const getPlayerSpentBudget = (playerID: string | undefined): number => {
+      return markers.reduce((acc, marker) => {
+         // sum the prices of all solutions belonging to that player markers
+         const price = marker.ownerPlayerID === playerID ? getSolution(marker.solutionID)?.price : 0;
+         return acc + (price ? price : 0);
+      }, 0);
+   };
 
    initSocket('marker-added', (marker: MapMarkerData) => {
       setMarkers((current) => [...current, marker]);
@@ -42,6 +52,7 @@ export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
 
    const value = useMemo(() => ({
       markers: memoizedMarkers,
+      getPlayerSpentBudget
    }), [
       memoizedMarkers,
    ]);
