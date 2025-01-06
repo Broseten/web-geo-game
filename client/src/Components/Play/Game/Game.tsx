@@ -20,10 +20,10 @@ export default function Game({ isFacilitator }: GameProps) {
     const { getPlayerSpentBudget } = useGameMarkers();
 
     let localPlayer = getPlayerData(global_playerID);
-    
+
     // TODO - needed variables
     const playerRole = localPlayer?.role;
-    const playerRemainingBudget = roomInfo? roomInfo.initialBudget - getPlayerSpentBudget(global_playerID) : 0;
+    const playerRemainingBudget = roomInfo ? roomInfo.initialBudget - getPlayerSpentBudget(global_playerID) : 0;
 
     const handleFinishRound = () => {
         socket.emit("progress-game");
@@ -79,7 +79,7 @@ export default function Game({ isFacilitator }: GameProps) {
                 </VStack>
 
                 <VStack gap="0" justifyContent="center">
-                    <Heading size="md" color="white" lineHeight={0.8}>
+                    <Heading size="md" color="white" lineHeight={0.8} textAlign="center">
                         {playerRole}
                     </Heading>
 
@@ -94,17 +94,19 @@ export default function Game({ isFacilitator }: GameProps) {
                 /* End Round Button */
                 isFacilitator
                 &&
-                <Button
-                    bg="brand.red"
-                    color="white"
-                    whiteSpace="normal"
-                    width="90%"
-                    justifySelf="center"
-                    _hover={{ color: "brand.red", background: "red.100" }}
-                    onClick={() => setIsConfirmModalOpen(true)}
-                >
-                    End Round
-                </Button>
+                <Center>
+                    <Button
+                        bg="brand.red"
+                        color="white"
+                        whiteSpace="normal"
+                        width="90%"
+                        justifySelf="center"
+                        _hover={{ color: "brand.red", background: "red.100" }}
+                        onClick={() => setIsConfirmModalOpen(true)}
+                    >
+                        End Round
+                    </Button>
+                </Center>
             }
 
             <hr />

@@ -3,14 +3,10 @@
 
 import { Box, Button, Center, Heading, Stack, } from "@chakra-ui/react";
 import '../../Theme/theme.css';
-import { useScreenSelection } from "../Contexts/useScreenSelection";
 import SolutionRanking from "./SolutionRanking";
 
 
 export default function EndScreen() {
-
-    const { setCurrentScreen } = useScreenSelection();
-
     return (
         <Box overflow="auto" h="100%">
             <Center>

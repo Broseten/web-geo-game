@@ -4,29 +4,19 @@
 
 import { Box, HStack } from "@chakra-ui/react";
 import L from "leaflet";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { ProgressState, RoundStage } from "../../data/DataTypes";
 import { socket } from "../../main";
+import { global_playerID } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
-import { useScreenSelection } from "../Contexts/useScreenSelection";
 import Game from "./Game/Game";
 import GameMap from "./Map/GameMap";
 import PlayModal from "./PlayModal";
 import Voting from "./Voting/Voting";
-import { global_playerID } from "../Contexts/ConnectionContext";
 
 export default function Play() {
-   const { setCurrentScreen } = useScreenSelection(); // Get the current screen from context
    const { roomInfo, gameRoomState, isFacilitator } = useGameRoom();
-
    const isFac = useMemo(() => isFacilitator(global_playerID), [global_playerID, isFacilitator]);
-
-   useEffect(() => {
-      // switch to the results screen if the game has finished
-      if (gameRoomState?.gameState === ProgressState.Finished) {
-         setCurrentScreen('end');
-      }
-   }, [gameRoomState]);
 
    return (
       <>

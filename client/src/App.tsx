@@ -5,11 +5,11 @@ import HomeScreen from './Components/Home/HomeScreen';
 import Lobby from './Components/Lobby/Lobby';
 import Play from './Components/Play/Play';
 import EndScreen from './Components/Results/EndScreen';
-import Results from './Components/Results/Results';
+import MidGameResults from './Components/Results/MidGameResults';
 import CreateRoom from './Components/Room/CreateRoom';
 import JoinRoom from './Components/Room/JoinRoom';
 import { useGameRoom } from './Components/Contexts/GameRoomContext';
-import { ProgressState } from './data/DataTypes';
+import { ProgressState, RoundStage } from './data/DataTypes';
 
 function App() {
    const { currentScreen } = useScreenSelection(); // Get the current screen from context
@@ -21,12 +21,18 @@ function App() {
       // override
       // TODO get rid of this override and make a smarter way to handle this with the networking now
       if (gameRoomState) {
+         console.log('overriding screen due to networking');
          switch (gameRoomState.gameState) {
             case ProgressState.NotStarted:
                screenToSwitch = 'lobby';
                break;
             case ProgressState.InProgress:
-               screenToSwitch = 'play';
+               // show results only after voting finishes
+               if (gameRoomState.round.stage === RoundStage.Voting &&
+                  gameRoomState.round.stageProgress === ProgressState.Finished) {
+                  screenToSwitch = 'results';
+               }
+               else screenToSwitch = 'play';
                break;
             case ProgressState.Finished:
                screenToSwitch = 'end';
@@ -47,7 +53,7 @@ function App() {
          case 'play':
             return <LocalGameDataProvider><Play /></LocalGameDataProvider>;
          case 'results':
-            return <Results />;
+            return <MidGameResults />;
          case 'end':
             return <EndScreen />;
          default:

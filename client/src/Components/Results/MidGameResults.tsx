@@ -2,19 +2,19 @@
 // Results Page 
 
 import { Box, Button, Center, Heading, Text } from "@chakra-ui/react";
+import { useMemo } from "react";
 import { global_playerID } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
-import Rankings from "./Rankings";
+import PlayerRanking from "./PlayerRanking";
+import { socket } from "../../main";
 
 
-export default function Results() {
+export default function MidGameResults() {
     const { isFacilitator } = useGameRoom();
     const { setCurrentScreen } = useScreenSelection();
 
-    const isFac = isFacilitator(global_playerID); //this assumes two rounds total
-    // TODO networking
-    let roundIndex = 0;
+    const isFac = useMemo(() => isFacilitator(global_playerID), [global_playerID, isFacilitator]);
 
     return (
         <Box overflow="auto" h="100%">
@@ -23,7 +23,7 @@ export default function Results() {
             <Center>
                 <Text pt="70px"
                     fontSize="4xl" fontWeight="bold" color="brand.teal">
-                    WIP Results!
+                    Results!
                 </Text>
             </Center>
 
@@ -32,7 +32,7 @@ export default function Results() {
                     fontSize="lg" color="brand.grey">
                     {
                         isFac ?
-                            "Please begin next round when everyone is ready."
+                            "You can click continue to progress to the next round."
                             :
                             "Check out your score! The facilitator will begin progress the game when ready."
                     }
@@ -47,11 +47,11 @@ export default function Results() {
                     padding="5"
                     mb="20px">
                     <Heading color="white" size="lg" textAlign="center" mb="10px">
-                        Rankings
+                        Player rankings
                     </Heading>
 
                     {/* Rankings */}
-                    <Rankings />
+                    <PlayerRanking />
                 </Box>
             </Center>
 
@@ -63,7 +63,7 @@ export default function Results() {
                         bg='brand.teal' color="white"
                         _hover={{ bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px" }}
                         onClick={() => {
-                            console.log("TODO");
+                            socket.emit('progress-game');
                         }}>
                         Continue
                     </Button>

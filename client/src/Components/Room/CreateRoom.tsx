@@ -8,7 +8,6 @@ import Customizations from "./Customizations";
 import { PolygonProvider } from "../Contexts/PolygonContext";
 
 export default function CreateRoom() {
-   const { setCurrentScreen } = useScreenSelection();
 
    return (
       <Box
@@ -57,7 +56,7 @@ export default function CreateRoom() {
                bg="none"
                _hover={{ background: "none" }}
                onClick={() => {
-                  setCurrentScreen('home');
+                  // TODO back home?
                }}>
                <Text color="brand.grey" _hover={{ textDecoration: "underline" }}>
                   NegoDesign

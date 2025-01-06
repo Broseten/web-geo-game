@@ -5,14 +5,13 @@ import { Card, CardBody, Center, Heading, Text, VStack } from "@chakra-ui/react"
 import '../../Theme/theme.css';
 import Icon from "../Lobby/Icon";
 import { useGameRoom } from "../Contexts/GameRoomContext";
+import { useGameMarkers } from "../Contexts/GameMarkersContext";
 
 
-export default function Rankings() {
+export default function PlayerRanking() {
 
     const { players } = useGameRoom();
-
-    // TODO networking
-    const score = "100";
+    const { markers } = useGameMarkers();
 
     return (
         <Center>
@@ -28,7 +27,8 @@ export default function Rankings() {
                             bg="white"
                             color="brand.grey"
                             mb="5px"
-                            align="center">
+                            align="center"
+                            key={player.id}>
 
                             <Icon color={player.color} />
 
@@ -39,7 +39,13 @@ export default function Rankings() {
 
                             <CardBody>
                                 <Text fontWeight="bold">
-                                    Score: {score}
+                                    Score: {markers.reduce((acc, marker) => {
+                                        if (marker.ownerPlayerID === player.id) {
+                                            // sum all votes for one player
+                                            return acc + marker.votes.length;
+                                        }
+                                        else return acc;
+                                    }, 0)}
                                 </Text>
                             </CardBody>
                         </Card>
