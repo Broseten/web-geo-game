@@ -1,7 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
 import { global_icon_colors } from './data/data';
-import { PlayerData, ProgressState, RoomJoined, RoomPlayersInfo } from './DataTypes';
+import { PlayerData, ProgressState, RoomJoined, RoomPlayersInfo, RoundStage } from './DataTypes';
 import { GameRoomProgress } from './GameRoomProgress';
 import { MapHandler } from './handlers/MapHandler';
 import { TimerHandler } from './handlers/TimerHandler';
@@ -138,9 +138,20 @@ export class GameRoom {
             this.timerHandler.tryStopTimer();
          }
          else if (roomState.round.stageProgress === ProgressState.InProgress) {
+            let nextTimer = 0;
+            switch (roomState.round.stage) {
+               case RoundStage.Placing:
+                  nextTimer = this.roomInitData.timeForPlacement;
+                  break;
+               case RoundStage.Voting:
+                  nextTimer = this.roomInitData.timeForVoting;
+                  break;
+               default:
+                  break;
+            }
             // when the timer finishes, progress the stage again
-            console.log(`Starting timer for ${this.roomInitData.timePerRound} in room ${this.id}.`)
-            this.timerHandler.startTimer(this.roomInitData.timePerRound, () => {
+            console.log(`Starting timer for ${nextTimer} in room ${this.id}.`)
+            this.timerHandler.startTimer(nextTimer, () => {
                this.progressGame();
             });
          }

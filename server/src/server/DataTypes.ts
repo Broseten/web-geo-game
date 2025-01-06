@@ -20,7 +20,8 @@ export interface RoomJoined {
    polygonLatLngs: any;
    solutionIDs: string[];
    roles: string[];
-   timePerRound: number;
+   timeForPlacement: number;
+   timeForVoting: number;
    initialBudget: number;
    totalRounds: number;
    // max votes per player per round

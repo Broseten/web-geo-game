@@ -20,11 +20,12 @@ export default function Customizations() {
     const { setCurrentScreen } = useScreenSelection();
     const [loading, setLoading] = useState(false);
     const [roomName, setRoomName] = useState('');
-    const [time, setTime] = useState(300);
+    const [timeForPlacement, setTimeForPlacement] = useState(300);
+    const [timeForVoting, setTimeForVoting] = useState(180);
     const [initialBudget, setInitialBudget] = useState(global_solutions_total_price);
     const [totalRounds, setTotalRounds] = useState(3);
     const [maxVotes, setMaxVotes] = useState(3);
-    const [maxMarkers, setMaxMarkersPerRound] = useState(3);
+    const [maxMarkers, setMaxMarkersPerRound] = useState(2);
     const { polygon: mapPolygon } = usePolygon();
     const mapSelectionRef = useRef<MapAreaSelectionRef>(null);
     const [checkedSolutions, setCheckedSolutions] = useState<Record<string, boolean>>(
@@ -102,26 +103,6 @@ export default function Customizations() {
                 <RoleSelector ref={roleSelectorRef} />
             </Box>
 
-            {/* Time per round */}
-            <Box pb="20px">
-                <Text className="h2" pb="0" color="brand.grey">Time per round</Text>
-                <TimeInput
-                    onChange={setTime}
-                    initialMinutes={Math.floor(time / 60)}
-                    initialSeconds={Math.round((time % 60) / 15) * 15}
-                />
-            </Box>
-
-            {/* Initial budget */}
-            <NumberInputComponent
-                value={initialBudget}
-                onChange={setInitialBudget}
-                label="Initial budget"
-                min={0}
-                step={100}
-                currencySymbol="€"
-            />
-
             {/* Total rounds */}
             <NumberInputComponent
                 value={totalRounds}
@@ -135,10 +116,40 @@ export default function Customizations() {
                 value={maxMarkers}
                 onChange={setMaxMarkersPerRound}
                 label="Max solutions per round per player"
-                min={0}
+                min={1}
             />
 
-            {/* Max votes */}
+            {/* Initial budget */}
+            <NumberInputComponent
+                value={initialBudget}
+                onChange={setInitialBudget}
+                label="Initial budget"
+                min={0}
+                step={100}
+                currencySymbol="€"
+            />
+
+            {/* Time per round - placement */}
+            <Box pb="20px">
+                <Text className="h2" pb="0" color="brand.grey">Time for placement</Text>
+                <TimeInput
+                    onChange={setTimeForPlacement}
+                    initialMinutes={Math.floor(timeForPlacement / 60)}
+                    initialSeconds={Math.round((timeForPlacement % 60) / 15) * 15}
+                />
+            </Box>
+
+            {/* Time per round - voting */}
+            <Box pb="20px">
+                <Text className="h2" pb="0" color="brand.grey">Time for voting</Text>
+                <TimeInput
+                    onChange={setTimeForVoting}
+                    initialMinutes={Math.floor(timeForVoting / 60)}
+                    initialSeconds={Math.round((timeForVoting % 60) / 15) * 15}
+                />
+            </Box>
+
+            {/* Max votes per round */}
             <NumberInputComponent
                 value={maxVotes}
                 onChange={setMaxVotes}
@@ -188,7 +199,8 @@ export default function Customizations() {
                             polygonLatLngs: polygon?.getLatLngs(),
                             solutionIDs: Object.keys(checkedSolutions).filter((id) => checkedSolutions[id]),
                             roles: roles,
-                            timePerRound: time,
+                            timeForPlacement: timeForPlacement,
+                            timeForVoting: timeForVoting,
                             initialBudget: initialBudget,
                             totalRounds: totalRounds,
                             maxVotes: maxVotes,

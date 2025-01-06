@@ -1,9 +1,8 @@
+import { useToast } from "@chakra-ui/react";
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
-import { GameRoomState, PlayerData, PlayerInfoUpdate, RoomInfo, RoomJoined } from "../../data/DataTypes";
+import { GameRoomState, PlayerData, PlayerInfoUpdate, RoomInfo, RoomJoined, RoundStage } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
-import { useScreenSelection } from "./useScreenSelection";
-import { useToast } from "@chakra-ui/react";
 
 interface GameRoomContextProps {
     roomID: string | null;
@@ -18,6 +17,7 @@ interface GameRoomContextProps {
     updatePlayer: (player: PlayerData) => void;
     getFacilitator: () => PlayerData | undefined;
     isFacilitator: (id: string | undefined) => boolean;
+    getTimeForCurrentRound: () => number;
 }
 
 const GameRoomContext = createContext<GameRoomContextProps | undefined>(undefined);
@@ -58,7 +58,20 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
         socket.emit('update-player-info', data);
     };
 
-    const getPlayerData = (playerID: string | undefined): PlayerData | undefined => players.find((p) => p.id === playerID)
+    const getPlayerData = (playerID: string | undefined): PlayerData | undefined => players.find((p) => p.id === playerID);
+
+    const getTimeForCurrentRound = () => {
+        if (!roomInfo) return 0;
+        switch (gameRoomState?.round.stage) {
+            case RoundStage.Placing:
+                return roomInfo.timeForPlacement;
+            case RoundStage.Voting:
+                return roomInfo.timeForVoting;
+            default:
+                break;
+        }
+        return 0;
+    }
 
     const isFacilitator = (playerID: string | undefined): boolean => {
         const player = players.find((p) => p.id === playerID);
@@ -117,6 +130,7 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
         updatePlayer,
         getFacilitator,
         isFacilitator,
+        getTimeForCurrentRound,
     }), [
         roomID,
         memoizedRoomInfo,
