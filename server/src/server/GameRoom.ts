@@ -82,7 +82,7 @@ export class GameRoom {
       if (!p) {
          return false;
       }
-      if (Array.from(this.players.values()).find(p => p.color === playerData.color)) {
+      if (Array.from(this.players.values()).find(p => p.color === playerData.color && p.id !== playerData.id)) {
          return false;
       }
       // update from player data

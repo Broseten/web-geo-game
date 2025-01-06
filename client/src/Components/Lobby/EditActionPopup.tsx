@@ -12,13 +12,13 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
+    useToast
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { socket } from "../../main";
-import { useGameRoom } from "../Contexts/GameRoomContext";
-import TextInput from "./TextInput";
 import { global_icon_colors } from "../../data/data";
 import { global_playerID } from "../Contexts/ConnectionContext";
+import { useGameRoom } from "../Contexts/GameRoomContext";
+import TextInput from "./TextInput";
 
 // Props Interface
 interface EditActionPopupProps {
@@ -40,8 +40,17 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
     const [name, setName] = useState(player.name || "");
     const [selectedColor, setSelectedColor] = useState(player.color || "default");
     const firstFieldRef = React.useRef<HTMLInputElement>(null);
+    const toast = useToast();
 
     const handleSave = () => {
+        if (players.find((p) => p.color === selectedColor)) {
+            toast({
+                title: "Color taken.",
+                status: 'error',
+                isClosable: true,
+             });
+            return;
+        }
         let localPlayer = getPlayerData(global_playerID);
         if (!localPlayer) {
             throw Error("Local player not found");
