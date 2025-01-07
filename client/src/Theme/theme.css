@@ -70,13 +70,13 @@
 
 /* color options for User Icons */
 :root {
-  --icon-pink:    #FF69B4;
-  --icon-red:     #e81416;
-  --icon-orange:  #ffa500;
-  --icon-yellow:  #faeb36;
-  --icon-green:   #79c314;
-  --icon-tur:     #40E0D0;
-  --icon-blue:    #487de7;
-  --icon-purple:  #b182e3;
+  --icon-pink:    #FF1493;
+  --icon-red:     #D32F2F;
+  --icon-orange:  #FF8C00;
+  --icon-yellow:  #FFD700;
+  --icon-green:   #32CD32;
+  --icon-turqoise:#00CED1;
+  --icon-blue:    #1E90FF;
+  --icon-purple:  #9370DB;
   --icon-default: #A1AEC1;
 }

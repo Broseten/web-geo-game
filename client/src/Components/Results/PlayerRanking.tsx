@@ -9,9 +9,18 @@ import { useGameMarkers } from "../Contexts/GameMarkersContext";
 
 
 export default function PlayerRanking() {
-
     const { players } = useGameRoom();
     const { markers } = useGameMarkers();
+
+    const playersWithVotes = players.map(player => {
+        const votes = markers.reduce((acc, marker) => {
+            if (marker.ownerPlayerID === player.id) {
+                return acc + marker.votes.length;
+            }
+            return acc;
+        }, 0);
+        return { ...player, votes };
+    });
 
     return (
         <Center>
@@ -19,16 +28,19 @@ export default function PlayerRanking() {
 
                 {/* For Loop of Players - sorted by score */}
                 {
-                    // TODO - sort by score 
-                    players && players.map((player) => (
+                    playersWithVotes && playersWithVotes.sort((a, b) => b.votes - a.votes).map((player) => (
 
                         /* Player Card */
-                        < Card direction={{ base: 'column', sm: 'row' }}
+                        < Card
+                            direction="row"
                             bg="white"
                             color="brand.grey"
                             mb="5px"
                             align="center"
-                            key={player.id}>
+                            key={player.id}
+                            height="100px"
+                            width="100%"
+                        >
 
                             <Icon color={player.color} />
 

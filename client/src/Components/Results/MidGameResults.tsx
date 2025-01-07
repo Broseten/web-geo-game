@@ -34,22 +34,20 @@ export default function MidGameResults() {
                         isFac ?
                             "You can click continue to progress to the next round."
                             :
-                            "Check out your score! The facilitator will begin progress the game when ready."
+                            "Check out your score! The facilitator will progress the game when ready."
                     }
                 </Text>
             </Center>
 
             {/* Rankings Section */}
             <Center>
-                <Box bg="brand.grey" overflow="auto"
-                    width="60%" height="500px"
+                <Box overflow="auto"
+                    height="55vh"
                     borderRadius="5px"
                     padding="5"
-                    mb="20px">
-                    <Heading color="white" size="lg" textAlign="center" mb="10px">
-                        Player rankings
-                    </Heading>
-
+                    mb="20px"
+                    width="90%"
+                >
                     {/* Rankings */}
                     <PlayerRanking />
                 </Box>

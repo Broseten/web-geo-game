@@ -1,5 +1,5 @@
 // Color List
-export const global_icon_colors = ["pink", "red", "orange", "yellow", "green", "blue"];
+export const global_icon_colors = ["red", "orange", "yellow", "green", "turqoise", "blue", "purple", "pink"];
 
 // TODO use this generic message everywhere?
 export interface Message {
