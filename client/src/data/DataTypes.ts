@@ -50,6 +50,7 @@ export interface Solution {
    description: string;
    image: string;
    price: number;
+   default: boolean; // should it be checked by default when creating a room
 }
 
 //// GAME PROGRESS TYPES

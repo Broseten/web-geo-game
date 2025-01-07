@@ -7,6 +7,7 @@ import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { getSolution } from "../../../data/data";
 import ConfirmationModal from "../ConfirmationModal";
 import { global_playerID } from "../../Contexts/ConnectionContext";
+import { solution_image_path } from "../Game/SolutionInfoCard";
 
 // helper
 const coordsToString = (coords: CustomLatLng) => {
@@ -65,7 +66,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
 
             <CardHeader bg="white" borderRadius="lg" justifyItems="center" p="2">
                 <Image height="80px" width="80px"
-                    src={"images/solution-icons/RED/" + selectedSolution.image + ".png"} />
+                    src={`${solution_image_path}${selectedSolution.image}.png`} />
             </CardHeader>
 
             <CardHeader fontWeight="bold" lineHeight="1.15" textAlign="center" pb="2">

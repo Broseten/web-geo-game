@@ -31,8 +31,7 @@ export default function Customizations() {
     const [checkedSolutions, setCheckedSolutions] = useState<{ [uid: string]: boolean }>(
         () => // better to use lazy init
             global_solutions.reduce<{ [uid: string]: boolean }>((acc, solution) => {
-                // init all solutions as true
-                acc[solution.id] = true;
+                acc[solution.id] = solution.default;
                 return acc;
             }, {})
     );

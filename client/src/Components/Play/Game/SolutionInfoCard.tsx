@@ -10,6 +10,8 @@ interface ExpandedSolutionProps {
    buttonText: string;
 }
 
+export const solution_image_path = "images/solution-icons/";
+
 export function SolutionInfoCard({ solution, onClick, buttonText, }: ExpandedSolutionProps) {
    return (
       <Box
@@ -29,7 +31,7 @@ export function SolutionInfoCard({ solution, onClick, buttonText, }: ExpandedSol
                height="40px"
                width="40px"
                mr="10px"
-               src={`/images/solution-icons/RED/${solution.image}.png`}
+               src={`${solution_image_path}${solution.image}.png`}
                alt={solution.name}
             />
 

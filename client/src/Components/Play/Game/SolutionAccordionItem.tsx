@@ -3,6 +3,7 @@
 
 import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Image, Text, } from "@chakra-ui/react";
 import { Solution } from "../../../data/DataTypes";
+import { solution_image_path } from "./SolutionInfoCard";
 
 interface SolutionAccordionProps {
    solution: Solution;
@@ -22,7 +23,7 @@ export function SolutionAccordionItem({ solution, onClick, buttonText, }: Soluti
                   width="40px"
                   ml="0"
                   mr="10px"
-                  src={`/images/solution-icons/RED/${solution.image}.png`}
+                  src={`${solution_image_path}${solution.image}.png`}
                />
 
                {/* Solution Name and Price */}
