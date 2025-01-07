@@ -59,7 +59,7 @@ export default function Game({ isFacilitator }: GameProps) {
                 {/* Budget */}
                 <VStack gap="0" justifyContent="center">
                     <Heading size="md" color="white" lineHeight={0.8}>
-                        {playerRemainingBudget}
+                        €{playerRemainingBudget}
                     </Heading>
 
                     <Text fontSize="14px" color="white">

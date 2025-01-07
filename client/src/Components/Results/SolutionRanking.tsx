@@ -33,6 +33,7 @@ export default function SolutionRanking() {
 
                      <CardBody p="10px" pr="80px">
                         <Heading size='md'> {sol.name} </Heading>
+                        <Text fontSize="12px"> Placed by: {getPlayerData(marker.ownerPlayerID)?.name}, {getPlayerData(marker.ownerPlayerID)?.role} </Text>
                         <Text fontSize="12px"> Price: {sol.price} </Text>
                         <Text fontSize="12px"> Latitude: {marker.coordinates.lat}</Text>
                         <Text fontSize="12px"> Longitude: {marker.coordinates.lng}</Text>

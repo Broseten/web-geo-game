@@ -10,7 +10,7 @@ import { global_playerID } from "../../Contexts/ConnectionContext";
 import { solution_image_path } from "../Game/SolutionInfoCard";
 
 // helper
-const coordsToString = (coords: CustomLatLng) => {
+export const coordsToString = (coords: CustomLatLng) => {
     const rounding = 10000;
     return `${Math.round(coords.lat * rounding) / rounding} lat, ${Math.round(coords.lng * rounding) / rounding} lng`;
 }
@@ -79,7 +79,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                 Location: {
                     coordsToString(marker.coordinates)
                 } <br />
-                Price: {selectedSolution.price} <br />
+                Price: €{selectedSolution.price} <br />
                 Placed in round: {marker.roundIndex + 1} <br />
                 Votes count: {marker.votes?.length || 0} <br />
             </CardBody>

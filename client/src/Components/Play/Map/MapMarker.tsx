@@ -4,6 +4,7 @@ import { MapMarkerData } from "../../../data/DataTypes";
 import { global_solutions } from "../../../data/data";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
+import { coordsToString } from "../Voting/MarkerInfoCard";
 
 interface MapMarkerProps {
    marker: MapMarkerData;
@@ -17,6 +18,8 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
    if (gameRoomState === null) {
       console.error("No game room state");
    }
+
+   const solution = global_solutions.find((sol) => sol.id === marker.solutionID);
 
    return (
       <Marker
@@ -34,10 +37,18 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
          {!voting && (
             <Popup>
                <Box>
-                  <Text fontSize="14px" as="b">{global_solutions.find((sol) => sol.id === marker.solutionID)?.name}</Text>
+                  <Text fontSize="14px" as="b">{solution?.name}</Text>
+                  <Text fontSize="12.5px">
+                     Location: {
+                        coordsToString(marker.coordinates)
+                     } <br />
+                     Price: €{solution?.price} <br />
+                     Placed in round: {marker.roundIndex + 1} <br />
+                     Votes count: {marker.votes?.length || 0} <br />
+                  </Text>
                   {/* Container for buttons */}
                   <Box display="flex" flexDirection="row" alignItems="flex-end"
-                     justifyContent="flex-start" gap={2} mt={3}>
+                     justifyContent="center" gap={2} mt={3}>
                      <Button colorScheme="gray" size="sm"
                         onClick={() =>
                            setSelectedMarkerID(marker.id)

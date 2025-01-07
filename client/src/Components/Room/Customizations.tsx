@@ -16,10 +16,54 @@ import { RoomJoined } from "../../data/DataTypes";
 import NumberInputComponent from "./NumberInput";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 
+const places = [
+    "Garden", "Hall", "Plaza", "Meadow", "Terrace",
+    "Pavilion", "Library", "Temple", "Sanctuary", "Grove",
+    "Lounge", "Chamber", "Atrium", "Haven", "Workshop",
+    "Gallery", "Studio", "Observatory", "Retreat", "Arena",
+    "Cafe", "Arcade", "Courtyard", "Deck", "Vista",
+    "Alcove", "Atrium", "Oasis", "Camp", "Harbor",
+    "Park", "Tower", "Bay", "Valley", "Village",
+    "Forest", "Cliffside", "Summit", "Pathway", "Overlook",
+    "Lagoon", "Beach", "Canyon", "Bridge", "Cove",
+    "Castle", "Chapel", "Cabin", "Fortress", "Peak",
+    "Dock", "Quay", "Harbor", "Boardwalk", "Hideaway",
+    "Den", "Tavern", "Parlor", "Fairground", "Bazaar",
+    "Island", "Waterfall", "Stream", "Brook", "Temple",
+    "Coliseum", "Shrine", "Lighthouse", "Observatory", "Grotto"
+];
+
+const placeAdjectives = [
+    "Serene", "Peaceful", "Vibrant", "Lively", "Majestic",
+    "Tranquil", "Enchanted", "Sunny", "Verdant", "Rustic",
+    "Cozy", "Charming", "Spacious", "Breezy", "Picturesque",
+    "Elegant", "Harmonious", "Idyllic", "Radiant", "Bright",
+    "Welcoming", "Cheerful", "Refreshing", "Hidden", "Quiet",
+    "Magical", "Dreamy", "Comfortable", "Delightful", "Inviting",
+    "Relaxing", "Stunning", "Grand", "Open", "Sparkling",
+    "Glistening", "Soothing", "Wondrous", "Unique", "Historic",
+    "Ancient", "Modern", "Mysterious", "Warm", "Cool",
+    "Natural", "Fascinating", "Colorful", "Pleasant", "Sunny",
+    "Shady", "Exquisite", "Breathtaking", "Chill", "Gentle",
+    "Pristine", "Golden", "Silver", "Flowing", "Sacred",
+    "Uplifting", "Peaceful", "Elegant", "Lush", "Humble",
+    "Radiant", "Luminous", "Delicate", "Friendly", "Inspiring",
+    "Artistic", "Brilliant", "Distinctive", "Majestic", "Vivid",
+    "Intimate", "Bright", "Effervescent", "Whimsical", "Graceful",
+    "Eclectic", "Ethereal", "Pristine", "Joyful", "Thoughtful",
+    "Fresh", "Rejuvenating", "Simple", "Subtle", "Heavenly"
+];
+
+function randomRoomName() {
+    const room = places[Math.floor(Math.random() * places.length)];
+    const roomAdj = placeAdjectives[Math.floor(Math.random() * placeAdjectives.length)];
+    return `${roomAdj} ${room}`;
+}
+
 export default function Customizations() {
     const { setCurrentScreen } = useScreenSelection();
     const [loading, setLoading] = useState(false);
-    const [roomName, setRoomName] = useState('');
+    const [roomName, setRoomName] = useState(randomRoomName());
     const [timeForPlacement, setTimeForPlacement] = useState(300);
     const [timeForVoting, setTimeForVoting] = useState(180);
     const [initialBudget, setInitialBudget] = useState(global_solutions_total_price);
@@ -67,12 +111,23 @@ export default function Customizations() {
                         onChange={(event) => setRoomName(event.target.value)}
                     />
                 </InputGroup>
+                <Button
+                    variant="outline"
+                    onClick={() => setRoomName(randomRoomName())}
+                >
+                    Random
+                </Button>
             </Box>
 
             {/* Map Area */}
             <Box pb="20px">
                 <Text className="h2" color="brand.grey">Select area on the map</Text>
-                <Text color="brand.grey">Use the button in the top right corner</Text>
+                <Text color="brand.grey">
+                    Use the button in the top right corner.
+                </Text>
+                <Text color="brand.grey">
+                    It will use the whole visible area if none selected.
+                </Text>
                 <Box h="400px">
                     <MapAreaSelection ref={mapSelectionRef} />
                 </Box>
