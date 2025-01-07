@@ -38,27 +38,25 @@ export default function GameMap({ polygon }: GameMapProps) {
    }, []);
 
    return (
-      <div className="gamemap">
-         <MapContainer
-            center={bounds.getCenter()}
-            scrollWheelZoom={true}
-            zoom={13}
-            style={{ height: "100vh", width: "75vw", margin: "auto" }}
-            maxBounds={bounds}
-            maxBoundsViscosity={0.8}
-         >
-            <MapInitializer bounds={bounds} />
+      <MapContainer
+         center={bounds.getCenter()}
+         scrollWheelZoom={true}
+         zoom={13}
+         style={{ height: "100%", width: "100%" }}
+         maxBounds={bounds}
+         maxBoundsViscosity={0.8}
+      >
+         <MapInitializer bounds={bounds} />
 
-            <TileLayer
-               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-               minZoom={3}
-            />
+         <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            minZoom={3}
+         />
 
-            <MarkersLayer />
+         <MarkersLayer />
 
-            <MapMask polygonCoords={polygonCoords} />
-         </MapContainer>
-      </div>
+         <MapMask polygonCoords={polygonCoords} />
+      </MapContainer>
    );
 }

@@ -2,7 +2,7 @@
 // This file pieces together the entire pay screen,
 // which includes the left game screen, map, and modals 
 
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, Divider, Heading, HStack, VStack } from "@chakra-ui/react";
 import L from "leaflet";
 import { useMemo } from "react";
 import { ProgressState, RoundStage } from "../../data/DataTypes";
@@ -40,25 +40,43 @@ export default function Play() {
                />
             )
          }
-         <HStack bg="brand.teal" align="flex-start" pl="0.5rem" h="100vh">
+         <HStack bg="brand.teal" align="flex-start" h="100vh">
 
-            {/* Left Sidebar - Game or Voting */}
-            {
-               gameRoomState?.round.stage === RoundStage.Placing
-               &&
-               <Game isFacilitator={isFac} />
-            }
-            {
-               gameRoomState?.round.stage === RoundStage.Voting
-               &&
-               <Voting isFacilitator={isFac} />
-            }
+            {/* Left Sidebar */}
+            <VStack
+               align={"top"}
+               width={{
+                  // TODO make this fullscreen for mobile (base)
+                  base: '300px',  // For mobile (sm and below)
+                  md: '300px',    // For larger (md and above)
+               }}
+               flexShrink={0}
+            >
+
+               {/* Logo at top */}
+               <Heading bg="none" pt="5px" color="brand.yellow" textAlign="center"
+                  fontSize="18px" fontFamily="Avenir Next" fontWeight="bold">
+                  NegoDesign
+               </Heading>
+
+               {/* Game or voting */}
+               {
+                  gameRoomState?.round.stage === RoundStage.Placing
+                  &&
+                  <Game isFacilitator={isFac} />
+               }
+               {
+                  gameRoomState?.round.stage === RoundStage.Voting
+                  &&
+                  <Voting isFacilitator={isFac} />
+               }
+            </VStack>
 
             {/* Game Map */}
-            <Box>
+            <Box flex="1" height="100vh">
                <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} />
             </Box>
-         </HStack>
+         </HStack >
       </>
    );
 }

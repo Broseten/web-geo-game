@@ -1,13 +1,13 @@
 // Authors: Vojtech Bruza and Grace Houser
 // This file displays the voting screen (left side)
 
-import { Box, Button, Center, HStack, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Divider, HStack, Heading, Text, VStack } from "@chakra-ui/react";
+import { useState } from "react";
 import { socket } from "../../../main";
+import { useLocalGameData } from "../../Contexts/LocalGameContext";
+import ConfirmationModal from "../ConfirmationModal";
 import Timer from "../Timer";
 import MarkerInfoCard from "./MarkerInfoCard";
-import { useState } from "react";
-import ConfirmationModal from "../ConfirmationModal";
-import { useLocalGameData } from "../../Contexts/LocalGameContext";
 
 interface VoteProps {
     isFacilitator: boolean;
@@ -27,40 +27,32 @@ export default function Voting({ isFacilitator }: VoteProps) {
 
     /* Voting Section */
     return (
-
-        <VStack align={"top"} w="25vw" minW="300px">
-
-            {/* Logo at top */}
-            <Heading bg="none" pt="5px" color="brand.yellow" textAlign="center"
-                fontSize="18px" fontFamily="Avenir Next" fontWeight="bold">
-                NegoDesign
-            </Heading>
-
-            <hr />
+        <>
+            <Divider />
 
             {/* End Voting and Time Section */}
             <Center>
                 <HStack justifyContent="center">
 
                     {
-                        isFacilitator 
-                        ? (
-                            /* End Voting Button - facilitator */
-                            <Button bg="brand.red" color="white" mr="40px"
-                                _hover={{ color: "brand.red", background: "red.100" }}
-                                onClick={() => { setIsConfirmModalOpen(true) }}>
-                                End Voting
-                            </Button>
-                        ) : (
-                            /* Votes Left - player */
-                            <VStack gap="0" mr="40px">
-                                <Heading size="md" color="white">
-                                    X
-                                </Heading>
+                        isFacilitator
+                            ? (
+                                /* End Voting Button - facilitator */
+                                <Button bg="brand.red" color="white" mr="40px"
+                                    _hover={{ color: "brand.red", background: "red.100" }}
+                                    onClick={() => { setIsConfirmModalOpen(true) }}>
+                                    End Voting
+                                </Button>
+                            ) : (
+                                /* Votes Left - player */
+                                <VStack gap="0" mr="40px">
+                                    <Heading size="md" color="white">
+                                        X
+                                    </Heading>
 
-                                <Text fontSize="14px" color="white">Votes Left</Text>
-                            </VStack>
-                        )
+                                    <Text fontSize="14px" color="white">Votes Left</Text>
+                                </VStack>
+                            )
                     }
 
                     {/* Time */}
@@ -74,7 +66,7 @@ export default function Voting({ isFacilitator }: VoteProps) {
                 </HStack>
             </Center>
 
-            <hr />
+            <Divider />
 
             {/* Solution Information Card */}
             <Center>
@@ -104,6 +96,6 @@ export default function Voting({ isFacilitator }: VoteProps) {
                 onConfirm={handleFinishRound}
                 message="Are you sure you want to finish voting before the timer runs out?"
             />
-        </VStack >
+        </>
     );
 }

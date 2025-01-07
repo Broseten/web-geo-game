@@ -61,8 +61,9 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
         // Solution Information Card 
         <Card
             bg="brand.yellow" color="brand.grey"
-            borderColor="brand.yellow" borderWidth="10px"
-            mt="10px" w="275px">
+            borderColor="brand.yellow" w="100%"
+            maxH="80vh"
+            >
 
             <CardHeader bg="white" borderRadius="lg" justifyItems="center" p="2">
                 <Image height="80px" width="80px"

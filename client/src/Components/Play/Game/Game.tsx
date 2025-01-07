@@ -1,14 +1,14 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays the left section of the game play 
-import { Box, Button, Center, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Divider, Heading, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { socket } from "../../../main";
+import { global_playerID } from "../../Contexts/ConnectionContext";
+import { useGameMarkers } from "../../Contexts/GameMarkersContext";
+import { useGameRoom } from "../../Contexts/GameRoomContext";
 import ConfirmationModal from "../ConfirmationModal";
 import Timer from "../Timer";
 import Solutions from "./Solutions";
-import { useGameRoom } from "../../Contexts/GameRoomContext";
-import { global_playerID } from "../../Contexts/ConnectionContext";
-import { useGameMarkers } from "../../Contexts/GameMarkersContext";
 
 interface GameProps {
     isFacilitator: boolean;
@@ -31,63 +31,42 @@ export default function Game({ isFacilitator }: GameProps) {
     };
 
     return (
-        <VStack align={"top"} w="25vw" minW="250px">
-            {/* Logo */}
-            <Heading
-                bg="none"
-                pt="5px"
-                color="brand.yellow"
-                textAlign="center"
-                fontSize="18px"
-                fontFamily="Avenir Next"
-                fontWeight="bold"
-            >
-                NegoDesign
-            </Heading>
-
-            <hr />
-
+        <>
+            <Divider />
             {/* End Round, Budget, and Time Section */}
-            <SimpleGrid
-                justifyContent="center"
-                //justifyItems={isFacilitator ? "stretch" : "center"}
-                columns={[1, 1, 2, 3]} // base, small, medium, large
-                //spacingX={4} // base, small, medium, large
-                spacingY={4}
-                width="100%"
-            >
-                {/* Budget */}
-                <VStack gap="0" justifyContent="center">
-                    <Heading size="md" color="white" lineHeight={0.8}>
-                        €{playerRemainingBudget}
-                    </Heading>
+            <Box display="flex" justifyContent="center" alignItems="center" width="100%">
+                <HStack justifyContent="center" alignItems="center">
+                    {/* Budget */}
+                    <VStack gap="0" justifyContent="center" width="100px">
+                        <Heading size="md" color="white" lineHeight={0.8}>
+                            €{playerRemainingBudget}
+                        </Heading>
+                        <Text fontSize="14px" color="white" textAlign="center">
+                            Budget
+                        </Text>
+                    </VStack>
 
-                    <Text fontSize="14px" color="white">
-                        Budget
-                    </Text>
-                </VStack>
+                    {/* Time */}
+                    <VStack gap="0" justifyContent="center" width="100px">
+                        <Heading size="md" color="white" lineHeight={0.8}>
+                            <Timer />
+                        </Heading>
+                        <Text fontSize="14px" color="white" textAlign="center">
+                            Time
+                        </Text>
+                    </VStack>
 
-                {/* Time */}
-                <VStack gap="0" justifyContent="center">
-                    <Heading size="md" color="white" lineHeight={0.8}>
-                        <Timer />
-                    </Heading>
-
-                    <Text fontSize="14px" color="white">
-                        Time
-                    </Text>
-                </VStack>
-
-                <VStack gap="0" justifyContent="center">
-                    <Heading size="md" color="white" lineHeight={0.8} textAlign="center">
-                        {playerRole}
-                    </Heading>
-
-                    <Text fontSize="14px" color="white">
-                        Role
-                    </Text>
-                </VStack>
-            </SimpleGrid>
+                    {/* Role */}
+                    <VStack gap="0" justifyContent="center" width="100px">
+                        <Heading size="sm" color="white" lineHeight={0.8} textAlign="center">
+                            {playerRole}
+                        </Heading>
+                        <Text fontSize="14px" color="white" textAlign="center">
+                            Role
+                        </Text>
+                    </VStack>
+                </HStack>
+            </Box>
 
             {
                 // TODO position button at the bottom? but first fix the layouts
@@ -109,11 +88,11 @@ export default function Game({ isFacilitator }: GameProps) {
                 </Center>
             }
 
-            <hr />
+            <Divider />
 
             {/* Solutions Section */}
             <Box textAlign="center" color="white">
-                <Heading size="lg">Solutions</Heading>
+                <Heading style={{ fontSize: '28px' }}>Solutions</Heading>
 
                 {/* <Text fontSize="14px" lineHeight="1.15" ml="20px" mr="20px">
                     Choose a pin option below to help meet your goals as a{" "}
@@ -136,6 +115,6 @@ export default function Game({ isFacilitator }: GameProps) {
                 onConfirm={handleFinishRound}
                 message="Are you sure you want to finish this round before the timer runs out?"
             />
-        </VStack>
+        </>
     );
 }
