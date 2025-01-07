@@ -1,7 +1,6 @@
-import { Server, Socket } from 'socket.io';
+import { Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
-import { global_icon_colors } from './data/data';
-import { PlayerData, ProgressState, RoomJoined, RoomPlayersInfo, RoundStage } from './DataTypes';
+import { global_icon_colors, PlayerData, ProgressState, RoomJoined, RoomPlayersInfo, RoundStage } from './DataTypes';
 import { GameRoomProgress } from './GameRoomProgress';
 import { MapHandler } from './handlers/MapHandler';
 import { TimerHandler } from './handlers/TimerHandler';

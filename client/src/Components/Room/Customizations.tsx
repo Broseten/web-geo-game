@@ -9,7 +9,7 @@ import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
 import { usePolygon } from "../Contexts/PolygonContext";
 import MapAreaSelection, { MapAreaSelectionRef } from "./MapAreaSelection";
-import { global_roles, global_solutions, maxPlayers as global_maxPlayers, global_solutions_total_price } from "../../data/data";
+import { global_roles, global_solutions, global_max_players as global_maxPlayers, global_solutions_total_price } from "../../data/data";
 import RoleSelector from "./RoleSelector";
 import TimeInput from "./TimeInput";
 import { RoomJoined } from "../../data/DataTypes";

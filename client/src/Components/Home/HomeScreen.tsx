@@ -31,7 +31,7 @@ export default function HomeScreen() {
                   <Text mb="80px" fontSize="2xl" textAlign="center" 
                      color="brand.teal"
                      textShadow='0px 0px 10px #444444'>
-                     A voting tool for the HeritACT project
+                     A voting tool for collaborative urban planning
                   </Text>
                </Center>
 
@@ -39,7 +39,7 @@ export default function HomeScreen() {
                <Center>{<SetUpInfo />}</Center> 
 
 
-               {/* HeritACT info link */}
+               {/* info link */}
                <Center position="absolute" left="50%" bottom="10" transform="translateX(-50%)">
                   <Link href="https://www.heritact.eu" isExternal>
                      <HStack>

@@ -1,13 +1,13 @@
 import { Checkbox, CheckboxGroup, VStack } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { global_roles, maxPlayers } from "../../data/data";
+import { global_roles, global_max_players } from "../../data/data";
 
 const RoleSelector = forwardRef((_, ref) => {
    // Initialize checked roles with the first 'maxPlayers' roles selected
    const [checkedRoles, setCheckedRoles] = useState<Record<string, boolean>>(() => {
       const initialRoles: Record<string, boolean> = {};
       global_roles.forEach((role, index) => {
-         initialRoles[role] = index < maxPlayers; // Preselect roles up to maxPlayers
+         initialRoles[role] = index < global_max_players; // Preselect roles up to maxPlayers
       });
       return initialRoles;
    });

@@ -2,7 +2,7 @@
 import { Avatar, Box } from "@chakra-ui/react";
 import React from "react";
 import "../../Theme/theme.css";
-import { global_icon_colors } from "../../data/data";
+import { global_icon_colors } from "../../data/DataTypes";
 
 // IconProps interface
 interface IconProps {

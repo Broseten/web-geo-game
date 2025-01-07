@@ -15,10 +15,10 @@ import {
     useToast
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { global_icon_colors } from "../../data/data";
 import { global_playerID } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import TextInput from "./TextInput";
+import { global_icon_colors } from "../../data/DataTypes";
 
 // Props Interface
 interface EditActionPopupProps {

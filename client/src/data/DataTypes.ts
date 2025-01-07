@@ -1,4 +1,6 @@
-// TODO figure out a better way to share this between client and server?
+// Color List
+export const global_icon_colors = ["pink", "red", "orange", "yellow", "green", "blue"];
+
 // TODO use this generic message everywhere?
 export interface Message {
    status: "ok" | "error";

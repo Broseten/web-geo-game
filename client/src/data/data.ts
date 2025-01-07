@@ -1,10 +1,10 @@
 import { Solution } from "./DataTypes";
 
-// TODO move this data to a json config file or somewhere that it can get loaded at runtime (HTTP request probably)
+export let global_server_url = 'http://localhost:1337';
 
-export const maxPlayers = 4;
+export let global_max_players = 4;
 
-export const global_solutions: Solution[] = [
+export let global_solutions: Solution[] = [
    {
       id: "1",
       name: "Green Tensegrity Installations",
@@ -77,55 +77,19 @@ export const global_solutions: Solution[] = [
       price: 7000,
       default: true,
    },
-   {
-      id: "11",
-      name: "Dune Stabilization",
-      description: "Dune stabilization refers to the process of managing and preserving sand dunes to prevent erosion and maintain their ecological and environmental functions. Sand dunes are natural features formed by wind-blown sand, and they play a crucial role in coastal protection, habitat preservation, and maintaining coastal stability. Dune stabilization techniques involve implementing measures such as planting vegetation, constructing fences or sand traps, and regulating human activities to minimize sand disturbance. These efforts aim to prevent sand erosion, enhance dune growth, and protect coastal areas from the impacts of storms and sea-level rise. By stabilizing dunes, we can safeguard fragile ecosystems, maintain coastal biodiversity, and provide valuable natural buffers against coastal erosion and flooding.",
-      image: "Dune",
-      price: 7000,
-      default: false,
-   },
-   {
-      id: "12",
-      name: "Tree plantation",
-      description: "Tree plantation is the process of planting and establishing trees in various locations, including forests, urban areas, and agricultural lands, with the aim of improving the environment and achieving multiple benefits. Tree plantation initiatives are essential for mitigating climate change as trees absorb carbon dioxide from the atmosphere, acting as natural carbon sinks. They also release oxygen, improve air quality, and provide shade, which helps reduce heat island effects and improve the overall well-being of communities. Additionally, tree plantations contribute to biodiversity conservation by providing habitats for numerous plant and animal species. They help prevent soil erosion, conserve water resources, and enhance the beauty of landscapes. Tree plantation efforts play a vital role in sustainable development and are crucial for creating a greener and healthier planet.",
-      image: "Green",
-      price: 7000,
-      default: false,
-   },
-   {
-      id: "13",
-      name: "Rehabilitation along riverbanks",
-      description: "Rehabilitation along riverbanks refers to the process of restoring and improving the ecological health and functionality of riverbank areas that have been degraded or impacted by human activities or natural processes. Riverbank rehabilitation aims to enhance the stability of riverbanks, prevent erosion, and promote the natural regeneration of vegetation. This involves implementing various techniques such as the construction of bioengineering structures, such as vegetative revetments and erosion control mats, which help stabilize the soil and prevent further erosion. Additionally, native vegetation is often reintroduced along the riverbanks to enhance biodiversity, provide habitat for wildlife, and improve water quality by filtering pollutants. By rehabilitating riverbanks, we can protect valuable ecosystems, preserve the integrity of river systems, and create more resilient and sustainable environments for both humans and wildlife.",
-      image: "Tools",
-      price: 6000,
-      default: false,
-   },
-   {
-      id: "14",
-      name: "Riverbank heightening",
-      description: "Riverbank heightening is a method employed to mitigate the risks of flooding and erosion by raising the elevation of riverbanks. This process involves adding additional material, such as soil or rock, to the existing riverbank to increase its height and create a more robust barrier against rising water levels. Riverbank heightening aims to prevent floodwaters from spilling over the banks and encroaching on adjacent areas, thereby safeguarding nearby communities and infrastructure. The added height also helps in maintaining the natural course of the river by directing the flow and minimizing erosion. By implementing riverbank heightening measures, we can enhance flood protection, reduce the potential for property damage, and ensure the safety and well-being of those living in flood-prone regions.",
-      image: "Rock",
-      price: 6000,
-      default: false,
-   },
-   {
-      id: "15",
-      name: "Open green spaces",
-      description: "Open green spaces play a crucial role in flood prevention by serving as natural flood management measures. These areas, such as parks, fields, and wetlands, provide essential space for water to infiltrate the ground, reducing the risk of surface runoff during heavy rainfall. The vegetation in open green spaces acts as a natural sponge, absorbing excess water and slowing down its flow into nearby water bodies, such as rivers and streams. By allowing water to spread out and be naturally absorbed by the soil, open green spaces help to mitigate the intensity and speed of floodwaters. Additionally, these spaces can act as temporary storage areas during flood events, providing a buffer that reduces the pressure on built-up areas. The presence of open green spaces in urban environments not only contributes to flood prevention but also offers recreational benefits, wildlife habitats, and improved overall urban resilience.",
-      image: "NBSReactivation",
-      price: 7000,
-      default: false,
-   }
 ];
 
-export const global_solutions_total_price = global_solutions.reduce((a, b) => a + b.price, 0);
+export let global_solutions_total_price = getTotalPrice();
+
+function getTotalPrice() {
+   return global_solutions.reduce((a, b) => a + b.price, 0);
+}
 
 export const getSolution = (solutionID: string | null) => {
    return solutionID === null ? undefined : global_solutions.find((sol) => sol.id === solutionID);
 };
 
-export const global_roles = [
+export let global_roles = [
    'Community Leader',
    'Developer',
    'Elder',
@@ -138,5 +102,18 @@ export const global_roles = [
    'Other'
 ];
 
-// Color List
-export const global_icon_colors = ["pink", "red", "orange", "yellow", "green", "blue"];
+export async function fetchGlobalData() {
+   const response = await fetch('https://raw.githubusercontent.com/Broseten/Geo-Game-Data/refs/heads/main/data.json');
+   if (!response.ok) {
+      throw new Error('Failed to fetch global data from server');
+   }
+   const data = await response.json();
+   // load data into global variables if they exist
+   if (data.serverURL) global_server_url = data.serverURL;
+   if (data.solutions && data.solutions.length > 0) global_solutions = data.solutions;
+   if (data.maxPlayers) global_max_players = data.maxPlayers;
+   if (data.roles && data.roles.length > 0) global_roles = data.roles;
+   // recaluclate total price estimate
+   global_solutions_total_price = getTotalPrice();
+   console.log('Data loaded:', global_server_url, global_solutions, global_max_players, global_roles);
+}
