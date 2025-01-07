@@ -1,6 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
-import { GameRoomState, PlayerData, PlayerInfoUpdate, RoomInfo, RoomJoined, RoundStage } from "../../data/DataTypes";
+import { global_solutions } from "../../data/data";
+import { GameRoomState, PlayerData, PlayerInfoUpdate, RoomInfo, RoomJoined, RoundStage, Solution } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
 
@@ -18,6 +19,7 @@ interface GameRoomContextProps {
     getFacilitator: () => PlayerData | undefined;
     isFacilitator: (id: string | undefined) => boolean;
     getTimeForCurrentRound: () => number;
+    getRoomSolutions: () => Solution[];
 }
 
 const GameRoomContext = createContext<GameRoomContextProps | undefined>(undefined);
@@ -31,6 +33,10 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     const [players, setPlayers] = useState<PlayerData[]>([]);
     const [gameRoomState, setGameRoomState] = useState<GameRoomState | undefined>(undefined);
     const toast = useToast();
+
+    const getRoomSolutions = () => {
+        return global_solutions.filter((s) => roomInfo?.solutionIDs.includes(s.id));
+    };
 
     initSocket('room-join-error', (msg: string) => {
         toast({
@@ -131,6 +137,7 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
         getFacilitator,
         isFacilitator,
         getTimeForCurrentRound,
+        getRoomSolutions,
     }), [
         roomID,
         memoizedRoomInfo,

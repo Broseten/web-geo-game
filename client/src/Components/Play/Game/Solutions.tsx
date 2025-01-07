@@ -2,20 +2,23 @@
 // Accordion of facilitator selected solutions for game play 
 
 import { Accordion, Box, Center, Text, VStack } from "@chakra-ui/react";
-import { global_solutions } from "../../../data/data";
+import { useEffect } from "react";
+import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
+import MarkerInfoCard from "../Voting/MarkerInfoCard";
 import { SolutionAccordionItem } from "./SolutionAccordionItem";
 import { SolutionInfoCard } from "./SolutionInfoCard";
-import { useEffect } from "react";
-import MarkerInfoCard from "../Voting/MarkerInfoCard";
 
 
 export default function Solutions() {
     const { setSelectedSolutionID, getSelectedSolution, getSelectedMarker, setSelectedMarkerID } = useLocalGameData();
+    const { getRoomSolutions } = useGameRoom();
 
     const selectedSolution = getSelectedSolution();
     const selectedMarker = getSelectedMarker();
     // TODO display marker info instead with a way to navigate back to the solution list
+
+    const solutionList = getRoomSolutions();
 
     useEffect(() => {
         // reset selected solution on cleanup
@@ -60,7 +63,7 @@ export default function Solutions() {
                             allowToggle
                         >
                             {
-                                global_solutions?.map((solution) => (
+                                solutionList.map((solution) => (
                                     <SolutionAccordionItem
                                         key={solution.id}
                                         solution={solution}

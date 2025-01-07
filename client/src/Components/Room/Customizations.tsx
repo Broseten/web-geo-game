@@ -28,13 +28,15 @@ export default function Customizations() {
     const [maxMarkers, setMaxMarkersPerRound] = useState(2);
     const { polygon: mapPolygon } = usePolygon();
     const mapSelectionRef = useRef<MapAreaSelectionRef>(null);
-    const [checkedSolutions, setCheckedSolutions] = useState<Record<string, boolean>>(
-        () =>
-            global_solutions.reduce((acc, solution) => {
+    const [checkedSolutions, setCheckedSolutions] = useState<{ [uid: string]: boolean }>(
+        () => // better to use lazy init
+            global_solutions.reduce<{ [uid: string]: boolean }>((acc, solution) => {
+                // init all solutions as true
                 acc[solution.id] = true;
                 return acc;
-            }, {} as Record<string, boolean>)
+            }, {})
     );
+
 
     const toggleSolution = (id: string) => {
         setCheckedSolutions((prev) => ({
@@ -171,6 +173,7 @@ export default function Customizations() {
                     _hover={{ bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px", }}
                     isLoading={loading}
                     onClick={() => {
+                        // TODO error toasts + unfreeze the button after a while
                         setLoading(true);
                         let polygon = mapPolygon;
                         if (polygon === null) {
@@ -194,10 +197,12 @@ export default function Customizations() {
                             roles.push(global_roles[0]);
                         }
 
+                        const selectedSolutionsIDs = Object.keys(checkedSolutions).filter((id) => checkedSolutions[id]);
+
                         const roomData: RoomJoined = {
                             name: roomName,
                             polygonLatLngs: polygon?.getLatLngs(),
-                            solutionIDs: Object.keys(checkedSolutions).filter((id) => checkedSolutions[id]),
+                            solutionIDs: selectedSolutionsIDs,
                             roles: roles,
                             timeForPlacement: timeForPlacement,
                             timeForVoting: timeForVoting,
