@@ -1,16 +1,34 @@
 // Authors: Vojtech Bruza and Grace Houser
 
-import { Card, CardBody, Heading, Text, VStack } from "@chakra-ui/react";
-import { getSolution } from "../../data/data";
+import { Box, Button, Card, CardBody, Heading, Image, Text, VStack } from "@chakra-ui/react";
+import { getSolution, global_solutions } from "../../data/data";
 import '../../Theme/theme.css';
 import { useGameMarkers } from "../Contexts/GameMarkersContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
-import Icon from "../Lobby/Icon";
-
+import { solution_image_path } from "../Play/Game/SolutionInfoCard";
 
 export default function SolutionRanking() {
    const { markers } = useGameMarkers();
-   const { getPlayerData } = useGameRoom();
+   const { getPlayerData, players, roomInfo } = useGameRoom();
+   const exportData = () => {
+      const data = {
+         markers,
+         players,
+         roomInfo,
+         global_solutions
+      };
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
+      const downloadAnchorNode = document.createElement('a');
+      // set timestamp for file name
+      const date = new Date();
+      const pad = (num: number) => num.toString().padStart(2, '0');
+      const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}_${pad(date.getHours())}-${pad(date.getMinutes())}`;
+      downloadAnchorNode.setAttribute("href", dataStr);
+      downloadAnchorNode.setAttribute("download", `voting-${dateStr}.json`);
+      document.body.appendChild(downloadAnchorNode);
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+   };
 
    return (
       <VStack overflow="auto" spacing="2px">
@@ -29,7 +47,20 @@ export default function SolutionRanking() {
                      mb="5px"
                      align="center">
 
-                     <Icon color={getPlayerData(marker.ownerPlayerID)?.color || "white"} />
+                     <Box
+                        backgroundColor={getPlayerData(marker.ownerPlayerID)?.color || "white"}
+                        borderRadius="50%"
+                        display="inline-block"
+                        padding="5px"
+                        width="100px"
+                        height="100px"
+                        m="20px"
+                     >
+                        <Image
+                           alt="Player" borderRadius="50%" width="100%" height="100%"
+                           src={`${solution_image_path}${sol.image}.png`}
+                        />
+                     </Box>
 
                      <CardBody p="10px" pr="80px">
                         <Heading size='md'> {sol.name} </Heading>
@@ -49,6 +80,9 @@ export default function SolutionRanking() {
             }
             )
          }
+         <Button variant="solid" onClick={exportData}>
+            Export Markers
+         </Button>
       </VStack>
    );
 }
