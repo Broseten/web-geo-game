@@ -9,6 +9,7 @@ interface ConnectionContextProps {
 
 const ConnectionContext = createContext<ConnectionContextProps | undefined>(undefined);
 
+// ID of the local player (global variable)
 export let global_playerID: string | undefined = undefined;
 
 interface LastSessionData {

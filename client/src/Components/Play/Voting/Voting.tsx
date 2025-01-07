@@ -8,6 +8,8 @@ import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import ConfirmationModal from "../ConfirmationModal";
 import Timer from "../Timer";
 import MarkerInfoCard from "./MarkerInfoCard";
+import { useGameRoom } from "../../Contexts/GameRoomContext";
+import { useGameMarkers } from "../../Contexts/GameMarkersContext";
 
 interface VoteProps {
     isFacilitator: boolean;
@@ -18,6 +20,8 @@ interface VoteProps {
 export default function Voting({ isFacilitator }: VoteProps) {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const { getSelectedMarker } = useLocalGameData();
+    const { getRemainingVotes } = useGameMarkers();
+    const { roomInfo } = useGameRoom();
     const selectedMarker = getSelectedMarker();
 
     const handleFinishRound = () => {
@@ -34,26 +38,15 @@ export default function Voting({ isFacilitator }: VoteProps) {
             <Center>
                 <HStack justifyContent="center">
 
-                    {
-                        isFacilitator
-                            ? (
-                                /* End Voting Button - facilitator */
-                                <Button bg="brand.red" color="white" mr="40px"
-                                    _hover={{ color: "brand.red", background: "red.100" }}
-                                    onClick={() => { setIsConfirmModalOpen(true) }}>
-                                    End Voting
-                                </Button>
-                            ) : (
-                                /* Votes Left - player */
-                                <VStack gap="0" mr="40px">
-                                    <Heading size="md" color="white">
-                                        X
-                                    </Heading>
+                    {/* Votes Left - player */}
+                    <VStack gap="0" mr="40px">
+                        <Heading size="md" color="white">
+                            {roomInfo ? roomInfo?.maxVotes - getRemainingVotes() : 0}
+                        </Heading>
 
-                                    <Text fontSize="14px" color="white">Votes Left</Text>
-                                </VStack>
-                            )
-                    }
+                        <Text fontSize="14px" color="white">Votes Left</Text>
+                    </VStack>
+
 
                     {/* Time */}
                     <VStack gap="0">
@@ -65,6 +58,25 @@ export default function Voting({ isFacilitator }: VoteProps) {
                     </VStack>
                 </HStack>
             </Center>
+
+            {
+                /* End Round Button */
+                isFacilitator
+                &&
+                <Center>
+                    <Button
+                        bg="brand.red"
+                        color="white"
+                        whiteSpace="normal"
+                        width="90%"
+                        justifySelf="center"
+                        _hover={{ color: "brand.red", background: "red.100" }}
+                        onClick={() => setIsConfirmModalOpen(true)}
+                    >
+                        End Voting
+                    </Button>
+                </Center>
+            }
 
             <Divider />
 
