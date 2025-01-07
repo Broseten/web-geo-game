@@ -36,6 +36,12 @@ export class RoomManager {
          return;
       }
 
+      if (targetRoom.isFull()) {
+         console.warn(`Room ${targetRoom.id} is full. Cannot add player ${playerID}.`);
+         clientSocket.emit('room-join-error', "Room full");
+         return;
+      }
+
       if (targetRoom.getPlayers().find((p) => p.id === playerID)) {
          clientSocket.emit('room-join-error', "Player already in the room");
          return;

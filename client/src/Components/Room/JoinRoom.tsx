@@ -2,7 +2,7 @@
 // This file is the join room screen where 
 // players can select what room they want to join
 
-import { Box, Button, Center, Text, useToast, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
@@ -12,6 +12,7 @@ export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
    const [rooms, setRooms] = useState<{ id: string; name: string }[] | undefined>(undefined);
 
+   // TODO display capacity of the room
    initSocket('room-list', (roomList: { id: string; name: string }[]) => {
       setRooms(roomList);
    });
@@ -39,38 +40,48 @@ export default function JoinRoom() {
          </Center>
 
 
-         {/* Room Options */}
-         <Center>
-            <Box bg="white" borderRadius="5px" overflow="auto"
-               pt="10px" pb="10px"
-               h="400px"
-               w="400px">
-               <VStack>
-                  {
-                     rooms
-                     &&
-                     rooms.map((room) => (
-                        <Button
-                           w="90%"
-                           bg="brand.yellow" color="brand.grey" variant="outline"
-                           _hover={{ bg: "brand.off", borderColor: "brand.yellow", borderWidth: "2px" }}
-                           key={room.name}
-                           onClick={() => {
-                              socket.emit('join-room', room.id);
-                           }}>{room.name || "No name"}
-                        </Button>))
-                  }
-                  {
-                     !rooms || rooms.length <= 0
-                     &&
-                     <>
-                        <Text>No Rooms Available</Text>
-                        <Button onClick={() => setCurrentScreen('home')}>Back</Button>
-                     </>
-                  }
-               </VStack>
-            </Box>
-         </Center>
+         <VStack         >
+
+            {/* Room Options */}
+            <Center>
+               <Box bg="white" borderRadius="5px" overflow="auto"
+                  pt="10px" pb="10px"
+                  h="400px"
+                  w="400px">
+                  <VStack>
+                     {
+                        rooms
+                        &&
+                        rooms.map((room) => (
+                           <Button
+                              w="90%"
+                              bg="brand.yellow" color="brand.grey" variant="outline"
+                              _hover={{ bg: "brand.off", borderColor: "brand.yellow", borderWidth: "2px" }}
+                              key={room.name}
+                              onClick={() => {
+                                 socket.emit('join-room', room.id);
+                              }}>{room.name || "No name"}
+                           </Button>))
+                     }
+                     {
+                        !rooms || rooms.length <= 0
+                        &&
+                        <>
+                           <Text>No Rooms Available</Text>
+                        </>
+                     }
+                  </VStack>
+               </Box>
+            </Center>
+            <Button
+               onClick={() => {
+                  setCurrentScreen('home');
+               }}
+               variant="outline"
+            >
+               Cancel
+            </Button>
+         </VStack>
 
 
          {/* home button at the top */}

@@ -7,8 +7,6 @@ import { TimerHandler } from './handlers/TimerHandler';
 import { Player } from './Player';
 import { ServerIO } from './ServerIO';
 
-const gameRoomMaxPlayers = 4;
-
 const animals = [
    "Panda", "Koala", "Dolphin", "Penguin", "Otter",
    "Bunny", "Hedgehog", "Fox", "Robin", "Squirrel",
@@ -98,11 +96,6 @@ export class GameRoom {
    // Adds a player to the room
    addPlayer(clientSocket: Socket): void {
       const playerID = this.ioServer.GetPlayerID(clientSocket.id);
-
-      if (this.players.size >= gameRoomMaxPlayers) {
-         console.warn(`Room ${this.id} is full. Cannot add player ${playerID}.`);
-         return;
-      }
 
       // if there is no role, than assign the first one (players can have same role)
       const playerRole = this.roomInitData.roles.find((role) => {
@@ -221,7 +214,7 @@ export class GameRoom {
 
    // Checks if the room has reached its maximum player capacity
    isFull(): boolean {
-      return this.players.size >= gameRoomMaxPlayers;
+      return this.players.size >= this.roomInitData.maxPlayers;
    }
 
    // Checks if the room is empty

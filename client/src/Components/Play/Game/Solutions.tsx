@@ -84,7 +84,7 @@ export default function Solutions() {
                         onClick={() => setSelectedSolutionID(null)}
                         buttonText={"Cancel"}
                     />
-                    <Text as={"b"}>Click on the map to place the selected solution.</Text>
+                    <Text as={"b"} align="center">Click on the map to place the selected solution.</Text>
                 </VStack>
             }
         </>

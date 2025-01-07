@@ -9,7 +9,7 @@ import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
 import { usePolygon } from "../Contexts/PolygonContext";
 import MapAreaSelection, { MapAreaSelectionRef } from "./MapAreaSelection";
-import { global_roles, global_solutions, global_max_players as global_maxPlayers, global_solutions_total_price } from "../../data/data";
+import { global_roles, global_solutions, global_solutions_total_price } from "../../data/data";
 import RoleSelector from "./RoleSelector";
 import TimeInput from "./TimeInput";
 import { RoomJoined } from "../../data/DataTypes";
@@ -69,6 +69,7 @@ export default function Customizations() {
     const [initialBudget, setInitialBudget] = useState(global_solutions_total_price);
     const [totalRounds, setTotalRounds] = useState(3);
     const [maxVotes, setMaxVotes] = useState(3);
+    const [maxPlayers, setMaxPlayers] = useState(4);
     const [maxMarkers, setMaxMarkersPerRound] = useState(2);
     const { polygon: mapPolygon } = usePolygon();
     const mapSelectionRef = useRef<MapAreaSelectionRef>(null);
@@ -158,6 +159,15 @@ export default function Customizations() {
                 <Text className="h2" color="brand.grey">Select roles</Text>
                 <RoleSelector ref={roleSelectorRef} />
             </Box>
+            
+
+            {/* Max players */}
+            <NumberInputComponent
+                value={maxPlayers}
+                onChange={setMaxPlayers}
+                label="Max players"
+                min={2}
+            />
 
             {/* Total rounds */}
             <NumberInputComponent
@@ -246,7 +256,8 @@ export default function Customizations() {
 
                         let roles = roleSelectorRef.current?.getSelectedRoles();
                         if (!roles) {
-                            roles = global_roles.slice(0, global_maxPlayers);
+                            // if no roles selected, use the first ones
+                            roles = global_roles.slice(0, maxPlayers);
                         } else if (roles.length === 0 && global_roles.length > 0) {
                             roles.push(global_roles[0]);
                         }
@@ -264,6 +275,7 @@ export default function Customizations() {
                             totalRounds: totalRounds,
                             maxVotes: maxVotes,
                             maxMarkers: maxMarkers,
+                            maxPlayers: maxPlayers,
                         };
                         socket.emit('create-room', roomData);
                     }

@@ -2,8 +2,6 @@ import { Solution } from "./DataTypes";
 
 export let global_server_url = 'http://localhost:1337';
 
-export let global_max_players = 4;
-
 export let global_solutions: Solution[] = [
    {
       id: "1",
@@ -111,9 +109,8 @@ export async function fetchGlobalData() {
    // load data into global variables if they exist
    if (data.serverURL) global_server_url = data.serverURL;
    if (data.solutions && data.solutions.length > 0) global_solutions = data.solutions;
-   if (data.maxPlayers) global_max_players = data.maxPlayers;
    if (data.roles && data.roles.length > 0) global_roles = data.roles;
    // recaluclate total price estimate
    global_solutions_total_price = getTotalPrice();
-   console.log('Data loaded:', global_server_url, global_solutions, global_max_players, global_roles);
+   console.log('Data loaded:', global_server_url, global_solutions, global_roles);
 }
