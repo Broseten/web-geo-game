@@ -67,7 +67,7 @@ export default function Customizations() {
     const [timeForPlacement, setTimeForPlacement] = useState(300);
     const [timeForVoting, setTimeForVoting] = useState(180);
     const [initialBudget, setInitialBudget] = useState(global_solutions_total_price);
-    const [totalRounds, setTotalRounds] = useState(3);
+    const [totalRounds, setTotalRounds] = useState(1);
     const [maxVotes, setMaxVotes] = useState(3);
     const [maxPlayers, setMaxPlayers] = useState(4);
     const [maxMarkers, setMaxMarkersPerRound] = useState(2);

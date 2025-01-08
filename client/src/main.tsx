@@ -1,7 +1,7 @@
 //import { StrictMode } from 'react'
 import { ChakraProvider } from '@chakra-ui/react';
 import { createRoot } from 'react-dom/client';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import App from './App.tsx';
 import { GameRoomProvider } from './Components/Contexts/GameRoomContext.tsx';
 import { ScreenProvider } from './Components/Contexts/useScreenSelection.tsx';
@@ -10,9 +10,13 @@ import { GameMarkersProvider } from './Components/Contexts/GameMarkersContext.ts
 import { ConnectionProvider } from './Components/Contexts/ConnectionContext.tsx';
 import { fetchGlobalData, global_server_url } from './data/data.ts';
 
-export const socket = io(global_server_url, {
-   autoConnect: false
-});
+export let socket: Socket;
+
+export const initSocketURL = () => {
+   socket = io(global_server_url, {
+      autoConnect: false
+   });
+}
 
 async function main() {
    try {

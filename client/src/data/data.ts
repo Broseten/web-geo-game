@@ -1,3 +1,4 @@
+import { initSocketURL } from "../main";
 import { Solution } from "./DataTypes";
 
 export let global_server_url = 'http://localhost:1337';
@@ -108,6 +109,7 @@ export async function fetchGlobalData() {
    const data = await response.json();
    // load data into global variables if they exist
    if (data.serverURL) global_server_url = data.serverURL;
+   initSocketURL();
    if (data.solutions && data.solutions.length > 0) global_solutions = data.solutions;
    if (data.roles && data.roles.length > 0) global_roles = data.roles;
    // recaluclate total price estimate
