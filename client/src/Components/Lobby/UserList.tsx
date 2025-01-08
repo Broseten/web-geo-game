@@ -34,7 +34,7 @@ export default function UserList() {
                     fontWeight="bold"
                     textAlign="left"
                     fontSize="lg"
-                    color="brand.grey"
+                    color="gray.900"
                 >
                     <Box ml="20px" flex="1">Icon</Box>
                     <Box flex="2">User</Box>

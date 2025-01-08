@@ -23,19 +23,13 @@ export default function SetUpInfo() {
     if (!isStartButtonClicked) {
         return (
             <Box>
-                <Button //className="dark-button"
-                    bg="brand.teal"
-                    color="white"
-                    boxShadow='dark-lg' p='6' rounded='md'
-                    _hover={{
-                        background: "brand.off",
-                        color: "brand.teal",
-                    }}
-                    mt="100px"
+                <Button 
+                    boxShadow='dark-lg' p='6' pl="10" pr="10"
+                    mt="20px"
+                    variant="solid"
+                    colorScheme="primary"
                     onClick={() => {
                         // TODO probably navigate only after connecting?
-                        // TODO when to disconnect? What if a user goes back here and tries to connect again
-                        //      - cookie with ID + custom reconnect message
                         socket.connect();
                         setIsStartButtonClicked(true);
                     }}>
@@ -51,15 +45,15 @@ export default function SetUpInfo() {
         <Center>
             <VStack bg="white" borderRadius="5px" pl="0.5cm" pr="0.5cm" pb="20px">
 
-                <Text mt="10px" color="brand.grey">
+                <Text mt="10px" color="gray.900">
                     Choose a room option below to begin!
                 </Text>
 
                 <HStack>
                     {/* Create Room */}
-                    <Button bg='white' color="brand.teal"
-                        borderColor="brand.teal" borderWidth="1px"
-                        _hover={{ bg: "brand.teal", color: "white" }}
+                    <Button bg='white' color="primary.500"
+                        borderColor="primary.500" borderWidth="1px"
+                        _hover={{ bg: "primary.500", color: "white" }}
                         variant='solid' onClick={() => {
                             setCurrentScreen('create')
                         }}>
@@ -67,9 +61,9 @@ export default function SetUpInfo() {
                     </Button>
 
                     {/* Join Room */}
-                    <Button bg='white' color="brand.teal"
-                        borderColor="brand.teal" borderWidth="1px"
-                        _hover={{ bg: "brand.teal", color: "white" }}
+                    <Button bg='white' color="primary.500"
+                        borderColor="primary.500" borderWidth="1px"
+                        _hover={{ bg: "primary.500", color: "white" }}
                         variant='solid'
                         onClick={() => {
                             setCurrentScreen('join') // future code?
@@ -82,9 +76,9 @@ export default function SetUpInfo() {
                     /* Rejoin Room */
                     lastRoomData
                     &&
-                    <Button mt={5} bg='white' color="brand.teal"
-                        borderColor="brand.teal" borderWidth="1px"
-                        _hover={{ bg: "brand.teal", color: "white" }}
+                    <Button mt={5} bg='white' color="primary.500"
+                        borderColor="primary.500" borderWidth="1px"
+                        _hover={{ bg: "primary.500", color: "white" }}
                         onClick={() => {
                             // try joining room
                             console.log("Rejoining room");

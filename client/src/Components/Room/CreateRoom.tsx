@@ -6,6 +6,7 @@ import { useScreenSelection } from "../Contexts/useScreenSelection";
 import '../../Theme/theme.css';
 import Customizations from "./Customizations";
 import { PolygonProvider } from "../Contexts/PolygonContext";
+import { global_app_name } from "../../data/data";
 
 export default function CreateRoom() {
 
@@ -26,7 +27,7 @@ export default function CreateRoom() {
                   <Text pt="70px"
                      fontSize="4xl"
                      fontWeight="bold"
-                     color="brand.teal">
+                     color="primary.500">
                      You are the Facilitator!
                   </Text>
                </Center>
@@ -34,7 +35,7 @@ export default function CreateRoom() {
                <Center>
                   <Text pb="20px"
                      fontSize="lg"
-                     color="brand.grey">
+                     color="gray.900">
                      Please create your room by customizing it below.
                   </Text>
                </Center>
@@ -58,8 +59,8 @@ export default function CreateRoom() {
                onClick={() => {
                   // TODO back home?
                }}>
-               <Text color="brand.grey" _hover={{ textDecoration: "underline" }}>
-                  NegoDesign
+               <Text color="gray.900" _hover={{ textDecoration: "underline" }}>
+                  {global_app_name}
                </Text>
             </Button>
          </Center>

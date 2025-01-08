@@ -69,7 +69,7 @@ function App() {
          className="app"
          h='calc(100vh)'
          w='calc(100vw)'
-         bg="brand.blue"
+         bg="primary.100"
       >
          {renderScreen()}
       </Box>

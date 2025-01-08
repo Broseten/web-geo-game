@@ -59,7 +59,7 @@ export default function TimeInput({ initialMinutes, initialSeconds, onChange }: 
                width="70px"
                borderColor={isError ? "red.500" : "gray.300"}
                _hover={{borderColor: "grey.300"}}
-               color="brand.grey"
+               color="gray.900"
             >
                {[...Array(21).keys()].map((minute) => (
                   <option key={minute} value={minute}>
@@ -68,7 +68,7 @@ export default function TimeInput({ initialMinutes, initialSeconds, onChange }: 
                ))}
             </Select>
 
-            <Text fontSize="16px" color="brand.grey" my="auto" mr="15px">minutes</Text>
+            <Text fontSize="16px" color="gray.900" my="auto" mr="15px">minutes</Text>
 
             <Select
                ref={secondsRef}
@@ -77,7 +77,7 @@ export default function TimeInput({ initialMinutes, initialSeconds, onChange }: 
                width="70px"
                borderColor={isError ? "red.500" : "gray.300"}
                _hover={{borderColor: "grey.300"}}
-               color="brand.grey"
+               color="gray.900"
             >
                {[0, 15, 30, 45].map((second) => (
                   <option key={second} value={second}>
@@ -85,7 +85,7 @@ export default function TimeInput({ initialMinutes, initialSeconds, onChange }: 
                   </option>
                ))}
             </Select>
-            <Text fontSize="16px" color="brand.grey" my="auto">seconds</Text>
+            <Text fontSize="16px" color="gray.900" my="auto">seconds</Text>
          </HStack>
          {isError && (
             <Text fontSize="14px" color="red.500" mt="2">

@@ -47,7 +47,7 @@ export function SolutionAccordionItem({ solution, onClick, buttonText, }: Soluti
 
             {/* Select Button */}
             <Button
-               bg="brand.red"
+               bg="secondary.500"
                color="white"
                fontSize="14px"
                height="30px"
@@ -56,10 +56,10 @@ export function SolutionAccordionItem({ solution, onClick, buttonText, }: Soluti
                justifySelf="flex-end"
                mt="2"
                _hover={{
-                  borderColor: "brand.red",
+                  borderColor: "secondary.500",
                   borderWidth: "2px",
                   background: "red.100",
-                  color: "brand.red",
+                  color: "secondary.500",
                }}
                onClick={onClick}
             >

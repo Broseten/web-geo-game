@@ -60,10 +60,9 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
     return (
         // Solution Information Card 
         <Card
-            bg="brand.yellow" color="brand.grey"
-            borderColor="brand.yellow" w="100%"
-            maxH="80vh"
-            >
+            bg="secondary" color="gray.900"
+            w="100%" maxH="80vh"
+        >
 
             <CardHeader bg="white" borderRadius="lg" justifyItems="center" p="2">
                 <Image height="80px" width="80px"
@@ -96,8 +95,8 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                     &&
                     gameRoomState?.round.stage === RoundStage.Voting
                     &&
-                    <Button bg="brand.red" color="white" fontSize="14px" height="30px" width="80px" mt="2"
-                        _hover={{ borderColor: "brand.red", borderWidth: "2px", background: "red.100", color: "brand.red" }}
+                    <Button bg="secondary.500" color="white" fontSize="14px" height="30px" width="80px" mt="2"
+                        _hover={{ borderColor: "secondary.500", borderWidth: "2px", background: "red.100", color: "secondary.500" }}
                         onClick={() => setIsConfirmModalOpen(true)}
                         isDisabled={playerVotes >= roomInfo.maxVotes}
                     >

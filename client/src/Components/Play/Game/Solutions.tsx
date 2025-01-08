@@ -51,7 +51,7 @@ export default function Solutions() {
                         <Accordion
                             maxWidth="300px"
                             bg="white"
-                            color="brand.grey"
+                            color="gray.900"
                             borderBottom={"1px"}
                             borderColor="gray.300"
                             allowToggle

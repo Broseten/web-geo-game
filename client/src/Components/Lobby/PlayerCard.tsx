@@ -45,7 +45,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
     <Card
       variant="outline"
       bg="white"
-      color="brand.grey"
+      color="gray.900"
       width="100%"
       mb="10px"
       p={4}
@@ -70,7 +70,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
             <Select
               maxWidth="300px"
               bg="gray.300"
-              borderColor="brand.grey"
+              borderColor="gray.900"
               borderWidth="2px"
               value={player.role || ""} // Default to an empty string if no role is selected
               placeholder={player.role ? undefined : "Select role..."}
@@ -90,7 +90,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
               isDisabled
               maxWidth="300px"
               bg="gray.300"
-              borderColor="brand.grey"
+              borderColor="gray.900"
               borderWidth="2px"
               placeholder={player.role}
             />

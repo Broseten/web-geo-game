@@ -99,11 +99,11 @@ export default function Customizations() {
         <VStack align="left">
             {/* Room Name */}
             <Box pb="20px">
-                <Text className="h2" color="brand.grey">Name your room</Text>
+                <Text className="h2" color="gray.900">Name your room</Text>
                 <InputGroup>
                     <Input
                         borderColor="gray.300"
-                        color="brand.grey"
+                        color="gray.900"
                         placeholder="Room name..."
                         _placeholder={{ color: 'gray.400', fontSize: "14px" }}
                         fontSize="14px"
@@ -122,11 +122,11 @@ export default function Customizations() {
 
             {/* Map Area */}
             <Box pb="20px">
-                <Text className="h2" color="brand.grey">Select area on the map</Text>
-                <Text color="brand.grey">
+                <Text className="h2" color="gray.900">Select area on the map</Text>
+                <Text color="gray.900">
                     Use the button in the top right corner.
                 </Text>
-                <Text color="brand.grey">
+                <Text color="gray.900">
                     It will use the whole visible area if none selected.
                 </Text>
                 <Box h="400px">
@@ -136,13 +136,13 @@ export default function Customizations() {
 
             {/* Solutions */}
             <Box pb="20px">
-                <Text className="h2" color="brand.grey">Select solutions</Text>
+                <Text className="h2" color="gray.900">Select solutions</Text>
                 <CheckboxGroup colorScheme="orange">
                     <VStack align="left" gap="0">
                         {global_solutions?.map((solution) => (
                             <Checkbox
                                 borderColor="orange"
-                                color="brand.grey"
+                                color="gray.900"
                                 key={solution.id}
                                 isChecked={checkedSolutions[solution.id]}
                                 onChange={() => toggleSolution(solution.id)}
@@ -156,7 +156,7 @@ export default function Customizations() {
 
             {/* Roles */}
             <Box pb="20px">
-                <Text className="h2" color="brand.grey">Select roles</Text>
+                <Text className="h2" color="gray.900">Select roles</Text>
                 <RoleSelector ref={roleSelectorRef} />
             </Box>
             
@@ -197,7 +197,7 @@ export default function Customizations() {
 
             {/* Time per round - placement */}
             <Box pb="20px">
-                <Text className="h2" pb="0" color="brand.grey">Time for placement</Text>
+                <Text className="h2" pb="0" color="gray.900">Time for placement</Text>
                 <TimeInput
                     onChange={setTimeForPlacement}
                     initialMinutes={Math.floor(timeForPlacement / 60)}
@@ -207,7 +207,7 @@ export default function Customizations() {
 
             {/* Time per round - voting */}
             <Box pb="20px">
-                <Text className="h2" pb="0" color="brand.grey">Time for voting</Text>
+                <Text className="h2" pb="0" color="gray.900">Time for voting</Text>
                 <TimeInput
                     onChange={setTimeForVoting}
                     initialMinutes={Math.floor(timeForVoting / 60)}
@@ -233,8 +233,8 @@ export default function Customizations() {
                 >
                     Cancel
                 </Button>
-                <Button bg="brand.teal" color="white" variant="outline"
-                    _hover={{ bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px", }}
+                <Button bg="primary.500" color="white" variant="outline"
+                    _hover={{ bg: "white", color: "primary.500", borderColor: "primary.500", borderWidth: "2px", }}
                     isLoading={loading}
                     onClick={() => {
                         // TODO error toasts + unfreeze the button after a while

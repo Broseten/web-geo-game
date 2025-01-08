@@ -34,7 +34,7 @@ export default function PlayerRanking() {
                         < Card
                             direction="row"
                             bg="white"
-                            color="brand.grey"
+                            color="gray.900"
                             mb="5px"
                             align="center"
                             key={player.id}

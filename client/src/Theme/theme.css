@@ -34,12 +34,12 @@
 
 
 /* theme for the room customizations */
-/* color="brand.grey"*/
+/* color="gray.900"*/
 
 .h2 {
   font-size: l;
   font-weight: bold;
-  color: "brand.grey";
+  color: "gray.900";
 
   line-height: 1.15;
   padding-bottom: 7px;

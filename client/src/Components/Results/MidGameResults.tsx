@@ -8,6 +8,7 @@ import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import PlayerRanking from "./PlayerRanking";
 import { socket } from "../../main";
+import { global_app_name } from "../../data/data";
 
 
 export default function MidGameResults() {
@@ -22,14 +23,14 @@ export default function MidGameResults() {
             {/* Page Title */}
             <Center>
                 <Text pt="70px"
-                    fontSize="4xl" fontWeight="bold" color="brand.teal">
+                    fontSize="4xl" fontWeight="bold" color="primary.500">
                     Results!
                 </Text>
             </Center>
 
             <Center>
                 <Text pb="20px" align="center"
-                    fontSize="lg" color="brand.grey">
+                    fontSize="lg" color="gray.900">
                     {
                         isFac ?
                             "You can click continue to progress to the next round."
@@ -58,8 +59,8 @@ export default function MidGameResults() {
                 {isFac &&
                     <Button
                         mb="80px"
-                        bg='brand.teal' color="white"
-                        _hover={{ bg: "white", color: "brand.teal", borderColor: "brand.teal", borderWidth: "2px" }}
+                        bg='primary.500' color="white"
+                        _hover={{ bg: "white", color: "primary.500", borderColor: "primary.500", borderWidth: "2px" }}
                         onClick={() => {
                             socket.emit('progress-game');
                         }}>
@@ -75,8 +76,8 @@ export default function MidGameResults() {
                 onClick={() => {
                     setCurrentScreen('home');
                 }}>
-                <Text color="brand.grey" _hover={{ textDecoration: "underline" }}>
-                    NegoDesign
+                <Text color="gray.900" _hover={{ textDecoration: "underline" }}>
+                    {global_app_name}
                 </Text>
             </Button>
         </Box>

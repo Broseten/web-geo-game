@@ -39,7 +39,7 @@ const RoleSelector = forwardRef((_, ref) => {
                <Checkbox
                   key={role}
                   borderColor="orange"
-                  color="brand.grey"
+                  color="gray.900"
                   isChecked={checkedRoles[role]}
                   onChange={() => toggleRole(role)}
                >

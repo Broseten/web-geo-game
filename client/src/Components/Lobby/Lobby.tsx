@@ -37,12 +37,12 @@ export default function Lobby() {
             pt={10}
             fontSize={{ base: "xl", sm: "4xl" }}
             fontWeight="bold"
-            color="brand.teal"
+            color="primary.500"
             textAlign="center"
          >
             Welcome to the {roomInfo ? roomInfo.name : "unknown"} lobby!
          </Text>
-         <Text pb={10} fontSize="md" color="brand.grey" textAlign="center">
+         <Text pb={10} fontSize="md" color="gray.900" textAlign="center">
             {isFacilitator(global_playerID)
                ? "Start the game when all players are ready."
                : "The facilitator will start the game when everyone is ready."}
@@ -55,7 +55,7 @@ export default function Lobby() {
          {isFacilitator(global_playerID) && (
             <Button
                mt={10}
-               colorScheme="teal"
+               colorScheme="primary.500" variant="custom_solid" 
                onClick={() => {
                   socket.emit("progress-game");
                }}

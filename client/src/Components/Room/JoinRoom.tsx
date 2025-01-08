@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
+import { global_app_name } from "../../data/data";
 
 export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
@@ -28,13 +29,13 @@ export default function JoinRoom() {
 
          {/* Header */}
          <Center>
-            <Text pt='50' fontSize="4xl" fontWeight="bold" color="brand.teal">
+            <Text pt='50' fontSize="4xl" fontWeight="bold" color="primary.500">
                Available Rooms
             </Text>
          </Center>
 
          <Center>
-            <Text pb="10" pr="20" pl="20" fontSize="l" color="brand.grey" align="center">
+            <Text pb="10" pr="20" pl="20" fontSize="l" color="gray.900" align="center">
                Select a room to join
             </Text>
          </Center>
@@ -55,8 +56,8 @@ export default function JoinRoom() {
                         rooms.map((room) => (
                            <Button
                               w="90%"
-                              bg="brand.yellow" color="brand.grey" variant="outline"
-                              _hover={{ bg: "brand.off", borderColor: "brand.yellow", borderWidth: "2px" }}
+                              bg="secondary.500" color="gray.900" variant="outline"
+                              _hover={{ borderColor: "secondary.500", borderWidth: "2px" }}
                               key={room.name}
                               onClick={() => {
                                  socket.emit('join-room', room.id);
@@ -91,8 +92,8 @@ export default function JoinRoom() {
             onClick={() => {
                setCurrentScreen('home');
             }}>
-            <Text color="brand.grey" _hover={{ textDecoration: "underline" }}>
-               NegoDesign
+            <Text color="gray.900" _hover={{ textDecoration: "underline" }}>
+               {global_app_name}
             </Text>
          </Button>
       </Box>

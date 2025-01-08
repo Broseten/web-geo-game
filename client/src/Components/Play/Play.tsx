@@ -13,6 +13,7 @@ import Game from "./Game/Game";
 import GameMap from "./Map/GameMap";
 import PlayModal from "./PlayModal";
 import Voting from "./Voting/Voting";
+import { global_app_name } from "../../data/data";
 
 export default function Play() {
    const { roomInfo, gameRoomState, isFacilitator } = useGameRoom();
@@ -40,7 +41,7 @@ export default function Play() {
                />
             )
          }
-         <HStack bg="brand.teal" align="flex-start" h="100vh">
+         <HStack bg="primary.500" align="flex-start" h="100vh">
 
             {/* Left Sidebar */}
             <VStack
@@ -54,9 +55,9 @@ export default function Play() {
             >
 
                {/* Logo at top */}
-               <Heading bg="none" pt="5px" color="brand.yellow" textAlign="center"
+               <Heading bg="none" pt="5px" textAlign="center"
                   fontSize="18px" fontFamily="Avenir Next" fontWeight="bold">
-                  NegoDesign
+                  {global_app_name}
                </Heading>
 
                {/* Game or voting */}
