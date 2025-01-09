@@ -56,7 +56,7 @@ export default function Play() {
 
                {/* Logo at top */}
                <Heading bg="none" pt="5px" textAlign="center"
-                  fontSize="18px" fontFamily="Avenir Next" fontWeight="bold">
+                  fontSize="18px" color="gray.900" fontWeight="bold">
                   {global_app_name}
                </Heading>
 

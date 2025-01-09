@@ -75,12 +75,10 @@ export default function Game({ isFacilitator }: GameProps) {
                 &&
                 <Center>
                     <Button
-                        bg="secondary.500"
-                        color="white"
+                        colorScheme="secondary"
                         whiteSpace="normal"
                         width="90%"
                         justifySelf="center"
-                        _hover={{ color: "secondary.500", background: "red.100" }}
                         onClick={() => setIsConfirmModalOpen(true)}
                     >
                         End Round

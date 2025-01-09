@@ -23,7 +23,7 @@ export default function SetUpInfo() {
     if (!isStartButtonClicked) {
         return (
             <Box>
-                <Button 
+                <Button
                     boxShadow='dark-lg' p='6' pl="10" pr="10"
                     mt="20px"
                     variant="solid"
@@ -51,9 +51,8 @@ export default function SetUpInfo() {
 
                 <HStack>
                     {/* Create Room */}
-                    <Button bg='white' color="primary.500"
-                        borderColor="primary.500" borderWidth="1px"
-                        _hover={{ bg: "primary.500", color: "white" }}
+                    <Button
+                        colorScheme="primary"
                         variant='solid' onClick={() => {
                             setCurrentScreen('create')
                         }}>
@@ -61,9 +60,8 @@ export default function SetUpInfo() {
                     </Button>
 
                     {/* Join Room */}
-                    <Button bg='white' color="primary.500"
-                        borderColor="primary.500" borderWidth="1px"
-                        _hover={{ bg: "primary.500", color: "white" }}
+                    <Button
+                        colorScheme="primary"
                         variant='solid'
                         onClick={() => {
                             setCurrentScreen('join') // future code?
@@ -76,9 +74,9 @@ export default function SetUpInfo() {
                     /* Rejoin Room */
                     lastRoomData
                     &&
-                    <Button mt={5} bg='white' color="primary.500"
-                        borderColor="primary.500" borderWidth="1px"
-                        _hover={{ bg: "primary.500", color: "white" }}
+                    <Button mt={5}
+                        colorScheme="secondary"
+                        variant='outline'
                         onClick={() => {
                             // try joining room
                             console.log("Rejoining room");
