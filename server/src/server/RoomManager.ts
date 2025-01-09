@@ -63,6 +63,19 @@ export class RoomManager {
       return targetRoom;
    }
 
+   leaveRoom(clientSocket: Socket<import("socket.io").DefaultEventsMap, import("socket.io").DefaultEventsMap, import("socket.io").DefaultEventsMap, any>) {
+      const playerID = this.ioServer.GetPlayerID(clientSocket.id);
+      const roomId = this.playerRoomMap.get(playerID);
+      if (!roomId) {
+         console.warn(`Player ${playerID} is not in any room.`);
+         return;
+      }
+      const targetRoom = this.rooms.get(roomId);
+      if (targetRoom?.removePlayer(playerID)) {
+         clientSocket.emit('room-left');
+      }
+   }
+
    // Starts a round in the specified room
    startRoundInRoom(roomId: string) {
       const room = this.rooms.get(roomId);

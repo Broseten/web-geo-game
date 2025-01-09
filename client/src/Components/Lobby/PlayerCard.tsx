@@ -18,6 +18,7 @@ import { global_playerID } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import EditActionPopup from "./EditActionPopup";
 import Icon from "./Icon";
+import { socket } from "../../main";
 
 interface PlayerCardProps {
   player: PlayerData;
@@ -117,6 +118,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
                   colorScheme="red"
                   aria-label="Leave room"
                   icon={<CloseIcon />}
+                  onClick={() => socket.emit('leave-room')}
                 />
               </Tooltip>
             </>

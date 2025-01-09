@@ -95,8 +95,7 @@ export class ServerIO {
       });
 
       clientSocket.on('leave-room', () => {
-         // TODO?
-         // TODO update all clients in the room
+         this.roomManager.leaveRoom(clientSocket);
       });
 
       clientSocket.on('progress-game', () => {

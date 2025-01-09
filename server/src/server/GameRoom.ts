@@ -148,7 +148,7 @@ export class GameRoom {
    }
 
    // Removes a player from the room
-   removePlayer(playerId: string): void {
+   removePlayer(playerId: string): boolean {
       const player = this.getPlayer(playerId);
       if (player) {
          player.getSocket().leave(this.id);
@@ -156,8 +156,10 @@ export class GameRoom {
          console.info(`Player ${playerId} left room ${this.id}`);
 
          // Notify remaining players
-         this.ioServer.socketServer.to(this.id).emit('player-left', playerId);
+         this.sendPlayersUpdate();
+         return true;
       }
+      return false;
    }
 
    private getPlayer(playerId: string) {

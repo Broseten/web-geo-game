@@ -118,6 +118,12 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
         setGameRoomState(roomInfo.roomState);
     });
 
+    initSocket('room-left', () => {
+        // TODO go back to the join screen instead of just reloading
+        // reload the page on leaving a room
+        location.reload();
+    });
+
     // Memoize room-specific values to avoid rerenders
     const memoizedRoomInfo = useMemo(() => roomInfo, [roomInfo]);
     const memoizedGameRoomState = useMemo(() => gameRoomState, [gameRoomState]);
