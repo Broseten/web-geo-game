@@ -5,7 +5,7 @@ import { getSolution, global_solutions } from "../../data/data";
 import '../../Theme/theme.css';
 import { useGameMarkers } from "../Contexts/GameMarkersContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
-import { solution_image_path } from "../Play/Game/SolutionInfoCard";
+import { getSolutionImagePath } from "../Play/Game/SolutionInfoCard";
 
 export default function SolutionRanking() {
    const { markers } = useGameMarkers();
@@ -34,7 +34,8 @@ export default function SolutionRanking() {
       <VStack overflow="auto" spacing="2px">
          {
             markers && markers.sort((a, b) => b.votes.length - a.votes.length).map((marker) => {
-               let sol = getSolution(marker.solutionID)!;
+               const sol = getSolution(marker.solutionID)!;
+               const solImg = getSolutionImagePath(sol.image);
                return (
                   // TODO make it responsive
                   <Card
@@ -56,10 +57,21 @@ export default function SolutionRanking() {
                         height="100px"
                         m="20px"
                      >
-                        <Image
-                           alt="Player" borderRadius="50%" width="100%" height="100%"
-                           src={`${solution_image_path}${sol.image}.png`}
-                        />
+                        {
+                           solImg ?
+                              <Image
+                                 alt="Player" borderRadius="50%" 
+                                 width="100%" height="100%"
+                                 src={solImg}
+                              />
+                              :
+                              <Box
+                                 backgroundColor="gray.300"
+                                 borderRadius="50%"
+                                 width="100%"
+                                 height="100%"
+                              />
+                        }
                      </Box>
 
                      <CardBody p="10px" pr="80px">

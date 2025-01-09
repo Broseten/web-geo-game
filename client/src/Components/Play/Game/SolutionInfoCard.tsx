@@ -10,9 +10,12 @@ interface ExpandedSolutionProps {
    buttonText: string;
 }
 
-export const solution_image_path = "images/solution-icons/";
+const solution_image_path = "images/solution-icons/";
+export const getSolutionImagePath = (name: string | undefined) =>
+   !name || name === "" || name === "default" ? undefined : `${solution_image_path}${name}.png`;
 
 export function SolutionInfoCard({ solution, onClick, buttonText, }: ExpandedSolutionProps) {
+   const solImg = getSolutionImagePath(solution.image);
    return (
       <Box
          border="1px solid"
@@ -27,13 +30,24 @@ export function SolutionInfoCard({ solution, onClick, buttonText, }: ExpandedSol
          <Box display="flex" alignItems="center" mb={2}>
 
             {/* Solution Image */}
-            <Image
-               height="40px"
-               width="40px"
-               mr="10px"
-               src={`${solution_image_path}${solution.image}.png`}
-               alt={solution.name}
-            />
+            {
+               solImg ?
+                  <Image
+                     height="40px"
+                     width="40px"
+                     mr="10px"
+                     src={solImg}
+                     alt={solution.name}
+                  />
+                  :
+                  <Box
+                     height="40px"
+                     width="40px"
+                     mr="10px"
+                     backgroundColor="gray.300"
+                     borderRadius="full"
+                  />
+            }
 
             {/* Solution Name and Price */}
             <Box flex="1" textAlign="left">

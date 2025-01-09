@@ -10,16 +10,6 @@ import MapInitializer from "./MapInitializer";
 import MapMask from "./MapMask";
 import MarkersLayer from "./MarkersLayer";
 
-let DefaultIcon = L.icon({
-   iconSize: [25, 41],
-   iconAnchor: [10, 41],
-   popupAnchor: [2, -40],
-   iconUrl: icon,
-   shadowUrl: iconShadow
-});
-
-L.Marker.prototype.options.icon = DefaultIcon;
-
 interface GameMapProps {
    polygon: L.Polygon | null;
 }

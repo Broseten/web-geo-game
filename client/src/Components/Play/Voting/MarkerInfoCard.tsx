@@ -1,13 +1,13 @@
-import { Box, Button, Card, CardBody, CardFooter, CardHeader, HStack, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardFooter, CardHeader, HStack, Image } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { CustomLatLng, MapMarkerData, RoundStage, Vote } from "../../../data/DataTypes";
-import { useLocalGameData } from "../../Contexts/LocalGameContext";
-import { socket } from "../../../main";
-import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { getSolution } from "../../../data/data";
-import ConfirmationModal from "../ConfirmationModal";
+import { CustomLatLng, MapMarkerData, RoundStage, Vote } from "../../../data/DataTypes";
+import { socket } from "../../../main";
 import { global_playerID } from "../../Contexts/ConnectionContext";
-import { solution_image_path } from "../Game/SolutionInfoCard";
+import { useGameRoom } from "../../Contexts/GameRoomContext";
+import { useLocalGameData } from "../../Contexts/LocalGameContext";
+import ConfirmationModal from "../ConfirmationModal";
+import { getSolutionImagePath } from "../Game/SolutionInfoCard";
 
 // helper
 export const coordsToString = (coords: CustomLatLng) => {
@@ -57,6 +57,8 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
         return;
     }
 
+    const solImg = getSolutionImagePath(selectedSolution.image);
+
     return (
         // Solution Information Card 
         <Card
@@ -65,8 +67,11 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
         >
 
             <CardHeader bg="white" borderRadius="lg" justifyItems="center" p="2">
-                <Image height="80px" width="80px"
-                    src={`${solution_image_path}${selectedSolution.image}.png`} />
+                {solImg ?
+                    <Image height="80px" width="80px" src={solImg} />
+                    :
+                    <Box height="80px" width="80px" backgroundColor="gray.300" borderRadius="full" />
+                }
             </CardHeader>
 
             <CardHeader fontWeight="bold" lineHeight="1.15" textAlign="center" pb="2">
