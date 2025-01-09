@@ -1,14 +1,14 @@
-import http, { IncomingMessage, ServerResponse } from 'http';
-import express, { Request, Response, NextFunction } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
+import http from 'http';
 import path from 'path';
-import { ServerIO } from './server/ServerIO';
 import { ViteDevServer } from 'vite';
+import { ServerIO } from './server/ServerIO';
 
 export default function runServer() {
     const application = express();
 
     const httpServer = http.createServer(application);
-    const port = process.env.PORT || 1337;
+    const port = process.env.PORT || 1336;
 
     // Init our Socket server
     // no need to create an instance because we have a singleton instance inside it

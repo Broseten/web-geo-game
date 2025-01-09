@@ -2,7 +2,7 @@
    "name": "web-geo-game-project",
    "private": true,
    "scripts": {
-      "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+      "postinstall": "cd server && npm install && cd ../client && npm install",
       "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
       "build-server": "cd server && npm run build && ncp ./dist/ ../dist",
       "build-client": "cd client && npm run build && ncp ./dist/ ../dist/src/client/",
