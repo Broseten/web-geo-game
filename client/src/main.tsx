@@ -11,7 +11,8 @@ import { fetchGlobalData } from './data/data.ts';
 import customTheme from './Theme/Theme.ts';
 
 const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
-const socketUrl = `${protocol}://${window.location.hostname}:1336`;
+const port = process.env.NODE_ENV !== 'production' ? ':1336' : (window.location.port ? `:${window.location.port}` : '');
+const socketUrl = `${protocol}://${window.location.hostname}${port}`;
 console.log('Socket server:', socketUrl);
 export let socket = io(socketUrl, {
    autoConnect: false
