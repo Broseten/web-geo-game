@@ -14,8 +14,7 @@ export default function CreateRoom() {
       <Box
          h='calc(100vh)'
          overflow="auto"
-         // background image is sourced from pexels.com 
-         backgroundImage="/images/Dublin.jpg"
+         backgroundImage="/images/city.jpg"
          backgroundSize="cover"
          backgroundPosition="center"
          backgroundRepeat="no-repeat"
