@@ -10,7 +10,8 @@ import { ScreenProvider } from './Components/Contexts/useScreenSelection.tsx';
 import { fetchGlobalData } from './data/data.ts';
 import customTheme from './Theme/Theme.ts';
 
-const socketUrl = `http://${window.location.hostname}:1336`;
+// ensure we use the correct http or https and address when setting up the socket
+const socketUrl = `${window.location.origin.replace(window.location.port, '1336')}`;
 export let socket = io(socketUrl, {
    autoConnect: false
 });
