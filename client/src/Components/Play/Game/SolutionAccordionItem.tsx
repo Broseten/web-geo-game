@@ -58,20 +58,14 @@ export function SolutionAccordionItem({ solution, onClick, buttonText, }: Soluti
 
             {/* Select Button */}
             <Button
-               bg="secondary.500"
-               color="white"
                fontSize="14px"
                height="30px"
                width="80px"
                display="flex"
                justifySelf="flex-end"
                mt="2"
-               _hover={{
-                  borderColor: "secondary.500",
-                  borderWidth: "2px",
-                  background: "red.100",
-                  color: "secondary.500",
-               }}
+               variant={"custom_solid"}
+               colorScheme="secondary.500"
                onClick={onClick}
             >
                {buttonText}

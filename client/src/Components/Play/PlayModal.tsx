@@ -22,7 +22,7 @@ export default function PlayModal({ title, message, facilitatorButtonText, onBut
                 <ModalBody>{message}</ModalBody>
                 {onButtonClick && (
                     <ModalFooter>
-                        <Button colorScheme="primary.500" variant="custom_solid" onClick={onButtonClick}>
+                        <Button colorScheme="primary" variant="solid" onClick={onButtonClick}>
                             {facilitatorButtonText}
                         </Button>
                     </ModalFooter>

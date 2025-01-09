@@ -67,20 +67,14 @@ export function SolutionInfoCard({ solution, onClick, buttonText, }: ExpandedSol
 
          {/* Cancel Button */}
          <Button
-            bg="secondary.500"
-            color="white"
             fontSize="14px"
             height="30px"
             width="80px"
             display="flex"
             justifySelf="flex-end"
             mt="2"
-            _hover={{
-               borderColor: "secondary.500",
-               borderWidth: "2px",
-               background: "red.100",
-               color: "secondary.500",
-            }}
+            variant={"custom_outline"}
+            colorScheme="secondary.500"
             onClick={onClick}
          >
             {buttonText}

@@ -55,7 +55,7 @@ export default function Lobby() {
          {isFacilitator(global_playerID) && (
             <Button
                mt={10}
-               colorScheme="primary.500" variant="custom_solid" 
+               colorScheme="primary" variant="solid" 
                onClick={() => {
                   socket.emit("progress-game");
                }}

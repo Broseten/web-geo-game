@@ -7,9 +7,11 @@ const custom_solid = defineStyle((props: { colorScheme: any; }) => ({
    borderWidth: "1px",
    borderColor: `${props.colorScheme}`,
    _hover: {
-      filter: "brightness(0.8)",
+      bg: "transparent",
+      color: `${props.colorScheme}`,
    },
 }));
+
 // TODO use this?
 const custom_outline = defineStyle((props: { colorScheme: any; }) => ({
    bg: "transparent",
@@ -21,7 +23,6 @@ const custom_outline = defineStyle((props: { colorScheme: any; }) => ({
       color: "white",
    },
 }));
-
 
 const outline = defineStyle({
    // border: '2px dashed', // change the appearance of the border
