@@ -17,8 +17,14 @@ export default function HomeScreen() {
          backgroundRepeat="no-repeat"
       >
          <Center>
-            <Box className="translucent-box">
-
+            {/* small box */}
+            <Box
+               backgroundColor="rgba(256, 256, 256, 0.75)"
+               overflow="auto"
+               height="100vh"
+               width="600px"
+               shadow="dark-lg"
+            >
                {/* Text over the white translucent box */}
                <Center>
                   <Heading
@@ -43,15 +49,14 @@ export default function HomeScreen() {
                {/* Buttons - Start and Join/Create Room */}
                <Center>{<SetUpInfo />}</Center>
 
-
                {/* info link */}
                {/* <Center position="absolute" left="50%" bottom="10" transform="translateX(-50%)">
-                  <Link href="https://www.heritact.eu" isExternal>
-                     <HStack>
-                        <Icon as={InfoOutlineIcon} color="gray.900" />
-                        <Image src="/images/HERITACT.png" height="18px" width="84px" />
-                     </HStack>
-                  </Link>
+                 <Link href="https://www.heritact.eu" isExternal>
+                   <HStack>
+                     <Icon as={InfoOutlineIcon} color="gray.900" />
+                     <Image src="/images/HERITACT.png" height="18px" width="84px" />
+                   </HStack>
+                 </Link>
                </Center> */}
             </Box>
          </Center>

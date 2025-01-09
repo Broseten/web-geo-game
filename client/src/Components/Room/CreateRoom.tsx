@@ -20,8 +20,13 @@ export default function CreateRoom() {
          backgroundRepeat="no-repeat"
       >
          <Center>
-            <Box className="full-translucent-box">
-
+            {/* full box */}
+            <Box
+               backgroundColor="rgba(256, 256, 256, 0.75)"
+               overflow="auto"
+               height="100vh"
+               width="100%"
+            >
                <Center>
                   <Text pt="70px"
                      fontSize="4xl"
