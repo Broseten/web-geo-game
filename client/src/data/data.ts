@@ -1,6 +1,5 @@
 import { Solution } from "./DataTypes";
 
-export const global_server_url = 'http://localhost:1336';
 export const global_app_name = 'GeoDesign Game';
 document.title = global_app_name;
 
