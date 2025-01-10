@@ -12,16 +12,18 @@ import customTheme from './Theme/Theme.ts';
 
 const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
 const port = process.env.NODE_ENV !== 'production' ? ':1336' : (window.location.port ? `:${window.location.port}` : '');
-const socketUrl = `${protocol}://${window.location.hostname}${port}`;
-console.log('Socket server:', socketUrl);
-export let socket = io(socketUrl, {
+const socketServerURL = `${protocol}://${window.location.hostname}${port}`;
+
+console.log('Socket server:', socketServerURL);
+
+export let socket = io(socketServerURL, {
    autoConnect: false
 });
 
 async function main() {
    try {
       // TODO fetch this after loading the app to avoid blocking the UI
-      await fetchGlobalData();
+      await fetchGlobalData(socketServerURL);
       createRoot(document.getElementById('root')!).render(
          //<StrictMode>
          <ChakraProvider theme={customTheme}>

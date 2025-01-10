@@ -4,5 +4,3 @@ services:
     build: .
     ports:
       - "1336:1336"
-    environment:
-      - NODE_ENV=production

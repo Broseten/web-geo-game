@@ -38,9 +38,9 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
 
    const icon = !imagePath ? defaultIcon : L.icon({
       iconUrl: imagePath,
-      iconSize: [32, 32],
-      iconAnchor: [16, 16], // center
-      popupAnchor: [0, -14], // top border
+      iconSize: [40, 40],
+      iconAnchor: [20, solution?.roundIcon ? 20 : 40], // center or bottom border
+      popupAnchor: [0, -16], // top border
    });
 
    return (

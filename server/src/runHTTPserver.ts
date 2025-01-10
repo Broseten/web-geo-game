@@ -52,6 +52,11 @@ export default function runServer() {
         return res.status(200).json({ rooms: ServerIO.instance.roomManager.getRoomList() });
     });
 
+    application.get('/data-url', (req: Request, res: Response) => {
+        console.log('Data URL requested:', process.env.DATA_URL);
+        return res.status(200).json({ dataURL: process.env.DATA_URL});
+    });
+
     /** Serve client assets (development or production) */
     if (process.env.NODE_ENV === 'production') {
         console.log(process.cwd());

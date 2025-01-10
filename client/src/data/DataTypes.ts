@@ -54,6 +54,7 @@ export interface Solution {
    image: string;
    price: number;
    default: boolean; // should it be checked by default when creating a room
+   roundIcon: boolean;
 }
 
 //// GAME PROGRESS TYPES
