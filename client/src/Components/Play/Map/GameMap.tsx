@@ -1,7 +1,5 @@
 // Authors: Vojtech Bruza and Grace Houser
 import L, { LatLngExpression } from "leaflet";
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import "leaflet/dist/leaflet.css";
 import { useEffect } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";

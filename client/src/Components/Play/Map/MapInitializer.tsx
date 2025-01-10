@@ -1,3 +1,4 @@
+// Author: Vojtech Bruza
 import { useToast } from "@chakra-ui/react";
 import { LatLng } from "leaflet";
 import { useEffect } from "react";
@@ -58,6 +59,37 @@ export default function MapInitializer({ bounds }: MapInitializerProps) {
          map.setMinZoom(zoom);
       }
    }, [bounds]);
+
+   useEffect(() => {
+      const mapElement = map.getContainer();
+
+      // Change the pointer if there is a selected solution
+      if (selectedSolutionID) {
+         const handleMouseOver = () => {
+            // Change to pointer on hover
+            mapElement.style.cursor = "crosshair";
+         };
+
+         const handleMouseOut = () => {
+            // Revert to default cursor
+            mapElement.style.cursor = "";
+         };
+
+         map.on("mouseover", handleMouseOver);
+         map.on("mouseout", handleMouseOut);
+
+         return () => {
+            map.off("mouseover", handleMouseOver);
+            map.off("mouseout", handleMouseOut);
+            // Ensure default cursor is reset when component unmounts
+            mapElement.style.cursor = "";
+         };
+      } else {
+         // If no solution is selected, explicitely reset the cursor
+         map.getContainer().style.cursor = "";
+      }
+      // selectedSolutionID added to the dependency array to dynamically handle changes
+   }, [map, selectedSolutionID]);
 
    useMapEvents({
       click(e) {
