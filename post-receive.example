@@ -6,9 +6,13 @@
 REPO_DIR=/path/to/your/repo.git
 APP_DIR=/path/to/your/app
 DOCKER_COMPOSE_FILE=$APP_DIR/docker-compose.yml
+ENV_FILE=$APP_DIR/.env
 
 # Checkout the latest code from the repo to the app dir
 git --work-tree=$APP_DIR --git-dir=$REPO_DIR checkout -f main
+
+# Create the .env file with the DATA_URL variable
+echo https://raw.githubusercontent.com/Broseten/Geo-Game-Data/refs/heads/main/data.json > $ENV_FILE
 
 # Navigate to the application directory
 cd $APP_DIR
