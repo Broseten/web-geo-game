@@ -73,6 +73,7 @@ export class GameRoom {
    public id: string;
    private facilitator: string; //player ID of the facilitator
    private players: Map<string, Player>; // Map of playerId to Player instance
+   private removedPlayers: Map<string, Player>; // disconnected players
    public roomInitData: RoomJoined;
    // copy the global list of colors for this room
    private availableColors = global_icon_colors.slice();
@@ -86,6 +87,7 @@ export class GameRoom {
       this.id = uuidv4(); // Unique ID for the room
       this.ioServer = ioServer;
       this.players = new Map<string, Player>();
+      this.removedPlayers = new Map<string, Player>();
       this.roomInitData = initialRoomData;
       this.facilitator = facilitatorID;
       this.mapHandler = new MapHandler(this.ioServer, this.id);
@@ -97,26 +99,33 @@ export class GameRoom {
    addPlayer(clientSocket: Socket): void {
       const playerID = this.ioServer.GetPlayerID(clientSocket.id);
 
-      // if there is no role, than assign the first one (players can have same role)
-      const playerRole = this.roomInitData.roles.find((role) => {
-         return !Array.from(this.players.values()).some((player) => player.role === role);
-      }) || this.roomInitData.roles[0];
-      // TODO assign no role at first and then make sure that to role is assigned when starting the game
-      // const playerRole = "";
+      let player: Player;
 
-      const color = this.availableColors.find((color) => {
-         return !Array.from(this.players.values()).some((player) => player.color === color);
-      });
+      if (this.removedPlayers.has(playerID)) {
+         player = this.removedPlayers.get(playerID)!;
+         this.removedPlayers.delete(playerID);
+      } else {
+         // if there is no role, then assign the first one (players can have same role)
+         const playerRole = this.roomInitData.roles.find((role) => {
+            return !Array.from(this.players.values()).some((player) => player.role === role);
+         }) || this.roomInitData.roles[0];
+         // TODO assign no role at first and then make sure that to role is assigned when starting the game
+         // const playerRole = "";
 
-      if (!color) {
-         console.warn(`Cannot add player ${playerID} to room ${this.id} due to lack of colors.`);
-         return;
+         const color = this.availableColors.find((color) => {
+            return !Array.from(this.players.values()).some((player) => player.color === color);
+         });
+
+         if (!color) {
+            console.warn(`Cannot add player ${playerID} to room ${this.id} due to lack of colors.`);
+            return;
+         }
+
+         const animal = animals[Math.floor(Math.random() * animals.length)];
+         const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+         const name = `${adj} ${animal}`;
+         player = new Player(clientSocket, playerRole, color, name, playerID);
       }
-
-      const animal = animals[Math.floor(Math.random() * animals.length)];
-      const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
-      const name = `${adj} ${animal}`;
-      const player = new Player(clientSocket, playerRole, color, name, playerID);
 
       this.players.set(playerID, player);
       clientSocket.join(this.id);
@@ -151,6 +160,10 @@ export class GameRoom {
    removePlayer(playerId: string): boolean {
       const player = this.getPlayer(playerId);
       if (player) {
+         // save the player data if the player wants to rejoin later
+         this.removedPlayers.set(playerId, player);
+
+         // remove the player from the room
          player.getSocket().leave(this.id);
          this.players.delete(playerId);
          console.info(`Player ${playerId} left room ${this.id}`);
