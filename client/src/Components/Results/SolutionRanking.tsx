@@ -6,6 +6,7 @@ import '../../Theme/theme.css';
 import { useGameMarkers } from "../Contexts/GameMarkersContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import { getSolutionImagePath } from "../Play/Game/SolutionInfoCard";
+import { getIconColor } from "../Lobby/Icon";
 
 export default function SolutionRanking() {
    const { markers } = useGameMarkers();
@@ -49,7 +50,7 @@ export default function SolutionRanking() {
                      align="center">
 
                      <Box
-                        backgroundColor={getPlayerData(marker.ownerPlayerID)?.color || "white"}
+                        backgroundColor={getIconColor(getPlayerData(marker.ownerPlayerID)?.color) || "white"}
                         borderRadius="50%"
                         display="inline-block"
                         padding="5px"

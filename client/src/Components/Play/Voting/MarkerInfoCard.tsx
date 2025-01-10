@@ -21,8 +21,8 @@ export interface MarkerInfoProps {
 
 export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-    const { gameRoomState, roomInfo } = useGameRoom();
-    const { setSelectedMarkerID, setSelectedSolutionID } = useLocalGameData();
+    const { gameRoomState, roomInfo, getPlayerData } = useGameRoom();
+    const { setSelectedMarkerID } = useLocalGameData();
     const [playerVotes, setPlayerVotes] = useState<number>(0);
 
     useEffect(() => {
@@ -59,6 +59,8 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
 
     const solImg = getSolutionImagePath(selectedSolution.image);
 
+    const player = getPlayerData(marker.ownerPlayerID);
+
     return (
         // Solution Information Card 
         <Card
@@ -85,6 +87,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                     coordsToString(marker.coordinates)
                 } <br />
                 Price: €{selectedSolution.price} <br />
+                Placed by: {player?.role} <br />
                 Placed in round: {marker.roundIndex + 1} <br />
                 Votes count: {marker.votes?.length || 0} <br />
             </CardBody>
@@ -100,8 +103,9 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                     &&
                     gameRoomState?.round.stage === RoundStage.Voting
                     &&
-                    <Button bg="secondary.500" color="white" fontSize="14px" height="30px" width="80px" mt="2"
-                        _hover={{ borderColor: "secondary.500", borderWidth: "2px", background: "red.100", color: "secondary.500" }}
+                    <Button fontSize="14px" height="30px" width="80px" mt="2"
+                        colorScheme="secondary.500"
+                        variant="custom_solid"
                         onClick={() => setIsConfirmModalOpen(true)}
                         isDisabled={playerVotes >= roomInfo.maxVotes}
                     >

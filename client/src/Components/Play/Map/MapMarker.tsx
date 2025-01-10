@@ -7,10 +7,9 @@ import { getSolution } from "../../../data/data";
 import { global_playerID } from "../../Contexts/ConnectionContext";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
+import { getIconColor } from "../../Lobby/Icon";
 import { getSolutionImagePath } from '../Game/SolutionInfoCard';
 import { coordsToString } from "../Voting/MarkerInfoCard";
-import { getIconColor } from "../../Lobby/Icon";
-import { useEffect } from "react";
 
 const defaultIcon = L.icon({
    iconSize: [25, 41],
@@ -30,7 +29,7 @@ interface MapMarkerProps {
 const localIconClassName = 'local-marker-icon';
 
 export default function MapMarker({ marker, voting }: MapMarkerProps) {
-   const { gameRoomState } = useGameRoom();
+   const { gameRoomState, getPlayerData } = useGameRoom();
    const { setSelectedMarkerID } = useLocalGameData();
 
    if (gameRoomState === null) {
@@ -75,6 +74,8 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
       icon.options.className = localIconClassName;
    }
 
+   const player = getPlayerData(marker.ownerPlayerID);
+
    return (
       <Marker
          icon={icon}
@@ -99,6 +100,7 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
                         coordsToString(marker.coordinates)
                      } <br />
                      Price: €{solution?.price} <br />
+                     Placed by: {player?.role} <br />
                      Placed in round: {marker.roundIndex + 1} <br />
                      Votes count: {marker.votes?.length || 0} <br />
                   </Text>
