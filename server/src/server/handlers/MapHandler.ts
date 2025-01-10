@@ -6,6 +6,10 @@ export class MapHandler extends BaseRoomHandler {
    private markers: MapMarkerData[] = [];
    private markerIDCounter = 0;
 
+   public onRejoin(socket: Socket) {
+      socket.emit('set-markers', this.markers);
+   }
+
    override startListeners(socket: Socket) {
       socket.on('request-map-markers', () => {
          socket.emit('set-markers', this.markers);

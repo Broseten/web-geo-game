@@ -102,8 +102,12 @@ export class GameRoom {
       let player: Player;
 
       if (this.removedPlayers.has(playerID)) {
+         // player is rejoining
          player = this.removedPlayers.get(playerID)!;
          this.removedPlayers.delete(playerID);
+
+         // update the player about reconnecting (resent the marker data)
+         this.mapHandler.onRejoin(clientSocket);
       } else {
          // if there is no role, then assign the first one (players can have same role)
          const playerRole = this.roomInitData.roles.find((role) => {
