@@ -1,13 +1,16 @@
+import { Box, Button, Text } from "@chakra-ui/react";
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-import { Box, Button, Text } from "@chakra-ui/react";
 import { Marker, Popup } from "react-leaflet";
 import { MapMarkerData } from "../../../data/DataTypes";
 import { getSolution } from "../../../data/data";
+import { global_playerID } from "../../Contexts/ConnectionContext";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
-import { coordsToString } from "../Voting/MarkerInfoCard";
 import { getSolutionImagePath } from '../Game/SolutionInfoCard';
+import { coordsToString } from "../Voting/MarkerInfoCard";
+import { getIconColor } from "../../Lobby/Icon";
+import { useEffect } from "react";
 
 const defaultIcon = L.icon({
    iconSize: [25, 41],
@@ -23,6 +26,8 @@ interface MapMarkerProps {
    marker: MapMarkerData;
    voting: boolean;
 }
+
+const localIconClassName = 'local-marker-icon';
 
 export default function MapMarker({ marker, voting }: MapMarkerProps) {
    const { gameRoomState } = useGameRoom();
@@ -43,9 +48,37 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
       popupAnchor: [0, solution?.roundIcon ? -16 : -36], // top border
    });
 
+   if (marker.ownerPlayerID === global_playerID) {
+      const { getPlayerData } = useGameRoom();
+      const localPlayerColor = getPlayerData(global_playerID)?.color;
+
+      // Check if a style element for the local icon already exists
+      let style = document.querySelector(`#style-${localIconClassName}`);
+      if (!style) {
+         // Create the style element if it doesn't exist
+         style = document.createElement('style');
+         style.id = `style-${localIconClassName}`;
+         document.head.appendChild(style);
+      }
+
+      const color = getIconColor(localPlayerColor, 0.5);
+      // Update the style content dynamically
+      style.innerHTML = `
+         .${localIconClassName} {
+            background: ${color};
+            border-radius: 50%;
+            box-shadow: 0 0 5px 3px ${color};
+         }
+      `;
+
+      // if it is the player's marker, add a border to the icon
+      icon.options.className = localIconClassName;
+   }
+
    return (
       <Marker
          icon={icon}
+         title={solution?.name}
          key={marker.id}
          position={{ lat: marker.coordinates.lat, lng: marker.coordinates.lng }}
          eventHandlers={{
