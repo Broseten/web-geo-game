@@ -3,7 +3,7 @@
    "private": true,
    "scripts": {
       "postinstall": "cd server && npm install && cd ../client && npm install",
-      "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+      "dev": "concurrently \"npm run dev --prefix client\" \"cross-env DATA_URL=$DATA_URL npm run dev --prefix server\"",
       "build-server": "cd server && npm run build && ncp ./dist/ ../dist",
       "build-client": "cd client && npm run build && ncp ./dist/ ../dist/src/client/",
       "clean": "rimraf ./dist",
