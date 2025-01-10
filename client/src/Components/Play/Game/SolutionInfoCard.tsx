@@ -19,13 +19,14 @@ export function SolutionInfoCard({ solution, onClick, buttonText, }: ExpandedSol
    return (
       <Box
          border="1px solid"
-         borderColor="gray.300"
+         borderColor="secondary.100"
          borderRadius="md"
          overflow="hidden"
          color="gray.900"
-         backgroundColor="white"
+         backgroundColor="secondary.50"
          p={2}
          mb={4}
+         width={"300px"}
       >
          <Box display="flex" alignItems="center" mb={2}>
 
