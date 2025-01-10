@@ -227,6 +227,14 @@ export class GameRoom {
       }
    }
 
+   hadPlayer(playerID: string) {
+      return this.removedPlayers.has(playerID);
+   }
+
+   hasNotStarted(): boolean {
+      return this.gameRoomProgress.getGameProgressState() === ProgressState.NotStarted;
+   }
+
    // Checks if the room has reached its maximum player capacity
    isFull(): boolean {
       return this.players.size >= this.roomInitData.maxPlayers;

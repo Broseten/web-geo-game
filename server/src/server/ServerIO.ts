@@ -61,7 +61,7 @@ export class ServerIO {
          if (roomId) {
             clientSocket.emit('room-created', roomId);
             // update all clients that a new room has been created
-            this.socketServer.sockets.emit('room-list', this.roomManager.getRoomList());
+            this.socketServer.sockets.emit('room-list', this.roomManager.getAvailableRoomList());
          }
          else clientSocket.emit('room-exists');
       });
@@ -91,7 +91,7 @@ export class ServerIO {
       });
 
       clientSocket.on('request-room-list', () => {
-         clientSocket.emit('room-list', this.roomManager.getRoomList());
+         clientSocket.emit('room-list', this.roomManager.getAvailableRoomList());
       });
 
       clientSocket.on('leave-room', () => {
