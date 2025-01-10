@@ -61,6 +61,7 @@ export default function MarkersLayer() {
       <MarkerClusterGroup
          showCoverageOnHover={true}
          iconCreateFunction={createClusterIcon}
+         key={markers.length}  // Force re-render on markers change
       >
          {markers.map((marker) => (
             <MapMarker
