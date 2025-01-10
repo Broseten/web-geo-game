@@ -12,7 +12,7 @@ ENV_FILE=$APP_DIR/.env
 git --work-tree=$APP_DIR --git-dir=$REPO_DIR checkout -f main
 
 # Create the .env file with the DATA_URL variable
-echo https://raw.githubusercontent.com/Broseten/Geo-Game-Data/refs/heads/main/data.json > $ENV_FILE
+echo DATA_URL=https://raw.githubusercontent.com/Broseten/Geo-Game-Data/refs/heads/main/data.json > $ENV_FILE
 
 # Navigate to the application directory
 cd $APP_DIR

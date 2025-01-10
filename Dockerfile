@@ -7,9 +7,6 @@ WORKDIR /usr/src/app
 # Copy the rest of the application code from the host machine to docker
 COPY . .
 
-# Make sure the .env file is copied to the docker container as well
-COPY .env .env
-
 # Install dependencies
 RUN npm install
 
