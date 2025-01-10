@@ -40,7 +40,7 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
       iconUrl: imagePath,
       iconSize: [40, 40],
       iconAnchor: [20, solution?.roundIcon ? 20 : 40], // center or bottom border
-      popupAnchor: [0, -16], // top border
+      popupAnchor: [0, solution?.roundIcon ? -16 : -36], // top border
    });
 
    return (
