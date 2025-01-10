@@ -5,7 +5,7 @@
   "main": "main.ts",
   "scripts": {
     "dev": "npx nodemon ./main.ts",
-    "start": "cross-env NODE_ENV=production DATA_URL=https://raw.githubusercontent.com/Broseten/Geo-Game-Data/refs/heads/main/score-data.json node ./dist/main.js",
+    "start": "cross-env NODE_ENV=production DATA_URL=$DATA_URL node ./dist/main.js",
     "clean": "rimraf ./dist",
     "build": "tsc -p tsconfig.json",
     "build:clean": "npm run clean && npm run build"

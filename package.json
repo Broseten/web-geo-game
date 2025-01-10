@@ -9,7 +9,7 @@
       "clean": "rimraf ./dist",
       "build": "npm run build-server && npm run build-client",
       "build:clean": "npm run clean && npm run build",
-      "start": "cross-env NODE_ENV=production DATA_URL=https://raw.githubusercontent.com/Broseten/Geo-Game-Data/refs/heads/main/score-data.json node ./dist/main.js"
+      "start": "cross-env NODE_ENV=production DATA_URL=$DATA_URL node ./dist/main.js"
    },
    "devDependencies": {
       "concurrently": "^7.0.0",

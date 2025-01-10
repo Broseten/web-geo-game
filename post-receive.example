@@ -14,6 +14,4 @@ git --work-tree=$APP_DIR --git-dir=$REPO_DIR checkout -f main
 cd $APP_DIR
 
 # Build and run the Docker containers (set the node variables - will have priority over npm scripts)
-docker compose -f $DOCKER_COMPOSE_FILE up --build -d \
-  -e NODE_ENV=production \
-  -e DATA_URL=https://raw.githubusercontent.com/Broseten/Geo-Game-Data/refs/heads/main/data.json
+docker compose -f $DOCKER_COMPOSE_FILE up --build -d
