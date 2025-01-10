@@ -56,8 +56,8 @@ export default function JoinRoom() {
                         rooms.map((room) => (
                            <Button
                               w="90%"
-                              bg="secondary.500" color="gray.900" variant="outline"
-                              _hover={{ borderColor: "secondary.500", borderWidth: "2px" }}
+                              variant={"solid"}
+                              colorScheme="secondary"
                               key={room.name}
                               onClick={() => {
                                  socket.emit('join-room', room.id);
