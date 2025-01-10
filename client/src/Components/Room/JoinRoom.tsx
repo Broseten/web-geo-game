@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
-import { global_app_name } from "../../data/data";
+import HomeButton from "../HomeButton";
 
 export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
@@ -84,18 +84,9 @@ export default function JoinRoom() {
             </Button>
          </VStack>
 
-
          {/* home button at the top */}
-         <Button position="absolute" top="0" left="0"
-            bg="none"
-            _hover={{ background: "none" }}
-            onClick={() => {
-               setCurrentScreen('home');
-            }}>
-            <Text color="gray.900" _hover={{ textDecoration: "underline" }}>
-               {global_app_name}
-            </Text>
-         </Button>
+         <HomeButton />
+
       </Box>
    );
 }

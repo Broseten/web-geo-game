@@ -1,15 +1,16 @@
 // Authors: Vojtech Bruza and Grace Houser
 // This file displays a room's lobby 
 
-import { Button, Flex, Text, useToast } from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { GameRoomState } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
+import { global_playerID } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
+import HomeButton from "../HomeButton";
 import UserList from "./UserList";
-import { global_playerID } from "../Contexts/ConnectionContext";
 
 export default function Lobby() {
    const { roomID, roomInfo, isFacilitator, setGameRoomState } = useGameRoom();
@@ -55,7 +56,7 @@ export default function Lobby() {
          {isFacilitator(global_playerID) && (
             <Button
                mt={10}
-               colorScheme="primary" variant="solid" 
+               colorScheme="primary" variant="solid"
                onClick={() => {
                   socket.emit("progress-game");
                }}
@@ -63,6 +64,9 @@ export default function Lobby() {
                Play
             </Button>
          )}
+
+         {/* home button at the top */}
+         <HomeButton />
       </Flex>
    );
 }

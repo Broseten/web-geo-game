@@ -1,19 +1,16 @@
 // Authors: Vojta Bruza and Grace Houser
 // Results Page 
 
-import { Box, Button, Center, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Text } from "@chakra-ui/react";
 import { useMemo } from "react";
+import { socket } from "../../main";
 import { global_playerID } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
-import { useScreenSelection } from "../Contexts/useScreenSelection";
 import PlayerRanking from "./PlayerRanking";
-import { socket } from "../../main";
-import { global_app_name } from "../../data/data";
 
 
 export default function MidGameResults() {
     const { isFacilitator } = useGameRoom();
-    const { setCurrentScreen } = useScreenSelection();
 
     const isFac = useMemo(() => isFacilitator(global_playerID), [global_playerID, isFacilitator]);
 
@@ -68,18 +65,6 @@ export default function MidGameResults() {
                     </Button>
                 }
             </Center>
-
-            {/* home button at the top */}
-            <Button position="absolute" top="0" left="0"
-                bg="none"
-                _hover={{ background: "none" }}
-                onClick={() => {
-                    setCurrentScreen('home');
-                }}>
-                <Text color="gray.900" _hover={{ textDecoration: "underline" }}>
-                    {global_app_name}
-                </Text>
-            </Button>
         </Box>
     );
 }

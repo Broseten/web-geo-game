@@ -1,8 +1,9 @@
 // Authors: Vojta Bruza and Grace Houser
 // This end screen displays the final results of the players 
 
-import { Box, Button, Center, Heading, Stack, } from "@chakra-ui/react";
+import { Box, Center, Heading, Stack } from "@chakra-ui/react";
 import '../../Theme/theme.css';
+import HomeButton from "../HomeButton";
 import SolutionRanking from "./SolutionRanking";
 
 
@@ -28,6 +29,9 @@ export default function EndScreen() {
                     </Button> */}
                 </Stack>
             </Center>
+
+            {/* home button at the top */}
+            <HomeButton />
         </Box>
 
     );
