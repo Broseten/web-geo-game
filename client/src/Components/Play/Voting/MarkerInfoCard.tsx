@@ -63,7 +63,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
         // Solution Information Card 
         <Card
             bg="secondary" color="gray.900"
-            w="100%" maxH="80vh"
+            w="100%" maxH="65vh"
         >
 
             <CardHeader bg="white" borderRadius="lg" justifyItems="center" p="2">
