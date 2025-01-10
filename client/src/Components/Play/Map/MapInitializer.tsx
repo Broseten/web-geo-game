@@ -20,6 +20,11 @@ export default function MapInitializer({ bounds }: MapInitializerProps) {
    const map = useMap();
 
    const onMapClicked = (position: LatLng) => {
+      if (!bounds.contains(position)) {
+         console.log("Clicked outside the allowed area.");
+         return;
+      }
+
       if (gameRoomState?.round.stage === RoundStage.Voting) {
          console.log("Cannot place solution markers while voting.");
          return;
@@ -63,33 +68,27 @@ export default function MapInitializer({ bounds }: MapInitializerProps) {
    useEffect(() => {
       const mapElement = map.getContainer();
 
-      // Change the pointer if there is a selected solution
-      if (selectedSolutionID) {
-         const handleMouseOver = () => {
-            // Change to pointer on hover
-            mapElement.style.cursor = "crosshair";
-         };
-
-         const handleMouseOut = () => {
-            // Revert to default cursor
+      const updateCursor = (e: L.LeafletMouseEvent) => {
+         if (selectedSolutionID) {
+            const isInsideBounds = bounds.contains(e.latlng);
+            if (isInsideBounds) {
+               mapElement.style.cursor = "crosshair";
+            }
+         } else {
+            // explicitely reset cursor to default
             mapElement.style.cursor = "";
-         };
+         }
+      };
 
-         map.on("mouseover", handleMouseOver);
-         map.on("mouseout", handleMouseOut);
+      map.on("mousemove", updateCursor);
 
-         return () => {
-            map.off("mouseover", handleMouseOver);
-            map.off("mouseout", handleMouseOut);
-            // Ensure default cursor is reset when component unmounts
-            mapElement.style.cursor = "";
-         };
-      } else {
-         // If no solution is selected, explicitely reset the cursor
-         map.getContainer().style.cursor = "";
-      }
+      // Cleanup event listeners
+      return () => {
+         map.off("mousemove", updateCursor);
+         mapElement.style.cursor = "";
+      };
       // selectedSolutionID added to the dependency array to dynamically handle changes
-   }, [map, selectedSolutionID]);
+   }, [map, bounds, selectedSolutionID]);
 
    useMapEvents({
       click(e) {

@@ -25,7 +25,20 @@ const MapMask = ({ polygonCoords }: MapMaskProps) => {
         <Pane name="mask-pane" style={{ zIndex: 500 }}>
             <Polygon
                 positions={maskCoords}
-                pathOptions={{ color: 'black', fillColor: 'black', fillOpacity: 0.7, stroke: false }}
+                pathOptions={{
+                    color: 'black',
+                    fillColor: 'black',
+                    fillOpacity: 0.7,
+                    stroke: false,
+                }}
+                eventHandlers={{
+                    add: (e) => {
+                        const element = (e.target as any)._path;
+                        if (element) {
+                            element.style.cursor = "grab";
+                        }
+                    },
+                }}
             />
         </Pane>
     );
