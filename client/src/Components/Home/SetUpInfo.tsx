@@ -46,7 +46,7 @@ export default function SetUpInfo() {
             <VStack pl="0.5cm" pr="0.5cm" pb="20px">
 
                 <Text mt="10px" color="gray.900"
-                    textShadow="0px 0px 8px #444444"
+                    textShadow="1px 1px 6px #444444"
                 >
                     Choose a room option below to begin!
                 </Text>

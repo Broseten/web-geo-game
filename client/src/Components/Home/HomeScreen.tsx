@@ -42,7 +42,7 @@ export default function HomeScreen() {
                <Center>
                   <Text mb="80px" fontSize="2xl" textAlign="center"
                      color="primary.700"
-                     textShadow='0px 0px 10px #444444'>
+                     textShadow='1px 1px 8px #444444'>
                      Building Consensus for Climate Adaptation Planning
                   </Text>
                </Center>

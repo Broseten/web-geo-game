@@ -11,7 +11,11 @@ export default function HomeButton() {
          onClick={() => {
             location.reload();
          }}>
-         <Text color="gray.900" _hover={{ textDecoration: "underline" }}>
+         <Text
+            color="gray.900"
+            _hover={{ textDecoration: "underline" }}
+            textShadow='-1px -1px 8px #444444'
+         >
             {global_app_name}
          </Text>
       </Button>
