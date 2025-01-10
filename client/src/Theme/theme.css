@@ -31,7 +31,14 @@
   padding-bottom: 7px;
 }
 
-
+.leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
 
 
 /* theme for the lobby and player icons */
@@ -53,13 +60,13 @@
 
 /* color options for User Icons */
 :root {
-  --icon-pink:    #FF1493;
-  --icon-red:     #D32F2F;
-  --icon-orange:  #FF8C00;
-  --icon-yellow:  #FFD700;
-  --icon-green:   #32CD32;
-  --icon-turqoise:#00CED1;
-  --icon-blue:    #1E90FF;
-  --icon-purple:  #9370DB;
+  --icon-pink: #FF1493;
+  --icon-red: #D32F2F;
+  --icon-orange: #FF8C00;
+  --icon-yellow: #FFD700;
+  --icon-green: #32CD32;
+  --icon-turqoise: #00CED1;
+  --icon-blue: #1E90FF;
+  --icon-purple: #9370DB;
   --icon-default: #A1AEC1;
 }
