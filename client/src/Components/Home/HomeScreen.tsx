@@ -1,7 +1,8 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays the home screen  
 
-import { Box, Center, Heading, Text } from "@chakra-ui/react";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
+import { Box, Center, Heading, HStack, Icon, Image, Link, Text, VStack } from "@chakra-ui/react";
 import '../../Theme/theme.css';
 import { global_app_name } from "../../data/data";
 import SetUpInfo from "./SetUpInfo";
@@ -42,22 +43,28 @@ export default function HomeScreen() {
                   <Text mb="80px" fontSize="2xl" textAlign="center"
                      color="primary.700"
                      textShadow='0px 0px 10px #444444'>
-                     A voting tool for collaborative urban planning
+                     Building Consensus for Climate Adaptation Planning
                   </Text>
                </Center>
 
                {/* Buttons - Start and Join/Create Room */}
                <Center>{<SetUpInfo />}</Center>
 
-               {/* info link */}
-               {/* <Center position="absolute" left="50%" bottom="10" transform="translateX(-50%)">
-                 <Link href="https://www.heritact.eu" isExternal>
-                   <HStack>
-                     <Icon as={InfoOutlineIcon} color="gray.900" />
-                     <Image src="/images/HERITACT.png" height="18px" width="84px" />
-                   </HStack>
-                 </Link>
-               </Center> */}
+               <Center position="absolute" left="50%" bottom="10" transform="translateX(-50%)">
+                  <HStack>
+                     {/* info link */}
+                     {/* <Link href="https://score-eu-project.eu/" isExternal>
+                        <Icon as={InfoOutlineIcon} color="gray.900" />
+                     </Link> */}
+                     {/* Logos */}
+                     <Link href="https://score-eu-project.eu/" isExternal>
+                        <Image src="/images/SCORE.png" height="40px" />
+                     </Link>
+                     <Link href="https://www.ucd.ie/sdl/" isExternal>
+                        <Image src="/images/SDL_UCD.png" height="100px" />
+                     </Link>
+                  </HStack>
+               </Center>
             </Box>
          </Center>
       </Box>
