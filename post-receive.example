@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# This is an example post-receive hook script that can be used to deploy a Node.js application using Docker Compose.
+
+# Define variables
+REPO_DIR=/path/to/your/repo.git
+APP_DIR=/path/to/your/app
+DOCKER_COMPOSE_FILE=$APP_DIR/docker-compose.yml
+
+# Checkout the latest code from the repo to the app dir
+git --work-tree=$APP_DIR --git-dir=$REPO_DIR checkout -f main
+
+# Navigate to the application directory
+cd $APP_DIR
+
+# Build and run the Docker containers (set the node variables - will have priority over npm scripts)
+docker compose -f $DOCKER_COMPOSE_FILE up --build -d \
+  -e NODE_ENV=production \
+  -e DATA_URL=https://raw.githubusercontent.com/Broseten/Geo-Game-Data/refs/heads/main/data.json
