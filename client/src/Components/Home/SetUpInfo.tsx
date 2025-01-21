@@ -43,7 +43,7 @@ export default function SetUpInfo() {
     // Rejoin option available if user refreshed page 
     else return (
         <Center>
-            <VStack pl="0.5cm" pr="0.5cm" pb="20px">
+            <VStack pl="0.5cm" pr="0.5cm" >
 
                 <Text mt="10px" color="gray.900"
                     textShadow="1px 1px 6px #444444"

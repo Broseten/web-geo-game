@@ -1,5 +1,6 @@
 //import { StrictMode } from 'react'
 import { ChakraProvider } from '@chakra-ui/react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { io } from 'socket.io-client';
 import App from './App.tsx';
@@ -8,6 +9,7 @@ import { GameMarkersProvider } from './Components/Contexts/GameMarkersContext.ts
 import { GameRoomProvider } from './Components/Contexts/GameRoomContext.tsx';
 import { ScreenProvider } from './Components/Contexts/useScreenSelection.tsx';
 import { fetchGlobalData } from './data/data.ts';
+import "./i18n/config.ts";
 import customTheme from './Theme/Theme.ts';
 
 const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
@@ -23,20 +25,23 @@ export let socket = io(socketServerURL, {
 async function main() {
    try {
       // TODO fetch this after loading the app to avoid blocking the UI
+      // TODO also load this in the language context as it may use different tranlastions
       await fetchGlobalData(socketServerURL);
       createRoot(document.getElementById('root')!).render(
          //<StrictMode>
-         <ChakraProvider theme={customTheme}>
-            <ConnectionProvider>
-               <ScreenProvider>
-                  <GameRoomProvider>
-                     <GameMarkersProvider>
-                        <App />
-                     </GameMarkersProvider>
-                  </GameRoomProvider>
-               </ ScreenProvider>
-            </ConnectionProvider>
-         </ChakraProvider>
+         <React.Suspense fallback={<div>Loading...</div>}>
+            <ChakraProvider theme={customTheme}>
+               <ConnectionProvider>
+                  <ScreenProvider>
+                     <GameRoomProvider>
+                        <GameMarkersProvider>
+                           <App />
+                        </GameMarkersProvider>
+                     </GameRoomProvider>
+                  </ ScreenProvider>
+               </ConnectionProvider>
+            </ChakraProvider>
+         </React.Suspense>
          //</StrictMode>,
       )
    } catch (error) {

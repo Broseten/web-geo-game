@@ -1,13 +1,15 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays the home screen  
 
-import { InfoOutlineIcon } from "@chakra-ui/icons";
-import { Box, Center, Heading, HStack, Icon, Image, Link, Text, VStack } from "@chakra-ui/react";
+import { Box, Center, Heading, HStack, Image, Link, Text } from "@chakra-ui/react";
 import '../../Theme/theme.css';
 import { global_app_name } from "../../data/data";
 import SetUpInfo from "./SetUpInfo";
+import { useTranslation } from "react-i18next";
+import LocaleSwitcher from "../../i18n/LanguageSwitcher";
 
 export default function HomeScreen() {
+   const { t } = useTranslation();
 
    return (
       <Box
@@ -17,6 +19,7 @@ export default function HomeScreen() {
          backgroundPosition="center"
          backgroundRepeat="no-repeat"
       >
+         <LocaleSwitcher />
          <Center>
             {/* small box */}
             <Box
@@ -40,10 +43,15 @@ export default function HomeScreen() {
                   </Heading>
                </Center>
                <Center>
-                  <Text mb="80px" fontSize="2xl" textAlign="center"
+                  <Text mb="80px"
+                     fontSize="2xl"
+                     textAlign="center"
                      color="primary.700"
-                     textShadow='1px 1px 8px #444444'>
-                     Building Consensus for Climate Adaptation Planning
+                     textShadow='1px 1px 8px #444444'
+                     height="2em"
+                     padding="20px"
+                     >
+                     {t("home.desc")}
                   </Text>
                </Center>
 
