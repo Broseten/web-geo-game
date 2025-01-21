@@ -1,3 +1,8 @@
 {
-   "home.desc": "Budování konsensu pro plánování adaptace na změnu klimatu"
+   "home.desc": "Budování konsensu pro plánování adaptace na změnu klimatu",
+   "home.start": "Začít",
+   "home.choose": "Vyberte možnost místnosti níže, abyste začali!",
+   "home.rejoin": "Zkusit znovu připojit",
+   "home.create": "Vytvořit",
+   "home.join": "Připojit se"
 }

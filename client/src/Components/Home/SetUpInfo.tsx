@@ -6,8 +6,10 @@ import { useState } from "react";
 import { socket } from "../../main";
 import '../../Theme/theme.css';
 import { useScreenSelection } from "../Contexts/useScreenSelection";
+import { useTranslation } from "react-i18next";
 
 export default function SetUpInfo() {
+    const { t } = useTranslation();
     const { setCurrentScreen } = useScreenSelection();
     const [isStartButtonClicked, setIsStartButtonClicked] = useState(false);
     if (socket.connected) {
@@ -33,7 +35,7 @@ export default function SetUpInfo() {
                         socket.connect();
                         setIsStartButtonClicked(true);
                     }}>
-                    Start
+                    {t("home.start")}
                 </Button>
             </Box>
         )
@@ -48,7 +50,7 @@ export default function SetUpInfo() {
                 <Text mt="10px" color="gray.900"
                     textShadow="1px 1px 6px #444444"
                 >
-                    Choose a room option below to begin!
+                    {t("home.choose")}
                 </Text>
 
                 <HStack gap={"40px"}>
@@ -58,7 +60,7 @@ export default function SetUpInfo() {
                         variant='solid' onClick={() => {
                             setCurrentScreen('create')
                         }}>
-                        Create
+                        {t("home.create")}
                     </Button>
 
                     {/* Join Room */}
@@ -69,7 +71,7 @@ export default function SetUpInfo() {
                             setCurrentScreen('join') // future code?
                             // setCurrentScreen('play') // for ease
                         }}>
-                        Join
+                        {t("home.join")}
                     </Button>
                 </HStack>
                 {
@@ -86,7 +88,7 @@ export default function SetUpInfo() {
                             // Emit reconnect event to the server
                             socket.emit('join-room', lastRoomID);
                         }}>
-                        Try Rejoin
+                        {t("home.rejoin")}
                     </Button>
                 }
             </VStack>
