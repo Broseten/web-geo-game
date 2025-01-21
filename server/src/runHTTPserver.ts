@@ -53,8 +53,18 @@ export default function runServer() {
     });
 
     application.get('/data-url', (req: Request, res: Response) => {
-        console.log('Data URL requested:', process.env.DATA_URL);
-        return res.status(200).json({ dataURL: process.env.DATA_URL});
+        const lang = req.query.lang as string;
+        // Get the base URL from the environment variable
+        let dataURL = process.env.DATA_URL || "";
+        
+        // Insert the language code before the '.json' extension
+        if (lang) {
+            console.log('Data language requested:', lang);
+            dataURL = dataURL.replace(/\.json$/, `_${lang}.json`);
+        }
+
+        console.log('Data URL requested:', dataURL);
+        return res.status(200).json({ dataURL: dataURL });
     });
 
     /** Serve client assets (development or production) */

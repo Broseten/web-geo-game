@@ -1,3 +1,4 @@
+import i18n from "../i18n/config";
 import { Solution } from "./DataTypes";
 
 export const global_app_name = 'GeoDesign Game';
@@ -41,9 +42,14 @@ export let global_roles = [
    'Example Role 4',
 ];
 
-export async function fetchGlobalData(socketServerURL: string) {
+export async function fetchGlobalData(socketServerURL: string, language: string | undefined) {
    // get the actual data URL from the server
-   const dataURLResponse = await fetchWithTimeout(`${socketServerURL}/data-url`, { timeout: 5000 });
+   let dataurl = `${socketServerURL}/data-url`;
+   // set the language only if the language is not the default language
+   if (!language || language === i18n.options.fallbackLng) {
+      dataurl = dataurl + `?lang=${language}`;
+   }
+   const dataURLResponse = await fetchWithTimeout(dataurl, { timeout: 5000 });
    if (!dataURLResponse.ok) {
       console.error('Failed to fetch data URL from server');
       return;

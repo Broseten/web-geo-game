@@ -1,12 +1,18 @@
 // Created by Vojtech Bruza
 // Inspired by https://phrase.com/blog/posts/localizing-react-apps-with-i18next/
 import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
 import HttpApi from "i18next-http-backend";
+import { initReactI18next } from "react-i18next";
 
 export const supportedLngs = {
    en: "English",
    cs: "Czech (Čeština)",
+   es: "Spanish (Español)",
+   pt: "Portuguese (Português)",
+   it: "Italian (Italiano)",
+   pl: "Polish (Polski)",
+   sl: "Slovenian (Slovenščina)",
+   tr: "Turkish (Türkçe)",
 };
 
 i18n

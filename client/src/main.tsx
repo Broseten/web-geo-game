@@ -8,13 +8,12 @@ import { ConnectionProvider } from './Components/Contexts/ConnectionContext.tsx'
 import { GameMarkersProvider } from './Components/Contexts/GameMarkersContext.tsx';
 import { GameRoomProvider } from './Components/Contexts/GameRoomContext.tsx';
 import { ScreenProvider } from './Components/Contexts/useScreenSelection.tsx';
-import { fetchGlobalData } from './data/data.ts';
 import "./i18n/config.ts";
 import customTheme from './Theme/Theme.ts';
 
 const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
 const port = process.env.NODE_ENV !== 'production' ? ':1336' : (window.location.port ? `:${window.location.port}` : '');
-const socketServerURL = `${protocol}://${window.location.hostname}${port}`;
+export const socketServerURL = `${protocol}://${window.location.hostname}${port}`;
 
 console.log('Socket server:', socketServerURL);
 
@@ -22,11 +21,8 @@ export let socket = io(socketServerURL, {
    autoConnect: false
 });
 
-async function main() {
+function main() {
    try {
-      // TODO fetch this after loading the app to avoid blocking the UI
-      // TODO also load this in the language context as it may use different tranlastions
-      await fetchGlobalData(socketServerURL);
       createRoot(document.getElementById('root')!).render(
          //<StrictMode>
          <React.Suspense fallback={<div>Loading...</div>}>

@@ -8,8 +8,6 @@ export default function LocaleSwitcher() {
    const handleChangeLanguage = (language: string) => {
       i18n.changeLanguage(language);
    };
-
-   console.log(i18n.resolvedLanguage);
    
    return (
       <Flex
