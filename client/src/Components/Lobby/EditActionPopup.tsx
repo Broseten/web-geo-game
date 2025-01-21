@@ -43,7 +43,7 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
     const toast = useToast();
 
     const handleSave = () => {
-        if (players.find((p) => p.color === selectedColor)) {
+        if (players.find((p) => p.id !== global_playerID && p.color === selectedColor)) {
             toast({
                 title: "Color taken.",
                 status: 'error',
