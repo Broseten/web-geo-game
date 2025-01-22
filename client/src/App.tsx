@@ -10,22 +10,25 @@ import MidGameResults from './Components/Results/MidGameResults';
 import CreateRoom from './Components/Room/CreateRoom';
 import JoinRoom from './Components/Room/JoinRoom';
 import { ProgressState, RoundStage } from './data/DataTypes';
-import { fetchGlobalData } from './data/data';
+import { initGlobalData } from './data/data';
 import { socketServerURL } from './main';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 
-async function loadData(language: string | undefined) {
-   // TODO check if correct;y async no time now (move the try block from main to here etc.)
+export async function loadData(language: string | undefined) {
+   // TODO check if correctly async no time now (move the try block from main to here etc.)
    // TODO also load this in the language context as it may use different tranlastions
-   await fetchGlobalData(socketServerURL, language);
+   await initGlobalData(socketServerURL, language);
 }
+
 function App() {
    const { currentScreen } = useScreenSelection(); // Get the current screen from context
    const { gameRoomState } = useGameRoom();
 
-   // TODO move this to context so that we can reaload the data when the language changes
    const { i18n } = useTranslation();
-   loadData(i18n.resolvedLanguage);
+   useEffect(() => {
+      loadData(i18n.resolvedLanguage);
+   }, []);
 
    // Function to switch between screens
    const renderScreen = () => {

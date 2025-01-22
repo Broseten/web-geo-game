@@ -1,5 +1,6 @@
 import { Flex, Select } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
+import { fetchGlobalData } from "../data/data";
 import { supportedLngs } from "./config";
 
 export default function LocaleSwitcher() {
@@ -7,8 +8,10 @@ export default function LocaleSwitcher() {
 
    const handleChangeLanguage = (language: string) => {
       i18n.changeLanguage(language);
+      // reload the solutions from the server (async)
+      fetchGlobalData(language);
    };
-   
+
    return (
       <Flex
          position="absolute"

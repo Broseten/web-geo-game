@@ -42,29 +42,35 @@ export let global_roles = [
    'Example Role 4',
 ];
 
-export async function fetchGlobalData(socketServerURL: string, language: string | undefined) {
-   // get the actual data URL from the server
-   let dataurl = `${socketServerURL}/data-url`;
-   // set the language only if the language is not the default language
-   if (!language || language === i18n.options.fallbackLng) {
-      dataurl = dataurl + `?lang=${language}`;
-   }
-   const dataURLResponse = await fetchWithTimeout(dataurl, { timeout: 5000 });
-   if (!dataURLResponse.ok) {
-      console.error('Failed to fetch data URL from server');
+let global_dataURL: string | undefined = undefined;
+
+// this first loads the data URL from the server and then tries to fetch the data from the required URL
+export async function initGlobalData(socketServerURL: string, language: string | undefined) {
+   await getDataURL(socketServerURL);
+   fetchGlobalData(language);
+}
+
+// for reloading the data at runtime
+export async function fetchGlobalData(language: string | undefined) {
+   if (!global_dataURL) {
+      console.log("Data URL not defined");
       return;
    }
-   // load the data
-   const dataURLText = await dataURLResponse.text();
-   const { dataURL } = JSON.parse(dataURLText);
-   if (!dataURL) {
-      console.error('Failed to parse data URL from server');
-      return;
+   let dataURL = global_dataURL;
+   // set the language only if the language is not the default language (en will default to the default language file)
+   if (language && language !== i18n.options.fallbackLng?.toString()) {
+      // also set it only if the language is supported
+      if (!i18n.options.supportedLngs || !i18n.options.supportedLngs.includes(language)) {
+         console.log(`Language ${language} not supported.`)
+      } else {
+         dataURL = dataURL.replace(/\.json$/, `_${language}.json`);
+         console.log("Loading data from: " + dataURL);
+      }
    }
-   console.log('Data from:', dataURL);
    const dataResponse = await fetchWithTimeout(dataURL, { timeout: 5000 });
+   console.log(dataResponse);
    if (!dataResponse.ok) {
-      console.error('Failed to fetch global data from server');
+      console.error('Failed to fetch global data from server. Maybe the language is missing?');
       return;
    }
    let data;
@@ -80,6 +86,25 @@ export async function fetchGlobalData(socketServerURL: string, language: string 
    // recaluclate total price estimate
    global_solutions_total_price = getTotalPrice();
    console.log('Data loaded:', global_solutions, global_roles);
+}
+
+async function getDataURL(socketServerURL: string) {
+   // get the actual data URL from the server
+   let requestURL = `${socketServerURL}/data-url`;
+   const dataURLResponse = await fetchWithTimeout(requestURL, { timeout: 5000 });
+   if (!dataURLResponse.ok) {
+      console.error('Failed to fetch data URL from server');
+      return;
+   }
+   // load the data
+   const dataURLText = await dataURLResponse.text();
+   // loading the dataURL from the serve response
+   const { dataURL } = JSON.parse(dataURLText);
+   if (!dataURL) {
+      console.error('Failed to parse data URL from server');
+      return;
+   }
+   global_dataURL = dataURL;
 }
 
 async function fetchWithTimeout(resource: string, options: { timeout: number }) {
