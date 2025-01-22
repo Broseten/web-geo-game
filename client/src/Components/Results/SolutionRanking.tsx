@@ -1,34 +1,93 @@
 // Authors: Vojtech Bruza and Grace Houser
 
 import { Box, Button, Card, CardBody, Heading, Image, Text, VStack } from "@chakra-ui/react";
+import { createObjectCsvStringifier } from "csv-writer";
 import { getSolution, global_solutions } from "../../data/data";
 import '../../Theme/theme.css';
 import { useGameMarkers } from "../Contexts/GameMarkersContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
-import { getSolutionImagePath } from "../Play/Game/SolutionInfoCard";
 import { getIconColor } from "../Lobby/Icon";
+import { getSolutionImagePath } from "../Play/Game/SolutionInfoCard";
 
 export default function SolutionRanking() {
    const { markers } = useGameMarkers();
    const { getPlayerData, players, roomInfo } = useGameRoom();
-   const exportData = () => {
+
+   const downloadFile = (dataStr: string, format: "csv" | "json") => {
+      const downloadString = `data:text/${format};charset=utf-8,` + encodeURIComponent(dataStr);
+      const downloadAnchorNode = document.createElement('a');
+      // set timestamp for file name
+      const date = new Date();
+      const pad = (num: number) => num.toString().padStart(2, '0');
+      const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}_${pad(date.getHours())}-${pad(date.getMinutes())}`;
+      downloadAnchorNode.setAttribute("href", downloadString);
+      downloadAnchorNode.setAttribute("download", `voting - ${dateStr}.${format}`);
+      document.body.appendChild(downloadAnchorNode);
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+   }
+
+   const exportDataJSON = () => {
+      // can by directly exported as json
       const data = {
          markers,
          players,
          roomInfo,
          global_solutions
       };
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
-      const downloadAnchorNode = document.createElement('a');
-      // set timestamp for file name
-      const date = new Date();
-      const pad = (num: number) => num.toString().padStart(2, '0');
-      const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}_${pad(date.getHours())}-${pad(date.getMinutes())}`;
-      downloadAnchorNode.setAttribute("href", dataStr);
-      downloadAnchorNode.setAttribute("download", `voting-${dateStr}.json`);
-      document.body.appendChild(downloadAnchorNode);
-      downloadAnchorNode.click();
-      downloadAnchorNode.remove();
+      downloadFile(JSON.stringify(data), "json");
+   };
+
+   const exportMarkersCSV = () => {
+      // write to csv using https://www.npmjs.com/package/csv-writer
+      const csvStringifier = createObjectCsvStringifier({
+         header: [
+            { id: 'marker_id', title: 'Marker ID' },
+            { id: 'lat', title: 'Latitude' },
+            { id: 'lng', title: 'Longitude' },
+            { id: 'placed_in', title: 'Placed in Round' },
+            { id: 'num_votes', title: 'Votes Count' },
+            { id: 'voted_by_in', title: 'Voted by (in Round)' },
+            { id: 'solution_name', title: 'Solution (Name)' },
+            { id: 'solution_id', title: 'Solution (ID)' },
+            { id: 'placed_by_name', title: 'Placed by (Name)' },
+            { id: 'placed_by_role', title: 'Placed by (Role)' },
+            { id: 'placed_by_color', title: 'Placed by (Color)' },
+         ]
+      });
+
+      // declare rows array
+      const records: {
+         marker_id: string, lat: string, lng: string, placed_in: string, num_votes: string
+         voted_by_in: string, solution_name: string, solution_id: string,
+         placed_by_name: string, placed_by_role: string, placed_by_color: string
+      }[] = [];
+
+      // write each marker as a new line
+      markers.sort((a, b) => b.votes.length - a.votes.length).forEach((m) => {
+         const solution = getSolution(m.solutionID);
+         const placedBy = getPlayerData(m.ownerPlayerID);
+         const votedByIn_str = m.votes.map((v) => {
+            const p = getPlayerData(v.playerID);
+            return `${p?.name} (round ${v.roundIndex + 1})`;
+         }).join(', ');
+         records.push({
+            marker_id: m.id.toString(),
+            lat: m.coordinates.lat.toString(),
+            lng: m.coordinates.lng.toString(),
+            placed_in: (m.roundIndex + 1).toString(),
+            num_votes: m.votes.length.toString(),
+            voted_by_in: votedByIn_str,
+            solution_name: solution?.name!,
+            solution_id: solution?.id!,
+            placed_by_name: placedBy?.name + (placedBy?.isFacilitator ? " (facilitator)" : ""),
+            placed_by_role: placedBy?.role!,
+            placed_by_color: placedBy?.color!
+         });
+      });
+
+      const fullCSV_str = csvStringifier.getHeaderString() + csvStringifier.stringifyRecords(records);
+      downloadFile(fullCSV_str, "csv");
    };
 
    return (
@@ -61,7 +120,7 @@ export default function SolutionRanking() {
                         {
                            solImg ?
                               <Image
-                                 alt="Player" borderRadius="50%" 
+                                 alt="Player" borderRadius="50%"
                                  width="100%" height="100%"
                                  src={solImg}
                               />
@@ -93,8 +152,11 @@ export default function SolutionRanking() {
             }
             )
          }
-         <Button variant="solid" onClick={exportData}>
-            Export Markers
+         <Button variant="solid" onClick={exportMarkersCSV}>
+            Export (CSV)
+         </Button>
+         <Button variant="solid" onClick={exportDataJSON}>
+            Export (JSON)
          </Button>
       </VStack>
    );

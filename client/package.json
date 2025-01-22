@@ -16,6 +16,7 @@
     "@chakra-ui/react": "^2.10.3",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "csv-writer": "^1.6.0",
     "framer-motion": "^11.7.0",
     "i18next": "^24.2.1",
     "i18next-http-backend": "^3.0.1",
