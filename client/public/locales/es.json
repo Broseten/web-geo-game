@@ -1,0 +1,80 @@
+{
+  "create": {
+    "name": "Nombra tu habitación",
+    "map": {
+      "title": "Seleccionar zona en el mapa",
+      "desc": "Haga clic en el icono de búsqueda para localizar su área. \nUsa la herramienta polígono (arriba a la derecha) para dibujar los límites del juego. \nSi no se selecciona ningún límite, se utilizará toda el área visible."
+    },
+    "solutions": {
+      "title": "Seleccionar soluciones",
+      "tooltip": "Elija las soluciones adaptadas a su contexto local, asegurándose de que aborden los desafíos regionales de manera efectiva.",
+      "limit": {
+        "tooltip": "Asigne la cantidad de soluciones que cada participante puede colocar en el mapa en la primera fase (ubicación) de cada ronda."
+      }
+    },
+    "roles": {
+      "title": "Seleccionar roles",
+      "tooltip": "Elija los roles de partes interesadas que estarán disponibles para los jugadores"
+    },
+    "time": {
+      "placement": {
+        "title": "tiempo de colocación",
+        "tooltip": "Configura el cronómetro para la primera fase de cada ronda (colocando las soluciones en el mapa dentro del área definida)."
+      },
+      "voting": {
+        "title": "hora de votar",
+        "tooltip": "Configura el cronómetro para la segunda fase de cada ronda (votando las soluciones colocadas por los jugadores en la primera fase)."
+      }
+    },
+    "cancel": "Cancelar",
+    "confirm": "Crear habitación",
+    "random_name": "Aleatorio",
+    "votes": {
+      "tooltip": "Asigna el número de votos que tiene cada participante para la segunda fase de cada ronda (votación).",
+      "title": "Votos máximos"
+    },
+    "budget": {
+      "title": "Presupuesto inicial"
+    },
+    "solutions_limit": {
+      "title": "Soluciones máximas por ronda por jugador"
+    },
+    "rounds": {
+      "tooltip": "Establezca el número total de rondas para esta sesión. \nCada ronda tiene una fase de colocación y votación.",
+      "title": "Rondas totales"
+    },
+    "players": {
+      "tooltip": "Establece el número máximo de jugadores que pueden estar en este juego.",
+      "title": "Jugadores máximos"
+    }
+  },
+  "home": {
+    "desc": "Construyendo consenso para la planificación de la adaptación climática",
+    "start": "Comenzar",
+    "choose": "¡Elija una opción de habitación a continuación para comenzar!",
+    "create": "Crear",
+    "join": "Unirse",
+    "rejoin": "Intenta volver a unirte"
+  },
+  "game": {
+    "modal": {
+      "start": {
+        "placement": {
+          "title": "Fase uno: colocación de soluciones",
+          "message": "Seleccione soluciones en el panel izquierdo y colóquelas en el mapa dentro del área predefinida. \nColoque todas las soluciones antes de que expire el cronómetro. \nUtilice el menú desplegable para leer la descripción de cada solución antes de colocarla en el mapa. \nCada jugador puede seleccionar un número limitado de soluciones. \nSe anima a los participantes a revisar todas las opciones y elegir las soluciones que consideren más impactantes y factibles.",
+          "button": "Empezar a colocar"
+        },
+        "voting": {
+          "title": "Fase dos: votación",
+          "message": "Haga clic en las soluciones en el mapa colocado en la ronda anterior y vote. \nUtilice todos sus votos antes de que expire el cronómetro. \nHaga clic en las soluciones para leer cada descripción antes de votar. \nCada jugador tiene un número limitado de votos, lo que fomenta la toma de decisiones estratégicas.",
+          "button": "Empezar a votar"
+        }
+      },
+      "end": {
+        "title": "Redondo Acabado",
+        "message": "El facilitador necesita avanzar a la siguiente ronda.",
+        "button": "Próxima ronda"
+      }
+    }
+  }
+}

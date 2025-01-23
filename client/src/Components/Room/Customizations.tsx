@@ -2,7 +2,7 @@
 // Displays all room customizations a facilitator can choose
 
 // src/components/Customizations.tsx
-import { Box, Button, Center, Checkbox, CheckboxGroup, Input, InputGroup, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Checkbox, CheckboxGroup, HStack, Input, InputGroup, Text, Tooltip, VStack } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import L from "leaflet";
 import initSocket from "../../Hooks/useSocket";
@@ -15,6 +15,8 @@ import TimeInput from "./TimeInput";
 import { RoomJoined } from "../../data/DataTypes";
 import NumberInputComponent from "./NumberInput";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
+import { useTranslation } from "react-i18next";
+import { InfoIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 
 const places = [
     "Garden", "Hall", "Plaza", "Meadow", "Terrace",
@@ -61,6 +63,7 @@ function randomRoomName() {
 }
 
 export default function Customizations() {
+    const { t } = useTranslation();
     const { setCurrentScreen } = useScreenSelection();
     const [loading, setLoading] = useState(false);
     const [roomName, setRoomName] = useState(randomRoomName());
@@ -99,7 +102,7 @@ export default function Customizations() {
         <VStack align="left">
             {/* Room Name */}
             <Box pb="20px">
-                <Text className="h2" color="gray.900">Name your room</Text>
+                <Text className="h2" color="gray.900">{t('create.name')}</Text>
                 <InputGroup>
                     <Input
                         borderColor="gray.300"
@@ -116,18 +119,15 @@ export default function Customizations() {
                     variant="outline"
                     onClick={() => setRoomName(randomRoomName())}
                 >
-                    Random
+                    {t('create.random_name')}
                 </Button>
             </Box>
 
             {/* Map Area */}
             <Box pb="20px">
-                <Text className="h2" color="gray.900">Select area on the map</Text>
+                <Text className="h2" color="gray.900">{t('create.map.title')}</Text>
                 <Text color="gray.900">
-                    Use the button in the top right corner.
-                </Text>
-                <Text color="gray.900">
-                    It will use the whole visible area if none selected.
+                    {t('create.map.desc')}
                 </Text>
                 <Box h="400px">
                     <MapAreaSelection ref={mapSelectionRef} />
@@ -136,7 +136,12 @@ export default function Customizations() {
 
             {/* Solutions */}
             <Box pb="20px">
-                <Text className="h2" color="gray.900">Select solutions</Text>
+                <HStack alignItems="baseline">
+                    <Text className="h2" color="gray.900">{t('create.solutions.title')}</Text>
+                    <Tooltip label={t('create.solutions.tooltip')} fontSize='md'>
+                        <InfoIcon />
+                    </Tooltip>
+                </HStack>
                 <CheckboxGroup colorScheme="orange">
                     <VStack align="left" gap="0">
                         {global_solutions?.map((solution) => (
@@ -147,7 +152,12 @@ export default function Customizations() {
                                 isChecked={checkedSolutions[solution.id]}
                                 onChange={() => toggleSolution(solution.id)}
                             >
-                                {solution.name}
+                                <Tooltip
+                                    label={solution.description} fontSize='md'
+                                    placement='auto-start' openDelay={500}
+                                >
+                                    {solution.name}
+                                </Tooltip>
                             </Checkbox>
                         ))}
                     </VStack>
@@ -156,40 +166,49 @@ export default function Customizations() {
 
             {/* Roles */}
             <Box pb="20px">
-                <Text className="h2" color="gray.900">Select roles</Text>
+
+                <HStack alignItems="baseline">
+                    <Text className="h2" color="gray.900">{t('create.roles.title')}</Text>
+                    <Tooltip label={t('create.roles.tooltip')} fontSize='md'>
+                        <InfoIcon />
+                    </Tooltip>
+                </HStack>
                 <RoleSelector ref={roleSelectorRef} />
             </Box>
-            
+
 
             {/* Max players */}
             <NumberInputComponent
                 value={maxPlayers}
                 onChange={setMaxPlayers}
-                label="Max players"
+                label={t('create.players.title')}
                 min={2}
+                tooltip={t('create.players.tooltip')}
             />
 
             {/* Total rounds */}
             <NumberInputComponent
                 value={totalRounds}
                 onChange={setTotalRounds}
-                label="Total rounds"
+                label={t('create.rounds.title')}
                 min={1}
+                tooltip={t('create.rounds.tooltip')}
             />
 
             {/* Max solutions per round */}
             <NumberInputComponent
                 value={maxMarkers}
                 onChange={setMaxMarkersPerRound}
-                label="Max solutions per round per player"
+                label={t('create.solutions_limit.title')}
                 min={1}
+                tooltip={t('create.solutions.limit.tooltip')}
             />
 
             {/* Initial budget */}
             <NumberInputComponent
                 value={initialBudget}
                 onChange={setInitialBudget}
-                label="Initial budget"
+                label={t('create.budget.title')}
                 min={0}
                 step={100}
                 currencySymbol="€"
@@ -197,7 +216,12 @@ export default function Customizations() {
 
             {/* Time per round - placement */}
             <Box pb="20px">
-                <Text className="h2" pb="0" color="gray.900">Time for placement</Text>
+                <HStack alignItems="baseline">
+                    <Text className="h2" pb="0" color="gray.900">{t('create.time.placement.title')}</Text>
+                    <Tooltip label={t('create.time.placement.tooltip')} fontSize='md'>
+                        <InfoIcon />
+                    </Tooltip>
+                </HStack>
                 <TimeInput
                     onChange={setTimeForPlacement}
                     initialMinutes={Math.floor(timeForPlacement / 60)}
@@ -207,7 +231,12 @@ export default function Customizations() {
 
             {/* Time per round - voting */}
             <Box pb="20px">
-                <Text className="h2" pb="0" color="gray.900">Time for voting</Text>
+                <HStack alignItems="baseline">
+                    <Text className="h2" pb="0" color="gray.900">{t('create.time.voting.title')}</Text>
+                    <Tooltip label={t('create.time.voting.tooltip')} fontSize='md'>
+                        <InfoIcon />
+                    </Tooltip>
+                </HStack>
                 <TimeInput
                     onChange={setTimeForVoting}
                     initialMinutes={Math.floor(timeForVoting / 60)}
@@ -219,8 +248,9 @@ export default function Customizations() {
             <NumberInputComponent
                 value={maxVotes}
                 onChange={setMaxVotes}
-                label="Max votes"
+                label={t('create.votes.title')}
                 min={1}
+                tooltip={t('create.votes.tooltip')}
             />
 
             {/* Create Room Button */}
@@ -231,7 +261,7 @@ export default function Customizations() {
                     }}
                     variant="outline"
                 >
-                    Cancel
+                    {t('create.cancel')}
                 </Button>
                 <Button bg="primary.500" color="white" variant="outline"
                     _hover={{ bg: "white", color: "primary.500", borderColor: "primary.500", borderWidth: "2px", }}
@@ -281,7 +311,7 @@ export default function Customizations() {
                     }
                     }
                 >
-                    Create {roomName}
+                    {t('create.confirm')}
                 </Button>
             </Center>
         </VStack>

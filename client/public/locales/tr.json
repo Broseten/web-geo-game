@@ -1,0 +1,80 @@
+{
+  "create": {
+    "name": "Odanıza isim verin",
+    "map": {
+      "title": "Haritada alanı seçin",
+      "desc": "Bölgenizi bulmak için arama simgesini tıklayın. \nOyunun sınırlarını çizmek için çokgen aracını (sağ üstte) kullanın. \nHiçbir sınır seçilmezse görünür alanın tamamı kullanılacaktır."
+    },
+    "solutions": {
+      "title": "Çözümleri seçin",
+      "tooltip": "Yerel bağlamınıza göre uyarlanmış çözümleri seçerek bölgesel zorlukları etkili bir şekilde ele aldıklarından emin olun.",
+      "limit": {
+        "tooltip": "Her turun ilk (yerleştirme) aşamasında her katılımcının haritaya yerleştirebileceği çözüm sayısını belirleyin."
+      }
+    },
+    "roles": {
+      "title": "Rolleri seçin",
+      "tooltip": "Oyuncular için kullanılabilecek paydaş rollerini seçin"
+    },
+    "time": {
+      "placement": {
+        "title": "Yerleştirme zamanı",
+        "tooltip": "Her turun ilk aşaması için zamanlayıcıyı ayarlayın (çözümleri tanımlanan alan içindeki haritaya yerleştirin)."
+      },
+      "voting": {
+        "title": "Oy verme zamanı",
+        "tooltip": "Her turun ikinci aşaması için zamanlayıcıyı ayarlayın (ilk aşamada oyuncuların belirlediği çözümlere oy verin)."
+      }
+    },
+    "cancel": "İptal etmek",
+    "confirm": "Oda Oluştur",
+    "random_name": "Rastgele",
+    "votes": {
+      "tooltip": "Her turun ikinci aşaması (oylama) için her katılımcının sahip olduğu oy sayısını tahsis edin.",
+      "title": "Maksimum oy"
+    },
+    "budget": {
+      "title": "Başlangıç ​​bütçesi"
+    },
+    "solutions_limit": {
+      "title": "Oyuncu başına tur başına maksimum çözüm"
+    },
+    "rounds": {
+      "tooltip": "Bu oturum için toplam tur sayısını ayarlayın. \nHer turun bir yerleştirme ve oylama aşaması vardır.",
+      "title": "Toplam tur"
+    },
+    "players": {
+      "tooltip": "Bu oyunda olabilecek maksimum oyuncu sayısını ayarlayın.",
+      "title": "Maksimum oyuncu"
+    }
+  },
+  "home": {
+    "desc": "İklim Uyum Planlaması için Konsensüs Oluşturmak",
+    "start": "Başlangıç",
+    "choose": "Başlamak için aşağıdan bir oda seçeneği seçin!",
+    "create": "Yaratmak",
+    "join": "Katılmak",
+    "rejoin": "Yeniden katılmayı deneyin"
+  },
+  "game": {
+    "modal": {
+      "start": {
+        "placement": {
+          "title": "Birinci Aşama: Çözümlerin Yerleştirilmesi",
+          "message": "Sol panelden çözümleri seçin ve bunları önceden tanımlanmış alan içindeki haritaya yerleştirin. \nZamanlayıcının süresi dolmadan önce tüm çözümleri yerleştirin. \nHaritaya yerleştirmeden önce her çözümün açıklamasını okumak için açılır menüyü kullanın. \nHer oyuncu sınırlı sayıda çözüm seçebilir. \nKatılımcıların tüm seçenekleri gözden geçirmeleri ve en etkili ve uygulanabilir olduğuna inandıkları çözümleri seçmeleri teşvik edilir.",
+          "button": "Yerleştirmeye Başla"
+        },
+        "voting": {
+          "title": "İkinci Aşama: Oylama",
+          "message": "Önceki turda yer alan haritadaki çözümlere tıklayın ve oy verin. \nSüre dolmadan tüm oylarınızı kullanın. \nOy vermeden önce her bir açıklamayı okumak için çözümlere tıklayın. \nHer oyuncunun sınırlı sayıda oyu vardır ve bu da stratejik karar almayı teşvik eder.",
+          "button": "Oylamaya Başla"
+        }
+      },
+      "end": {
+        "title": "Yuvarlak Bitmiş",
+        "message": "Kolaylaştırıcının bir sonraki tura geçmesi gerekiyor.",
+        "button": "Sonraki Tur"
+      }
+    }
+  }
+}

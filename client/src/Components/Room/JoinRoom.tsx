@@ -8,6 +8,7 @@ import initSocket from "../../Hooks/useSocket";
 import { socket } from "../../main";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import HomeButton from "../HomeButton";
+import LocaleSwitcher from "../../i18n/LanguageSwitcher";
 
 export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
@@ -27,6 +28,7 @@ export default function JoinRoom() {
    return (
       <Box>
 
+         <LocaleSwitcher />
          {/* Header */}
          <Center>
             <Text pt='50' fontSize="4xl" fontWeight="bold" color="primary.500">

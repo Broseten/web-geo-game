@@ -1,0 +1,80 @@
+{
+  "create": {
+    "name": "Poimenuj svojo sobo",
+    "map": {
+      "title": "Izberite območje na zemljevidu",
+      "desc": "Kliknite ikono za iskanje, da poiščete svoje območje. \nUporabite orodje poligon (zgoraj desno), da narišete meje za igro. \nČe ni izbrana nobena meja, bo uporabljeno celotno vidno območje."
+    },
+    "solutions": {
+      "title": "Izberite rešitve",
+      "tooltip": "Izberite rešitve, prilagojene vašemu lokalnemu kontekstu, in zagotovite, da učinkovito obravnavajo regionalne izzive.",
+      "limit": {
+        "tooltip": "Določite število rešitev, ki jih lahko vsak udeleženec postavi na zemljevid v prvi (umestitveni) fazi vsakega kroga."
+      }
+    },
+    "roles": {
+      "title": "Izberite vloge",
+      "tooltip": "Izberite vloge deležnikov, ki bodo na voljo igralcem"
+    },
+    "time": {
+      "placement": {
+        "title": "Čas za postavitev",
+        "tooltip": "Nastavite časovnik za prvo fazo vsakega kroga (postavitev rešitev na zemljevid znotraj določenega območja)."
+      },
+      "voting": {
+        "title": "Čas za glasovanje",
+        "tooltip": "Nastavite časovnik za drugo fazo vsakega kroga (glasovanje za rešitve, ki so jih postavili igralci v prvi fazi)."
+      }
+    },
+    "cancel": "Prekliči",
+    "confirm": "Ustvari sobo",
+    "random_name": "Naključno",
+    "votes": {
+      "tooltip": "Dodelite število glasov, ki jih ima vsak udeleženec za drugo fazo vsakega kroga (glasovanje).",
+      "title": "Max glasov"
+    },
+    "budget": {
+      "title": "Začetni proračun"
+    },
+    "solutions_limit": {
+      "title": "Največje število rešitev na krog na igralca"
+    },
+    "rounds": {
+      "tooltip": "Nastavite skupno število krogov za to sejo. \nVsak krog ima eno fazo uvrstitve in glasovanja.",
+      "title": "Skupaj krogov"
+    },
+    "players": {
+      "tooltip": "Nastavite največje število igralcev, ki so lahko v tej igri.",
+      "title": "Max igralcev"
+    }
+  },
+  "home": {
+    "desc": "Vzpostavitev soglasja za načrtovanje prilagajanja podnebju",
+    "start": "Začetek",
+    "choose": "Za začetek izberite možnost sobe spodaj!",
+    "create": "Ustvari",
+    "join": "Pridruži se",
+    "rejoin": "Poskusite se ponovno pridružiti"
+  },
+  "game": {
+    "modal": {
+      "start": {
+        "placement": {
+          "title": "Prva faza: Postavitev rešitev",
+          "message": "Izberite rešitve na levi plošči in jih postavite na zemljevid znotraj vnaprej določenega območja. \nPostavite vse rešitve, preden poteče časovnik. \nS spustnim menijem preberite opis vsake rešitve, preden jo postavite na zemljevid. \nVsak igralec lahko izbere omejeno število rešitev. \nUdeležence spodbujamo, da pregledajo vse možnosti in izberejo rešitve, za katere menijo, da so najbolj učinkovite in izvedljive.",
+          "button": "Začnite postavljati"
+        },
+        "voting": {
+          "title": "Druga faza: glasovanje",
+          "message": "Kliknite rešitve na zemljevidu v prejšnjem krogu in glasujte. \nUporabite vse svoje glasove, preden poteče časovnik. \nKliknite na rešitve, da preberete vsak opis pred glasovanjem. \nVsak igralec ima omejeno število glasov, kar spodbuja strateško odločanje.",
+          "button": "Začni glasovati"
+        }
+      },
+      "end": {
+        "title": "Krog končan",
+        "message": "Moderator mora napredovati v naslednji krog.",
+        "button": "Naslednji krog"
+      }
+    }
+  }
+}

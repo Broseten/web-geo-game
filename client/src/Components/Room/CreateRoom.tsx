@@ -2,14 +2,13 @@
 // This file displays the framework for creating a room 
 
 import { Box, Center, Text } from "@chakra-ui/react";
+import LocaleSwitcher from "../../i18n/LanguageSwitcher";
 import '../../Theme/theme.css';
 import { PolygonProvider } from "../Contexts/PolygonContext";
-import { useScreenSelection } from "../Contexts/useScreenSelection";
 import HomeButton from "../HomeButton";
 import Customizations from "./Customizations";
 
 export default function CreateRoom() {
-   const { setCurrentScreen } = useScreenSelection();
 
    return (
       <Box
@@ -20,6 +19,7 @@ export default function CreateRoom() {
          backgroundPosition="center"
          backgroundRepeat="no-repeat"
       >
+         <LocaleSwitcher />
          <Center>
             {/* full box */}
             <Box

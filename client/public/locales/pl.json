@@ -1,0 +1,80 @@
+{
+  "create": {
+    "name": "Nazwij swój pokój",
+    "map": {
+      "title": "Wybierz obszar na mapie",
+      "desc": "Kliknij ikonę wyszukiwania, aby zlokalizować swój obszar. \nUżyj narzędzia wielokąta (w prawym górnym rogu), aby narysować granice gry. \nJeśli nie zostanie wybrana żadna granica, użyty zostanie cały widoczny obszar."
+    },
+    "solutions": {
+      "title": "Wybierz rozwiązania",
+      "tooltip": "Wybierz rozwiązania dostosowane do lokalnego kontekstu, zapewniając, że skutecznie sprostają wyzwaniom regionalnym.",
+      "limit": {
+        "tooltip": "Przydziel liczbę rozwiązań, które każdy uczestnik może umieścić na mapie w pierwszej fazie (umieszczania) każdej rundy."
+      }
+    },
+    "roles": {
+      "title": "Wybierz role",
+      "tooltip": "Wybierz role interesariuszy, które będą dostępne dla graczy"
+    },
+    "time": {
+      "placement": {
+        "title": "Czas na rozmieszczenie",
+        "tooltip": "Ustaw licznik czasu dla pierwszej fazy każdej rundy (umieszczając rozwiązania na mapie w określonym obszarze)."
+      },
+      "voting": {
+        "title": "Czas na głosowanie",
+        "tooltip": "Ustaw licznik czasu dla drugiej fazy każdej rundy (głosowanie na rozwiązania umieszczone przez graczy w pierwszej fazie)."
+      }
+    },
+    "cancel": "Anulować",
+    "confirm": "Utwórz pokój",
+    "random_name": "Losowy",
+    "votes": {
+      "tooltip": "Przydziel liczbę głosów, jaką posiada każdy uczestnik na drugą fazę każdej rundy (głosowanie).",
+      "title": "Maksymalna liczba głosów"
+    },
+    "budget": {
+      "title": "Początkowy budżet"
+    },
+    "solutions_limit": {
+      "title": "Maksymalna liczba rozwiązań na rundę na gracza"
+    },
+    "rounds": {
+      "tooltip": "Ustaw całkowitą liczbę rund w tej sesji. \nKażda runda składa się z jednej fazy rozmieszczania i głosowania.",
+      "title": "Całkowita liczba rund"
+    },
+    "players": {
+      "tooltip": "Ustaw maksymalną liczbę graczy, którzy mogą brać udział w tej grze.",
+      "title": "Maksymalna liczba graczy"
+    }
+  },
+  "home": {
+    "desc": "Budowanie konsensusu w sprawie planowania adaptacji do klimatu",
+    "start": "Start",
+    "choose": "Aby rozpocząć, wybierz opcję pokoju poniżej!",
+    "create": "Tworzyć",
+    "join": "Dołączyć",
+    "rejoin": "Spróbuj ponownie dołączyć"
+  },
+  "game": {
+    "modal": {
+      "start": {
+        "placement": {
+          "title": "Faza pierwsza: Umieszczanie rozwiązań",
+          "message": "Wybierz rozwiązania z lewego panelu i umieść je na mapie w obrębie wcześniej zdefiniowanego obszaru. \nUmieść wszystkie rozwiązania przed upływem czasu. \nSkorzystaj z menu rozwijanego, aby przeczytać opis każdego rozwiązania przed umieszczeniem go na mapie. \nKażdy gracz może wybrać ograniczoną liczbę rozwiązań. \nUczestników zachęca się do przejrzenia wszystkich opcji i wybrania rozwiązań, które ich zdaniem są najskuteczniejsze i wykonalne.",
+          "button": "Rozpocznij umieszczanie"
+        },
+        "voting": {
+          "title": "Faza druga: głosowanie",
+          "message": "Kliknij rozwiązania na mapie umieszczonej w poprzedniej rundzie i zagłosuj. \nWykorzystaj wszystkie swoje głosy przed upływem limitu czasu. \nKliknij rozwiązania, aby przeczytać każdy opis przed oddaniem głosu. \nKażdy gracz ma ograniczoną liczbę głosów, co zachęca do podejmowania strategicznych decyzji.",
+          "button": "Rozpocznij głosowanie"
+        }
+      },
+      "end": {
+        "title": "Runda zakończona",
+        "message": "Facylitator musi przejść do następnej rundy.",
+        "button": "Następna runda"
+      }
+    }
+  }
+}

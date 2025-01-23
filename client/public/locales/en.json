@@ -1,0 +1,78 @@
+{
+  "home.desc": "Building Consensus for Climate Adaptation Planning",
+  "home.start": "Start",
+  "home.choose": "Choose a room option below to begin!",
+  "home.rejoin": "Try Rejoin",
+  "home.create": "Create",
+  "home.join": "Join",
+  "create": {
+    "map": {
+      "title": "Select area on the map",
+      "desc": "Click the search icon to locate your area. Use the polygon tool (top right) to draw boundaries for the game. If no boundary is selected, the entire visible area will be used."
+    },
+    "name": "Name your room",
+    "solutions": {
+      "title": "Select solutions",
+      "tooltip": "Choose the solutions tailored to your local context, ensuring they address regional challenges effectively.",
+      "limit": {
+        "tooltip": "Allocate the number of solutions each participant can place onto the map in the first (placement) phase of each round."
+      }
+    },
+    "roles": {
+      "title": "Select roles",
+      "tooltip": "Choose the stakeholder roles that will be available for the players"
+    },
+    "time": {
+      "placement": {
+        "title": "Time for placement",
+        "tooltip": "Set the timer for the first phase of each round (placing the solutions onto the map within the defined area)."
+      },
+      "voting": {
+        "title": "Time for voting",
+        "tooltip": "Set the timer for the second phase of each round (voting for the solutions placed by players in the first phase)."
+      }
+    },
+    "confirm": "Create Room",
+    "cancel": "Cancel",
+    "random_name": "Random",
+    "players": {
+      "title": "Max players",
+      "tooltip": "Set the number of maximum players that can be in this game."
+    },
+    "rounds": {
+      "title": "Total rounds",
+      "tooltip": "Set the total number of rounds for this session. Each round has one placement and voting phase."
+    },
+    "solutions_limit": {
+      "title": "Max solutions per round per player"
+    },
+    "budget": {
+      "title": "Initial budget"
+    },
+    "votes": {
+      "title": "Max votes",
+      "tooltip": "Allocate the number of votes each participant has for the second phase of each round (voting)."
+    }
+  },
+  "game": {
+    "modal": {
+      "start": {
+        "placement": {
+          "title": "Phase One: Placing Solutions",
+          "message": "Select solutions from the left panel and place them onto the map within the pre-defined area. Place all solutions before the timer expires. Use the dropdown to read each solution's description before placing it on the map. Each player can select a limited number of solutions. Participants are encouraged to review all options and choose the solutioins they believe are the most impactful and feasible.",
+          "button": "Start Placing"
+        },
+        "voting": {
+          "title": "Phase Two: Voting",
+          "message": "Click the solutions on the map placed in the previous round and vote. Use all your votes before the timer expires. Click on the solutions to read each description before voting. Each player has a limited number of votes, encouraging strategic decision-making.",
+          "button": "Start Voting"
+        }
+      },
+      "end": {
+        "title": "Round Finished",
+        "message": "Facilitator needs to progress to the next round.",
+        "button": "Next Round"
+      }
+    }
+  }
+}

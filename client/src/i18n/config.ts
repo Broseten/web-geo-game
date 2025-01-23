@@ -24,6 +24,9 @@ i18n
    .init({
       // Config options
 
+      // set the HttpApi options to config the path to locales
+      backend: { loadPath: '/locales/{{lng}}.json' },
+
       // Specifies the default language (locale) used
       // when a user visits our site for the first time.
       // We use English here, but feel free to use

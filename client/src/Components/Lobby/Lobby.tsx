@@ -5,6 +5,7 @@ import { Button, Flex, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { GameRoomState } from "../../data/DataTypes";
 import initSocket from "../../Hooks/useSocket";
+import LocaleSwitcher from "../../i18n/LanguageSwitcher";
 import { socket } from "../../main";
 import { global_playerID } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
@@ -34,6 +35,7 @@ export default function Lobby() {
          h="100%" // ensure it takes full height
          px={4}
       >
+         <LocaleSwitcher />
          <Text
             pt={10}
             fontSize={{ base: "xl", sm: "4xl" }}
