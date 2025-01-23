@@ -6,7 +6,7 @@ import { initReactI18next } from "react-i18next";
 
 export const supportedLngs = {
    en: "English",
-   cs: "Czech (Čeština)",
+   // cs: "Czech (Čeština)",
    es: "Spanish (Español)",
    pt: "Portuguese (Português)",
    it: "Italian (Italiano)",
