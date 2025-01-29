@@ -19,7 +19,7 @@ export default function Game({ isFacilitator }: GameProps) {
     const { getPlayerData, roomInfo } = useGameRoom();
     const { getPlayerSpentBudget } = useGameMarkers();
 
-    let localPlayer = getPlayerData(global_playerID);
+    const localPlayer = getPlayerData(global_playerID);
 
     // TODO - needed variables
     const playerRole = localPlayer?.role;

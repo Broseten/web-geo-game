@@ -76,7 +76,7 @@ export async function fetchGlobalData(language: string | undefined) {
    let data;
    try {
       data = await dataResponse.json();
-   } catch (error) {
+   } catch {
       console.error('Failed to parse JSON response from ' + dataURL);
       return;
    }
@@ -90,7 +90,7 @@ export async function fetchGlobalData(language: string | undefined) {
 
 async function getDataURL(socketServerURL: string) {
    // get the actual data URL from the server
-   let requestURL = `${socketServerURL}/data-url`;
+   const requestURL = `${socketServerURL}/data-url`;
    const dataURLResponse = await fetchWithTimeout(requestURL, { timeout: 5000 });
    if (!dataURLResponse.ok) {
       console.error('Failed to fetch data URL from server');

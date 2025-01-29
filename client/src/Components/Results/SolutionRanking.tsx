@@ -78,11 +78,11 @@ export default function SolutionRanking() {
             placed_in: (m.roundIndex + 1).toString(),
             num_votes: m.votes.length.toString(),
             voted_by_in: votedByIn_str,
-            solution_name: solution?.name!,
-            solution_id: solution?.id!,
+            solution_name: solution!.name,
+            solution_id: solution!.id,
             placed_by_name: placedBy?.name + (placedBy?.isFacilitator ? " (facilitator)" : ""),
-            placed_by_role: placedBy?.role!,
-            placed_by_color: placedBy?.color!
+            placed_by_role: placedBy!.role,
+            placed_by_color: placedBy!.color
          });
       });
 
