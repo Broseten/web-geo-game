@@ -1,4 +1,6 @@
 import { Box } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useGameRoom } from './Components/Contexts/GameRoomContext';
 import { LocalGameDataProvider } from './Components/Contexts/LocalGameContext';
 import { useScreenSelection } from './Components/Contexts/useScreenSelection';
@@ -11,11 +13,9 @@ import CreateRoom from './Components/Room/CreateRoom';
 import JoinRoom from './Components/Room/JoinRoom';
 import { ProgressState, RoundStage } from './data/DataTypes';
 import { initGlobalData } from './data/data';
-import { socketServerURL } from './main';
-import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react';
+import { socketServerURL } from './Components/Contexts/ConnectionContext';
 
-export async function loadData(language: string | undefined) {
+async function loadData(socketServerURL: string, language: string | undefined) {
    // TODO check if correctly async no time now (move the try block from main to here etc.)
    // TODO also load this in the language context as it may use different tranlastions
    await initGlobalData(socketServerURL, language);
@@ -27,7 +27,7 @@ function App() {
 
    const { i18n } = useTranslation();
    useEffect(() => {
-      loadData(i18n.resolvedLanguage);
+      loadData(socketServerURL, i18n.resolvedLanguage);
    }, []);
 
    // Function to switch between screens

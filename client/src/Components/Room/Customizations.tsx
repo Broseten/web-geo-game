@@ -2,21 +2,20 @@
 // Displays all room customizations a facilitator can choose
 
 // src/components/Customizations.tsx
+import { InfoIcon } from "@chakra-ui/icons";
 import { Box, Button, Center, Checkbox, CheckboxGroup, HStack, Input, InputGroup, Text, Tooltip, VStack } from "@chakra-ui/react";
-import { useRef, useState } from "react";
 import L from "leaflet";
-import initSocket from "../../Hooks/useSocket";
-import { socket } from "../../main";
-import { usePolygon } from "../Contexts/PolygonContext";
-import MapAreaSelection, { MapAreaSelectionRef } from "./MapAreaSelection";
+import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { global_roles, global_solutions, global_solutions_total_price } from "../../data/data";
+import { global_icon_colors, RoomJoined } from "../../data/DataTypes";
+import { usePolygon } from "../Contexts/PolygonContext";
+import { useScreenSelection } from "../Contexts/useScreenSelection";
+import MapAreaSelection, { MapAreaSelectionRef } from "./MapAreaSelection";
+import NumberInputComponent from "./NumberInput";
 import RoleSelector from "./RoleSelector";
 import TimeInput from "./TimeInput";
-import { RoomJoined } from "../../data/DataTypes";
-import NumberInputComponent from "./NumberInput";
-import { useScreenSelection } from "../Contexts/useScreenSelection";
-import { useTranslation } from "react-i18next";
-import { InfoIcon, InfoOutlineIcon } from "@chakra-ui/icons";
+import { useConnection } from "../Contexts/ConnectionContext";
 
 const places = [
     "Garden", "Hall", "Plaza", "Meadow", "Terrace",
@@ -83,6 +82,7 @@ export default function Customizations() {
                 return acc;
             }, {})
     );
+    const { socket, useSocketEvent } = useConnection();
 
 
     const toggleSolution = (id: string) => {
@@ -94,7 +94,7 @@ export default function Customizations() {
 
     const roleSelectorRef = useRef<{ getSelectedRoles: () => string[] }>(null);
 
-    initSocket('room-created', (roomID: string) => {
+    useSocketEvent('room-created', (roomID: string) => {
         socket.emit('join-room', roomID);
     });
 
@@ -183,6 +183,7 @@ export default function Customizations() {
                 onChange={setMaxPlayers}
                 label={t('create.players.title')}
                 min={2}
+                max={global_icon_colors.length}
                 tooltip={t('create.players.tooltip')}
             />
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Color List
 export const global_icon_colors = ["red", "orange", "yellow", "green", "turqoise", "blue", "purple", "pink"];
 

@@ -14,11 +14,10 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { PlayerData } from "../../data/DataTypes";
-import { global_playerID } from "../Contexts/ConnectionContext";
+import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import EditActionPopup from "./EditActionPopup";
 import Icon from "./Icon";
-import { socket } from "../../main";
 
 interface PlayerCardProps {
   player: PlayerData;
@@ -27,10 +26,11 @@ interface PlayerCardProps {
 export default function PlayerCard({ player }: PlayerCardProps) {
   const { roomInfo, isFacilitator, updatePlayer } = useGameRoom();
   const [isEditing, setIsEditing] = useState(false);
+  const { socket, localPlayerID } = useConnection();
 
-  const isLocalPlayer = global_playerID === player.id;
+  const isLocalPlayer = localPlayerID === player.id;
   const isFac = player.isFacilitator;
-  const isLocalPlayerFacilitator = isFacilitator(global_playerID);
+  const isLocalPlayerFacilitator = isFacilitator(localPlayerID);
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);

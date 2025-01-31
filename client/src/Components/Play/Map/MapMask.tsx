@@ -33,6 +33,7 @@ const MapMask = ({ polygonCoords }: MapMaskProps) => {
                 }}
                 eventHandlers={{
                     add: (e) => {
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         const element = (e.target as any)._path;
                         if (element) {
                             element.style.cursor = "grab";

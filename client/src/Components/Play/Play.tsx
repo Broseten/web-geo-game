@@ -8,8 +8,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { global_app_name } from "../../data/data";
 import { ProgressState, RoundStage } from "../../data/DataTypes";
-import { socket } from "../../main";
-import { global_playerID } from "../Contexts/ConnectionContext";
+import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import Game from "./Game/Game";
 import GameMap from "./Map/GameMap";
@@ -19,9 +18,10 @@ import Voting from "./Voting/Voting";
 export default function Play() {
    const { t } = useTranslation();
    const { roomInfo, gameRoomState, isFacilitator } = useGameRoom();
-   const isFac = useMemo(() => isFacilitator(global_playerID), [global_playerID, isFacilitator]);
+   const { socket, localPlayerID } = useConnection();
+   const isFac = useMemo(() => isFacilitator(localPlayerID), [localPlayerID, isFacilitator]);
 
-   let getModalWindowPopup = () => {
+   const getModalWindowPopup = () => {
       switch (gameRoomState?.round.stageProgress) {
          case ProgressState.NotStarted:
             switch (gameRoomState.round.stage) {

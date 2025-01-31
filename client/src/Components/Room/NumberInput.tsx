@@ -6,12 +6,13 @@ interface NumberInputComponentProps {
    onChange: (value: number) => void;
    label: string;
    min?: number;
+   max?: number;
    step?: number;
    currencySymbol?: string;
    tooltip?: string;
 }
 
-const NumberInputComponent = ({ value, onChange, label, min = 1, step = 1, currencySymbol, tooltip }: NumberInputComponentProps) => {
+const NumberInputComponent = ({ value, onChange, label, min = 1, max = undefined, step = 1, currencySymbol, tooltip }: NumberInputComponentProps) => {
    return (
       <Box pb="20px">
          <HStack alignItems="baseline">
@@ -28,7 +29,7 @@ const NumberInputComponent = ({ value, onChange, label, min = 1, step = 1, curre
          <NumberInput
             value={currencySymbol ? `${currencySymbol}${value}` : value}
             onChange={(_, valueString) => onChange(Number(valueString))}
-            defaultValue={value} min={min} step={step}
+            defaultValue={value} min={min} step={step} max={max}
          >
             <NumberInputField color="gray.900" borderColor="gray.300" _hover={{ borderWidth: "1px" }} mt="0.5" />
             <NumberInputStepper borderColor="gray.300" borderTop="20">

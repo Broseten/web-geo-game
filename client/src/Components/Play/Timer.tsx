@@ -1,20 +1,20 @@
 import { Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ProgressState } from "../../data/DataTypes";
-import initSocket from "../../Hooks/useSocket";
-import { socket } from "../../main";
+import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 
 export default function Timer() {
     const { getTimeForCurrentRound, gameRoomState } = useGameRoom();
     const [currentTimeSeconds, setTimeSeconds] = useState(0);
+    const { socket, useSocketEvent } = useConnection();
 
-    initSocket('timer-update', (seconds: number) => setTimeSeconds(seconds));
+    useSocketEvent('timer-update', (seconds: number) => setTimeSeconds(seconds));
 
     useEffect(() => {
         // init the state
         socket.emit('request-timer-update');
-    }, []);
+    }, [socket]);
 
     let currentShownTime = currentTimeSeconds;
     if (gameRoomState?.round.stageProgress === ProgressState.NotStarted) {

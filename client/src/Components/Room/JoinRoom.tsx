@@ -4,18 +4,18 @@
 
 import { Box, Button, Center, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import initSocket from "../../Hooks/useSocket";
-import { socket } from "../../main";
+import LocaleSwitcher from "../../i18n/LanguageSwitcher";
+import { useConnection } from "../Contexts/ConnectionContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import HomeButton from "../HomeButton";
-import LocaleSwitcher from "../../i18n/LanguageSwitcher";
 
 export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
    const [rooms, setRooms] = useState<{ id: string; name: string }[] | undefined>(undefined);
+   const { socket, useSocketEvent } = useConnection();
 
    // TODO display capacity of the room
-   initSocket('room-list', (roomList: { id: string; name: string }[]) => {
+   useSocketEvent('room-list', (roomList: { id: string; name: string }[]) => {
       setRooms(roomList);
    });
 
@@ -23,7 +23,7 @@ export default function JoinRoom() {
       // TODO add a button to refresh or do it automatically in intervals
       //      (or actually let the server notify all clients about a change)
       socket.emit('request-room-list');
-   }, []); // empty array to execute this only once on refresh
+   }, [socket]);
 
    return (
       <Box>

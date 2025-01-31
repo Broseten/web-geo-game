@@ -3,19 +3,16 @@
 
 import { Box, Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
-import { socket } from "../../main";
 import '../../Theme/theme.css';
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useTranslation } from "react-i18next";
+import { useConnection } from "../Contexts/ConnectionContext";
 
 export default function SetUpInfo() {
     const { t } = useTranslation();
     const { setCurrentScreen } = useScreenSelection();
     const [isStartButtonClicked, setIsStartButtonClicked] = useState(false);
-    if (socket.connected) {
-        // auto disconnect if still connected
-        socket.disconnect;
-    }
+    const { socket } = useConnection();
 
     const lastRoomData = sessionStorage.getItem('lastRoom');
 
@@ -31,8 +28,6 @@ export default function SetUpInfo() {
                     variant="solid"
                     colorScheme="primary"
                     onClick={() => {
-                        // TODO probably navigate only after connecting?
-                        socket.connect();
                         setIsStartButtonClicked(true);
                     }}>
                     {t("home.start")}

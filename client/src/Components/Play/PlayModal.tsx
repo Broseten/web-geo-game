@@ -1,5 +1,5 @@
 // This file contains the modals that will appear during gameplay and voting
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
 
 // Simplified modal component
 interface PlayModalProps {

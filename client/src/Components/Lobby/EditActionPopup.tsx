@@ -15,10 +15,10 @@ import {
     useToast
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { global_playerID } from "../Contexts/ConnectionContext";
+import { global_icon_colors } from "../../data/DataTypes";
+import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import TextInput from "./TextInput";
-import { global_icon_colors } from "../../data/DataTypes";
 
 // Props Interface
 interface EditActionPopupProps {
@@ -41,17 +41,18 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
     const [selectedColor, setSelectedColor] = useState(player.color || "default");
     const firstFieldRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
+    const { localPlayerID } = useConnection();
 
     const handleSave = () => {
-        if (players.find((p) => p.id !== global_playerID && p.color === selectedColor)) {
+        if (players.find((p) => p.id !== localPlayerID && p.color === selectedColor)) {
             toast({
                 title: "Color taken.",
                 status: 'error',
                 isClosable: true,
-             });
+            });
             return;
         }
-        let localPlayer = getPlayerData(global_playerID);
+        const localPlayer = getPlayerData(localPlayerID);
         if (!localPlayer) {
             throw Error("Local player not found");
         }
@@ -91,7 +92,7 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
                                 {global_icon_colors.map((color) => (
                                     <Button
                                         // is the color taken by another player?
-                                        isDisabled={players.some(p => p.color === color && p.id !== global_playerID)}
+                                        isDisabled={players.some(p => p.color === color && p.id !== localPlayerID)}
                                         key={color}
                                         bg={`var(--icon-${color})`}
                                         _hover={{ opacity: "0.8" }}

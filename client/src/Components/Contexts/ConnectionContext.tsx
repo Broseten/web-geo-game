@@ -1,26 +1,50 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import initSocket from "../../Hooks/useSocket";
-import { socket } from "../../main";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { DefaultEventsMap } from "socket.io";
+import { io, Socket } from "socket.io-client";
 import { v4 } from "uuid";
 
 interface ConnectionContextProps {
    isConnected: boolean;
+   localPlayerID: string | undefined;
+   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
+   useSocketEvent: (eventName: string, eventHandler: (data: any) => void) => void;
 }
 
 const ConnectionContext = createContext<ConnectionContextProps | undefined>(undefined);
-
-// ID of the local player (global variable)
-export let global_playerID: string | undefined = undefined;
 
 interface LastSessionData {
    playerID: string;
 }
 
+const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
+const port = process.env.NODE_ENV !== 'production' ? ':1336' : (window.location.port ? `:${window.location.port}` : '');
+export const socketServerURL = `${protocol}://${window.location.hostname}${port}`;
+
 export const ConnectionProvider = ({ children }: { children: ReactNode }) => {
    const [isConnected, setIsConnected] = useState(false);
+   const [localPlayerID, setLocalPlayerID] = useState<string | undefined>(undefined);
+   const [socket] = useState<Socket>(io(socketServerURL, { autoConnect: false }));
+
+   useEffect(() => {
+      socket.connect();
+      return () => {
+         socket.disconnect();
+      }
+   }, [socket]);
+
+   const useSocketEvent = (eventName: string, eventHandler: (data: any) => void) => {
+      // well this it not perfect, but simplifies the registration for us at least for now
+      useEffect(() => {
+         socket.on(eventName, eventHandler);
+         return () => {
+            // Clean up the event listener on unmount
+            socket.off(eventName, eventHandler);
+         };
+      }, [eventHandler, eventName]); // empty array to execute this only once on refresh
+   }
 
    // on connected
-   initSocket('connect', () => {
+   useSocketEvent('connect', () => {
       setIsConnected(true);
 
       // load cookie
@@ -28,7 +52,7 @@ export const ConnectionProvider = ({ children }: { children: ReactNode }) => {
       if (lastSessionData) {
          const { playerID }: LastSessionData = JSON.parse(lastSessionData);
          // use the v4 id generated previously instead of the socket ID
-         global_playerID = playerID;
+         setLocalPlayerID(playerID);
          console.log("reconnecting with:" + playerID);
          socket.emit('reconnect', playerID);
       } else {
@@ -40,11 +64,11 @@ export const ConnectionProvider = ({ children }: { children: ReactNode }) => {
          console.log("Saving session: " + newSessiondata.playerID);
          sessionStorage.setItem('lastSession', JSON.stringify(newSessiondata));
          // for now use the assigned socket ID instead of the v4
-         global_playerID = socket.id;
+         setLocalPlayerID(socket.id);
       }
    });
 
-   initSocket('reconnected', () => {
+   useSocketEvent('reconnected', () => {
       console.log("welcome back");
       // // load cookie
       // const lastRoomData = sessionStorage.getItem('lastRoom');
@@ -59,12 +83,17 @@ export const ConnectionProvider = ({ children }: { children: ReactNode }) => {
    });
 
    // on disconnected
-   initSocket('disconnect', () => {
+   useSocketEvent('disconnect', () => {
       setIsConnected(false);
    });
 
    return (
-      <ConnectionContext.Provider value={{ isConnected }}>
+      <ConnectionContext.Provider value={{
+         isConnected,
+         localPlayerID,
+         socket,
+         useSocketEvent
+      }}>
          {children}
       </ConnectionContext.Provider>
    );

@@ -4,7 +4,7 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import { Marker, Popup } from "react-leaflet";
 import { MapMarkerData } from "../../../data/DataTypes";
 import { getSolution } from "../../../data/data";
-import { global_playerID } from "../../Contexts/ConnectionContext";
+import { useConnection } from "../../Contexts/ConnectionContext";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import { getIconColor } from "../../Lobby/Icon";
@@ -31,6 +31,7 @@ const localIconClassName = 'local-marker-icon';
 export default function MapMarker({ marker, voting }: MapMarkerProps) {
    const { gameRoomState, getPlayerData } = useGameRoom();
    const { setSelectedMarkerID } = useLocalGameData();
+   const { localPlayerID } = useConnection();
 
    if (gameRoomState === null) {
       console.error("No game room state");
@@ -47,9 +48,8 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
       popupAnchor: [0, solution?.roundIcon ? -16 : -36], // top border
    });
 
-   if (marker.ownerPlayerID === global_playerID) {
-      const { getPlayerData } = useGameRoom();
-      const localPlayerColor = getPlayerData(global_playerID)?.color;
+   if (marker.ownerPlayerID === localPlayerID) {
+      const localPlayerColor = getPlayerData(localPlayerID)?.color;
 
       // Check if a style element for the local icon already exists
       let style = document.querySelector(`#style-${localIconClassName}`);

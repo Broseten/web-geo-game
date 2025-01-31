@@ -43,6 +43,7 @@ export default function MarkersLayer() {
    }, [markers, map]);
 
    // Create a custom cluster icon with a transparent circle and shadow
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    const createClusterIcon = (cluster: any) => {
       const count = cluster.getChildCount();
       const size = Math.max(40, 16 + count * 2);  // Set size dynamically

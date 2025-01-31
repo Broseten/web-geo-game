@@ -3,13 +3,13 @@
 
 import { Box, Button, Center, Divider, HStack, Heading, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
-import { socket } from "../../../main";
+import { useConnection } from "../../Contexts/ConnectionContext";
+import { useGameMarkers } from "../../Contexts/GameMarkersContext";
+import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import ConfirmationModal from "../ConfirmationModal";
 import Timer from "../Timer";
 import MarkerInfoCard from "./MarkerInfoCard";
-import { useGameRoom } from "../../Contexts/GameRoomContext";
-import { useGameMarkers } from "../../Contexts/GameMarkersContext";
 
 interface VoteProps {
     isFacilitator: boolean;
@@ -22,6 +22,7 @@ export default function Voting({ isFacilitator }: VoteProps) {
     const { getSelectedMarker } = useLocalGameData();
     const { getRemainingVotes } = useGameMarkers();
     const { roomInfo } = useGameRoom();
+    const { socket } = useConnection();
     const selectedMarker = getSelectedMarker();
 
     const handleFinishRound = () => {

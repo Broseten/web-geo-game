@@ -1,9 +1,9 @@
 // Authors: Vojta Bruza and Grace Houser
 // Number slider for getting value for room set up
 
-import { Box, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack, VStack, Tooltip } from "@chakra-ui/react";
-import '../../Theme/theme.css';
+import { Box, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Tooltip } from "@chakra-ui/react";
 import React from "react";
+import '../../Theme/theme.css';
 
 interface NumSliderProps {
   value: number;  // Value to control the slider from parent component

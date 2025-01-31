@@ -2,8 +2,7 @@ import { Box, Button, Card, CardBody, CardFooter, CardHeader, HStack, Image } fr
 import { useEffect, useState } from "react";
 import { getSolution } from "../../../data/data";
 import { CustomLatLng, MapMarkerData, RoundStage, Vote } from "../../../data/DataTypes";
-import { socket } from "../../../main";
-import { global_playerID } from "../../Contexts/ConnectionContext";
+import { useConnection } from "../../Contexts/ConnectionContext";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import ConfirmationModal from "../ConfirmationModal";
@@ -24,6 +23,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
     const { gameRoomState, roomInfo, getPlayerData } = useGameRoom();
     const { setSelectedMarkerID } = useLocalGameData();
     const [playerVotes, setPlayerVotes] = useState<number>(0);
+    const { socket, localPlayerID } = useConnection();
 
     useEffect(() => {
         // reset selected marker on cleanup
@@ -43,7 +43,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
         setPlayerVotes(playerVotes + 1);
         const vote: Vote = {
             markerID: votedMarker.id,
-            playerID: global_playerID!,
+            playerID: localPlayerID!,
             roundIndex: gameRoomState!.round.index,
         }
 
@@ -99,7 +99,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
             <CardFooter pt="0" display="flex" justifyContent="flex-end" alignItems="center" gap="2">
                 {
                     // cannot vote for own solutions
-                    global_playerID !== marker.ownerPlayerID
+                    localPlayerID !== marker.ownerPlayerID
                     &&
                     gameRoomState?.round.stage === RoundStage.Voting
                     &&
@@ -124,7 +124,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                         </Button>
 
                         {
-                            marker.ownerPlayerID === global_playerID
+                            marker.ownerPlayerID === localPlayerID
                             &&
                             marker.roundIndex === gameRoomState?.round.index
                             &&

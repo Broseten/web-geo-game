@@ -3,16 +3,16 @@
 
 import { Box, Button, Center, Text } from "@chakra-ui/react";
 import { useMemo } from "react";
-import { socket } from "../../main";
-import { global_playerID } from "../Contexts/ConnectionContext";
+import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import PlayerRanking from "./PlayerRanking";
 
 
 export default function MidGameResults() {
     const { isFacilitator } = useGameRoom();
+    const { socket, localPlayerID } = useConnection();
 
-    const isFac = useMemo(() => isFacilitator(global_playerID), [global_playerID, isFacilitator]);
+    const isFac = useMemo(() => isFacilitator(localPlayerID), [localPlayerID, isFacilitator]);
 
     return (
         <Box overflow="auto" h="100%">

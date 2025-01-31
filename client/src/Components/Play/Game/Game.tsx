@@ -1,9 +1,8 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays the left section of the game play 
-import { Box, Button, Center, Divider, Heading, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Divider, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
-import { socket } from "../../../main";
-import { global_playerID } from "../../Contexts/ConnectionContext";
+import { useConnection } from "../../Contexts/ConnectionContext";
 import { useGameMarkers } from "../../Contexts/GameMarkersContext";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import ConfirmationModal from "../ConfirmationModal";
@@ -18,12 +17,13 @@ export default function Game({ isFacilitator }: GameProps) {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const { getPlayerData, roomInfo } = useGameRoom();
     const { getPlayerSpentBudget } = useGameMarkers();
+    const { socket, localPlayerID } = useConnection();
 
-    const localPlayer = getPlayerData(global_playerID);
+    const localPlayer = getPlayerData(localPlayerID);
 
     // TODO - needed variables
     const playerRole = localPlayer?.role;
-    const playerRemainingBudget = roomInfo ? roomInfo.initialBudget - getPlayerSpentBudget(global_playerID) : 0;
+    const playerRemainingBudget = roomInfo ? roomInfo.initialBudget - getPlayerSpentBudget(localPlayerID) : 0;
 
     const handleFinishRound = () => {
         socket.emit("progress-game");

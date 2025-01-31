@@ -4,10 +4,9 @@ import { LatLng } from "leaflet";
 import { useEffect } from "react";
 import { useMap, useMapEvents } from "react-leaflet";
 import { MapMarkerData, RoundStage } from "../../../data/DataTypes";
-import { socket } from "../../../main";
+import { useConnection } from "../../Contexts/ConnectionContext";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
-import { global_playerID } from "../../Contexts/ConnectionContext";
 
 interface MapInitializerProps {
    bounds: L.LatLngBounds;
@@ -16,6 +15,7 @@ interface MapInitializerProps {
 export default function MapInitializer({ bounds }: MapInitializerProps) {
    const { selectedSolutionID, setSelectedSolutionID } = useLocalGameData();
    const { gameRoomState } = useGameRoom();
+   const { socket, localPlayerID } = useConnection();
    const toast = useToast();
    const map = useMap();
 
@@ -44,11 +44,11 @@ export default function MapInitializer({ bounds }: MapInitializerProps) {
       }
       const roundIndex = gameRoomState.round.index;
       // Add new marker
-      let data: MapMarkerData = {
+      const data: MapMarkerData = {
          coordinates: { lat: position.lat, lng: position.lng },
          id: -1,
          solutionID: selectedSolutionID,
-         ownerPlayerID: global_playerID!,
+         ownerPlayerID: localPlayerID!,
          roundIndex: roundIndex,
          votes: [],
       };

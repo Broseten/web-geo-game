@@ -1,9 +1,8 @@
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import { MapMarkerData } from "../../data/DataTypes";
-import initSocket from "../../Hooks/useSocket";
 import { useToast } from "@chakra-ui/react";
 import { getSolution } from "../../data/data";
-import { global_playerID } from "./ConnectionContext";
+import { useConnection } from "./ConnectionContext";
 
 interface GameMarkersContextProps {
    markers: MapMarkerData[];
@@ -16,12 +15,13 @@ const GameMarkersContext = createContext<GameMarkersContextProps | undefined>(un
 export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
    const [markers, setMarkers] = useState<MapMarkerData[]>([]);
    const toast = useToast();
+   const { useSocketEvent, localPlayerID } = useConnection();
 
    const getRemainingVotes = () => {
       // add only votes from the local player
       return markers.reduce((acc, marker) => {
          return acc + marker.votes.reduce((voteAcc, vote) => {
-            return vote.playerID === global_playerID ? voteAcc + 1 : voteAcc;
+            return vote.playerID === localPlayerID ? voteAcc + 1 : voteAcc;
          }, 0);
       }, 0);
    };
@@ -34,11 +34,11 @@ export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
       }, 0);
    };
 
-   initSocket('marker-added', (marker: MapMarkerData) => {
+   useSocketEvent('marker-added', (marker: MapMarkerData) => {
       setMarkers((current) => [...current, marker]);
    });
 
-   initSocket('marker-error', (msg: string) => {
+   useSocketEvent('marker-error', (msg: string) => {
       // TODO use global error messages instead of marker-error
       toast({
          title: msg,
@@ -47,7 +47,7 @@ export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
       });
    });
 
-   initSocket('update-marker', (updatedMarker: MapMarkerData) => {
+   useSocketEvent('update-marker', (updatedMarker: MapMarkerData) => {
       setMarkers((prevMarkers) =>
          prevMarkers.map((marker) =>
             marker.id === updatedMarker.id ? updatedMarker : marker
@@ -55,7 +55,7 @@ export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
       );
    });
 
-   initSocket('set-markers', (newMarkers: MapMarkerData[]) => {
+   useSocketEvent('set-markers', (newMarkers: MapMarkerData[]) => {
       setMarkers(newMarkers);
    });
 

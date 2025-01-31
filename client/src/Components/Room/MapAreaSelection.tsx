@@ -53,11 +53,12 @@ const MapAreaSelection = forwardRef<MapAreaSelectionRef>((_, ref) => {
          map.addControl(areaSelection);
 
          // Add the search control
-         const geocoder = L.Control.geocoder({
+         L.Control.geocoder({
             defaultMarkGeocode: true,
             // Customize the position here 'topright', 'topleft', 'bottomleft', or 'bottomright'
             position: "topleft",
          })
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .on("markgeocode", function (e: any) {
                const bbox = e.geocode.bbox;
                const bounds = L.latLngBounds(

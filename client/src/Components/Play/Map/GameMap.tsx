@@ -3,7 +3,7 @@ import L, { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
-import { socket } from "../../../main";
+import { useConnection } from "../../Contexts/ConnectionContext";
 import MapInitializer from "./MapInitializer";
 import MapMask from "./MapMask";
 import MarkersLayer from "./MarkersLayer";
@@ -13,6 +13,12 @@ interface GameMapProps {
 }
 
 export default function GameMap({ polygon }: GameMapProps) {
+   const { socket } = useConnection();
+
+   useEffect(() => {
+      socket.emit('request-map-markers');
+   }, []);
+
    if (!polygon) {
       console.error("Error: Polygon is null in GameMap component.");
       return null;
@@ -20,10 +26,6 @@ export default function GameMap({ polygon }: GameMapProps) {
 
    const bounds = polygon.getBounds();
    const polygonCoords = polygon.getLatLngs()[0] as LatLngExpression[];
-
-   useEffect(() => {
-      socket.emit('request-map-markers');
-   }, []);
 
    return (
       <MapContainer

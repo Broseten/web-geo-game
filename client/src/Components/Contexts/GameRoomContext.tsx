@@ -2,8 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import { global_solutions } from "../../data/data";
 import { GameRoomState, PlayerData, PlayerInfoUpdate, RoomInfo, RoomJoined, RoundStage, Solution } from "../../data/DataTypes";
-import initSocket from "../../Hooks/useSocket";
-import { socket } from "../../main";
+import { useConnection } from "./ConnectionContext";
 
 interface GameRoomContextProps {
     roomID: string | null;
@@ -32,13 +31,14 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     const [roomInfo, setRoomInfo] = useState<RoomJoined | null>(null);
     const [players, setPlayers] = useState<PlayerData[]>([]);
     const [gameRoomState, setGameRoomState] = useState<GameRoomState | undefined>(undefined);
+    const { socket, useSocketEvent } = useConnection();
     const toast = useToast();
 
     const getRoomSolutions = () => {
         return global_solutions.filter((s) => roomInfo?.solutionIDs.includes(s.id));
     };
 
-    initSocket('room-join-error', (msg: string) => {
+    useSocketEvent('room-join-error', (msg: string) => {
         toast({
             title: msg,
             status: 'error',
@@ -98,27 +98,27 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
         return facilitator;
     };
 
-    initSocket('room-players-info', (roomUpdate: { players: PlayerData[] }) => {
+    useSocketEvent('room-players-info', (roomUpdate: { players: PlayerData[] }) => {
         setPlayers(roomUpdate.players);
     });
 
-    initSocket('update-player-error', (mess) => {
+    useSocketEvent('update-player-error', (mess) => {
         console.error(mess);
     });
 
-    initSocket('room-state', (gameRoomState: GameRoomState) => {
+    useSocketEvent('room-state', (gameRoomState: GameRoomState) => {
         setGameRoomState(gameRoomState);
     });
 
     // same for the facilitator (creator of the room) and for the players just directly joining
-    initSocket('room-joined', (roomInfo: RoomInfo) => {
+    useSocketEvent('room-joined', (roomInfo: RoomInfo) => {
         const lastRoomID = roomInfo.id;
         sessionStorage.setItem('lastRoom', JSON.stringify({ lastRoomID }));
         setGameRoom(roomInfo.id, roomInfo.data);
         setGameRoomState(roomInfo.roomState);
     });
 
-    initSocket('room-left', () => {
+    useSocketEvent('room-left', () => {
         // TODO go back to the join screen instead of just reloading
         // reload the page on leaving a room
         location.reload();

@@ -4,10 +4,8 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { GameRoomState } from "../../data/DataTypes";
-import initSocket from "../../Hooks/useSocket";
 import LocaleSwitcher from "../../i18n/LanguageSwitcher";
-import { socket } from "../../main";
-import { global_playerID } from "../Contexts/ConnectionContext";
+import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import HomeButton from "../HomeButton";
@@ -16,8 +14,9 @@ import UserList from "./UserList";
 export default function Lobby() {
    const { roomID, roomInfo, isFacilitator, setGameRoomState } = useGameRoom();
    const { setCurrentScreen } = useScreenSelection();
+   const { socket, useSocketEvent, localPlayerID } = useConnection();
 
-   initSocket('start-game', (roomState: GameRoomState) => {
+   useSocketEvent('start-game', (roomState: GameRoomState) => {
       setGameRoomState(roomState);
       setCurrentScreen("play");
    });
@@ -46,7 +45,7 @@ export default function Lobby() {
             Welcome to the {roomInfo ? roomInfo.name : "unknown"} lobby!
          </Text>
          <Text pb={10} fontSize="md" color="gray.900" textAlign="center">
-            {isFacilitator(global_playerID)
+            {isFacilitator(localPlayerID)
                ? "Start the game when all players are ready."
                : "The facilitator will start the game when everyone is ready."}
          </Text>
@@ -55,7 +54,7 @@ export default function Lobby() {
          <UserList />
 
          {/* Start Game Button */}
-         {isFacilitator(global_playerID) && (
+         {isFacilitator(localPlayerID) && (
             <Button
                mt={10}
                colorScheme="primary" variant="solid"
