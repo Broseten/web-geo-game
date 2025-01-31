@@ -1,15 +1,17 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays the home screen  
 
-import { Box, Center, Heading, HStack, Image, Link, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, HStack, Image, Link, Text } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import '../../Theme/theme.css';
 import { global_app_name } from "../../data/data";
-import SetUpInfo from "./SetUpInfo";
-import { useTranslation } from "react-i18next";
 import LocaleSwitcher from "../../i18n/LanguageSwitcher";
+import SetUpInfo from "./SetUpInfo";
+import { useScreenSelection } from "../Contexts/useScreenSelection";
 
 export default function HomeScreen() {
    const { t } = useTranslation();
+   const { setCurrentScreen } = useScreenSelection(); // Get the current screen from context
 
    return (
       <Box
@@ -50,13 +52,23 @@ export default function HomeScreen() {
                      textShadow='1px 1px 8px #444444'
                      height="2em"
                      padding="20px"
-                     >
+                  >
                      {t("home.desc")}
                   </Text>
                </Center>
 
                {/* Buttons - Start and Join/Create Room */}
                <Center>{<SetUpInfo />}</Center>
+               <Center>
+                  <Button mt={15}
+                     colorScheme="primary"
+                     variant='outline'
+                     onClick={() => {
+                        setCurrentScreen('about');
+                     }}>
+                     {t("home.about")}
+                  </Button>
+               </Center>
 
                <Center position="absolute" left="50%" bottom="10" transform="translateX(-50%)">
                   <HStack>

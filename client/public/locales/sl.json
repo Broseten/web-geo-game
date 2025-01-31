@@ -54,7 +54,8 @@
     "choose": "Za začetek izberite možnost sobe spodaj!",
     "create": "Ustvari",
     "join": "Pridruži se",
-    "rejoin": "Poskusite se ponovno pridružiti"
+    "rejoin": "Poskusite se ponovno pridružiti",
+    "about": "Približno"
   },
   "game": {
     "modal": {
@@ -75,6 +76,35 @@
         "message": "Moderator mora napredovati v naslednji krog.",
         "button": "Naslednji krog"
       }
+    }
+  },
+  "about": {
+    "desc": "Ta igra je interaktivno orodje za vključevanje skupnosti in lokalnih oblasti pri soustvarjanju mestnih rešitev. \nTa digitalna platforma olajša participativno prostorsko odločanje z reševanjem nasprotujočih si perspektiv in spodbujanjem sodelovanja. \nUdeleženci sodelujejo pri predlaganju, razpravljanju in glasovanju o rešitvah, prilagojenih specifičnim ekološkim, socialnim in gospodarskim potrebam v regiji. \nTa postopek spodbuja vključujoče odločanje in spodbuja inovativne rešitve, ki jih vodijo v skupnosti za trajnostni razvoj.",
+    "how-to-play": {
+      "desc": {
+        "beforeStartDescription": "Povodniki postavljajo oder tako, da določijo zanimivo območje in prilagajajo igro, tako da narišejo poligon in razmejijo meje igre. \nOBLIKOVANJI nato izberejo seznam rešitev EBA, ki ustrezajo lokalnemu kontekstu, in zagotavljajo, da se uskladijo z regionalnimi izzivi.",
+        "beforeStartTitle": "Preden se igra začne:",
+        "phase1Steps": {
+          "1": "Izberite rešitve z leve plošče in jih postavite na zemljevid znotraj vnaprej določenega območja.",
+          "2": "Vse rešitve postavite pred iztekom časovnika.",
+          "3": "Uporabite spustnika, da preberete opis vsake rešitve, preden jo postavite na zemljevid.",
+          "4": "Vsak igralec lahko izbere omejeno število rešitev."
+        },
+        "phase1Title": "1. faza: Postavite rešitve",
+        "phase2Steps": {
+          "1": "Kliknite rešitve na zemljevidu, ki je bil postavljen v prejšnjem krogu, in glasujte.",
+          "2": "Pred iztekom časovnika uporabite vse svoje glasove za rešitve.",
+          "3": "Kliknite rešitve, da pred glasovanjem preberete vsak opis.",
+          "4": "Vsak igralec ima omejeno število glasov, kar spodbuja strateško odločanje."
+        },
+        "phase2Title": "Faza 2: Glasovanje"
+      },
+      "title": "Kako igrati igro?"
+    }
+  },
+  "generic": {
+    "button": {
+      "back": "Nazaj"
     }
   }
 }

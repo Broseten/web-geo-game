@@ -14,6 +14,7 @@ import JoinRoom from './Components/Room/JoinRoom';
 import { ProgressState, RoundStage } from './data/DataTypes';
 import { initGlobalData } from './data/data';
 import { socketServerURL } from './Components/Contexts/ConnectionContext';
+import AboutScreen from './Components/Home/AboutScreen';
 
 async function loadData(socketServerURL: string, language: string | undefined) {
    // TODO check if correctly async no time now (move the try block from main to here etc.)
@@ -59,6 +60,8 @@ function App() {
       switch (screenToSwitch) {
          case 'home':
             return <HomeScreen />;
+         case 'about':
+            return <AboutScreen />;
          case 'join':
             return <JoinRoom />;
          case 'create':

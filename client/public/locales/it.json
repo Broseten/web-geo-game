@@ -54,7 +54,8 @@
     "choose": "Scegli un'opzione di camera qui sotto per iniziare!",
     "create": "Creare",
     "join": "Giuntura",
-    "rejoin": "Prova Rientra"
+    "rejoin": "Prova Rientra",
+    "about": "Di"
   },
   "game": {
     "modal": {
@@ -75,6 +76,35 @@
         "message": "Il facilitatore deve passare al turno successivo.",
         "button": "Prossimo turno"
       }
+    }
+  },
+  "about": {
+    "desc": "Questo gioco è uno strumento interattivo per coinvolgere le comunità e le autorità locali nel co-creazione di soluzioni urbane. \nQuesta piattaforma digitale facilita il processo decisionale spaziale partecipativo affrontando le prospettive contrastanti e promuovendo la collaborazione. \nI partecipanti lavorano insieme per proporre, discutere e votare soluzioni su misura per le esigenze ecologiche, sociali ed economiche specifiche della regione. \nQuesto processo incoraggia il processo decisionale inclusivo e promuove soluzioni innovative basate sulla comunità per lo sviluppo sostenibile.",
+    "how-to-play": {
+      "desc": {
+        "beforeStartDescription": "I facilitatori hanno preparato il palcoscenico definendo l'area di interesse e personalizzando il gioco disegnando un poligono e delineando i confini del gioco. \nI facilitatori selezionano quindi un elenco di soluzioni EBA adatte al contesto locale, garantendo che si allineino con le sfide regionali.",
+        "beforeStartTitle": "Prima dell'inizio del gioco:",
+        "phase1Steps": {
+          "1": "Seleziona soluzioni dal pannello sinistro e posizionarle sulla mappa all'interno dell'area predefinita.",
+          "2": "Posizionare tutte le soluzioni prima della scadenza del timer.",
+          "3": "Usa il discesa per leggere la descrizione di ciascuna soluzione prima di posizionarlo sulla mappa.",
+          "4": "Ogni giocatore può selezionare un numero limitato di soluzioni."
+        },
+        "phase1Title": "Fase 1: Posiziona soluzioni",
+        "phase2Steps": {
+          "1": "Fai clic su soluzioni sulla mappa inserita nel round precedente e vota.",
+          "2": "Utilizza tutti i tuoi voti per le soluzioni prima della scadenza del timer.",
+          "3": "Fai clic sulle soluzioni per leggere ogni descrizione prima del voto.",
+          "4": "Ogni giocatore ha un numero limitato di voti, incoraggiando il processo decisionale strategico."
+        },
+        "phase2Title": "Fase 2: voto"
+      },
+      "title": "Come giocare?"
+    }
+  },
+  "generic": {
+    "button": {
+      "back": "Indietro"
     }
   }
 }

@@ -54,7 +54,8 @@
     "choose": "¡Elija una opción de habitación a continuación para comenzar!",
     "create": "Crear",
     "join": "Unirse",
-    "rejoin": "Intenta volver a unirte"
+    "rejoin": "Intenta volver a unirte",
+    "about": "Acerca de"
   },
   "game": {
     "modal": {
@@ -75,6 +76,35 @@
         "message": "El facilitador necesita avanzar a la siguiente ronda.",
         "button": "Próxima ronda"
       }
+    }
+  },
+  "about": {
+    "desc": "Este juego es una herramienta interactiva para involucrar a las comunidades y las autoridades locales en la creación de soluciones urbanas. \nEsta plataforma digital facilita la toma de decisiones espaciales participativas al abordar perspectivas conflictivas y promover la colaboración. \nLos participantes trabajan juntos para proponer, discutir y votar sobre soluciones adaptadas a las necesidades ecológicas, sociales y económicas específicas de la región. \nEste proceso fomenta la toma de decisiones inclusivas y fomenta soluciones innovadoras e impulsadas por la comunidad para el desarrollo sostenible.",
+    "how-to-play": {
+      "desc": {
+        "beforeStartDescription": "Los facilitadores prepararon el escenario definiendo el área de interés y personalizando el juego dibujando un polígono y delineando los límites del juego. \nLos facilitadores luego seleccionan una lista de soluciones EBA adecuadas para el contexto local, asegurando que se alineen con los desafíos regionales.",
+        "beforeStartTitle": "Antes de que comience el juego:",
+        "phase1Steps": {
+          "1": "Seleccione soluciones del panel izquierdo y colóquelas en el mapa dentro del área predefinida.",
+          "2": "Coloque todas las soluciones antes de que expire el temporizador.",
+          "3": "Use el menú desplegable para leer la descripción de cada solución antes de colocarla en el mapa.",
+          "4": "Cada jugador puede seleccionar un número limitado de soluciones."
+        },
+        "phase1Title": "Fase 1: Soluciones de lugar",
+        "phase2Steps": {
+          "1": "Haga clic en soluciones en el mapa colocado en la ronda anterior y vote.",
+          "2": "Utilice todos sus votos para soluciones antes de que expire el temporizador.",
+          "3": "Haga clic en las soluciones para leer cada descripción antes de votar.",
+          "4": "Cada jugador tiene un número limitado de votos, alentando la toma de decisiones estratégicas."
+        },
+        "phase2Title": "Fase 2: Votación"
+      },
+      "title": "¿Cómo jugar el juego?"
+    }
+  },
+  "generic": {
+    "button": {
+      "back": "Atrás"
     }
   }
 }

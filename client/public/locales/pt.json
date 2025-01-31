@@ -54,7 +54,8 @@
     "choose": "Escolha uma opção de quarto abaixo para começar!",
     "create": "Criar",
     "join": "Juntar",
-    "rejoin": "Tente reingressar"
+    "rejoin": "Tente reingressar",
+    "about": "Sobre"
   },
   "game": {
     "modal": {
@@ -75,6 +76,35 @@
         "message": "O facilitador precisa avançar para a próxima rodada.",
         "button": "Próxima Rodada"
       }
+    }
+  },
+  "about": {
+    "desc": "Este jogo é uma ferramenta interativa para envolver comunidades e autoridades locais na criação de soluções urbanas. \nEssa plataforma digital facilita a tomada de decisão espacial participativa, abordando perspectivas conflitantes e promovendo a colaboração. \nOs participantes trabalham juntos para propor, discutir e votar em soluções adaptadas às necessidades ecológicas, sociais e econômicas específicas da região. \nEsse processo incentiva a tomada de decisões inclusivas e promove soluções inovadoras e orientadas pela comunidade para o desenvolvimento sustentável.",
+    "how-to-play": {
+      "desc": {
+        "beforeStartDescription": "Os facilitadores prepararam o terreno, definindo a área de interesse e personalizando o jogo desenhando um polígono e delineando os limites do jogo. \nOs facilitadores selecionam uma lista de soluções da EBA adequadas ao contexto local, garantindo que eles se alinhem aos desafios regionais.",
+        "beforeStartTitle": "Antes do início do jogo:",
+        "phase1Steps": {
+          "1": "Selecione soluções no painel esquerdo e coloque-as no mapa na área predefinida.",
+          "2": "Coloque todas as soluções antes que o timer expire.",
+          "3": "Use o menu suspenso para ler a descrição de cada solução antes de colocá -la no mapa.",
+          "4": "Cada jogador pode selecionar um número limitado de soluções."
+        },
+        "phase1Title": "Fase 1: Coloque soluções",
+        "phase2Steps": {
+          "1": "Clique em soluções no mapa colocado na rodada anterior e vote.",
+          "2": "Utilize todos os seus votos para soluções antes que o timer expire.",
+          "3": "Clique nas soluções para ler cada descrição antes da votação.",
+          "4": "Cada jogador tem um número limitado de votos, incentivando a tomada de decisões estratégicas."
+        },
+        "phase2Title": "Fase 2: votação"
+      },
+      "title": "Como jogar o jogo?"
+    }
+  },
+  "generic": {
+    "button": {
+      "back": "Voltar"
     }
   }
 }

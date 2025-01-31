@@ -3,10 +3,10 @@
 
 import { Box, Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
-import '../../Theme/theme.css';
-import { useScreenSelection } from "../Contexts/useScreenSelection";
 import { useTranslation } from "react-i18next";
+import '../../Theme/theme.css';
 import { useConnection } from "../Contexts/ConnectionContext";
+import { useScreenSelection } from "../Contexts/useScreenSelection";
 
 export default function SetUpInfo() {
     const { t } = useTranslation();
@@ -35,7 +35,6 @@ export default function SetUpInfo() {
             </Box>
         )
     }
-
     // Create or Join room button options - user decision 
     // Rejoin option available if user refreshed page 
     else return (

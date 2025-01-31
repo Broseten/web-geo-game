@@ -54,7 +54,8 @@
     "choose": "Başlamak için aşağıdan bir oda seçeneği seçin!",
     "create": "Yaratmak",
     "join": "Katılmak",
-    "rejoin": "Yeniden katılmayı deneyin"
+    "rejoin": "Yeniden katılmayı deneyin",
+    "about": "Hakkında"
   },
   "game": {
     "modal": {
@@ -75,6 +76,35 @@
         "message": "Kolaylaştırıcının bir sonraki tura geçmesi gerekiyor.",
         "button": "Sonraki Tur"
       }
+    }
+  },
+  "about": {
+    "desc": "Bu oyun, toplulukları ve yerel yetkilileri birlikte yaratan kentsel çözümlerle meşgul etmek için etkileşimli bir araçtır. \nBu dijital platform, çelişkili perspektifleri ele alarak ve işbirliğini teşvik ederek katılımcı mekansal karar almayı kolaylaştırır. \nKatılımcılar, bölgenin özel ekolojik, sosyal ve ekonomik ihtiyaçlarına göre uyarlanan çözümleri önermek, tartışmak ve oy vermek için birlikte çalışırlar. \nBu süreç kapsayıcı karar almayı teşvik eder ve sürdürülebilir kalkınma için yenilikçi, toplum odaklı çözümler teşvik eder.",
+    "how-to-play": {
+      "desc": {
+        "beforeStartDescription": "Kolaylaştırıcılar, ilgi alanını tanımlayarak ve bir çokgen çizerek ve oyunun sınırlarını tanımlayarak oyunu özelleştirerek sahneyi belirlediler. \nKolaylaştırıcılar daha sonra bölgesel zorluklarla uyumlu olmalarını sağlayan yerel bağlamda uygun EBA çözümlerinin bir listesini seçerler.",
+        "beforeStartTitle": "Oyun başlamadan önce:",
+        "phase1Steps": {
+          "1": "Sol panelden çözümleri seçin ve bunları önceden tanımlanmış alan içindeki haritaya yerleştirin.",
+          "2": "Zamanlayıcı sona ermeden önce tüm çözümleri yerleştirin.",
+          "3": "Haritaya yerleştirmeden önce her çözümün açıklamasını okumak için açılır listeyi kullanın.",
+          "4": "Her oyuncu sınırlı sayıda çözüm seçebilir."
+        },
+        "phase1Title": "Aşama 1: Yer Çözümleri",
+        "phase2Steps": {
+          "1": "Önceki turda yerleştirilen haritadaki çözümleri tıklayın ve oy verin.",
+          "2": "Zamanlayıcı sona ermeden önce tüm oylarınızı çözümler için kullanın.",
+          "3": "Oylamadan önce her açıklamayı okumak için çözümleri tıklayın.",
+          "4": "Her oyuncunun stratejik karar almayı teşvik eden sınırlı sayıda oyu vardır."
+        },
+        "phase2Title": "Aşama 2: Oylama"
+      },
+      "title": "Oyunu nasıl oynatılır?"
+    }
+  },
+  "generic": {
+    "button": {
+      "back": "Geri"
     }
   }
 }

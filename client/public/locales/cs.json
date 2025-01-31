@@ -5,7 +5,8 @@
     "choose": "Vyberte možnost místnosti níže, abyste začali!",
     "rejoin": "Zkusit znovu připojit",
     "create": "Vytvořit",
-    "join": "Připojit se"
+    "join": "Připojit se",
+    "about": "O"
   },
   "create": {
     "map": {
@@ -75,6 +76,35 @@
         "message": "Facilitátor musí postoupit do dalšího kola.",
         "button": "Další kolo"
       }
+    }
+  },
+  "about": {
+    "desc": "Tato hra je interaktivním nástrojem pro zapojení komunit a místních úřadů do společného vytváření městských řešení. \nTato digitální platforma usnadňuje participativní prostorové rozhodování tím, že se zabývá konfliktními perspektivami a podporou spolupráce. \nÚčastníci spolupracují na tom, aby navrhovali, diskutovali a hlasovali o řešeních přizpůsobených specifickým ekologickým, sociálním a ekonomickým potřebám regionu. \nTento proces podporuje inkluzivní rozhodování a podporuje inovativní, komunitní řešení pro udržitelný rozvoj.",
+    "how-to-play": {
+      "desc": {
+        "beforeStartDescription": "Facilitátoři připravili jeviště definováním oblasti zájmu a přizpůsobením hry nakreslením polygonu a vymezením hranic hry. \nFacilitátoři pak vyberou seznam řešení EBA vhodných pro místní kontext a zajišťují, aby se shodovali s regionálními výzvami.",
+        "beforeStartTitle": "Než hra začne:",
+        "phase1Steps": {
+          "1": "Vyberte řešení z levého panelu a umístěte je na mapu v předdefinované oblasti.",
+          "2": "Umístěte všechna řešení před vypršením časovače.",
+          "3": "Před umístěním na mapu použijte rozbalovací nabídku a přečtěte si popis každého řešení.",
+          "4": "Každý hráč si může vybrat omezený počet řešení."
+        },
+        "phase1Title": "Fáze 1: Umístěte řešení",
+        "phase2Steps": {
+          "1": "Klikněte na řešení na mapě umístěná v předchozím kole a hlasujte.",
+          "2": "Před vypršením časovače použijte všechny své hlasy pro řešení.",
+          "3": "Před hlasováním klikněte na řešení a přečtěte si každý popis.",
+          "4": "Každý hráč má omezený počet hlasů a podporuje strategické rozhodování."
+        },
+        "phase2Title": "Fáze 2: Hlasování"
+      },
+      "title": "Jak hrát hru?"
+    }
+  },
+  "generic": {
+    "button": {
+      "back": "Zadní"
     }
   }
 }
