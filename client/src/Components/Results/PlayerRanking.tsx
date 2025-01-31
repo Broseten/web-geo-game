@@ -6,6 +6,7 @@ import '../../Theme/theme.css';
 import Icon from "../Lobby/Icon";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useGameMarkers } from "../Contexts/GameMarkersContext";
+import { getSolution } from "../../data/data";
 
 
 export default function PlayerRanking() {
@@ -13,13 +14,14 @@ export default function PlayerRanking() {
     const { markers } = useGameMarkers();
 
     const playersWithVotes = players.map(player => {
-        const votes = markers.reduce((acc, marker) => {
+        const { votes, spent } = markers.reduce((acc, marker) => {
             if (marker.ownerPlayerID === player.id) {
-                return acc + marker.votes.length;
+                acc.votes += marker.votes.length;
+                acc.spent += getSolution(marker.solutionID)?.price || 0;
             }
             return acc;
-        }, 0);
-        return { ...player, votes };
+        }, { votes: 0, spent: 0 });
+        return { ...player, votes, spent };
     });
 
     return (
@@ -28,7 +30,8 @@ export default function PlayerRanking() {
 
                 {/* For Loop of Players - sorted by score */}
                 {
-                    playersWithVotes && playersWithVotes.sort((a, b) => b.votes - a.votes).map((player) => (
+                    // sort by score and then by how much they spent
+                    playersWithVotes && playersWithVotes.sort((a, b) => b.votes - a.votes || a.spent - b.spent).map((player) => (
 
                         /* Player Card */
                         < Card
@@ -51,13 +54,10 @@ export default function PlayerRanking() {
 
                             <CardBody>
                                 <Text fontWeight="bold">
-                                    Score: {markers.reduce((acc, marker) => {
-                                        if (marker.ownerPlayerID === player.id) {
-                                            // sum all votes for one player
-                                            return acc + marker.votes.length;
-                                        }
-                                        else return acc;
-                                    }, 0)}
+                                    Score: {player.votes}
+                                </Text>
+                                <Text fontWeight="bold">
+                                    Spent: {player.spent}
                                 </Text>
                             </CardBody>
                         </Card>

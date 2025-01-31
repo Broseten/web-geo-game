@@ -7,6 +7,7 @@ interface ConnectionContextProps {
    isConnected: boolean;
    localPlayerID: string | undefined;
    socket: Socket<DefaultEventsMap, DefaultEventsMap>;
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    useSocketEvent: (eventName: string, eventHandler: (data: any) => void) => void;
 }
 
@@ -32,6 +33,7 @@ export const ConnectionProvider = ({ children }: { children: ReactNode }) => {
       }
    }, [socket]);
 
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    const useSocketEvent = (eventName: string, eventHandler: (data: any) => void) => {
       // well this it not perfect, but simplifies the registration for us at least for now
       useEffect(() => {
