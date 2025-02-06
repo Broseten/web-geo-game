@@ -103,7 +103,8 @@
   },
   "generic": {
     "button": {
-      "back": "Indietro"
+      "back": "Indietro",
+      "play": "Giocare"
     }
   }
 }

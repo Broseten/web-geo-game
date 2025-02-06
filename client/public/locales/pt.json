@@ -103,7 +103,8 @@
   },
   "generic": {
     "button": {
-      "back": "Voltar"
+      "back": "Voltar",
+      "play": "Jogar"
     }
   }
 }

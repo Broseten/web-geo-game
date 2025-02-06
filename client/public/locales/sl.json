@@ -103,7 +103,8 @@
   },
   "generic": {
     "button": {
-      "back": "Nazaj"
+      "back": "Nazaj",
+      "play": "Igrati"
     }
   }
 }

@@ -10,8 +10,10 @@ import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import HomeButton from "../HomeButton";
 import UserList from "./UserList";
+import { useTranslation } from "react-i18next";
 
 export default function Lobby() {
+   const { t } = useTranslation();
    const { roomID, roomInfo, isFacilitator, setGameRoomState } = useGameRoom();
    const { setCurrentScreen } = useScreenSelection();
    const { socket, useSocketEvent, localPlayerID } = useConnection();
@@ -23,7 +25,7 @@ export default function Lobby() {
 
    useEffect(() => {
       socket.emit("request-room-players-info", roomID);
-   }, []);
+   }, [roomID, socket]);
 
    return (
       <Flex
@@ -42,7 +44,11 @@ export default function Lobby() {
             color="primary.500"
             textAlign="center"
          >
-            Welcome to the {roomInfo ? roomInfo.name : "unknown"} lobby!
+            {
+               t('lobby.welcome-message', {
+                  roomName: roomInfo ? roomInfo.name : 'unknown'
+               })
+            }
          </Text>
          <Text pb={10} fontSize="md" color="gray.900" textAlign="center">
             {isFacilitator(localPlayerID)
@@ -62,7 +68,7 @@ export default function Lobby() {
                   socket.emit("progress-game");
                }}
             >
-               Play
+               {t('generic.button.play')}
             </Button>
          )}
 

@@ -103,7 +103,8 @@
   },
   "generic": {
     "button": {
-      "back": "Geri"
+      "back": "Geri",
+      "play": "Oynamak"
     }
   }
 }

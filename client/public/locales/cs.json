@@ -103,7 +103,8 @@
   },
   "generic": {
     "button": {
-      "back": "Zadní"
+      "back": "Zadní",
+      "play": "Hrát"
     }
   }
 }

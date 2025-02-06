@@ -103,7 +103,8 @@
   },
   "generic": {
     "button": {
-      "back": "Z powrotem"
+      "back": "Z powrotem",
+      "play": "Grać"
     }
   }
 }

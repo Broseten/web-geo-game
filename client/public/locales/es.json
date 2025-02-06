@@ -103,7 +103,8 @@
   },
   "generic": {
     "button": {
-      "back": "Atrás"
+      "back": "Atrás",
+      "play": "Jugar"
     }
   }
 }
