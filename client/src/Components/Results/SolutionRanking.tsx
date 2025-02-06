@@ -50,6 +50,7 @@ export default function SolutionRanking() {
             { id: 'voted_by_in', title: 'Voted by (in Round)' },
             { id: 'solution_name', title: 'Solution (Name)' },
             { id: 'solution_id', title: 'Solution (ID)' },
+            { id: 'solution_cost', title: 'Solution Cost' },
             { id: 'placed_by_name', title: 'Placed by (Name)' },
             { id: 'placed_by_role', title: 'Placed by (Role)' },
             { id: 'placed_by_color', title: 'Placed by (Color)' },
@@ -59,7 +60,7 @@ export default function SolutionRanking() {
       // declare rows array
       const records: {
          marker_id: string, lat: string, lng: string, placed_in: string, num_votes: string
-         voted_by_in: string, solution_name: string, solution_id: string,
+         voted_by_in: string, solution_name: string, solution_id: string, solution_cost: string,
          placed_by_name: string, placed_by_role: string, placed_by_color: string
       }[] = [];
 
@@ -69,7 +70,7 @@ export default function SolutionRanking() {
          const placedBy = getPlayerData(m.ownerPlayerID);
          const votedByIn_str = m.votes.map((v) => {
             const p = getPlayerData(v.playerID);
-            return `${p?.name} (round ${v.roundIndex + 1})`;
+            return `${p?.name} - ${p?.role} (round ${v.roundIndex + 1})`;
          }).join(', ');
          records.push({
             marker_id: m.id.toString(),
@@ -80,6 +81,7 @@ export default function SolutionRanking() {
             voted_by_in: votedByIn_str,
             solution_name: solution!.name,
             solution_id: solution!.id,
+            solution_cost: solution!.price.toString(),
             placed_by_name: placedBy?.name + (placedBy?.isFacilitator ? " (facilitator)" : ""),
             placed_by_role: placedBy!.role,
             placed_by_color: placedBy!.color
