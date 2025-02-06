@@ -75,6 +75,9 @@
         "message": "Kolaylaştırıcının bir sonraki tura geçmesi gerekiyor.",
         "button": "Sonraki Tur"
       }
+    },
+    "confirmation": {
+      "finish-voting": "Zamanlayıcı bitmeden oylamayı bitirmek istediğinden emin misiniz?"
     }
   },
   "about": {
@@ -106,5 +109,8 @@
       "back": "Geri",
       "play": "Oynamak"
     }
+  },
+  "lobby": {
+    "welcome-message": "{{RoomName}} lobisine hoş geldiniz!"
   }
 }

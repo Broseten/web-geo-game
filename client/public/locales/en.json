@@ -67,6 +67,9 @@
         "message": "Facilitator needs to progress to the next round.",
         "button": "Next Round"
       }
+    },
+    "confirmation": {
+      "finish-voting": "Are you sure you want to finish voting before the timer runs out?"
     }
   },
   "home": {

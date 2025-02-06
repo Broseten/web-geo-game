@@ -75,6 +75,9 @@
         "message": "Il facilitatore deve passare al turno successivo.",
         "button": "Prossimo turno"
       }
+    },
+    "confirmation": {
+      "finish-voting": "Sei sicuro di voler finire il voto prima che finisca il timer?"
     }
   },
   "about": {
@@ -106,5 +109,8 @@
       "back": "Indietro",
       "play": "Giocare"
     }
+  },
+  "lobby": {
+    "welcome-message": "Benvenuti nella lobby {{RoomName}}!"
   }
 }

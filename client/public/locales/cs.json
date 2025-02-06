@@ -75,6 +75,9 @@
         "message": "Facilitátor musí postoupit do dalšího kola.",
         "button": "Další kolo"
       }
+    },
+    "confirmation": {
+      "finish-voting": "Jste si jisti, že chcete dokončit hlasování, než dojde časovač?"
     }
   },
   "about": {
@@ -106,5 +109,8 @@
       "back": "Zadní",
       "play": "Hrát"
     }
+  },
+  "lobby": {
+    "welcome-message": "Vítejte v {{roomName}} lobby!"
   }
 }

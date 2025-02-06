@@ -75,6 +75,9 @@
         "message": "El facilitador necesita avanzar a la siguiente ronda.",
         "button": "Próxima ronda"
       }
+    },
+    "confirmation": {
+      "finish-voting": "¿Estás seguro de que quieres terminar de votar antes de que se agote el temporizador?"
     }
   },
   "about": {
@@ -106,5 +109,8 @@
       "back": "Atrás",
       "play": "Jugar"
     }
+  },
+  "lobby": {
+    "welcome-message": "¡Bienvenido al lobby {{RoomName}}!"
   }
 }

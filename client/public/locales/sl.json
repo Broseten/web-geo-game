@@ -75,6 +75,9 @@
         "message": "Moderator mora napredovati v naslednji krog.",
         "button": "Naslednji krog"
       }
+    },
+    "confirmation": {
+      "finish-voting": "Ali ste prepričani, da želite končati glasovanje, preden časovnik zmanjka?"
     }
   },
   "about": {
@@ -106,5 +109,8 @@
       "back": "Nazaj",
       "play": "Igrati"
     }
+  },
+  "lobby": {
+    "welcome-message": "Dobrodošli v preddverju {{RoomName}}!"
   }
 }

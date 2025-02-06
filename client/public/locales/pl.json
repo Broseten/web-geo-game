@@ -75,6 +75,9 @@
         "message": "Facylitator musi przejść do następnej rundy.",
         "button": "Następna runda"
       }
+    },
+    "confirmation": {
+      "finish-voting": "Czy na pewno chcesz zakończyć głosowanie, zanim skończy się timer?"
     }
   },
   "about": {
@@ -106,5 +109,8 @@
       "back": "Z powrotem",
       "play": "Grać"
     }
+  },
+  "lobby": {
+    "welcome-message": "Witamy w lobby {{RoomName}}!"
   }
 }

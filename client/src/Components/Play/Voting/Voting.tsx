@@ -10,6 +10,7 @@ import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import ConfirmationModal from "../ConfirmationModal";
 import Timer from "../Timer";
 import MarkerInfoCard from "./MarkerInfoCard";
+import { useTranslation } from "react-i18next";
 
 interface VoteProps {
     isFacilitator: boolean;
@@ -18,6 +19,7 @@ interface VoteProps {
 // TODO Voting -- will need to enable voting buttons on the markers on the map + visualize the voting somehow?
 
 export default function Voting({ isFacilitator }: VoteProps) {
+    const {t} = useTranslation();
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const { getSelectedMarker } = useLocalGameData();
     const { getRemainingVotes } = useGameMarkers();
@@ -105,7 +107,7 @@ export default function Voting({ isFacilitator }: VoteProps) {
                 isOpen={isConfirmModalOpen}
                 onClose={() => setIsConfirmModalOpen(false)}
                 onConfirm={handleFinishRound}
-                message="Are you sure you want to finish voting before the timer runs out?"
+                message={t('game.confirmation.finish-voting')}
             />
         </>
     );

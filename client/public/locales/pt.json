@@ -75,6 +75,9 @@
         "message": "O facilitador precisa avançar para a próxima rodada.",
         "button": "Próxima Rodada"
       }
+    },
+    "confirmation": {
+      "finish-voting": "Tem certeza de que deseja terminar de votar antes que o timer acabar?"
     }
   },
   "about": {
@@ -106,5 +109,8 @@
       "back": "Voltar",
       "play": "Jogar"
     }
+  },
+  "lobby": {
+    "welcome-message": "Bem -vindo ao {{RoomName}} lobby!"
   }
 }
