@@ -3,7 +3,10 @@ import { useMap } from "react-leaflet";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { markerIcon } from "../../../data/data";
 
-export default function MapSearch() {
+interface MapSearchProps {
+   bounds: L.LatLngBounds | null;
+}
+export default function MapSearch({ bounds = null }: MapSearchProps) {
    const map = useMap();
    // to remove the search marker when the room state changes
    const { gameRoomState } = useGameRoom();
@@ -14,6 +17,10 @@ export default function MapSearch() {
       if (searchControlRef.current) return;
 
       const searchControl = L.Control.geocoder({
+         geocodingQueryParams: {
+            // limit search area to the map bounds only
+            viewbox: bounds?.toBBoxString(),
+         },
          defaultMarkGeocode: false,
          position: "topleft",
       });
@@ -55,7 +62,7 @@ export default function MapSearch() {
             markerRef.current = null;
          }
       };
-   }, [map, gameRoomState]);
+   }, [map, gameRoomState, bounds]);
 
    return null;
 }

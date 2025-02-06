@@ -37,7 +37,7 @@ export default function GameMap({ polygon }: GameMapProps) {
          maxBounds={bounds}
          maxBoundsViscosity={0.8}
       >
-         <MapSearch />
+         <MapSearch bounds={polygon.getBounds()}/>
          <MapInitializer bounds={bounds} />
          <LayerControl />
          <MarkersLayer />
