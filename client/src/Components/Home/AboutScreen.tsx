@@ -7,6 +7,7 @@ import { global_app_name } from "../../data/data";
 export default function AboutScreen() {
    const { setCurrentScreen } = useScreenSelection();
 
+   // i18n error 'key not found is not' a problem...syntax issue. No easy fix. 
    const phase1Steps = t("about.how-to-play.desc.phase1Steps", { returnObjects: true }) as { [key: string]: string };
    const phase2Steps = t("about.how-to-play.desc.phase2Steps", { returnObjects: true }) as { [key: string]: string };
 

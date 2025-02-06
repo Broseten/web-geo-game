@@ -5,17 +5,12 @@ import { Box, Button, Center, HStack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import '../../Theme/theme.css';
-import { useConnection } from "../Contexts/ConnectionContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
-import { getStorage } from "../../data/data";
 
 export default function SetUpInfo() {
     const { t } = useTranslation();
     const { setCurrentScreen } = useScreenSelection();
     const [isStartButtonClicked, setIsStartButtonClicked] = useState(false);
-    const { socket } = useConnection();
-
-    const lastRoomData = getStorage().getItem('lastRoom');
 
     // conditional statements for the middle display of the Home page  
 
@@ -69,23 +64,6 @@ export default function SetUpInfo() {
                         {t("home.join")}
                     </Button>
                 </HStack>
-                {
-                    /* Rejoin Room */
-                    lastRoomData
-                    &&
-                    <Button mt={5}
-                        colorScheme="secondary"
-                        variant='outline'
-                        onClick={() => {
-                            // try joining room
-                            console.log("Rejoining room");
-                            const { lastRoomID } = JSON.parse(lastRoomData);
-                            // Emit reconnect event to the server
-                            socket.emit('join-room', lastRoomID);
-                        }}>
-                        {t("home.rejoin")}
-                    </Button>
-                }
             </VStack>
         </Center>
     )
