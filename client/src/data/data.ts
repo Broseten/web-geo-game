@@ -1,5 +1,6 @@
 import i18n from "../i18n/config";
 import { Solution } from "./DataTypes";
+import * as L from "leaflet";
 
 export const global_app_name = 'GeoDesign Game';
 document.title = global_app_name;
@@ -7,6 +8,16 @@ document.title = global_app_name;
 export const getStorage = () => {
    return process.env.NODE_ENV === 'production' ? localStorage : sessionStorage;
 }
+
+const iconWidth = 478;
+const iconHeigh = 578;
+const iconDownscale = 15;
+export const markerIcon = L.icon({
+   iconUrl: '/images/map-pin.png',
+   iconSize: [iconWidth / iconDownscale, iconHeigh / iconDownscale],
+   iconAnchor: [iconWidth / iconDownscale / 2, iconHeigh / iconDownscale], // at the bottom center
+   popupAnchor: [0, -iconHeigh / iconDownscale], // popup above the marker
+});
 
 export let global_solutions: Solution[] = [
    {

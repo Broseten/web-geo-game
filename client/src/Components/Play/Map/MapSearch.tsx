@@ -1,13 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useMap } from "react-leaflet";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
-
-// const markerIcon = L.icon({
-//    iconUrl: '/images/pin.png',
-//    iconSize: [198 / 8, 256 / 8],
-//    iconAnchor: [198 / 8 / 2, 256 / 8], // at the bottom center
-//    popupAnchor: [0, -256 / 8], // popup above the marker
-// });
+import { markerIcon } from "../../../data/data";
 
 export default function MapSearch() {
    const map = useMap();
@@ -34,7 +28,7 @@ export default function MapSearch() {
                map.removeLayer(markerRef.current);
             }
 
-            markerRef.current = L.marker(center)
+            markerRef.current = L.marker(center, { icon: markerIcon })
                .addTo(map)
                .bindPopup(e.geocode.name)
                .openPopup();

@@ -8,6 +8,7 @@ import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import "leaflet/dist/leaflet.css";
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { usePolygon } from "../Contexts/PolygonContext";
+import { markerIcon } from "../../data/data";
 
 export type MapAreaSelectionRef = {
    getMapInstance: () => L.Map | null;
@@ -16,6 +17,7 @@ export type MapAreaSelectionRef = {
 const MapAreaSelection = forwardRef<MapAreaSelectionRef>((_, ref) => {
    const { setPolygon: setMapPolygon } = usePolygon();
    const mapRef = useRef<L.Map | null>(null);
+   const markerRef = useRef<L.Marker | null>(null);
 
    // Add gesture handling to Leaflet
    L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
@@ -55,7 +57,7 @@ const MapAreaSelection = forwardRef<MapAreaSelectionRef>((_, ref) => {
          // TODO get rid of this repetitive code and use the MapSearch component instead - first MapContainer for context
          // Add the search control
          L.Control.geocoder({
-            defaultMarkGeocode: true,
+            defaultMarkGeocode: false,
             // Customize the position here 'topright', 'topleft', 'bottomleft', or 'bottomright'
             position: "topleft",
          })
@@ -67,6 +69,23 @@ const MapAreaSelection = forwardRef<MapAreaSelectionRef>((_, ref) => {
                   L.latLng(bbox.getNorthEast())
                );
                map.fitBounds(bounds);
+
+               // Remove existing marker
+               if (markerRef.current) {
+                  map.removeLayer(markerRef.current);
+               }
+
+               const { center } = e.geocode;
+               markerRef.current = L.marker(center, { icon: markerIcon })
+                  .addTo(map)
+                  .bindPopup(e.geocode.name)
+                  .openPopup();
+
+               // Allow double-click to remove the marker
+               markerRef.current.on("dblclick", () => {
+                  map.removeLayer(markerRef.current!);
+                  markerRef.current = null;
+               });
             })
             .addTo(map);
 
