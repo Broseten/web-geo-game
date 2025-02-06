@@ -3,7 +3,7 @@
 
 // src/components/Customizations.tsx
 import { InfoIcon } from "@chakra-ui/icons";
-import { Box, Button, Center, Checkbox, CheckboxGroup, HStack, Input, InputGroup, Text, Tooltip, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Checkbox, CheckboxGroup, HStack, Input, InputGroup, Text, Tooltip, useToast, VStack } from "@chakra-ui/react";
 import L from "leaflet";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -83,6 +83,7 @@ export default function Customizations() {
             }, {})
     );
     const { socket, useSocketEvent } = useConnection();
+    const toast = useToast();
 
 
     const toggleSolution = (id: string) => {
@@ -294,6 +295,15 @@ export default function Customizations() {
                         }
 
                         const selectedSolutionsIDs = Object.keys(checkedSolutions).filter((id) => checkedSolutions[id]);
+                        if (selectedSolutionsIDs.length === 0) {
+                            toast({
+                                title: "No solutions selected.",
+                                status: 'error',
+                                isClosable: true,
+                            });
+                            setLoading(false);
+                            return;
+                        }
 
                         const roomData: RoomJoined = {
                             name: roomName,
@@ -309,6 +319,9 @@ export default function Customizations() {
                             maxPlayers: maxPlayers,
                         };
                         socket.emit('create-room', roomData);
+                        setTimeout(() => {
+                            setLoading(false);
+                        }, 5000);
                     }
                     }
                 >

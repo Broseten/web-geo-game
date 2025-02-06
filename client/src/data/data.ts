@@ -72,7 +72,6 @@ export async function fetchGlobalData(language: string | undefined) {
       }
    }
    const dataResponse = await fetchWithTimeout(dataURL, { timeout: 5000 });
-   console.log(dataResponse);
    if (!dataResponse.ok) {
       console.error('Failed to fetch global data from server. Maybe the language is missing?');
       return;
