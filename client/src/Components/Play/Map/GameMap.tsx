@@ -1,12 +1,13 @@
-// Authors: Vojtech Bruza and Grace Houser
 import L, { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer } from "react-leaflet";
 import { useConnection } from "../../Contexts/ConnectionContext";
+import LayerControl from "./LayerControl";
 import MapInitializer from "./MapInitializer";
 import MapMask from "./MapMask";
 import MarkersLayer from "./MarkersLayer";
+import MapSearch from "./MapSearch";
 
 interface GameMapProps {
    polygon: L.Polygon | null;
@@ -16,8 +17,8 @@ export default function GameMap({ polygon }: GameMapProps) {
    const { socket } = useConnection();
 
    useEffect(() => {
-      socket.emit('request-map-markers');
-   }, []);
+      socket.emit("request-map-markers");
+   }, [socket]);
 
    if (!polygon) {
       console.error("Error: Polygon is null in GameMap component.");
@@ -36,16 +37,10 @@ export default function GameMap({ polygon }: GameMapProps) {
          maxBounds={bounds}
          maxBoundsViscosity={0.8}
       >
+         <MapSearch />
          <MapInitializer bounds={bounds} />
-
-         <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            minZoom={3}
-         />
-
+         <LayerControl />
          <MarkersLayer />
-
          <MapMask polygonCoords={polygonCoords} />
       </MapContainer>
    );

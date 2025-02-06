@@ -34,6 +34,7 @@ export default function MapInitializer({ bounds }: MapInitializerProps) {
             title: "No solution selected",
             status: 'info',
             isClosable: true,
+            duration: 3000,
          });
          console.log("No solution selected.");
          return;
@@ -63,7 +64,7 @@ export default function MapInitializer({ bounds }: MapInitializerProps) {
          const zoom = Math.floor(map.getBoundsZoom(bounds));
          map.setMinZoom(zoom);
       }
-   }, [bounds]);
+   }, [bounds, map]);
 
    useEffect(() => {
       const mapElement = map.getContainer();

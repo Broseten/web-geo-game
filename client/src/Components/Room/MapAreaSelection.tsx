@@ -52,6 +52,7 @@ const MapAreaSelection = forwardRef<MapAreaSelectionRef>((_, ref) => {
          // Add the area selection control to the map
          map.addControl(areaSelection);
 
+         // TODO get rid of this repetitive code and use the MapSearch component instead - first MapContainer for context
          // Add the search control
          L.Control.geocoder({
             defaultMarkGeocode: true,
@@ -73,6 +74,7 @@ const MapAreaSelection = forwardRef<MapAreaSelectionRef>((_, ref) => {
       }
    }, []);
 
+   // TODO use map container instead but then expose the map to the parent (probably use the container there?)
    return <div id="map" style={{ height: "100%", width: "100%" }} />;
 });
 
