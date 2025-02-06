@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import '../../Theme/theme.css';
 import { useConnection } from "../Contexts/ConnectionContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
+import { getStorage } from "../../data/data";
 
 export default function SetUpInfo() {
     const { t } = useTranslation();
@@ -14,7 +15,7 @@ export default function SetUpInfo() {
     const [isStartButtonClicked, setIsStartButtonClicked] = useState(false);
     const { socket } = useConnection();
 
-    const lastRoomData = sessionStorage.getItem('lastRoom');
+    const lastRoomData = getStorage().getItem('lastRoom');
 
     // conditional statements for the middle display of the Home page  
 

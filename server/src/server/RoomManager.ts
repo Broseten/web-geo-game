@@ -48,7 +48,7 @@ export class RoomManager {
       }
 
       // do not allow joining a room that has already started for player that was not in it
-      if (!targetRoom.hasNotStarted() && !targetRoom.hadPlayer(playerID)) {
+      if (targetRoom.hasStarted() && !targetRoom.hadPlayer(playerID)) {
          clientSocket.emit('room-join-error', "Cannot join a room that has already started");
          return;
       }
@@ -107,8 +107,11 @@ export class RoomManager {
       return this.rooms.get(roomId);
    }
 
-   getAvailableRoomList(): { id: string; name: string }[] {
-      return this.getRoomList().filter((room) => this.getRoom(room.id)?.hasNotStarted());
+   getAvailableRoomList(playerID: string): { id: string; name: string }[] {
+      return this.getRoomList().filter((room) => {
+         const gameRoom = this.getRoom(room.id);
+         return gameRoom && (!gameRoom.hasStarted() || gameRoom.hadPlayer(playerID));
+      });
    }
 
    // Retrieves "tuples" with roomId and room name

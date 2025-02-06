@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import { DefaultEventsMap } from "socket.io";
 import { io, Socket } from "socket.io-client";
 import { v4 } from "uuid";
+import { getStorage } from "../../data/data";
 
 interface ConnectionContextProps {
    isConnected: boolean;
@@ -20,6 +21,14 @@ interface LastSessionData {
 const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
 const port = process.env.NODE_ENV !== 'production' ? ':1336' : (window.location.port ? `:${window.location.port}` : '');
 export const socketServerURL = `${protocol}://${window.location.hostname}${port}`;
+
+function savePlayerID(id: string) {
+   const newSessiondata: LastSessionData = {
+      playerID: id
+   };
+   getStorage().setItem('lastSession', JSON.stringify(newSessiondata));
+   return newSessiondata;
+}
 
 export const ConnectionProvider = ({ children }: { children: ReactNode }) => {
    const [isConnected, setIsConnected] = useState(false);
@@ -50,9 +59,13 @@ export const ConnectionProvider = ({ children }: { children: ReactNode }) => {
       setIsConnected(true);
 
       // load cookie
-      const lastSessionData = sessionStorage.getItem('lastSession');
+      const lastSessionData = getStorage().getItem('lastSession');
       if (lastSessionData) {
-         const { playerID }: LastSessionData = JSON.parse(lastSessionData);
+         let { playerID }: LastSessionData = JSON.parse(lastSessionData);
+         if (!playerID) {
+            // if for some reason we saved wrong player id on this machine, than try to generate new
+            playerID = savePlayerID(v4()).playerID;
+         }
          // use the v4 id generated previously instead of the socket ID
          setLocalPlayerID(playerID);
          console.log("reconnecting with:" + playerID);
@@ -60,20 +73,16 @@ export const ConnectionProvider = ({ children }: { children: ReactNode }) => {
       } else {
          // no session was saved
          // create new session
-         const newSessiondata: LastSessionData = {
-            playerID: v4()
-         }
-         console.log("Saving session: " + newSessiondata.playerID);
-         sessionStorage.setItem('lastSession', JSON.stringify(newSessiondata));
-         // for now use the assigned socket ID instead of the v4
-         setLocalPlayerID(socket.id);
+         // use generated socket id as the permanent player ID
+         const newSessiondata: LastSessionData = savePlayerID(socket.id!);
+         setLocalPlayerID(newSessiondata.playerID);
       }
    });
 
    useSocketEvent('reconnected', () => {
       console.log("welcome back");
       // // load cookie
-      // const lastRoomData = sessionStorage.getItem('lastRoom');
+      // const lastRoomData = getStorage().getItem('lastRoom');
       // if (lastRoomData) {
       //    // try joining room
       //    console.log("Rejoining room");
@@ -108,3 +117,4 @@ export const useConnection = () => {
    }
    return context;
 };
+

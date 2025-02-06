@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
-import { global_solutions } from "../../data/data";
+import { getStorage, global_solutions } from "../../data/data";
 import { GameRoomState, PlayerData, PlayerInfoUpdate, RoomInfo, RoomJoined, RoundStage, Solution } from "../../data/DataTypes";
 import { useConnection } from "./ConnectionContext";
 
@@ -113,7 +113,7 @@ export const GameRoomProvider = ({ children }: { children: ReactNode }) => {
     // same for the facilitator (creator of the room) and for the players just directly joining
     useSocketEvent('room-joined', (roomInfo: RoomInfo) => {
         const lastRoomID = roomInfo.id;
-        sessionStorage.setItem('lastRoom', JSON.stringify({ lastRoomID }));
+        getStorage().setItem('lastRoom', JSON.stringify({ lastRoomID }));
         setGameRoom(roomInfo.id, roomInfo.data);
         setGameRoomState(roomInfo.roomState);
     });

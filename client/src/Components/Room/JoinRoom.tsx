@@ -8,6 +8,7 @@ import LocaleSwitcher from "../../i18n/LanguageSwitcher";
 import { useConnection } from "../Contexts/ConnectionContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import HomeButton from "../HomeButton";
+import { getStorage } from "../../data/data";
 
 export default function JoinRoom() {
    const { setCurrentScreen } = useScreenSelection();
@@ -24,6 +25,13 @@ export default function JoinRoom() {
       //      (or actually let the server notify all clients about a change)
       socket.emit('request-room-list');
    }, [socket]);
+
+   let lastRoom: string | null = null;
+   const lastRoomData = getStorage().getItem('lastRoom');
+   if (lastRoomData) {
+      const { lastRoomID } = JSON.parse(lastRoomData);
+      lastRoom = lastRoomID;
+   }
 
    return (
       <Box>
@@ -55,15 +63,15 @@ export default function JoinRoom() {
                      {
                         rooms
                         &&
-                        rooms.map((room) => (
+                        rooms.sort((a, b) => (b.id === lastRoom ? 1 : 0) - (a.id === lastRoom ? 1 : 0)).map((room) => (
                            <Button
                               w="90%"
                               variant={"solid"}
-                              colorScheme="secondary"
+                              colorScheme={"secondary"}
                               key={room.name}
                               onClick={() => {
                                  socket.emit('join-room', room.id);
-                              }}>{room.name || "No name"}
+                              }}>{(lastRoom === room.id ? `Rejoin: ${room.name}` : room.name) || "No name"}
                            </Button>))
                      }
                      {
@@ -89,6 +97,6 @@ export default function JoinRoom() {
          {/* home button at the top */}
          <HomeButton />
 
-      </Box>
+      </Box >
    );
 }

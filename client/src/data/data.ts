@@ -4,6 +4,10 @@ import { Solution } from "./DataTypes";
 export const global_app_name = 'GeoDesign Game';
 document.title = global_app_name;
 
+export const getStorage = () => {
+   return process.env.NODE_ENV === 'production' ? localStorage : sessionStorage;
+}
+
 export let global_solutions: Solution[] = [
    {
       id: "1",
