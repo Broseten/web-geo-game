@@ -1,6 +1,6 @@
 // Authors: Vojtech Bruza and Grace Houser
 
-import { Box, Button, Card, CardBody, Heading, Image, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, Heading, Image, Link, Text, VStack } from "@chakra-ui/react";
 import { createObjectCsvStringifier } from "csv-writer";
 import { getSolution, global_solutions } from "../../data/data";
 import '../../Theme/theme.css';
@@ -8,6 +8,11 @@ import { useGameMarkers } from "../Contexts/GameMarkersContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import { getIconColor } from "../Lobby/Icon";
 import { getSolutionImagePath } from "../Play/Game/SolutionInfoCard";
+import { CustomLatLng } from "../../data/DataTypes";
+
+export function getOSMLink(coordinates: CustomLatLng) {
+   return `https://www.openstreetmap.org/?mlat=${coordinates.lat}&mlon=${coordinates.lng}#map=15/${coordinates.lat}/${coordinates.lng}`;
+}
 
 export default function SolutionRanking() {
    const { markers } = useGameMarkers();
@@ -43,6 +48,7 @@ export default function SolutionRanking() {
       const csvStringifier = createObjectCsvStringifier({
          header: [
             { id: 'marker_id', title: 'Marker ID' },
+            { id: 'link', title: 'Link to OSM' },
             { id: 'lat', title: 'Latitude' },
             { id: 'lng', title: 'Longitude' },
             { id: 'placed_in', title: 'Placed in Round' },
@@ -59,7 +65,7 @@ export default function SolutionRanking() {
 
       // declare rows array
       const records: {
-         marker_id: string, lat: string, lng: string, placed_in: string, num_votes: string
+         marker_id: string, link: string, lat: string, lng: string, placed_in: string, num_votes: string
          voted_by_in: string, solution_name: string, solution_id: string, solution_cost: string,
          placed_by_name: string, placed_by_role: string, placed_by_color: string
       }[] = [];
@@ -74,6 +80,7 @@ export default function SolutionRanking() {
          }).join(', ');
          records.push({
             marker_id: m.id.toString(),
+            link: getOSMLink(m.coordinates),
             lat: m.coordinates.lat.toString(),
             lng: m.coordinates.lng.toString(),
             placed_in: (m.roundIndex + 1).toString(),
@@ -140,8 +147,14 @@ export default function SolutionRanking() {
                         <Heading size='md'> {sol.name} </Heading>
                         <Text fontSize="12px"> Placed by: {getPlayerData(marker.ownerPlayerID)?.name}, {getPlayerData(marker.ownerPlayerID)?.role} </Text>
                         <Text fontSize="12px"> Price: {sol.price} </Text>
-                        <Text fontSize="12px"> Latitude: {marker.coordinates.lat}</Text>
-                        <Text fontSize="12px"> Longitude: {marker.coordinates.lng}</Text>
+                        <Link
+                           href={getOSMLink(marker.coordinates)}
+                           target="_blank" rel="noopener noreferrer"
+                           fontSize="12px"
+                           style={{ textDecoration: "underline" }}
+                        >
+                           Show location in OSM
+                        </Link>
                      </CardBody>
 
                      <CardBody>
