@@ -7,6 +7,7 @@ import { useGameRoom } from "../../Contexts/GameRoomContext";
 import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import ConfirmationModal from "../ConfirmationModal";
 import { getSolutionImagePath } from "../Game/SolutionInfoCard";
+import { useGameMarkers } from "../../Contexts/GameMarkersContext";
 
 // helper
 export const coordsToString = (coords: CustomLatLng) => {
@@ -22,9 +23,9 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const { gameRoomState, roomInfo, getPlayerData } = useGameRoom();
     const { setSelectedMarkerID } = useLocalGameData();
-    const [playerVotes, setPlayerVotes] = useState<number>(0);
     const { useSocketEvent, socket, localPlayerID } = useConnection();
     const toast = useToast();
+    const { getRemainingVotes } = useGameMarkers();
 
     useSocketEvent('vote-error', (message: string) => {
         toast(
@@ -47,11 +48,6 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
     }
 
     const onVote = (votedMarker: MapMarkerData) => {
-        if (playerVotes >= roomInfo.maxVotes) {
-            // Prevent voting if the player has already voted 3 times
-            return;
-        }
-        setPlayerVotes(playerVotes + 1);
         const vote: Vote = {
             markerID: votedMarker.id,
             playerID: localPlayerID!,
@@ -71,6 +67,8 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
     const solImg = getSolutionImagePath(selectedSolution.image);
 
     const player = getPlayerData(marker.ownerPlayerID);
+
+    const remainingVotes = getRemainingVotes();
 
     return (
         // Solution Information Card 
@@ -118,7 +116,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                         colorScheme="secondary.500"
                         variant="custom_solid"
                         onClick={() => setIsConfirmModalOpen(true)}
-                        isDisabled={playerVotes >= roomInfo.maxVotes}
+                        isDisabled={remainingVotes >= roomInfo.maxVotes}
                     >
                         Vote
                     </Button>
@@ -129,7 +127,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                     <HStack spacing="1" align="flex-end">
                         <Button variant="outline" size="sm"
                             onClick={() => setSelectedMarkerID(null)}
-                            isDisabled={playerVotes >= roomInfo.maxVotes}
+                            isDisabled={remainingVotes >= roomInfo.maxVotes}
                         >
                             Back to List
                         </Button>
