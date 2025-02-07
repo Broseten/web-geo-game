@@ -97,6 +97,10 @@ export class ServerIO {
             this.roomManager.leaveRoom(clientSocket);
         });
 
+        clientSocket.on('kick-player', (playerID) => {
+            this.roomManager.removePlayerFromRoom(playerID);
+        });
+
         clientSocket.on('progress-game', () => {
             // get the room the player is in
             const roomId = this.roomManager.getRoomIdBySocket(clientSocket);

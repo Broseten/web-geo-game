@@ -1,7 +1,7 @@
-import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
-import { MapMarkerData } from "../../data/DataTypes";
 import { useToast } from "@chakra-ui/react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { getSolution } from "../../data/data";
+import { MapMarkerData } from "../../data/DataTypes";
 import { useConnection } from "./ConnectionContext";
 import { useGameRoom } from "./GameRoomContext";
 

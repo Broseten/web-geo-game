@@ -380,22 +380,24 @@ export class GameRoom {
     }
 
     // Removes a player from the room
-    removePlayer(playerId: string): boolean {
+    removePlayer(playerId: string) {
         const player = this.getPlayer(playerId);
         if (player) {
             // save the player data if the player wants to rejoin later
             this.removedPlayers.set(playerId, player);
 
+            const clientSocket = player.getSocket();
+
             // remove the player from the room
-            player.getSocket().leave(this.id);
+            clientSocket.leave(this.id);
             this.players.delete(playerId);
             console.info(`Player ${playerId} left room ${this.id}`);
 
+            clientSocket.emit('room-left');
+
             // Notify remaining players
             this.sendPlayersUpdate();
-            return true;
         }
-        return false;
     }
 
     private getPlayer(playerId: string) {
@@ -413,9 +415,12 @@ export class GameRoom {
     progressGame(): void {
         console.log('Trying to progress game');
         if (this.gameRoomProgress?.getGameProgressState() === ProgressState.NotStarted) {
-            this.gameRoomProgress.startGame();
-            const roomState = this.gameRoomProgress.getRoomState();
-            this.ioServer.socketServer.to(this.id).emit('start-game', roomState);
+            if (this.gameRoomProgress.startGame()) {
+                // clear the removed players to prevent rejoining kicked players after game start
+                this.removedPlayers.clear();
+                const roomState = this.gameRoomProgress.getRoomState();
+                this.ioServer.socketServer.to(this.id).emit('start-game', roomState);
+            }
             return;
         }
         if (this.gameRoomProgress.next()) {

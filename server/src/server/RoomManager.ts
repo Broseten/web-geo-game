@@ -82,15 +82,17 @@ export class RoomManager {
         clientSocket: Socket<import('socket.io').DefaultEventsMap, import('socket.io').DefaultEventsMap, import('socket.io').DefaultEventsMap, any>
     ) {
         const playerID = this.ioServer.GetPlayerID(clientSocket.id);
+        this.removePlayerFromRoom(playerID);
+    }
+
+    removePlayerFromRoom(playerID: string) {
         const roomId = this.playerRoomMap.get(playerID);
         if (!roomId) {
             console.warn(`Player ${playerID} is not in any room.`);
             return;
         }
         const targetRoom = this.rooms.get(roomId);
-        if (targetRoom?.removePlayer(playerID)) {
-            clientSocket.emit('room-left');
-        }
+        targetRoom?.removePlayer(playerID);
     }
 
     // Starts a round in the specified room

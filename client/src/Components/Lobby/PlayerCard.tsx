@@ -129,6 +129,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
                 colorScheme="red"
                 aria-label="Remove player"
                 icon={<DeleteIcon />}
+                onClick={() => socket.emit('kick-player', player.id)}
               />
             </Tooltip>
           )}
