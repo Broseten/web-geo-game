@@ -57,7 +57,7 @@ export default function PlayerRanking() {
                                     Score: {player.votes}
                                 </Text>
                                 <Text fontWeight="bold">
-                                    Spent: {player.spent}
+                                    Spent: €{player.spent}
                                 </Text>
                             </CardBody>
                         </Card>
