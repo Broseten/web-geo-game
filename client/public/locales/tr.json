@@ -63,7 +63,8 @@
           "title": "Birinci Aşama: Çözümlerin Yerleştirilmesi",
           "message": "Sol panelden çözümleri seçin ve bunları önceden tanımlanmış alan içindeki haritaya yerleştirin. \nZamanlayıcının süresi dolmadan önce tüm çözümleri yerleştirin. \nHaritaya yerleştirmeden önce her çözümün açıklamasını okumak için açılır menüyü kullanın. \nHer oyuncu sınırlı sayıda çözüm seçebilir. \nKatılımcıların tüm seçenekleri gözden geçirmeleri ve en etkili ve uygulanabilir olduğuna inandıkları çözümleri seçmeleri teşvik edilir.",
           "button": "Yerleştirmeye Başla",
-          "message2": "Kolaylaştırıcının turu başlatmasını bekleyin."
+          "message2": "Kolaylaştırıcının turu başlatmasını bekleyin.",
+          "tip": "İpucu: Uydu görüntülerine geçmek için haritadaki katmanlar düğmesini kullanabilirsiniz."
         },
         "voting": {
           "title": "İkinci Aşama: Oylama",

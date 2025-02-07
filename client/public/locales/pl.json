@@ -63,7 +63,8 @@
           "title": "Faza pierwsza: Umieszczanie rozwiązań",
           "message": "Wybierz rozwiązania z lewego panelu i umieść je na mapie w obrębie wcześniej zdefiniowanego obszaru. \nUmieść wszystkie rozwiązania przed upływem czasu. \nSkorzystaj z menu rozwijanego, aby przeczytać opis każdego rozwiązania przed umieszczeniem go na mapie. \nKażdy gracz może wybrać ograniczoną liczbę rozwiązań. \nUczestników zachęca się do przejrzenia wszystkich opcji i wybrania rozwiązań, które ich zdaniem są najskuteczniejsze i wykonalne.",
           "button": "Rozpocznij umieszczanie",
-          "message2": "Poczekaj, aż facylitator rozpocznie rundę."
+          "message2": "Poczekaj, aż facylitator rozpocznie rundę.",
+          "tip": "Wskazówka: możesz użyć przycisku warstw na mapie, aby przełączyć się na obrazy satelitarne."
         },
         "voting": {
           "title": "Faza druga: głosowanie",

@@ -63,7 +63,8 @@
           "title": "Fase Um: Colocando Soluções",
           "message": "Selecione soluções no painel esquerdo e coloque-as no mapa dentro da área predefinida. \nColoque todas as soluções antes que o tempo expire. \nUse o menu suspenso para ler a descrição de cada solução antes de colocá-la no mapa. \nCada jogador pode selecionar um número limitado de soluções. \nOs participantes são incentivados a analisar todas as opções e escolher as soluções que consideram mais impactantes e viáveis.",
           "button": "Comece a colocar",
-          "message2": "Aguarde o facilitador iniciar a rodada."
+          "message2": "Aguarde o facilitador iniciar a rodada.",
+          "tip": "Dica: você pode usar o botão camadas no mapa para alternar para imagens de satélite."
         },
         "voting": {
           "title": "Fase Dois: Votação",

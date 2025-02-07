@@ -55,6 +55,7 @@
           "title": "Phase One: Placing Solutions",
           "message": "Select solutions from the left panel and place them onto the map within the pre-defined area. Place all solutions before the timer expires. Use the dropdown to read each solution's description before placing it on the map. Each player can select a limited number of solutions. Participants are encouraged to review all options and choose the solutioins they believe are the most impactful and feasible.",
           "message2": "Wait for the facilitator to start the round.",
+          "tip": "Hint: You can use the layers button on the map to switch to satellite images.",
           "button": "Start Placing"
         },
         "voting": {

@@ -28,7 +28,7 @@ export default function Play() {
                case RoundStage.Placing:
                   return <PlayModal
                      title={t('game.modal.start.placement.title')}
-                     message={[t('game.modal.start.placement.message'), t('game.modal.start.placement.message2')]}
+                     message={[t('game.modal.start.placement.message'), t('game.modal.start.placement.tip'), t('game.modal.start.placement.message2')]}
                      onButtonClick={isFac ? () => { socket.emit('progress-game'); } : undefined} // only pass for facilitator
                      facilitatorButtonText={isFac ? t('game.modal.start.placement.button') : undefined}  // same
                   />;

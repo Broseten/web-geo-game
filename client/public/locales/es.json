@@ -63,7 +63,8 @@
           "title": "Fase uno: colocación de soluciones",
           "message": "Seleccione soluciones en el panel izquierdo y colóquelas en el mapa dentro del área predefinida. \nColoque todas las soluciones antes de que expire el cronómetro. \nUtilice el menú desplegable para leer la descripción de cada solución antes de colocarla en el mapa. \nCada jugador puede seleccionar un número limitado de soluciones. \nSe anima a los participantes a revisar todas las opciones y elegir las soluciones que consideren más impactantes y factibles.",
           "button": "Empezar a colocar",
-          "message2": "Espere a que el facilitador comience la ronda."
+          "message2": "Espere a que el facilitador comience la ronda.",
+          "tip": "Sugerencia: puede usar el botón Capas en el mapa para cambiar a imágenes satelitales."
         },
         "voting": {
           "title": "Fase dos: votación",
