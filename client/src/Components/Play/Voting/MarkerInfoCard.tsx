@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, CardFooter, CardHeader, HStack, Image } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardFooter, CardHeader, HStack, Image, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getSolution } from "../../../data/data";
 import { CustomLatLng, MapMarkerData, RoundStage, Vote } from "../../../data/DataTypes";
@@ -23,7 +23,18 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
     const { gameRoomState, roomInfo, getPlayerData } = useGameRoom();
     const { setSelectedMarkerID } = useLocalGameData();
     const [playerVotes, setPlayerVotes] = useState<number>(0);
-    const { socket, localPlayerID } = useConnection();
+    const { useSocketEvent, socket, localPlayerID } = useConnection();
+    const toast = useToast();
+
+    useSocketEvent('vote-error', (message: string) => {
+        toast(
+            {
+                title: message,
+                status: "error",
+                isClosable: true,
+            }
+        );
+    });
 
     useEffect(() => {
         // reset selected marker on cleanup
