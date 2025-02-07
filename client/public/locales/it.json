@@ -81,6 +81,9 @@
     },
     "confirmation": {
       "finish-voting": "Sei sicuro di voler finire il voto prima che finisca il timer?"
+    },
+    "voting": {
+      "players-finished": "Tutti i giocatori hanno finito di votare."
     }
   },
   "about": {

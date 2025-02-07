@@ -81,6 +81,9 @@
     },
     "confirmation": {
       "finish-voting": "Zamanlayıcı bitmeden oylamayı bitirmek istediğinden emin misiniz?"
+    },
+    "voting": {
+      "players-finished": "Tüm oyuncular oylamayı bitirdi."
     }
   },
   "about": {

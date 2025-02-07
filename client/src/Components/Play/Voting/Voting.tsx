@@ -19,10 +19,10 @@ interface VoteProps {
 // TODO Voting -- will need to enable voting buttons on the markers on the map + visualize the voting somehow?
 
 export default function Voting({ isFacilitator }: VoteProps) {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const { getSelectedMarker } = useLocalGameData();
-    const { getRemainingVotes } = useGameMarkers();
+    const { getRemainingVotes, allPlayersFinishedVoting } = useGameMarkers();
     const { roomInfo } = useGameRoom();
     const { socket } = useConnection();
     const selectedMarker = getSelectedMarker();
@@ -101,6 +101,15 @@ export default function Voting({ isFacilitator }: VoteProps) {
                     }
                 </VStack>
             </Center>
+
+
+            {
+                isFacilitator &&
+                allPlayersFinishedVoting &&
+                <Center>
+                    <Text color="white" fontSize="20px">{t('game.voting.players-finished')}</Text>
+                </Center>
+            }
 
             {/* Confirmation Modal */}
             <ConfirmationModal

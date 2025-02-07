@@ -73,6 +73,9 @@
     },
     "confirmation": {
       "finish-voting": "Are you sure you want to finish voting before the timer runs out?"
+    },
+    "voting": {
+      "players-finished": "All players finished voting."
     }
   },
   "home": {

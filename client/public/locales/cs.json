@@ -81,6 +81,9 @@
     },
     "confirmation": {
       "finish-voting": "Jste si jisti, že chcete dokončit hlasování, než dojde časovač?"
+    },
+    "voting": {
+      "players-finished": "Všichni hráči dokončili hlasování."
     }
   },
   "about": {

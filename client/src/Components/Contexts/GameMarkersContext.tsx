@@ -1,13 +1,15 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
 import { MapMarkerData } from "../../data/DataTypes";
 import { useToast } from "@chakra-ui/react";
 import { getSolution } from "../../data/data";
 import { useConnection } from "./ConnectionContext";
+import { useGameRoom } from "./GameRoomContext";
 
 interface GameMarkersContextProps {
    markers: MapMarkerData[];
    getPlayerSpentBudget: (playerID: string | undefined) => number;
    getRemainingVotes: () => number;
+   allPlayersFinishedVoting: boolean;
 }
 
 const GameMarkersContext = createContext<GameMarkersContextProps | undefined>(undefined);
@@ -16,6 +18,8 @@ export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
    const [markers, setMarkers] = useState<MapMarkerData[]>([]);
    const toast = useToast();
    const { useSocketEvent, localPlayerID } = useConnection();
+   const { roomInfo, gameRoomState, players } = useGameRoom();
+   const [allPlayersFinishedVoting, setAllPlayersFinishedVoting] = useState(false);
 
    const getRemainingVotes = () => {
       // add only votes from the local player
@@ -33,6 +37,27 @@ export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
          return acc + (price ? price : 0);
       }, 0);
    };
+
+   const checkAllPlayersFinished = () => {
+      //  all player votes for the current round
+      const playerVotesInRound = markers
+         .flatMap(marker => marker.votes.filter(v => v.roundIndex === gameRoomState?.round.index))
+         .reduce((voteCounts, vote) => {
+            voteCounts[vote.playerID] = (voteCounts[vote.playerID] || 0) + 1;
+            return voteCounts;
+         }, {} as Record<string, number>);
+
+      // check if each player has more then `maxVotes`
+      const allReached = players.length > 0 && players.every(
+         p => playerVotesInRound[p.id] >= (roomInfo?.maxVotes || 0)
+      );
+      return allReached;
+   };
+
+   useEffect(() => {
+      // check only on marker update (updated votes)
+      setAllPlayersFinishedVoting(checkAllPlayersFinished());
+   }, [markers]);
 
    useSocketEvent('marker-added', (marker: MapMarkerData) => {
       setMarkers((current) => [...current, marker]);
@@ -59,18 +84,15 @@ export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
       setMarkers(newMarkers);
    });
 
-   const memoizedMarkers = useMemo(() => markers, [markers]);
-
-   const value = useMemo(() => ({
-      markers: memoizedMarkers,
-      getPlayerSpentBudget,
-      getRemainingVotes,
-   }), [
-      memoizedMarkers,
-   ]);
-
    return (
-      <GameMarkersContext.Provider value={value}>
+      <GameMarkersContext.Provider value={
+         {
+            markers,
+            getPlayerSpentBudget,
+            getRemainingVotes,
+            allPlayersFinishedVoting
+         }
+      }>
          {children}
       </GameMarkersContext.Provider>
    );

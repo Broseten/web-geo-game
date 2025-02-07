@@ -81,6 +81,9 @@
     },
     "confirmation": {
       "finish-voting": "Ali ste prepričani, da želite končati glasovanje, preden časovnik zmanjka?"
+    },
+    "voting": {
+      "players-finished": "Vsi igralci so končali z glasovanjem."
     }
   },
   "about": {
