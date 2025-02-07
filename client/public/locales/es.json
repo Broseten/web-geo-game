@@ -62,12 +62,14 @@
         "placement": {
           "title": "Fase uno: colocación de soluciones",
           "message": "Seleccione soluciones en el panel izquierdo y colóquelas en el mapa dentro del área predefinida. \nColoque todas las soluciones antes de que expire el cronómetro. \nUtilice el menú desplegable para leer la descripción de cada solución antes de colocarla en el mapa. \nCada jugador puede seleccionar un número limitado de soluciones. \nSe anima a los participantes a revisar todas las opciones y elegir las soluciones que consideren más impactantes y factibles.",
-          "button": "Empezar a colocar"
+          "button": "Empezar a colocar",
+          "message2": "Espere a que el facilitador comience la ronda."
         },
         "voting": {
           "title": "Fase dos: votación",
           "message": "Haga clic en las soluciones en el mapa colocado en la ronda anterior y vote. \nUtilice todos sus votos antes de que expire el cronómetro. \nHaga clic en las soluciones para leer cada descripción antes de votar. \nCada jugador tiene un número limitado de votos, lo que fomenta la toma de decisiones estratégicas.",
-          "button": "Empezar a votar"
+          "button": "Empezar a votar",
+          "message2": "Espere a que el facilitador comience la votación."
         }
       },
       "end": {

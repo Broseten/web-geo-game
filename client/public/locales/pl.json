@@ -62,12 +62,14 @@
         "placement": {
           "title": "Faza pierwsza: Umieszczanie rozwiązań",
           "message": "Wybierz rozwiązania z lewego panelu i umieść je na mapie w obrębie wcześniej zdefiniowanego obszaru. \nUmieść wszystkie rozwiązania przed upływem czasu. \nSkorzystaj z menu rozwijanego, aby przeczytać opis każdego rozwiązania przed umieszczeniem go na mapie. \nKażdy gracz może wybrać ograniczoną liczbę rozwiązań. \nUczestników zachęca się do przejrzenia wszystkich opcji i wybrania rozwiązań, które ich zdaniem są najskuteczniejsze i wykonalne.",
-          "button": "Rozpocznij umieszczanie"
+          "button": "Rozpocznij umieszczanie",
+          "message2": "Poczekaj, aż facylitator rozpocznie rundę."
         },
         "voting": {
           "title": "Faza druga: głosowanie",
           "message": "Kliknij rozwiązania na mapie umieszczonej w poprzedniej rundzie i zagłosuj. \nWykorzystaj wszystkie swoje głosy przed upływem limitu czasu. \nKliknij rozwiązania, aby przeczytać każdy opis przed oddaniem głosu. \nKażdy gracz ma ograniczoną liczbę głosów, co zachęca do podejmowania strategicznych decyzji.",
-          "button": "Rozpocznij głosowanie"
+          "button": "Rozpocznij głosowanie",
+          "message2": "Poczekaj, aż facylitator rozpocznie głosowanie."
         }
       },
       "end": {

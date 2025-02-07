@@ -28,14 +28,14 @@ export default function Play() {
                case RoundStage.Placing:
                   return <PlayModal
                      title={t('game.modal.start.placement.title')}
-                     message={t('game.modal.start.placement.message')}
+                     message={[t('game.modal.start.placement.message'), t('game.modal.start.placement.message2')]}
                      onButtonClick={isFac ? () => { socket.emit('progress-game'); } : undefined} // only pass for facilitator
                      facilitatorButtonText={isFac ? t('game.modal.start.placement.button') : undefined}  // same
                   />;
                case RoundStage.Voting:
                   return <PlayModal
                      title={t('game.modal.start.voting.title')}
-                     message={t('game.modal.start.voting.message')}
+                     message={[t('game.modal.start.voting.message'), t('game.modal.start.voting.message2')]}
                      onButtonClick={isFac ? () => { socket.emit('progress-game'); } : undefined} // only pass for facilitator
                      facilitatorButtonText={isFac ? t('game.modal.start.voting.button') : undefined}  // same
                   />;
@@ -46,7 +46,7 @@ export default function Play() {
          case ProgressState.Finished:
             return <PlayModal
                title={t('game.modal.end.title')}
-               message={t('game.modal.end.message')}
+               message={[t('game.modal.end.message')]}
                onButtonClick={isFac ? () => { socket.emit('progress-game'); } : undefined} // only pass for facilitator
                facilitatorButtonText={isFac ? t('game.modal.end.button') : undefined}  // same
             />;

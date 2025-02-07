@@ -1,10 +1,10 @@
 // This file contains the modals that will appear during gameplay and voting
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react";
 
 // Simplified modal component
 interface PlayModalProps {
     title: string;
-    message: string;
+    message: string[];
     onButtonClick?: () => void; // Optional function to be called when the button is clicked
     facilitatorButtonText?: string;
 }
@@ -19,7 +19,12 @@ export default function PlayModal({ title, message, facilitatorButtonText, onBut
             <ModalContent>
                 <ModalHeader>{title}</ModalHeader>
                 {/* <ModalCloseButton /> */}
-                <ModalBody>{message}</ModalBody>
+                <ModalBody>
+                    {message.map((msg, i) => (
+                        <Text key={i}>{msg}</Text>
+                    ))}
+                </ModalBody>
+                {/* TODO add multiple messages option (from an array) */}
                 {onButtonClick && (
                     <ModalFooter>
                         <Button colorScheme="primary" variant="solid" onClick={onButtonClick}>

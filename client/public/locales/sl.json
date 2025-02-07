@@ -62,12 +62,14 @@
         "placement": {
           "title": "Prva faza: Postavitev rešitev",
           "message": "Izberite rešitve na levi plošči in jih postavite na zemljevid znotraj vnaprej določenega območja. \nPostavite vse rešitve, preden poteče časovnik. \nS spustnim menijem preberite opis vsake rešitve, preden jo postavite na zemljevid. \nVsak igralec lahko izbere omejeno število rešitev. \nUdeležence spodbujamo, da pregledajo vse možnosti in izberejo rešitve, za katere menijo, da so najbolj učinkovite in izvedljive.",
-          "button": "Začnite postavljati"
+          "button": "Začnite postavljati",
+          "message2": "Počakajte, da bo moderator začel krog."
         },
         "voting": {
           "title": "Druga faza: glasovanje",
           "message": "Kliknite rešitve na zemljevidu v prejšnjem krogu in glasujte. \nUporabite vse svoje glasove, preden poteče časovnik. \nKliknite na rešitve, da preberete vsak opis pred glasovanjem. \nVsak igralec ima omejeno število glasov, kar spodbuja strateško odločanje.",
-          "button": "Začni glasovati"
+          "button": "Začni glasovati",
+          "message2": "Počakajte, da vodja začne glasovanje."
         }
       },
       "end": {

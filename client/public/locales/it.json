@@ -62,12 +62,14 @@
         "placement": {
           "title": "Fase uno: individuazione delle soluzioni",
           "message": "Seleziona le soluzioni dal pannello di sinistra e posizionale sulla mappa all'interno dell'area predefinita. \nPosiziona tutte le soluzioni prima che il timer scada. \nUtilizza il menu a discesa per leggere la descrizione di ciascuna soluzione prima di posizionarla sulla mappa. \nOgni giocatore può selezionare un numero limitato di soluzioni. \nI partecipanti sono incoraggiati a rivedere tutte le opzioni e a scegliere le soluzioni che ritengono più efficaci e fattibili.",
-          "button": "Inizia a posizionare"
+          "button": "Inizia a posizionare",
+          "message2": "Aspetta che il facilitatore inizi il round."
         },
         "voting": {
           "title": "Fase due: votazione",
           "message": "Clicca le soluzioni sulla mappa posizionate nel turno precedente e vota. \nUsa tutti i tuoi voti prima che il tempo scada. \nClicca sulle soluzioni per leggere ogni descrizione prima di votare. \nOgni giocatore ha un numero limitato di voti, incoraggiando il processo decisionale strategico.",
-          "button": "Inizia a votare"
+          "button": "Inizia a votare",
+          "message2": "Aspetta che il facilitatore inizi il voto."
         }
       },
       "end": {

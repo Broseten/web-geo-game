@@ -54,11 +54,13 @@
         "placement": {
           "title": "Phase One: Placing Solutions",
           "message": "Select solutions from the left panel and place them onto the map within the pre-defined area. Place all solutions before the timer expires. Use the dropdown to read each solution's description before placing it on the map. Each player can select a limited number of solutions. Participants are encouraged to review all options and choose the solutioins they believe are the most impactful and feasible.",
+          "message2": "Wait for the facilitator to start the round.",
           "button": "Start Placing"
         },
         "voting": {
           "title": "Phase Two: Voting",
           "message": "Click the solutions on the map placed in the previous round and vote. Use all your votes before the timer expires. Click on the solutions to read each description before voting. Each player has a limited number of votes, encouraging strategic decision-making.",
+          "message2": "Wait for the facilitator to start the voting.",
           "button": "Start Voting"
         }
       },

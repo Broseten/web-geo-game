@@ -62,12 +62,14 @@
         "placement": {
           "title": "Fáze jedna: Umístění řešení",
           "message": "Vyberte řešení z levého panelu a umístěte je na mapu do předem definované oblasti. \nUmístěte všechna řešení před vypršením časovače. \nPřed umístěním řešení na mapu si pomocí rozevíracího seznamu přečtěte popis každého řešení. \nKaždý hráč si může vybrat omezený počet řešení. \nÚčastníkům se doporučuje, aby prozkoumali všechny možnosti a zvolili řešení, která považují za nejefektivnější a nejschůdnější.",
-          "button": "Začněte umisťovat"
+          "button": "Začněte umisťovat",
+          "message2": "Počkejte, až zprostředkovatel zahájí kolo."
         },
         "voting": {
           "title": "Druhá fáze: Hlasování",
           "message": "Klikněte na řešení na mapě umístěné v předchozím kole a hlasujte. \nPoužijte všechny své hlasy před vypršením časovače. \nKlikněte na řešení a přečtěte si každý popis před hlasováním. \nKaždý hráč má omezený počet hlasů, což podporuje strategické rozhodování.",
-          "button": "Začněte hlasovat"
+          "button": "Začněte hlasovat",
+          "message2": "Počkejte, až facilitátor zahájí hlasování."
         }
       },
       "end": {
