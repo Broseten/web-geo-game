@@ -46,6 +46,10 @@
     "votes": {
       "title": "Max votes",
       "tooltip": "Allocate the number of votes each participant has for the second phase of each round (voting)."
+    },
+    "header": {
+      "title": "You are the Facilitator!",
+      "message": "Please create your room by customizing it below."
     }
   },
   "game": {
@@ -89,7 +93,9 @@
   "generic": {
     "button": {
       "back": "Back",
-      "play": "Play"
+      "play": "Play",
+      "cancel": "Cancel",
+      "save": "Save"
     }
   },
   "about": {
@@ -117,6 +123,36 @@
     "desc": "This game is an interactive tool to engage communities and local authorities in co-creating urban solutions. This digital platform facilitates participatory spatial decision-making by addressing conflicting perspectives and promoting collaboration. Participants work together to propose, discuss, and vote on solutions tailored to the region's specific ecological, social, and economic needs. This process encourages inclusive decision-making and fosters innovative, community-driven solutions for sustainable development."
   },
   "lobby": {
-    "welcome-message": "Welcome to the {{roomName}} lobby!"
+    "header": {
+      "facilitator-message": "Start the game when all players are ready.",
+      "title": "Welcome to the {{roomName}} lobby!",
+      "player-message": "The facilitator will start the game when everyone is ready."
+    },
+    "popup": {
+      "choose-color": "Choose Icon Color",
+      "title": "Edit Name and Icon Color",
+      "choose-name": "Name",
+      "name-placeholder": "Enter your name..."
+    },
+    "userlist": {
+      "icon": "Icon",
+      "user": "User",
+      "role": "Role",
+      "actions": "Actions",
+      "no-players": "No players connected.",
+      "role-placeholder": "Select role...",
+      "popup-label": "Edit name",
+      "leave-room-label": "Leave room",
+      "remove-player-label": "Remove player"
+    }
+  },
+  "join": {
+    "header": "Available Rooms",
+    "message": "Select a room to join",
+    "no-rooms": "No Rooms Available"
+  },
+  "user-info": {
+    "player": "Player",
+    "facilitator": "Facilitator"
   }
 }

@@ -45,15 +45,15 @@ export default function Lobby() {
             textAlign="center"
          >
             {
-               t('lobby.welcome-message', {
+               t('lobby.header.title', {
                   roomName: roomInfo ? roomInfo.name : 'unknown'
                })
             }
          </Text>
          <Text pb={10} fontSize="md" color="gray.900" textAlign="center">
             {isFacilitator(localPlayerID)
-               ? "Start the game when all players are ready."
-               : "The facilitator will start the game when everyone is ready."}
+               ? t('lobby.header.facilitator-message')
+               : t('lobby.header.player-message')}
          </Text>
 
          {/* User List */}

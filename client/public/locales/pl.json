@@ -46,6 +46,10 @@
     "players": {
       "tooltip": "Ustaw maksymalną liczbę graczy, którzy mogą brać udział w tej grze.",
       "title": "Maksymalna liczba graczy"
+    },
+    "header": {
+      "message": "Utwórz pokój, dostosowując go poniżej.",
+      "title": "Jesteś facylitatorem!"
     }
   },
   "home": {
@@ -113,10 +117,42 @@
   "generic": {
     "button": {
       "back": "Z powrotem",
-      "play": "Grać"
+      "play": "Grać",
+      "cancel": "Anulować",
+      "save": "Ratować"
     }
   },
   "lobby": {
-    "welcome-message": "Witamy w lobby {{RoomName}}!"
+    "header": {
+      "facilitator-message": "Rozpocznij grę, gdy wszyscy gracze są gotowi.",
+      "title": "Witamy w lobby {{RoomName}}!",
+      "player-message": "Facylitator rozpocznie grę, gdy wszyscy będą gotowi."
+    },
+    "popup": {
+      "choose-color": "Wybierz kolor ikon",
+      "title": "Edytuj nazwę i kolor ikon",
+      "choose-name": "Nazwa",
+      "name-placeholder": "Wprowadź swoje imię ..."
+    },
+    "userlist": {
+      "actions": "Działania",
+      "icon": "Ikona",
+      "no-players": "Żadnych graczy.",
+      "role": "Rola",
+      "user": "Użytkownik",
+      "leave-room-label": "Opuść pokój",
+      "popup-label": "Edytuj nazwę",
+      "remove-player-label": "Usuń gracza",
+      "role-placeholder": "Wybierz rolę ..."
+    }
+  },
+  "join": {
+    "header": "Dostępne pokoje",
+    "message": "Wybierz pokój do dołączenia",
+    "no-rooms": "Brak dostępnych pokoi"
+  },
+  "user-info": {
+    "facilitator": "Facylitator",
+    "player": "Odtwarzacz"
   }
 }

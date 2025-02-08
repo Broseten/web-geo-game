@@ -19,6 +19,7 @@ import { global_icon_colors } from "../../data/DataTypes";
 import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import TextInput from "./TextInput";
+import { useTranslation } from "react-i18next";
 
 // Props Interface
 interface EditActionPopupProps {
@@ -62,19 +63,22 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
         onClose();
     };
 
+    const { t } = useTranslation();
+
     return (
+
         <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={firstFieldRef}>
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Edit Name and Icon Color</ModalHeader>
+                <ModalHeader>{t('lobby.popup.title')}</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody pb={6}>
                     {/* Name Input */}
                     <TextInput
                         ref={firstFieldRef}
                         id="name-input"
-                        label="Name"
-                        placeholder="Enter your name..."
+                        label={t('lobby.popup.choose-name')}
+                        placeholder={t('lobby.popup.name-placeholder')}
                         fontSize="14px"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -82,7 +86,7 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
 
                     {/* Icon Color Selection */}
                     <FormControl mt={4}>
-                        <FormLabel>Choose Icon Color</FormLabel>
+                        <FormLabel>{t('lobby.popup.choose-color')}</FormLabel>
                         <ButtonGroup width="100%">
                             <Grid
                                 gap="4px"
@@ -111,9 +115,9 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
                 {/* Save/Cancel Button */}
                 <ModalFooter>
                     <Button colorScheme="primary" variant="solid" mr={3} onClick={handleSave}>
-                        Save
+                        {t('generic.button.save')}
                     </Button>
-                    <Button onClick={onClose}>Cancel</Button>
+                    <Button onClick={onClose}>{t('generic.button.cancel')}</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

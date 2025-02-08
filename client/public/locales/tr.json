@@ -46,6 +46,10 @@
     "players": {
       "tooltip": "Bu oyunda olabilecek maksimum oyuncu sayısını ayarlayın.",
       "title": "Maksimum oyuncu"
+    },
+    "header": {
+      "message": "Lütfen aşağıda özelleştirerek odanızı oluşturun.",
+      "title": "Siz kolaylaştırıcısın!"
     }
   },
   "home": {
@@ -113,10 +117,42 @@
   "generic": {
     "button": {
       "back": "Geri",
-      "play": "Oynamak"
+      "play": "Oynamak",
+      "cancel": "İptal etmek",
+      "save": "Kaydetmek"
     }
   },
   "lobby": {
-    "welcome-message": "{{RoomName}} lobisine hoş geldiniz!"
+    "header": {
+      "facilitator-message": "Tüm oyuncular hazır olduğunda oyuna başlayın.",
+      "title": "{{RoomName}} lobisine hoş geldiniz!",
+      "player-message": "Kolaylaştırıcı, herkes hazır olduğunda oyuna başlayacaktır."
+    },
+    "popup": {
+      "choose-color": "Simge Rengi Seçin",
+      "title": "Ad ve Simge Rengi Düzenle",
+      "choose-name": "İsim",
+      "name-placeholder": "Adınızı girin ..."
+    },
+    "userlist": {
+      "actions": "Eylem",
+      "icon": "Simge",
+      "no-players": "Hiçbir oyuncu bağlı.",
+      "role": "Rol",
+      "user": "Kullanıcı",
+      "leave-room-label": "Odadan ayrılmak",
+      "popup-label": "Adı Düzenle",
+      "remove-player-label": "Oynatıcıyı Kaldır",
+      "role-placeholder": "Rolü seçin ..."
+    }
+  },
+  "join": {
+    "header": "Mevcut Odalar",
+    "message": "Katılmak için bir oda seçin",
+    "no-rooms": "Oda yok"
+  },
+  "user-info": {
+    "facilitator": "Kolaylaştırıcı",
+    "player": "Oyuncu"
   }
 }

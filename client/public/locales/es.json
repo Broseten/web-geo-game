@@ -46,6 +46,10 @@
     "players": {
       "tooltip": "Establece el número máximo de jugadores que pueden estar en este juego.",
       "title": "Jugadores máximos"
+    },
+    "header": {
+      "message": "Cree su habitación personalizándola a continuación.",
+      "title": "¡Eres el facilitador!"
     }
   },
   "home": {
@@ -113,10 +117,42 @@
   "generic": {
     "button": {
       "back": "Atrás",
-      "play": "Jugar"
+      "play": "Jugar",
+      "cancel": "Cancelar",
+      "save": "Ahorrar"
     }
   },
   "lobby": {
-    "welcome-message": "¡Bienvenido al lobby {{RoomName}}!"
+    "header": {
+      "facilitator-message": "Comience el juego cuando todos los jugadores estén listos.",
+      "title": "¡Bienvenido al lobby {{RoomName}}!",
+      "player-message": "El facilitador comenzará el juego cuando todos estén listos."
+    },
+    "popup": {
+      "choose-color": "Elija Color de icono",
+      "title": "Editar nombre y color de icono",
+      "choose-name": "Nombre",
+      "name-placeholder": "Ingrese su nombre ..."
+    },
+    "userlist": {
+      "actions": "Comportamiento",
+      "icon": "Icono",
+      "no-players": "No hay jugadores conectados.",
+      "role": "Role",
+      "user": "Usuario",
+      "leave-room-label": "Saliente",
+      "popup-label": "Editar nombre",
+      "remove-player-label": "Eliminar el jugador",
+      "role-placeholder": "Seleccionar rol ..."
+    }
+  },
+  "join": {
+    "header": "Habitaciones disponibles",
+    "message": "Seleccione una habitación para unirse",
+    "no-rooms": "No hay habitaciones disponibles"
+  },
+  "user-info": {
+    "facilitator": "Facilitador",
+    "player": "Jugador"
   }
 }

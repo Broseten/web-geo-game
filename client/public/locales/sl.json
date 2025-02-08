@@ -46,6 +46,10 @@
     "players": {
       "tooltip": "Nastavite največje število igralcev, ki so lahko v tej igri.",
       "title": "Max igralcev"
+    },
+    "header": {
+      "message": "Ustvarite svojo sobo tako, da jo prilagodite spodaj.",
+      "title": "Ste spodbujevalnik!"
     }
   },
   "home": {
@@ -113,10 +117,42 @@
   "generic": {
     "button": {
       "back": "Nazaj",
-      "play": "Igrati"
+      "play": "Igrati",
+      "cancel": "Odpovedati",
+      "save": "Shrani"
     }
   },
   "lobby": {
-    "welcome-message": "Dobrodošli v preddverju {{RoomName}}!"
+    "header": {
+      "facilitator-message": "Začnite igro, ko so vsi igralci pripravljeni.",
+      "title": "Dobrodošli v preddverju {{RoomName}}!",
+      "player-message": "Vodja bo začel igro, ko bodo vsi pripravljeni."
+    },
+    "popup": {
+      "choose-color": "Izberite barvo ikone",
+      "title": "Uredi ime in barvo ikone",
+      "choose-name": "Ime",
+      "name-placeholder": "Vnesite svoje ime ..."
+    },
+    "userlist": {
+      "actions": "Dejanja",
+      "icon": "Ikona",
+      "no-players": "Nobena igralca ni povezana.",
+      "role": "Vloga",
+      "user": "Uporabnik",
+      "leave-room-label": "Pusti sobo",
+      "popup-label": "Uredi ime",
+      "remove-player-label": "Odstrani predvajalnik",
+      "role-placeholder": "Izberite Vlogo ..."
+    }
+  },
+  "join": {
+    "header": "Na voljo sobe",
+    "message": "Izberite sobo, da se pridružite",
+    "no-rooms": "Ni na voljo prostorov"
+  },
+  "user-info": {
+    "facilitator": "Spodbujanje",
+    "player": "Igralec"
   }
 }

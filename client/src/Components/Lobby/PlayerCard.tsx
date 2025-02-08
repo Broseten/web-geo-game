@@ -18,12 +18,15 @@ import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import EditActionPopup from "./EditActionPopup";
 import Icon from "./Icon";
+import { useTranslation } from "react-i18next";
 
 interface PlayerCardProps {
   player: PlayerData;
 }
 
 export default function PlayerCard({ player }: PlayerCardProps) {
+
+  const { t } = useTranslation();
   const { roomInfo, isFacilitator, updatePlayer } = useGameRoom();
   const [isEditing, setIsEditing] = useState(false);
   const { socket, localPlayerID } = useConnection();
@@ -62,7 +65,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
         {/* Player Info */}
         <Box flex="2" textAlign="left">
           <Heading size="md">{player.name}</Heading>
-          <Text fontSize="12px">{isFac ? "Facilitator" : "Player"}</Text>
+          <Text fontSize="12px">{isFac ? t('user-info.facilitator') : t('user-info.player')}</Text>
         </Box>
 
         {/* Role Dropdown */}
@@ -74,7 +77,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
               borderColor="gray.900"
               borderWidth="2px"
               value={player.role || ""} // Default to an empty string if no role is selected
-              placeholder={player.role ? undefined : "Select role..."}
+              placeholder={player.role ? undefined : t('lobby.userlist.role-placeholder')}
               fontSize="sm"
               onChange={(e) => handleRoleChange(e.target.value)} // Handle role change
             >
@@ -103,7 +106,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
         <Flex flex="1" justifyContent="flex-start" alignItems="center" gap={2}>
           {isLocalPlayer && (
             <>
-              <Tooltip label="Edit name" fontSize="sm" placement="top" hasArrow>
+              <Tooltip label={t('lobby.userlist.popup-label')} fontSize="sm" placement="top" hasArrow>
                 <IconButton
                   bg="gray.200"
                   color="black"
@@ -113,7 +116,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
                   onClick={handleEditClick}
                 />
               </Tooltip>
-              <Tooltip label="Leave room" fontSize="sm" placement="top" hasArrow>
+              <Tooltip label={t('lobby.userlist.leave-room-label')} fontSize="sm" placement="top" hasArrow>
                 <IconButton
                   colorScheme="red"
                   aria-label="Leave room"
@@ -124,7 +127,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
             </>
           )}
           {!isFac && isLocalPlayerFacilitator && (
-            <Tooltip label="Remove player" fontSize="sm" placement="top" hasArrow>
+            <Tooltip label={t('lobby.userlist.remove-player-label')} fontSize="sm" placement="top" hasArrow>
               <IconButton
                 colorScheme="red"
                 aria-label="Remove player"

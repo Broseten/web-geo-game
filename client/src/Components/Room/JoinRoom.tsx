@@ -9,8 +9,10 @@ import { useConnection } from "../Contexts/ConnectionContext";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
 import HomeButton from "../HomeButton";
 import { getStorage } from "../../data/data";
+import { useTranslation } from "react-i18next";
 
 export default function JoinRoom() {
+   const { t } = useTranslation();
    const { setCurrentScreen } = useScreenSelection();
    const [rooms, setRooms] = useState<{ id: string; name: string }[] | undefined>(undefined);
    const { socket, useSocketEvent } = useConnection();
@@ -40,18 +42,18 @@ export default function JoinRoom() {
          {/* Header */}
          <Center>
             <Text pt='50' fontSize="4xl" fontWeight="bold" color="primary.500">
-               Available Rooms
+               {t('join.header')}
             </Text>
          </Center>
 
          <Center>
             <Text pb="10" pr="20" pl="20" fontSize="l" color="gray.900" align="center">
-               Select a room to join
+               {t('join.message')}
             </Text>
          </Center>
 
 
-         <VStack         >
+         <VStack>
 
             {/* Room Options */}
             <Center>
@@ -78,7 +80,7 @@ export default function JoinRoom() {
                         !rooms || rooms.length <= 0
                         &&
                         <>
-                           <Text>No Rooms Available</Text>
+                           <Text>{t('join.no-rooms')}</Text>
                         </>
                      }
                   </VStack>
@@ -90,7 +92,7 @@ export default function JoinRoom() {
                }}
                variant="outline"
             >
-               Cancel
+               {t('generic.button.cancel')}
             </Button>
          </VStack>
 

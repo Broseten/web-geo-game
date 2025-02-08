@@ -4,8 +4,10 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import PlayerCard from "./PlayerCard";
+import { useTranslation } from "react-i18next";
 
 export default function UserList() {
+    const { t } = useTranslation();
     const { players } = useGameRoom();
 
     return (
@@ -36,10 +38,10 @@ export default function UserList() {
                     fontSize="lg"
                     color="gray.900"
                 >
-                    <Box ml="20px" flex="1">Icon</Box>
-                    <Box flex="2">User</Box>
-                    <Box flex="2">Role</Box>
-                    <Box flex="1">Actions</Box>
+                    <Box ml="20px" flex="1">{t('lobby.userlist.icon')}</Box>
+                    <Box flex="2">{t('lobby.userlist.user')}</Box>
+                    <Box flex="2">{t('lobby.userlist.role')}</Box>
+                    <Box flex="1">{t('lobby.userlist.actions')}</Box>
                 </Flex>
 
                 {/* Player Cards */}
@@ -50,7 +52,7 @@ export default function UserList() {
                         ))
                     ) : (
                         <Flex justifyContent="center" py={4} color="gray.500">
-                            No players connected.
+                            {t('lobby.userlist.no-players')}
                         </Flex>
                     )}
                 </Box>

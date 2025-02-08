@@ -6,8 +6,11 @@ import '../../Theme/theme.css';
 import { PolygonProvider } from "../Contexts/PolygonContext";
 import HomeButton from "../HomeButton";
 import Customizations from "./Customizations";
+import { useTranslation } from "react-i18next";
 
 export default function CreateRoom() {
+
+   const { t } = useTranslation();
 
    return (
       <Box
@@ -32,7 +35,7 @@ export default function CreateRoom() {
                      fontSize="4xl"
                      fontWeight="bold"
                      color="primary.500">
-                     You are the Facilitator!
+                     {t('create.header.title')}
                   </Text>
                </Center>
 
@@ -40,7 +43,7 @@ export default function CreateRoom() {
                   <Text pb="20px"
                      fontSize="lg"
                      color="gray.900">
-                     Please create your room by customizing it below.
+                     {t('create.header.message')}
                   </Text>
                </Center>
 

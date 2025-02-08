@@ -54,6 +54,10 @@
     "players": {
       "tooltip": "Nastavte maximální počet hráčů, kteří mohou být v této hře.",
       "title": "Max hráčů"
+    },
+    "header": {
+      "message": "Vytvořte si svůj pokoj tím, že jej přizpůsobíte níže.",
+      "title": "Jste facilitátor!"
     }
   },
   "game": {
@@ -113,10 +117,42 @@
   "generic": {
     "button": {
       "back": "Zadní",
-      "play": "Hrát"
+      "play": "Hrát",
+      "cancel": "Zrušit",
+      "save": "Uložit"
     }
   },
   "lobby": {
-    "welcome-message": "Vítejte v {{roomName}} lobby!"
+    "header": {
+      "facilitator-message": "Začněte hru, když jsou všichni hráči připraveni.",
+      "title": "Vítejte v {{roomName}} lobby!",
+      "player-message": "Facilitátor zahájí hru, až budou všichni připraveni."
+    },
+    "popup": {
+      "choose-color": "Vyberte barvu ikony",
+      "title": "Upravit název a barvu ikon",
+      "choose-name": "Jméno",
+      "name-placeholder": "Zadejte své jméno ..."
+    },
+    "userlist": {
+      "actions": "Akce",
+      "icon": "Ikona",
+      "no-players": "Žádní hráči se nepřipojili.",
+      "role": "Role",
+      "user": "Uživatel",
+      "leave-room-label": "Nechte pokoj",
+      "popup-label": "Upravit název",
+      "remove-player-label": "Odstranit hráče",
+      "role-placeholder": "Vybrat roli ..."
+    }
+  },
+  "join": {
+    "header": "Dostupné pokoje",
+    "message": "Vyberte místnost, která se připojíte",
+    "no-rooms": "Žádné pokoje"
+  },
+  "user-info": {
+    "facilitator": "Facilitátor",
+    "player": "Hráč"
   }
 }
