@@ -27,17 +27,17 @@ export default function Play() {
             switch (gameRoomState.round.stage) {
                case RoundStage.Placing:
                   return <PlayModal
-                     title={t('game.modal.start.placement.title')}
-                     message={[t('game.modal.start.placement.message'), t('game.modal.start.placement.tip'), t('game.modal.start.placement.message2')]}
+                     title={t('play.modal.start.game.title')}
+                     message={[t('play.modal.start.game.message'), t('play.modal.start.game.tip'), t('play.modal.start.game.message2')]}
                      onButtonClick={isFac ? () => { socket.emit('progress-game'); } : undefined} // only pass for facilitator
-                     facilitatorButtonText={isFac ? t('game.modal.start.placement.button') : undefined}  // same
+                     facilitatorButtonText={isFac ? t('play.modal.start.game.button') : undefined}  // same
                   />;
                case RoundStage.Voting:
                   return <PlayModal
-                     title={t('game.modal.start.voting.title')}
-                     message={[t('game.modal.start.voting.message'), t('game.modal.start.voting.message2')]}
+                     title={t('play.modal.start.voting.title')}
+                     message={[t('play.modal.start.voting.message'), t('play.modal.start.voting.message2')]}
                      onButtonClick={isFac ? () => { socket.emit('progress-game'); } : undefined} // only pass for facilitator
-                     facilitatorButtonText={isFac ? t('game.modal.start.voting.button') : undefined}  // same
+                     facilitatorButtonText={isFac ? t('play.modal.start.voting.button') : undefined}  // same
                   />;
                default:
                   break;
@@ -45,10 +45,10 @@ export default function Play() {
             break;
          case ProgressState.Finished:
             return <PlayModal
-               title={t('game.modal.end.title')}
-               message={[t('game.modal.end.message')]}
+               title={t('play.modal.end.title')}
+               message={[t('play.modal.end.message')]}
                onButtonClick={isFac ? () => { socket.emit('progress-game'); } : undefined} // only pass for facilitator
-               facilitatorButtonText={isFac ? t('game.modal.end.button') : undefined}  // same
+               facilitatorButtonText={isFac ? t('play.modal.end.button') : undefined}  // same
             />;
          default:
             break;

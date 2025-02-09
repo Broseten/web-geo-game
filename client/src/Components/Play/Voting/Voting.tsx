@@ -47,9 +47,8 @@ export default function Voting({ isFacilitator }: VoteProps) {
                             {roomInfo ? roomInfo?.maxVotes - getRemainingVotes() : 0}
                         </Heading>
 
-                        <Text fontSize="14px" color="white">Votes Left</Text>
+                        <Text fontSize="14px" color="white">{t('play.voting.votes-left')}</Text>
                     </VStack>
-
 
                     {/* Time */}
                     <VStack gap="0">
@@ -57,7 +56,7 @@ export default function Voting({ isFacilitator }: VoteProps) {
                             <Timer />
                         </Heading>
 
-                        <Text fontSize="14px" color="white">Time</Text>
+                        <Text fontSize="14px" color="white">{t('play.generic.time')}</Text>
                     </VStack>
                 </HStack>
             </Center>
@@ -74,7 +73,7 @@ export default function Voting({ isFacilitator }: VoteProps) {
                         justifySelf="center"
                         onClick={() => setIsConfirmModalOpen(true)}
                     >
-                        End Voting
+                        {t('play.generic.end-voting')}
                     </Button>
                 </Center>
             }
@@ -95,19 +94,18 @@ export default function Voting({ isFacilitator }: VoteProps) {
                             // fefault, when no solutions are selected
                             : <Box>
                                 <Text align="center" color="white">
-                                    Click on a solution to learn more
+                                    {t('play.voting.learn-more')}
                                 </Text>
                             </Box>
                     }
                 </VStack>
             </Center>
 
-
             {
                 isFacilitator &&
                 allPlayersFinishedVoting &&
                 <Center>
-                    <Text color="white" fontSize="20px">{t('game.voting.players-finished')}</Text>
+                    <Text color="white" fontSize="20px">{t('play.voting.players-finished')}</Text>
                 </Center>
             }
 
@@ -116,7 +114,7 @@ export default function Voting({ isFacilitator }: VoteProps) {
                 isOpen={isConfirmModalOpen}
                 onClose={() => setIsConfirmModalOpen(false)}
                 onConfirm={handleFinishRound}
-                message={t('game.confirmation.finish-voting')}
+                message={t('play.modal.confirmation.finish-voting')}
             />
         </>
     );

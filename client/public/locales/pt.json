@@ -60,10 +60,10 @@
     "join": "Juntar",
     "about": "Sobre"
   },
-  "game": {
+  "play": {
     "modal": {
       "start": {
-        "placement": {
+        "game": {
           "title": "Fase Um: Colocando Soluções",
           "message": "Selecione soluções no painel esquerdo e coloque-as no mapa dentro da área predefinida. \nColoque todas as soluções antes que o tempo expire. \nUse o menu suspenso para ler a descrição de cada solução antes de colocá-la no mapa. \nCada jogador pode selecionar um número limitado de soluções. \nOs participantes são incentivados a analisar todas as opções e escolher as soluções que consideram mais impactantes e viáveis.",
           "button": "Comece a colocar",
@@ -81,13 +81,34 @@
         "title": "Rodada concluída",
         "message": "O facilitador precisa avançar para a próxima rodada.",
         "button": "Próxima Rodada"
+      },
+      "confirmation": {
+        "finish-voting": "Tem certeza de que deseja terminar de votar antes que o timer acabar?",
+        "confirm": "Confirmação",
+        "confirm-vote": "Tem certeza que deseja votar em",
+        "finish-round": "Tem certeza de que deseja terminar esta rodada antes que o timer acabar?",
+        "no": "Não",
+        "yes": "Sim"
       }
     },
-    "confirmation": {
-      "finish-voting": "Tem certeza de que deseja terminar de votar antes que o timer acabar?"
-    },
     "voting": {
-      "players-finished": "Todos os jogadores terminaram de votar."
+      "players-finished": "Todos os jogadores terminaram de votar.",
+      "learn-more": "Clique em uma solução para saber mais",
+      "votes-left": "Votos restantes"
+    },
+    "game": {
+      "budget": "Orçamento",
+      "place-solution": "Clique no mapa para colocar a solução selecionada.",
+      "role": "Papel",
+      "solutions": "Soluções"
+    },
+    "generic": {
+      "back": "Voltar para a lista",
+      "delete": "Excluir",
+      "end-round": "Final",
+      "end-voting": "Final votando",
+      "time": "Tempo",
+      "vote": "Voto"
     }
   },
   "about": {
@@ -120,12 +141,13 @@
       "play": "Jogar",
       "cancel": "Cancelar",
       "save": "Salvar"
-    }
+    },
+    "continue": "Continuar"
   },
   "lobby": {
     "header": {
       "facilitator-message": "Comece o jogo quando todos os jogadores estiverem prontos.",
-      "title": "Bem -vindo ao {{RoomName}} lobby!",
+      "title": "Bem -vindo ao {{roomName}} lobby!",
       "player-message": "O facilitador começará o jogo quando todos estiverem prontos."
     },
     "popup": {
@@ -154,5 +176,26 @@
   "user-info": {
     "facilitator": "Facilitador",
     "player": "Jogador"
+  },
+  "error": {
+    "solution-dne": "Solução do marcador não existe ..."
+  },
+  "results": {
+    "check-score": "Confira sua pontuação! \nO facilitador progredirá no jogo quando estiver pronto.",
+    "click-to-progress": "Você pode clicar em continuar a progredir para a próxima rodada.",
+    "export": "Exportar",
+    "results": "Resultados!",
+    "score": "Pontuação",
+    "spent": "Gasto",
+    "thank-you": "Obrigado por jogar!"
+  },
+  "solution-info": {
+    "location": "Localização",
+    "placed-by": "Colocado por",
+    "price": "Preço",
+    "round-placed": "Colocado em volta",
+    "show": "Mostrar localização no OSM",
+    "vote-count": "Votos contam",
+    "votes": "Votos"
   }
 }

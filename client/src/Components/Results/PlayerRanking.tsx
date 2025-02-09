@@ -7,9 +7,11 @@ import Icon from "../Lobby/Icon";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import { useGameMarkers } from "../Contexts/GameMarkersContext";
 import { getSolution } from "../../data/data";
+import { useTranslation } from "react-i18next";
 
 
 export default function PlayerRanking() {
+    const { t } = useTranslation();
     const { players } = useGameRoom();
     const { markers } = useGameMarkers();
 
@@ -54,10 +56,10 @@ export default function PlayerRanking() {
 
                             <CardBody>
                                 <Text fontWeight="bold">
-                                    Score: {player.votes}
+                                    {t('results.score')}: {player.votes}
                                 </Text>
                                 <Text fontWeight="bold">
-                                    Spent: €{player.spent}
+                                    {t('results.spent')}: €{player.spent}
                                 </Text>
                             </CardBody>
                         </Card>

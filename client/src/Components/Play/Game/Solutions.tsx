@@ -8,9 +8,12 @@ import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import MarkerInfoCard from "../Voting/MarkerInfoCard";
 import { SolutionAccordionItem } from "./SolutionAccordionItem";
 import { SolutionInfoCard } from "./SolutionInfoCard";
+import { useTranslation } from "react-i18next";
 
 
 export default function Solutions() {
+
+    const { t } = useTranslation();
     const { setSelectedSolutionID, getSelectedSolution, getSelectedMarker, setSelectedMarkerID } = useLocalGameData();
     const { getRoomSolutions } = useGameRoom();
 
@@ -84,7 +87,7 @@ export default function Solutions() {
                         onClick={() => setSelectedSolutionID(null)}
                         buttonText={"Cancel"}
                     />
-                    <Text as={"b"} align="center" color={"white"}>Click on the map to place the selected solution.</Text>
+                    <Text as={"b"} align="center" color={"white"}>{t('play.game.place-solution')}</Text>
                 </VStack>
             }
         </>

@@ -8,6 +8,7 @@ import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import ConfirmationModal from "../ConfirmationModal";
 import { getSolutionImagePath } from "../Game/SolutionInfoCard";
 import { useGameMarkers } from "../../Contexts/GameMarkersContext";
+import { useTranslation } from "react-i18next";
 
 // helper
 export const coordsToString = (coords: CustomLatLng) => {
@@ -20,6 +21,7 @@ export interface MarkerInfoProps {
 }
 
 export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
+    const { t } = useTranslation();
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const { gameRoomState, roomInfo, getPlayerData } = useGameRoom();
     const { setSelectedMarkerID } = useLocalGameData();
@@ -92,13 +94,13 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
             <hr color="black" />
 
             <CardBody pt="2" pb="2" fontWeight="bold" fontSize="12.5px">
-                Location: {
+                {t('solution-info.location')}: {
                     coordsToString(marker.coordinates)
                 } <br />
-                Price: €{selectedSolution.price} <br />
-                Placed by: {player?.role} <br />
-                Placed in round: {marker.roundIndex + 1} <br />
-                Votes count: {marker.votes?.length || 0} <br />
+                {t('solution-info.price')}: €{selectedSolution.price} <br />
+                {t('solution-info.placed-by')}: {player?.role} <br />
+                {t('solution-info.round-placed')}: {marker.roundIndex + 1} <br />
+                {t('solution-info.vote-count')}: {marker.votes?.length || 0} <br />
             </CardBody>
 
             <CardBody pt="0" fontSize="12.5px" overflow="auto">
@@ -118,7 +120,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                         onClick={() => setIsConfirmModalOpen(true)}
                         isDisabled={remainingVotes >= roomInfo.maxVotes}
                     >
-                        Vote
+                        {t('play.generic.vote')}
                     </Button>
                 }
                 {
@@ -129,7 +131,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                             onClick={() => setSelectedMarkerID(null)}
                             isDisabled={remainingVotes >= roomInfo.maxVotes}
                         >
-                            Back to List
+                            {t('play.generic.back')}
                         </Button>
 
                         {
@@ -143,7 +145,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                                     socket.emit("remove-marker", marker.id)
                                 }}
                             >
-                                Delete
+                                {t('play.generic.delete')}
                             </Button>
                         }
                     </HStack>
@@ -156,7 +158,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                         onVote(marker);
                         setIsConfirmModalOpen(false);
                     }}
-                    message={`Are you sure you want to vote for ${getSolution(marker.solutionID)?.name}?`}
+                    message={`{t('play.modal.confirmation.confirm-vote')} ${getSolution(marker.solutionID)?.name}?`}
                 />
             </CardFooter>
 

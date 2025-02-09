@@ -9,12 +9,15 @@ import { useGameRoom } from "../Contexts/GameRoomContext";
 import { getIconColor } from "../Lobby/Icon";
 import { getSolutionImagePath } from "../Play/Game/SolutionInfoCard";
 import { CustomLatLng } from "../../data/DataTypes";
+import { useTranslation } from "react-i18next";
 
 export function getOSMLink(coordinates: CustomLatLng) {
    return `https://www.openstreetmap.org/?mlat=${coordinates.lat}&mlon=${coordinates.lng}#map=15/${coordinates.lat}/${coordinates.lng}`;
 }
 
 export default function SolutionRanking() {
+
+   const { t } = useTranslation();
    const { markers } = useGameMarkers();
    const { getPlayerData, players, roomInfo } = useGameRoom();
 
@@ -145,21 +148,21 @@ export default function SolutionRanking() {
 
                      <CardBody p="10px" pr="80px">
                         <Heading size='md'> {sol.name} </Heading>
-                        <Text fontSize="12px"> Placed by: {getPlayerData(marker.ownerPlayerID)?.name}, {getPlayerData(marker.ownerPlayerID)?.role} </Text>
-                        <Text fontSize="12px"> Price: {sol.price} </Text>
+                        <Text fontSize="12px"> {t('solution-info.placed-by')}: {getPlayerData(marker.ownerPlayerID)?.name}, {getPlayerData(marker.ownerPlayerID)?.role} </Text>
+                        <Text fontSize="12px"> {t('solution-info.price')}: {sol.price} </Text>
                         <Link
                            href={getOSMLink(marker.coordinates)}
                            target="_blank" rel="noopener noreferrer"
                            fontSize="12px"
                            style={{ textDecoration: "underline" }}
                         >
-                           Show location in OSM
+                           {t('solution-info.show')}
                         </Link>
                      </CardBody>
 
                      <CardBody>
                         <Text fontWeight="bold">
-                           Votes: {marker.votes.length}
+                           {t('solution-info.votes')}: {marker.votes.length}
                         </Text>
                      </CardBody>
                   </Card>
@@ -168,10 +171,10 @@ export default function SolutionRanking() {
             )
          }
          <Button variant="solid" onClick={exportMarkersCSV}>
-            Export (CSV)
+            {t('results.export')} (CSV)
          </Button>
          <Button variant="solid" onClick={exportDataJSON}>
-            Export (JSON)
+            {t('results.export')} (JSON)
          </Button>
       </VStack>
    );

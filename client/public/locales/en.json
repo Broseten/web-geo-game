@@ -52,10 +52,10 @@
       "message": "Please create your room by customizing it below."
     }
   },
-  "game": {
+  "play": {
     "modal": {
       "start": {
-        "placement": {
+        "game": {
           "title": "Phase One: Placing Solutions",
           "message": "Select solutions from the left panel and place them onto the map within the pre-defined area. Place all solutions before the timer expires. Use the dropdown to read each solution's description before placing it on the map. Each player can select a limited number of solutions. Participants are encouraged to review all options and choose the solutioins they believe are the most impactful and feasible.",
           "message2": "Wait for the facilitator to start the round.",
@@ -73,13 +73,34 @@
         "title": "Round Finished",
         "message": "Facilitator needs to progress to the next round.",
         "button": "Next Round"
+      },
+      "confirmation": {
+        "finish-voting": "Are you sure you want to finish voting before the timer runs out?",
+        "confirm": "Confirmation",
+        "yes": "Yes",
+        "no": "No",
+        "finish-round": "Are you sure you want to finish this round before the timer runs out?",
+        "confirm-vote": "Are you sure you want to vote for"
       }
     },
-    "confirmation": {
-      "finish-voting": "Are you sure you want to finish voting before the timer runs out?"
-    },
     "voting": {
-      "players-finished": "All players finished voting."
+      "players-finished": "All players finished voting.",
+      "learn-more": "Click on a solution to learn more",
+      "votes-left": "Votes Left"
+    },
+    "game": {
+      "solutions": "Solutions",
+      "role": "Role",
+      "budget": "Budget",
+      "place-solution": "Click on the map to place the selected solution."
+    },
+    "generic": {
+      "end-round": "End Round",
+      "time": "Time",
+      "end-voting": "End Voting",
+      "delete": "Delete",
+      "back": "Back to List",
+      "vote": "Vote"
     }
   },
   "home": {
@@ -96,7 +117,8 @@
       "play": "Play",
       "cancel": "Cancel",
       "save": "Save"
-    }
+    },
+    "continue": "Continue"
   },
   "about": {
     "how-to-play": {
@@ -154,5 +176,26 @@
   "user-info": {
     "player": "Player",
     "facilitator": "Facilitator"
+  },
+  "error": {
+    "solution-dne": "Solution from the marker does not exist..."
+  },
+  "solution-info": {
+    "vote-count": "Votes count",
+    "round-placed": "Placed in round",
+    "placed-by": "Placed by",
+    "price": "Price",
+    "location": "Location",
+    "show": "Show location in OSM",
+    "votes": "Votes"
+  },
+  "results": {
+    "export": "Export",
+    "spent": "Spent",
+    "score": "Score",
+    "click-to-progress": "You can click continue to progress to the next round.",
+    "check-score": "Check out your score! The facilitator will progress the game when ready.",
+    "results": "Results!",
+    "thank-you": "Thank you for playing!"
   }
 }

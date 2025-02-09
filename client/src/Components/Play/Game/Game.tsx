@@ -8,12 +8,15 @@ import { useGameRoom } from "../../Contexts/GameRoomContext";
 import ConfirmationModal from "../ConfirmationModal";
 import Timer from "../Timer";
 import Solutions from "./Solutions";
+import { useTranslation } from "react-i18next";
 
 interface GameProps {
     isFacilitator: boolean;
 }
 
 export default function Game({ isFacilitator }: GameProps) {
+
+    const { t } = useTranslation();
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const { getPlayerData, roomInfo } = useGameRoom();
     const { getPlayerSpentBudget } = useGameMarkers();
@@ -42,7 +45,7 @@ export default function Game({ isFacilitator }: GameProps) {
                             €{playerRemainingBudget}
                         </Heading>
                         <Text fontSize="14px" color="white" textAlign="center">
-                            Budget
+                            {t('play.game.budget')}
                         </Text>
                     </VStack>
 
@@ -52,7 +55,7 @@ export default function Game({ isFacilitator }: GameProps) {
                             <Timer />
                         </Heading>
                         <Text fontSize="14px" color="white" textAlign="center">
-                            Time
+                            {t('play.generic.time')}
                         </Text>
                     </VStack>
 
@@ -62,7 +65,7 @@ export default function Game({ isFacilitator }: GameProps) {
                             {playerRole}
                         </Heading>
                         <Text fontSize="14px" color="white" textAlign="center">
-                            Role
+                            {t('play.game.role')}
                         </Text>
                     </VStack>
                 </HStack>
@@ -81,7 +84,7 @@ export default function Game({ isFacilitator }: GameProps) {
                         justifySelf="center"
                         onClick={() => setIsConfirmModalOpen(true)}
                     >
-                        End Round
+                        {t('play.generic.end-round')}
                     </Button>
                 </Center>
             }
@@ -90,7 +93,7 @@ export default function Game({ isFacilitator }: GameProps) {
 
             {/* Solutions Section */}
             <Box textAlign="center" color="white">
-                <Heading style={{ fontSize: '28px' }}>Solutions</Heading>
+                <Heading style={{ fontSize: '28px' }}>{t('play.game.solutions')}</Heading>
 
                 {/* <Text fontSize="14px" lineHeight="1.15" ml="20px" mr="20px">
                     Choose a pin option below to help meet your goals as a{" "}
@@ -111,7 +114,7 @@ export default function Game({ isFacilitator }: GameProps) {
                 isOpen={isConfirmModalOpen}
                 onClose={() => setIsConfirmModalOpen(false)}
                 onConfirm={handleFinishRound}
-                message="Are you sure you want to finish this round before the timer runs out?"
+                message={t('play.modal.confirmation.finish-round')}
             />
         </>
     );

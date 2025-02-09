@@ -60,10 +60,10 @@
     "join": "Katılmak",
     "about": "Hakkında"
   },
-  "game": {
+  "play": {
     "modal": {
       "start": {
-        "placement": {
+        "game": {
           "title": "Birinci Aşama: Çözümlerin Yerleştirilmesi",
           "message": "Sol panelden çözümleri seçin ve bunları önceden tanımlanmış alan içindeki haritaya yerleştirin. \nZamanlayıcının süresi dolmadan önce tüm çözümleri yerleştirin. \nHaritaya yerleştirmeden önce her çözümün açıklamasını okumak için açılır menüyü kullanın. \nHer oyuncu sınırlı sayıda çözüm seçebilir. \nKatılımcıların tüm seçenekleri gözden geçirmeleri ve en etkili ve uygulanabilir olduğuna inandıkları çözümleri seçmeleri teşvik edilir.",
           "button": "Yerleştirmeye Başla",
@@ -81,13 +81,34 @@
         "title": "Yuvarlak Bitmiş",
         "message": "Kolaylaştırıcının bir sonraki tura geçmesi gerekiyor.",
         "button": "Sonraki Tur"
+      },
+      "confirmation": {
+        "finish-voting": "Zamanlayıcı bitmeden oylamayı bitirmek istediğinden emin misiniz?",
+        "confirm": "Onaylama",
+        "confirm-vote": "Oy vermek istediğinden emin misin",
+        "finish-round": "Zamanlayıcı bitmeden bu turu bitirmek istediğinden emin misiniz?",
+        "no": "HAYIR",
+        "yes": "Evet"
       }
     },
-    "confirmation": {
-      "finish-voting": "Zamanlayıcı bitmeden oylamayı bitirmek istediğinden emin misiniz?"
-    },
     "voting": {
-      "players-finished": "Tüm oyuncular oylamayı bitirdi."
+      "players-finished": "Tüm oyuncular oylamayı bitirdi.",
+      "learn-more": "Daha fazla bilgi edinmek için bir çözümü tıklayın",
+      "votes-left": "Oylar kaldı"
+    },
+    "game": {
+      "budget": "Bütçe",
+      "place-solution": "Seçilen çözümü yerleştirmek için haritayı tıklayın.",
+      "role": "Rol",
+      "solutions": "Çözümler"
+    },
+    "generic": {
+      "back": "Listeye Geri Dön",
+      "delete": "Silmek",
+      "end-round": "Bitirmek",
+      "end-voting": "Son Oylama",
+      "time": "Zaman",
+      "vote": "Oy"
     }
   },
   "about": {
@@ -120,12 +141,13 @@
       "play": "Oynamak",
       "cancel": "İptal etmek",
       "save": "Kaydetmek"
-    }
+    },
+    "continue": "Devam etmek"
   },
   "lobby": {
     "header": {
       "facilitator-message": "Tüm oyuncular hazır olduğunda oyuna başlayın.",
-      "title": "{{RoomName}} lobisine hoş geldiniz!",
+      "title": "{{roomName}} lobisine hoş geldiniz!",
       "player-message": "Kolaylaştırıcı, herkes hazır olduğunda oyuna başlayacaktır."
     },
     "popup": {
@@ -154,5 +176,26 @@
   "user-info": {
     "facilitator": "Kolaylaştırıcı",
     "player": "Oyuncu"
+  },
+  "error": {
+    "solution-dne": "İşaretleyiciden çözüm yok ..."
+  },
+  "results": {
+    "check-score": "Puanınıza göz atın! \nKolaylaştırıcı hazır olduğunda oyunu ilerletecektir.",
+    "click-to-progress": "Bir sonraki tura ilerlemek için devam etmeyi tıklayabilirsiniz.",
+    "export": "İhracat",
+    "results": "Sonuçlar!",
+    "score": "Gol",
+    "spent": "Harcanmış",
+    "thank-you": "Oynadığınız için teşekkürler!"
+  },
+  "solution-info": {
+    "location": "Konum",
+    "placed-by": "Tarafından yerleştirilmiş",
+    "price": "Fiyat",
+    "round-placed": "Yuvarlak",
+    "show": "OSM'de Konumu Göster",
+    "vote-count": "Oy sayımı",
+    "votes": "Oy"
   }
 }

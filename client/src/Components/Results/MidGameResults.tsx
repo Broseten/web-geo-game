@@ -6,9 +6,11 @@ import { useMemo } from "react";
 import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import PlayerRanking from "./PlayerRanking";
+import { useTranslation } from "react-i18next";
 
 
 export default function MidGameResults() {
+    const { t } = useTranslation();
     const { isFacilitator } = useGameRoom();
     const { socket, localPlayerID } = useConnection();
 
@@ -21,7 +23,7 @@ export default function MidGameResults() {
             <Center>
                 <Text pt="70px"
                     fontSize="4xl" fontWeight="bold" color="primary.500">
-                    Results!
+                    {t('results.results')}
                 </Text>
             </Center>
 
@@ -30,9 +32,9 @@ export default function MidGameResults() {
                     fontSize="lg" color="gray.900">
                     {
                         isFac ?
-                            "You can click continue to progress to the next round."
+                            t('results.click-to-progress')
                             :
-                            "Check out your score! The facilitator will progress the game when ready."
+                            t('results.check-score')
                     }
                 </Text>
             </Center>
@@ -61,7 +63,7 @@ export default function MidGameResults() {
                         onClick={() => {
                             socket.emit('progress-game');
                         }}>
-                        Continue
+                        {t('generic.continue')}
                     </Button>
                 }
             </Center>
