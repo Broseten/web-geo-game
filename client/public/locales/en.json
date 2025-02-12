@@ -116,7 +116,8 @@
       "back": "Back",
       "play": "Play",
       "cancel": "Cancel",
-      "save": "Save"
+      "save": "Save",
+      "select": "Select"
     },
     "continue": "Continue"
   },
@@ -187,7 +188,8 @@
     "price": "Price",
     "location": "Location",
     "show": "Show location in OSM",
-    "votes": "Votes"
+    "votes": "Votes",
+    "information": "Solution Information"
   },
   "results": {
     "export": "Export",

@@ -140,7 +140,8 @@
       "back": "Z powrotem",
       "play": "Grać",
       "cancel": "Anulować",
-      "save": "Ratować"
+      "save": "Ratować",
+      "select": "Wybierać"
     },
     "continue": "Kontynuować"
   },
@@ -196,6 +197,7 @@
     "round-placed": "Umieszczone w okrągłości",
     "show": "Pokaż lokalizację w OSM",
     "vote-count": "Liczą się głosy",
-    "votes": "Głosy"
+    "votes": "Głosy",
+    "information": "Informacje o rozwiązaniu"
   }
 }

@@ -84,8 +84,8 @@ export default function Voting({ isFacilitator }: VoteProps) {
             <Center>
                 <VStack w="300px">
                     <Heading size="lg" color="white" mt="5px" lineHeight="1" textAlign="center">
-                        Solution <br />
-                        Information
+                        {t('solution-info.information')}
+
                     </Heading>
                     {
                         selectedMarker

@@ -140,7 +140,8 @@
       "back": "Voltar",
       "play": "Jogar",
       "cancel": "Cancelar",
-      "save": "Salvar"
+      "save": "Salvar",
+      "select": "Selecione"
     },
     "continue": "Continuar"
   },
@@ -196,6 +197,7 @@
     "round-placed": "Colocado em volta",
     "show": "Mostrar localização no OSM",
     "vote-count": "Votos contam",
-    "votes": "Votos"
+    "votes": "Votos",
+    "information": "Informações da solução"
   }
 }

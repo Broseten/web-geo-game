@@ -140,7 +140,8 @@
       "back": "Zadní",
       "play": "Hrát",
       "cancel": "Zrušit",
-      "save": "Uložit"
+      "save": "Uložit",
+      "select": "Vybrat"
     },
     "continue": "Pokračovat"
   },
@@ -196,6 +197,7 @@
     "round-placed": "Umístěné v kole",
     "show": "Zobrazit umístění v OSM",
     "vote-count": "Počet hlasů",
-    "votes": "Hlasy"
+    "votes": "Hlasy",
+    "information": "Informace o řešení"
   }
 }

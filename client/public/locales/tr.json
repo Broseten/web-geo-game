@@ -140,7 +140,8 @@
       "back": "Geri",
       "play": "Oynamak",
       "cancel": "İptal etmek",
-      "save": "Kaydetmek"
+      "save": "Kaydetmek",
+      "select": "Seçme"
     },
     "continue": "Devam etmek"
   },
@@ -196,6 +197,7 @@
     "round-placed": "Yuvarlak",
     "show": "OSM'de Konumu Göster",
     "vote-count": "Oy sayımı",
-    "votes": "Oy"
+    "votes": "Oy",
+    "information": "Çözüm bilgileri"
   }
 }

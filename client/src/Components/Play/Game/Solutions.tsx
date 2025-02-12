@@ -65,7 +65,7 @@ export default function Solutions() {
                                         key={solution.id}
                                         solution={solution}
                                         onClick={() => setSelectedSolutionID(solution.id)}
-                                        buttonText={"Select"}
+                                        buttonText={t('generic.button.select')}
                                     />
                                 ))
                             }
@@ -85,7 +85,7 @@ export default function Solutions() {
                         key={selectedSolution.id}
                         solution={selectedSolution}
                         onClick={() => setSelectedSolutionID(null)}
-                        buttonText={"Cancel"}
+                        buttonText={t('generic.button.cancel')}
                     />
                     <Text as={"b"} align="center" color={"white"}>{t('play.game.place-solution')}</Text>
                 </VStack>

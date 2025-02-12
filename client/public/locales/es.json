@@ -140,7 +140,8 @@
       "back": "Atrás",
       "play": "Jugar",
       "cancel": "Cancelar",
-      "save": "Ahorrar"
+      "save": "Ahorrar",
+      "select": "Seleccionar"
     },
     "continue": "Continuar"
   },
@@ -196,6 +197,7 @@
     "round-placed": "Colocado en ronda",
     "show": "Ubicación del espectáculo en OSM",
     "vote-count": "Votos cuenta",
-    "votes": "Votos"
+    "votes": "Votos",
+    "information": "Solución Información"
   }
 }

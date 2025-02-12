@@ -140,7 +140,8 @@
       "back": "Indietro",
       "play": "Giocare",
       "cancel": "Cancellare",
-      "save": "Salva"
+      "save": "Salva",
+      "select": "Selezionare"
     },
     "continue": "Continuare"
   },
@@ -196,6 +197,7 @@
     "round-placed": "Posto in round",
     "show": "Mostra posizione in OSM",
     "vote-count": "I voti contano",
-    "votes": "Voti"
+    "votes": "Voti",
+    "information": "Informazioni sulla soluzione"
   }
 }

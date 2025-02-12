@@ -140,7 +140,8 @@
       "back": "Nazaj",
       "play": "Igrati",
       "cancel": "Odpovedati",
-      "save": "Shrani"
+      "save": "Shrani",
+      "select": "Izberite"
     },
     "continue": "Nadaljujte"
   },
@@ -196,6 +197,7 @@
     "round-placed": "Postavljen v krog",
     "show": "Pokaži lokacijo v OSM",
     "vote-count": "Glasovi štejejo",
-    "votes": "Glasovi"
+    "votes": "Glasovi",
+    "information": "Informacije o rešitvi"
   }
 }
