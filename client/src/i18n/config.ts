@@ -13,6 +13,7 @@ export const supportedLngs = {
    pl: "Polish (Polski)",
    sl: "Slovenian (Slovenščina)",
    tr: "Turkish (Türkçe)",
+   eu: "Basque (Euskara)",
 };
 
 i18n
