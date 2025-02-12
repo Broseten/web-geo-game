@@ -159,8 +159,7 @@ export default function MarkerInfoCard({ marker }: MarkerInfoProps) {
                         setIsConfirmModalOpen(false);
                     }}
 
-                    // BUG - TRANSLATION NOT WORKING CORRECTLY
-                    message={`{t('play.modal.confirmation.confirm-vote')} ${getSolution(marker.solutionID)?.name}?`}
+                    message={`${t('play.modal.confirmation.confirm-vote')} ${getSolution(marker.solutionID)?.name}?`}
                 />
             </CardFooter>
 
