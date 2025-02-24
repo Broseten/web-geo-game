@@ -57,6 +57,7 @@ export let global_roles = [
    'Example Role 4',
 ];
 
+// data url without the langugage string
 let global_dataURL: string | undefined = undefined;
 
 // this first loads the data URL from the server and then tries to fetch the data from the required URL
@@ -82,10 +83,12 @@ export async function fetchGlobalData(language: string | undefined) {
          console.log("Loading data from: " + dataURL);
       }
    }
-   const dataResponse = await fetchWithTimeout(dataURL, { timeout: 5000 });
+   let dataResponse = await fetchWithTimeout(dataURL, { timeout: 5000 });
    if (!dataResponse.ok) {
       console.error('Failed to fetch global data from server. Maybe the language is missing?');
-      return;
+      console.error('Trying to load default language data.');
+      dataResponse = await fetchWithTimeout(global_dataURL, { timeout: 5000 });
+      if (!dataResponse.ok) return;
    }
    let data;
    try {

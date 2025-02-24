@@ -189,7 +189,8 @@
     "location": "Location",
     "show": "Show location in OSM",
     "votes": "Votes",
-    "information": "Solution Information"
+    "information": "Solution Information",
+    "show-more": "Show More Info"
   },
   "results": {
     "export": "Export",

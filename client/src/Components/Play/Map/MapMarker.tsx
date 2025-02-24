@@ -10,6 +10,7 @@ import { useLocalGameData } from "../../Contexts/LocalGameContext";
 import { getIconColor } from "../../Lobby/Icon";
 import { getSolutionImagePath } from '../Game/SolutionInfoCard';
 import { coordsToString } from "../Voting/MarkerInfoCard";
+import { useTranslation } from "react-i18next";
 
 const defaultIcon = L.icon({
    iconSize: [25, 41],
@@ -32,6 +33,7 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
    const { gameRoomState, getPlayerData } = useGameRoom();
    const { setSelectedMarkerID } = useLocalGameData();
    const { localPlayerID } = useConnection();
+   const { t } = useTranslation();
 
    if (gameRoomState === null) {
       console.error("No game room state");
@@ -96,13 +98,13 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
                <Box>
                   <Text fontSize="14px" as="b">{solution?.name}</Text>
                   <Text fontSize="12.5px">
-                     Location: {
+                     {t('solution-info.location')}: {
                         coordsToString(marker.coordinates)
                      } <br />
-                     Price: €{solution?.price} <br />
-                     Placed by: {player?.role} <br />
-                     Placed in round: {marker.roundIndex + 1} <br />
-                     Votes count: {marker.votes?.length || 0} <br />
+                     {t('solution-info.price')}: €{solution?.price} <br />
+                     {t('solution-info.placed-by')}: {player?.role} <br />
+                     {t('solution-info.round-placed')}: {marker.roundIndex + 1} <br />
+                     {t('solution-info.vote-count')}: {marker.votes?.length || 0} <br />
                   </Text>
                   {/* Container for buttons */}
                   <Box display="flex" flexDirection="row" alignItems="flex-end"
@@ -112,7 +114,7 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
                            setSelectedMarkerID(marker.id)
                         }
                      >
-                        Show More Info
+                        {t('solution-info.show-more')}
                      </Button>
                   </Box>
                </Box>
