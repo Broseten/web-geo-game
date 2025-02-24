@@ -25,7 +25,7 @@ export const GameMarkersProvider = ({ children }: { children: ReactNode }) => {
       // add only votes from the local player
       return markers.reduce((acc, marker) => {
          return acc + marker.votes.reduce((voteAcc, vote) => {
-            return vote.playerID === localPlayerID ? voteAcc + 1 : voteAcc;
+            return vote.playerID === localPlayerID  ? voteAcc + 1 : voteAcc;
          }, 0);
       }, 0);
    };
