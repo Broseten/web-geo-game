@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Config } from '../../types/Config';
-import { initializeI18n } from '../../i18n/config';
+import { initializeI18n } from '../../i18n/i18nConfig';
 
 const ConfigContext = createContext<Config | null>(null);
 
