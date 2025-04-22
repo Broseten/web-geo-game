@@ -18,11 +18,12 @@ import AboutScreen from './Components/Home/AboutScreen';
 import { useConfig } from './Components/Contexts/Config';
 import { initTheme } from './Theme/Theme';
 import React from 'react';
+import { i18n } from 'i18next';
 
-async function loadData(socketServerURL: string, language: string | undefined) {
+async function loadData(socketServerURL: string, language: string | undefined, i18n: i18n) {
    // TODO check if correctly async no time now (move the try block from main to here etc.)
    // TODO also load this in the language context as it may use different tranlastions
-   await initGlobalData(socketServerURL, language);
+   await initGlobalData(socketServerURL, language, i18n);
 }
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
 
    const { i18n } = useTranslation();
    useEffect(() => {
-      loadData(socketServerURL, i18n.resolvedLanguage);
+      loadData(socketServerURL, i18n.resolvedLanguage, i18n);
    }, []);
 
    // Function to switch between screens

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Config } from '../../types/Config';
+import { initializeI18n } from '../../i18n/config';
 
 const ConfigContext = createContext<Config | null>(null);
 
@@ -8,10 +9,16 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
    useEffect(() => {
       // Fetch the config.json file from the public directory
-      fetch('/config.json')
-         .then(res => res.json())
-         .then(setConfig)
-         .catch(console.error);
+      const loadConfig = async () => {
+         const response = await fetch('/config.json');
+         const config: Config = await response.json();
+
+         // Initialize i18n AFTER config load
+         await initializeI18n(Object.keys(config.languages));
+
+         setConfig(config);
+      };
+      loadConfig();
    }, []);
 
    if (!config) return <p>Loading config...</p>;

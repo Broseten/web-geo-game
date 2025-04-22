@@ -6,7 +6,6 @@ import { ConnectionProvider } from './Components/Contexts/ConnectionContext.tsx'
 import { GameMarkersProvider } from './Components/Contexts/GameMarkersContext.tsx';
 import { GameRoomProvider } from './Components/Contexts/GameRoomContext.tsx';
 import { ScreenProvider } from './Components/Contexts/useScreenSelection.tsx';
-import "./i18n/config.ts";
 import { ConfigProvider } from './Components/Contexts/Config.tsx';
 
 function main() {
