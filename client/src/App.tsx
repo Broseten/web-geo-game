@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, ChakraProvider } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGameRoom } from './Components/Contexts/GameRoomContext';
@@ -15,6 +15,9 @@ import { ProgressState, RoundStage } from './data/DataTypes';
 import { initGlobalData } from './data/data';
 import { socketServerURL } from './Components/Contexts/ConnectionContext';
 import AboutScreen from './Components/Home/AboutScreen';
+import { useConfig } from './Components/Contexts/Config';
+import { initTheme } from './Theme/Theme';
+import React from 'react';
 
 async function loadData(socketServerURL: string, language: string | undefined) {
    // TODO check if correctly async no time now (move the try block from main to here etc.)
@@ -23,6 +26,8 @@ async function loadData(socketServerURL: string, language: string | undefined) {
 }
 
 function App() {
+   const config = useConfig();
+   const theme = React.useMemo(() => initTheme(config), [config]);
    const { currentScreen } = useScreenSelection(); // Get the current screen from context
    const { gameRoomState } = useGameRoom();
 
@@ -83,14 +88,16 @@ function App() {
    // room screen    -- (join/create) to configure a room, username and join
    // play screen    -- to acutally play the game (can use a parametr with id of the room to rejoin on refresh)
    return (
-      <Box
-         className="app"
-         h='calc(100vh)'
-         w='calc(100vw)'
-         bg="primary.100"
-      >
-         {renderScreen()}
-      </Box>
+      <ChakraProvider theme={theme}>
+         <Box
+            className="app"
+            h='calc(100vh)'
+            w='calc(100vw)'
+            bg="primary.100"
+         >
+            {renderScreen()}
+         </Box>
+      </ChakraProvider>
    )
 }
 

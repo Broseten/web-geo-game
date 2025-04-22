@@ -1,6 +1,7 @@
 import { defineStyle, defineStyleConfig } from '@chakra-ui/react'
 
 // TODO use this?
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const custom_solid = defineStyle((props: { colorScheme: any; }) => ({
    bg: `${props.colorScheme}`,
    color: "white",
@@ -13,6 +14,7 @@ const custom_solid = defineStyle((props: { colorScheme: any; }) => ({
 }));
 
 // TODO use this?
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const custom_outline = defineStyle((props: { colorScheme: any; }) => ({
    bg: "transparent",
    borderColor: `${props.colorScheme}`,
