@@ -8,9 +8,11 @@ import { global_app_name } from "../../data/data";
 import LocaleSwitcher from "../../i18n/LanguageSwitcher";
 import SetUpInfo from "./SetUpInfo";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
+import { useConfig } from "../Contexts/Config";
 
 export default function HomeScreen() {
    const { t } = useTranslation();
+   const config = useConfig();
    const { setCurrentScreen } = useScreenSelection(); // Get the current screen from context
 
    return (
@@ -72,17 +74,16 @@ export default function HomeScreen() {
 
                <Center position="absolute" left="50%" bottom="10" transform="translateX(-50%)">
                   <HStack>
-                     {/* info link */}
-                     {/* <Link href="https://score-eu-project.eu/" isExternal>
-                        <Icon as={InfoOutlineIcon} color="gray.900" />
-                     </Link> */}
                      {/* Logos */}
-                     <Link href="https://score-eu-project.eu/" isExternal>
-                        <Image src="/images/SCORE.png" height="40px" />
-                     </Link>
-                     <Link href="https://www.ucd.ie/sdl/" isExternal>
-                        <Image src="/images/SDL_UCD.png" height="100px" />
-                     </Link>
+                     {
+                        config.logos.map((logo, index) => {
+                           return (
+                              <Link href={logo.link} isExternal key={index}>
+                                 <Image src={logo.src} height={logo.height} alt={logo.alt} />
+                              </Link>
+                           )
+                        })
+                     }
                   </HStack>
                </Center>
             </Box>

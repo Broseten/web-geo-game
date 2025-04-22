@@ -9,6 +9,20 @@
     "tr": "Turkish (Türkçe)",
     "eu": "Basque (Euskara)"
   },
+  "logos": [
+    {
+      "alt": "SCORE",
+      "src": "/images/SCORE.png",
+      "link": "https://score-eu-project.eu/",
+      "height": "40px"
+    },
+    {
+      "alt": "SDL & UCD",
+      "src": "/images/SDL_UCD.png",
+      "link": "https://www.ucd.ie/sdl/",
+      "height": "100px"
+    }
+  ],
   "theme": {
     "colors": {
       "primary": {
