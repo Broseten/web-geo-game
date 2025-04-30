@@ -22,13 +22,13 @@ const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
 
 let serverPort: string;
 if (import.meta.env.NODE_ENV === 'production') {
-  // In production: use import.meta.env.PORT or window.location.port, always with a colon if present
-  const port = import.meta.env.PORT || window.location.port;
-  serverPort = port ? `:${port}` : '';
+   // In production: use import.meta.env.PORT or window.location.port, always with a colon if present
+   const port = import.meta.env.VITE_PORT || window.location.port;
+   serverPort = port ? `:${port}` : '';
 } else {
-  // In development: use import.meta.env.PORT or default to 1336, always with a colon
-  const port = import.meta.env.PORT || '1336';
-  serverPort = `:${port}`;
+   // In development: use import.meta.env.PORT or default to 1336, always with a colon
+   const port = import.meta.env.VITE_PORT || '1336';
+   serverPort = `:${port}`;
 }
 
 export const socketServerURL = `${protocol}://${window.location.hostname}${serverPort}`;

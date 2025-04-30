@@ -14,13 +14,13 @@ RUN npm install
 RUN npm run build
 
 # Accept a build argument for the port (default to 1336)
-ARG PORT=1336
+ARG VITE_PORT=1336
 
 # Set the port as an environment variable
-ENV PORT=${PORT}
+ENV VITE_PORT=${VITE_PORT}
 
 # Expose the port dynamically
-EXPOSE ${PORT}
+EXPOSE ${VITE_PORT}
 
 # Define the command to run the app
 CMD ["npm", "start"]

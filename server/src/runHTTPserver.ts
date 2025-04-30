@@ -8,7 +8,7 @@ export default function runServer() {
     const application = express();
 
     const httpServer = http.createServer(application);
-    const port = process.env.PORT || 1336;
+    const port = process.env.VITE_PORT || 1336;
 
     // Init our Socket server
     // no need to create an instance because we have a singleton instance inside it
