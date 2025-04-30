@@ -22,8 +22,8 @@ const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
 
 let serverPort: string;
 if (import.meta.env.NODE_ENV === 'production') {
-   // In production: use import.meta.env.PORT or window.location.port, always with a colon if present
-   const port = import.meta.env.VITE_PORT || window.location.port;
+   // In production: use window.location.port (no port if using domain name), with a colon if present
+   const port = window.location.port;
    serverPort = port ? `:${port}` : '';
 } else {
    // In development: use import.meta.env.PORT or default to 1336, always with a colon
