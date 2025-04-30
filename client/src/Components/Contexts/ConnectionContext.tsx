@@ -19,8 +19,19 @@ interface LastSessionData {
 }
 
 const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
-const port = import.meta.env.NODE_ENV !== 'production' ? (import.meta.env.PORT || 1336) : (window.location.port ? `:${window.location.port}` : '');
-export const socketServerURL = `${protocol}://${window.location.hostname}${port}`;
+let serverPort: string;
+if (import.meta.env.NODE_ENV === 'production') {
+   // In production: use window.location.port if present, always with a colon
+   // the server serves the client, so we can use the same port
+   serverPort = import.meta.env.PORT || window.location.port ? `:${window.location.port}` : '';
+} else {
+   // In development: use env PORT or default to 1336, always with a colon
+   // the server does not serve the client, so we need to use the port from the env
+   const devPort = import.meta.env.PORT || 1336;
+   serverPort = `:${devPort}`;
+}
+
+export const socketServerURL = `${protocol}://${window.location.hostname}${serverPort}`;
 
 function savePlayerID(id: string) {
    const newSessiondata: LastSessionData = {
