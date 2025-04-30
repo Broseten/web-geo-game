@@ -19,7 +19,7 @@ interface LastSessionData {
 }
 
 const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
-const port = process.env.NODE_ENV !== 'production' ? process.env.PORT || 1336 : (window.location.port ? `:${window.location.port}` : '');
+const port = import.meta.env.NODE_ENV !== 'production' ? (import.meta.env.PORT || 1336) : (window.location.port ? `:${window.location.port}` : '');
 export const socketServerURL = `${protocol}://${window.location.hostname}${port}`;
 
 function savePlayerID(id: string) {
