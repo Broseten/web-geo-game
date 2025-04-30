@@ -7,14 +7,14 @@ WORKDIR /usr/src/app
 # Copy the rest of the application code from the host machine to docker
 COPY . .
 
-# Install dependencies
-RUN npm install
+# Accept a build argument for the port (default to 1336)
+ARG PORT=1336
 
-# Build the application
-RUN npm run build
+# Set the port as an environment variable
+ENV PORT=${PORT}
 
-# Expose the port the app runs on
-EXPOSE 1336
+# Expose the port dynamically
+EXPOSE ${PORT}
 
 # Define the command to run the app
 CMD ["npm", "start"]

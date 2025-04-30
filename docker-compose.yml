@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - "1336:1336"
+      - "${PORT}:${PORT}"
     environment:
       - NODE_ENV=production
     env_file:
