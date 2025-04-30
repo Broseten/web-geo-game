@@ -16,6 +16,8 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
          // Initialize i18n AFTER config load
          await initializeI18n(Object.keys(config.languages));
 
+         if (!config.app_name) config.app_name = 'GeoDesign Game'; // Fallback app name
+
          setConfig(config);
       };
       loadConfig();

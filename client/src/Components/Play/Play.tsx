@@ -6,7 +6,6 @@ import { Box, Heading, HStack, VStack } from "@chakra-ui/react";
 import L from "leaflet";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { global_app_name } from "../../data/data";
 import { ProgressState, RoundStage } from "../../data/DataTypes";
 import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
@@ -14,9 +13,11 @@ import Game from "./Game/Game";
 import GameMap from "./Map/GameMap";
 import PlayModal from "./PlayModal";
 import Voting from "./Voting/Voting";
+import { useConfig } from "../Contexts/Config";
 
 export default function Play() {
    const { t } = useTranslation();
+   const config = useConfig();
    const { roomInfo, gameRoomState, isFacilitator } = useGameRoom();
    const { socket, localPlayerID } = useConnection();
    const isFac = useMemo(() => isFacilitator(localPlayerID), [localPlayerID, isFacilitator]);
@@ -73,7 +74,7 @@ export default function Play() {
                {/* Logo at top */}
                <Heading bg="none" pt="5px" textAlign="center"
                   fontSize="18px" color="gray.900" fontWeight="bold">
-                  {global_app_name}
+                  {config.app_name}
                </Heading>
 
                {/* Game or voting */}

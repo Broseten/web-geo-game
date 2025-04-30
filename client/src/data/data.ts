@@ -2,9 +2,6 @@ import { i18n } from "i18next";
 import { Solution } from "./DataTypes";
 import * as L from "leaflet";
 
-export const global_app_name = "GeoDesign Game";
-document.title = global_app_name;
-
 export const getStorage = () => {
   return process.env.NODE_ENV === "production" ? localStorage : sessionStorage;
 };

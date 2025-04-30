@@ -17,4 +17,5 @@ export interface Config {
     colors: ThemeColors;
   };
   logos: Logo[];
+  app_name: string;
 }

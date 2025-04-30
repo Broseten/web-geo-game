@@ -4,7 +4,6 @@
 import { Box, Button, Center, Heading, HStack, Image, Link, Text } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 import '../../Theme/theme.css';
-import { global_app_name } from "../../data/data";
 import LocaleSwitcher from "../../i18n/LanguageSwitcher";
 import SetUpInfo from "./SetUpInfo";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
@@ -43,7 +42,7 @@ export default function HomeScreen() {
                      color="gray.900"
                      textShadow="0px 0px 8px #444444"
                      textAlign="center">
-                     {global_app_name}
+                     {config.app_name}
                   </Heading>
                </Center>
                <Center>

@@ -2,10 +2,11 @@ import { Box, Button, Center, OrderedList, ListItem, Text, VStack } from "@chakr
 import HomeButton from "../HomeButton";
 import { t } from "i18next";
 import { useScreenSelection } from "../Contexts/useScreenSelection";
-import { global_app_name } from "../../data/data";
+import { useConfig } from "../Contexts/Config";
 
 export default function AboutScreen() {
    const { setCurrentScreen } = useScreenSelection();
+   const config = useConfig();
 
    // i18n error 'key not found is not' a problem...syntax issue. No easy fix. 
    const phase1Steps = t("about.how-to-play.desc.phase1Steps", { returnObjects: true }) as { [key: string]: string };
@@ -37,7 +38,7 @@ export default function AboutScreen() {
                   <VStack fontSize="lg" spacing={8} textAlign="justify">
                      {/* App Title */}
                      <Text fontSize="4xl" fontWeight="bold" color="primary.500">
-                        {global_app_name}
+                        {config.app_name}
                      </Text>
 
                      {/* Description */}

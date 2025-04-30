@@ -1,9 +1,10 @@
 // Authors: Vojta Bruza 
 
 import { Button, Text } from "@chakra-ui/react";
-import { global_app_name } from "../data/data";
+import { useConfig } from "./Contexts/Config";
 
 export default function HomeButton() {
+   const config = useConfig();
    return (
       <Button position="absolute" top="0" left="0"
          bg="none"
@@ -16,7 +17,7 @@ export default function HomeButton() {
             _hover={{ textDecoration: "underline" }}
             textShadow='-1px -1px 8px #444444'
          >
-            {global_app_name}
+            {config.app_name}
          </Text>
       </Button>
    );

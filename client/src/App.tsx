@@ -35,6 +35,7 @@ function App() {
    const { i18n } = useTranslation();
    useEffect(() => {
       loadData(socketServerURL, i18n.resolvedLanguage, i18n);
+      document.title = config.app_name;
    }, []);
 
    // Function to switch between screens
