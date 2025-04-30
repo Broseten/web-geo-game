@@ -21,7 +21,7 @@ interface LastSessionData {
 const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
 
 let serverPort: string;
-if (import.meta.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
    // In production: use window.location.port (no port if using domain name), with a colon if present
    const port = window.location.port;
    serverPort = port ? `:${port}` : '';
