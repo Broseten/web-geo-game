@@ -76,10 +76,12 @@ export default function HomeScreen() {
                      {/* Logos */}
                      {
                         config.logos.map((logo, index) => {
-                           return (
+                           return logo.link ? (
                               <Link href={logo.link} isExternal key={index}>
                                  <Image src={logo.src} height={logo.height} alt={logo.alt} />
                               </Link>
+                           ) : (
+                              <Image key={index} src={logo.src} height={logo.height} alt={logo.alt} />
                            )
                         })
                      }
