@@ -11,6 +11,7 @@ export default function AboutScreen() {
    // i18n error 'key not found is not' a problem...syntax issue. No easy fix. 
    const phase1Steps = t("about.how-to-play.desc.phase1Steps", { returnObjects: true }) as { [key: string]: string };
    const phase2Steps = t("about.how-to-play.desc.phase2Steps", { returnObjects: true }) as { [key: string]: string };
+   const statement = t("about.statement");
 
    return (
       <Box
@@ -73,10 +74,11 @@ export default function AboutScreen() {
                            ))}
                         </OrderedList>
                      </VStack>
-                     
-                     <Text color="gray.800" fontSize="xs">
-                        {t("about.statement")}
+
+                     {statement && <Text color="gray.800" fontSize="xs">
+                        {statement}
                      </Text>
+                     }
 
                      {/* Back Button */}
                      <Center mb={50}>
@@ -90,7 +92,7 @@ export default function AboutScreen() {
                            {t("generic.button.back")}
                         </Button>
                      </Center>
-                     
+
                   </VStack>
                </Box>
             </Center>
