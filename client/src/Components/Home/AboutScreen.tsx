@@ -73,6 +73,10 @@ export default function AboutScreen() {
                            ))}
                         </OrderedList>
                      </VStack>
+                     
+                     <Text color="gray.800" fontSize="xs">
+                        {t("about.statement")}
+                     </Text>
 
                      {/* Back Button */}
                      <Center mb={50}>
@@ -86,6 +90,7 @@ export default function AboutScreen() {
                            {t("generic.button.back")}
                         </Button>
                      </Center>
+                     
                   </VStack>
                </Box>
             </Center>
