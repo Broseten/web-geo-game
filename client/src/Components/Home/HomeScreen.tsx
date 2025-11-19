@@ -1,7 +1,7 @@
 // Authors: Vojta Bruza and Grace Houser
 // This file displays the home screen  
 
-import { Box, Button, Center, Heading, HStack, Image, Link, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, HStack, Image, Link, Text, VStack } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 import '../../Theme/theme.css';
 import LocaleSwitcher from "../../i18n/LanguageSwitcher";
@@ -13,6 +13,7 @@ export default function HomeScreen() {
    const { t } = useTranslation();
    const config = useConfig();
    const { setCurrentScreen } = useScreenSelection(); // Get the current screen from context
+   const statement = t("about.statement");
 
    return (
       <Box
@@ -29,7 +30,7 @@ export default function HomeScreen() {
                backgroundColor="rgba(256, 256, 256, 0.75)"
                overflow="auto"
                height="100vh"
-               width="600px"
+               width={{ base: "100vw", md: "600px" }}
                shadow="dark-lg"
             >
                {/* Text over the white translucent box */}
@@ -71,22 +72,29 @@ export default function HomeScreen() {
                   </Button>
                </Center>
 
-               <Center position="absolute" left="50%" bottom="10" transform="translateX(-50%)">
-                  <HStack>
-                     {/* Logos */}
-                     {
-                        config.logos.map((logo, index) => {
-                           return logo.link ? (
-                              <Link href={logo.link} isExternal key={index}>
-                                 <Image src={logo.src} height={logo.height} alt={logo.alt} />
-                              </Link>
-                           ) : (
-                              <Image key={index} src={logo.src} height={logo.height} alt={logo.alt} />
-                           )
-                        })
-                     }
-                  </HStack>
-               </Center>
+               <Box position="absolute" left="50%" bottom="2" transform="translateX(-50%)" width={{ base: "100%", md: "600px" }} px={{ base: 4, md: 0 }}>
+                  <VStack>
+                     <HStack justify="center">
+                        {/* Logos */}
+                        {
+                           config.logos.map((logo, index) => {
+                              return logo.link ? (
+                                 <Link href={logo.link} isExternal key={index}>
+                                    <Image src={logo.src} height={logo.height} alt={logo.alt} />
+                                 </Link>
+                              ) : (
+                                 <Image key={index} src={logo.src} height={logo.height} alt={logo.alt} />
+                              )
+                           })
+                        }
+                     </HStack>
+                     {statement && (
+                        <Text color="gray.800" fontSize="2xs" textAlign="center" px={4}>
+                           {statement}
+                        </Text>
+                     )}
+                  </VStack>
+               </Box>
             </Box>
          </Center>
       </Box>
